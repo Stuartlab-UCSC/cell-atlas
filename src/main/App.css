@@ -1,0 +1,17 @@
+body {
+  font-family: sans-serif;
+}
+
+.pageBody {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.App ul.AppMenu {
+    list-style-type: none;
+}
+
+.App ul.AppMenu li {
+    display: inline;
+    padding: 1rem;
+}

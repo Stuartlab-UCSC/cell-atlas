@@ -1,0 +1,29 @@
+
+# eslintAll: run eslint on all js files
+# except legacy files that are still full of lint
+
+DONT_LINT_FILES=(
+    viewport.js
+)
+
+recurse() {
+    # recursively look for .js files and lint them
+    # where $1 is the directory to start searching
+    for i in "$1"/*
+        do
+        if [ -d "$i" ];then
+            recurse "$i"
+        elif [ -f "$i" ] && \
+            [[ $i == *.js ]] && \
+            [[ ! " ${DONT_LINT_FILES[@]} " =~ " $(basename "$i") " ]]
+            then
+            echo $(basename "$i")
+            eslint $i
+        fi
+    done
+}
+
+echo linting...
+recurse $CELLROOT/app/src
+
+
