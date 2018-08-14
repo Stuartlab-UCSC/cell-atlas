@@ -32,7 +32,7 @@ const styles = theme => ({
     },
 });
 
-const details = (id, detail, detailShow, classes) => {
+const details = (detail, detailShow, classes) => {
 
     // The collapsable area.
     let comp =
@@ -40,27 +40,26 @@ const details = (id, detail, detailShow, classes) => {
             in={detailShow}
             className={classes.details}
         >
-            <div
-                data-id={id}>
+            <div>
                 {detail}
             </div>
         </Collapse>
     return comp
 }
 
-const icon = (id, detailShow, classes) => {
+const icon = (detailShow, classes) => {
+
+    // The up or down expansion icon.
     let comp = null
     if (detailShow) {
         comp =
             <ExpandLessIcon
-                data-id={id}
                 className={classes.icon}
             >
             </ExpandLessIcon>
     } else {
         comp =
             <ExpandMoreIcon
-                data-id={id}
                 className={classes.icon}
             >
             </ExpandMoreIcon>
@@ -70,28 +69,29 @@ const icon = (id, detailShow, classes) => {
 
 const GrowPanel = ({ id, summaryText, detail, detailShow, classes,
     onClick } ) => (
-    
+
     <div>
         <div
             className={classes.summary}
+            data-id={id}
             onClick={onClick}
+            
         >
             <Typography
-                data-id={id}
                 className={classes.summaryText}
             >
                 {summaryText}
             </Typography>
-            {icon(id, detailShow, classes)}
+            {icon(detailShow, classes)}
         </div>
-        {details(id, detail, detailShow, classes)}
+        {details(detail, detailShow, classes)}
     </div>
 )
 
 GrowPanel.propTypes = {
     id: PropTypes.string.isRequired,
     summaryText: PropTypes.string.isRequired,
-    //detail: PropTypes.object.isRequired,
+    detail: PropTypes.node.isRequired,
     detailShow: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,

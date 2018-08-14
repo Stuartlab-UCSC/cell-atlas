@@ -1,4 +1,6 @@
 
+// Select files for upload, logic and state.
+
 import { connect } from 'react-redux'
 
 import UploadFilePres from 'upload/UploadFilePres'
@@ -14,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
         onChange: ev => {
             const files = ev.target.files
             dispatch({
-                type: 'upload.selected',
+                type: 'upload.file.selected',
                 files: files,
             })
         },

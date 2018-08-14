@@ -40,6 +40,34 @@ const reducers = {
             return state
         }
     },
+    'upload.table.order': (state = {property: 'name', direction: 'asc'},
+        action) => {
+        
+        let next = {...state}
+        switch(action.type) {
+        case 'upload.table.order.property':
+
+            // If the property is the same, just change the direction.
+            if (state.property === action.property) {
+                if (state.direction === 'desc') {
+                    next.direction = 'asc'
+                } else {
+                    next.direction = 'desc'
+                }
+            } else {
+            
+                // With the property changed, reset the direction to descending.
+                next.property = action.property
+                next.direction = 'asc'
+            }
+            
+            //console.log('upload.table.order, state, action, next:', state, action, next)
+        
+            return next
+        default:
+            return state
+        }
+    },
 };
 
 // Create one action.
@@ -56,7 +84,7 @@ function makeAction (type, ...argNames) {
 // Create all actions.
 function makeStateActions () {
 
-    // Create all action identifiers and actions for single action bits of state.
+    // Create an action with ID for each leaf node of state.
     rxStateActions.forEach(id => {
         makeAction(id)
     })
@@ -66,11 +94,6 @@ export const init = () => {
     
     // Create the redux actions.
     makeStateActions()
-    /*
-    // Combine the shortEntry reducers with these reducers.
-    // TODO use nested reducers rather than a flat space.
-    Object.assign(reducers, shortEntryState.getReducers())
-    */
     
     // Create the store.
     /* eslint-disable no-underscore-dangle */

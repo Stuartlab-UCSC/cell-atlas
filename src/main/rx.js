@@ -8,7 +8,9 @@
 const statePieces =  [ // eslint-disable-line
     'doNotTrack',
     'upload',
-    'upload.formatShow'
+    'upload.formatShow',
+    'upload.table.order',
+    'upload.file',
 ]
 
 // Actions on state. used with rx.set().
@@ -19,8 +21,13 @@ const statePieces =  [ // eslint-disable-line
 export const stateActions = [
     'doNotTrack.displayed',
     'doNotTrack.loadPersist',
+    'upload.file.add',
+    'upload.file.cancel',
+    'upload.file.delete',
+    'upload.file.rename',
+    'upload.file.selected',
     'upload.formatShow.toggle',
-    'upload.selected',
+    'upload.table.order.property',
 ]
 
 // The global redux state.

@@ -1,4 +1,6 @@
 
+// Show the upload file formats available and their details, logic and state.
+
 import { connect } from 'react-redux'
 
 import UploadFormatPres from 'upload/UploadFormatPres'
@@ -79,12 +81,21 @@ sample_2    96    COAD    III
 sample_3    52    GBM     II
 ...`,
     },
+    {
+        id: 'trajectory',
+        summaryText: 'Trajectory',
+        detailText:`
+A description of the trajectory format.`,
+        detailExample:
+`Example of the trajectory format.`
+    },
 ]
 
 const mapStateToProps = (state) => {
     return {
         info,
         detailShow: state['upload.formatShow'],
+        classes: { main: 'main'},
         fwdClasses: {
             icon: 'icon',
             summary: 'summary',
@@ -99,7 +110,7 @@ const mapDispatchToProps = (dispatch) => {
         onClick: ev => {
             dispatch({
                 type: 'upload.formatShow.toggle',
-                id: ev.target.dataset.id,
+                id: ev.target.closest('.summary').dataset.id,
             })
         },
     }

@@ -24,6 +24,4 @@ recurse() {
 }
 
 echo linting...
-recurse $CELLROOT/app/src
-
-
+recurse $CELLROOT/src

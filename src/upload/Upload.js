@@ -1,4 +1,6 @@
 
+// The upload page.
+
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -7,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import UploadFile from 'upload/UploadFile'
 import UploadFormat from 'upload/UploadFormat'
+import UploadTable from 'upload/UploadTable'
 
 const styles = theme => ({
     title: {
@@ -25,6 +28,7 @@ const UploadPres = ({classes}) => (
         </Typography>
         <UploadFile />
         <UploadFormat />
+        <UploadTable />
     </div>
 )
 

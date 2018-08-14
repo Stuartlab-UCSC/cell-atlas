@@ -1,4 +1,6 @@
 
+// Select files for upload, the presentation component.
+
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -10,7 +12,7 @@ const styles = theme => ({
         display: 'none',
     },
     button: {
-        marginBottom: '16px',
+        marginBottom: theme.spacing.unit * 2,
     },
 });
 
@@ -36,8 +38,8 @@ const UploadFilePres = ({ classes, onChange} ) => (
 )
 
 UploadFilePres.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onChange: PropTypes.func,
+    classes: PropTypes.object.isRequired,
+    onChange: PropTypes.func,
 }
 
 export default withStyles(styles)(UploadFilePres);
