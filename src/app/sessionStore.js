@@ -2,7 +2,7 @@
 // state.js
 // An object to write and load state
 
-import rx from 'main/rx'
+import rx from 'app/rx'
 
 let LOGGING = false  // true means log the state and store on save and load
 let storageSupported

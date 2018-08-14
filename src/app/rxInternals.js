@@ -4,7 +4,7 @@
 
 //import redux from 'redux'
 import { createStore, combineReducers } from 'redux'
-import { init as rxInit, stateActions as rxStateActions } from 'main/rx'
+import { init as rxInit, stateActions as rxStateActions } from 'app/rx'
 
 const reducers = {
 

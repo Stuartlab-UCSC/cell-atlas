@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from 'main/App'
-import registerServiceWorker from 'main/registerServiceWorker'
+import App from 'app/App'
+import registerServiceWorker from 'app/registerServiceWorker'
 
 ReactDOM.render(
         <App />,

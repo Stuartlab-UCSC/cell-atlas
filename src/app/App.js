@@ -8,20 +8,33 @@ import {
       Switch
 } from 'react-router-dom'
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import About from 'home/About.js'
 import Help from 'home/Help.js'
 import Home from 'home/Home.js'
 import Job from 'job/Job.js'
 import PageNotFound from 'home/PageNotFound.js'
-import { init as rxInit } from 'main/rxInternals'
+import { init as rxInit } from 'app/rxInternals'
 import Upload from 'upload/Upload.js'
 
-import 'main/App.css'
+import 'app/App.css'
 
 const store = rxInit()
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'sans-serif',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Arial',
+    ].join(','),
+  },
+});
 
 const App = () => (
         <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
             <Router>
                 <div className='App'>
                     <ul className='AppMenu'>
@@ -42,6 +55,7 @@ const App = () => (
                     </Switch>
                 </div>
             </Router>
+        </MuiThemeProvider>
         </Provider>
 )
 
