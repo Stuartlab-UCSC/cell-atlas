@@ -13,7 +13,6 @@ import UploadTable from 'upload/UploadTable'
 
 const styles = theme => ({
     title: {
-        marginTop: theme.spacing.unit * 2,
         marginBottom: theme.spacing.unit * 2,
     },
 });

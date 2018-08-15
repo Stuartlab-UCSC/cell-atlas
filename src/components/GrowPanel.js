@@ -40,9 +40,7 @@ const details = (detail, detailShow, classes) => {
             in={detailShow}
             className={classes.details}
         >
-            <div>
-                {detail}
-            </div>
+            <div>{detail}</div>
         </Collapse>
     return comp
 }
@@ -53,16 +51,10 @@ const icon = (detailShow, classes) => {
     let comp = null
     if (detailShow) {
         comp =
-            <ExpandLessIcon
-                className={classes.icon}
-            >
-            </ExpandLessIcon>
+            <ExpandLessIcon className={classes.icon}></ExpandLessIcon>
     } else {
         comp =
-            <ExpandMoreIcon
-                className={classes.icon}
-            >
-            </ExpandMoreIcon>
+            <ExpandMoreIcon className={classes.icon}></ExpandMoreIcon>
     }
     return comp
 }
@@ -77,9 +69,7 @@ const GrowPanel = ({ id, summaryText, detail, detailShow, classes,
             onClick={onClick}
             
         >
-            <Typography
-                className={classes.summaryText}
-            >
+            <Typography className={classes.summaryText}>
                 {summaryText}
             </Typography>
             {icon(detailShow, classes)}

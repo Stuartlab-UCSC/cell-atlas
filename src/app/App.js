@@ -22,14 +22,28 @@ import 'app/App.css'
 
 const store = rxInit()
 const theme = createMuiTheme({
-  typography: {
-    fontFamily: [
-      'sans-serif',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      'Arial',
-    ].join(','),
-  },
+    // Values of the material-ui default theme are in comments.
+    typography: {
+        fontFamily: [
+            'sans-serif',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            'Arial',
+        ].join(','), //""Roboto", "Helvetica", "Arial", sans-serif"
+        fontSize: '16', // 14
+    },
+    overrides: {
+        'MuiTableRowHead': {
+            root: {
+                height: '36px', // 56px
+            },
+        },
+        'MuiTableRow': {
+            head: {
+                height: '36px', // 48px
+            },
+        },
+    },
 });
 
 const App = () => (

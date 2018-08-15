@@ -5,18 +5,18 @@ import { connect } from 'react-redux'
 
 import Matrix from 'components/Matrix'
 
-
-let counter = 0
+let seq = 0
 function createData(format, name, size, date) {
-  counter += 1
-  return { id: counter, format, name, size, date }
+  seq += 1
+  return { id: seq, format, name, size, date }
 }
 
 const getData = (state) => {
     const rows = [
         createData('Feature', 'myClusteringData.tsv', 149.34, '----'),
         createData('Sparse Similarity', '1clusteringData.tsv', 142.55, '----'),
-        createData('Attributes', 'myColoringAttributes.tsv', 201.96, '08/08/2018  04:29:48 PM'),
+        createData('Attributes', 'myColoringAttributes.tsv', 201.96,
+            '08/08/2018  04:29:48 PM'),
     ]
     return rows
 }
@@ -28,7 +28,6 @@ const getHead = (state) => {
       { id: 'size', numeric: true, label: 'Size' },
       { id: 'date', numeric: false, label: 'Date' },
     ]
-
     return head
 }
 
@@ -37,11 +36,8 @@ const mapStateToProps = (state) => {
         data: getData(state),
         head: getHead(state),
         order: state['upload.table.order'],
-        classes: {
-            root: 'root',
-            tableWrapper: 'tableWrapper',
-            table: 'table',
-        },
+        width: '800px',
+        classes: { row: 'row' },
     }
 }
 
