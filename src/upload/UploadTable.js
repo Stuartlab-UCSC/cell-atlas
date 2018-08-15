@@ -7,8 +7,8 @@ import Matrix from 'components/Matrix'
 
 let seq = 0
 function createData(format, name, size, date) {
-  seq += 1
-  return { id: seq, format, name, size, date }
+    seq += 1
+    return { id: seq, format, name, size, date }
 }
 
 const getData = (state) => {
@@ -23,10 +23,10 @@ const getData = (state) => {
 
 const getHead = (state) => {
     const head = [
-      { id: 'name', numeric: false, label: 'Name' },
-      { id: 'format', numeric: false, label: 'Format' },
-      { id: 'size', numeric: true, label: 'Size' },
-      { id: 'date', numeric: false, label: 'Date' },
+        { id: 'name', numeric: false, label: 'Name' },
+        { id: 'format', numeric: false, label: 'Format' },
+        { id: 'size', numeric: true, label: 'Size' },
+        { id: 'date', numeric: false, label: 'Date' },
     ]
     return head
 }

@@ -46,10 +46,10 @@ const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
                                     tabIndex={-1}
                                     key={n.id}
                                 >
-                                <TableCell>{n.name}</TableCell>
-                                <TableCell>{n.format}</TableCell>
-                                <TableCell numeric>{n.size}</TableCell>
-                                <TableCell>{n.date}</TableCell>
+                                    <TableCell>{n.name}</TableCell>
+                                    <TableCell>{n.format}</TableCell>
+                                    <TableCell numeric>{n.size}</TableCell>
+                                    <TableCell>{n.date}</TableCell>
                                 </TableRow>
                             )
                         })
