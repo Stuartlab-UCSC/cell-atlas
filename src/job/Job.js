@@ -2,7 +2,7 @@
 import React from 'react'
 
 const Job = () => (
-    <div>
+    <div className='pageBody'>
         <h3>(Jobs Page)</h3>
     </div>
 )

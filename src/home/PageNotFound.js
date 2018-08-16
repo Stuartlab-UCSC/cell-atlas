@@ -1,8 +1,10 @@
 
+// 'Not Found' page.
+
 import React from 'react'
 
 const PageNotFound = ({ location }) => (
-  <div>
+  <div className='pageBody'>
     Sorry, the page you requested does not exist: {location.pathname}
   </div>
 );

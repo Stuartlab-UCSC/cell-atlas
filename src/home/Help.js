@@ -2,7 +2,7 @@
 import React from 'react'
 
 const Help = () => (
-    <div>
+    <div className='pageBody'>
         <h3>(Help Page)</h3>
     </div>
 )

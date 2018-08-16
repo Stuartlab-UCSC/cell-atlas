@@ -10,25 +10,40 @@ body {
     padding-right: 2rem;
 }
 
-.App .AppNavBar {
-    background-color: #2B5E91;
+.App .navBar {
+    color: rgba(0, 0, 0, 0.87);
     height: 2rem;
     width: 100%;
+    position: relative;
 }
 
-.App ul.AppMenu {
+.App .menu {
     margin-top: 0;
     list-style-type: none;
-    padding-top: 0.5rem;
+    padding-top: 0.8rem;
     padding-left: 1rem;
 }
 
-.App ul.AppMenu li {
+.App li {
     display: inline;
     padding: 1rem;
 }
 
-.App ul.AppMenu li a {
-    color: white;
+.App li.home {
+    padding-right: 3rem;
+}
+
+.App .menu a {
     text-decoration-line: none;
+    color: inherit;
+}
+
+.App .menu a:hover {
+    text-decoration-line: underline;
+}
+
+.App .logo {
+    position: absolute;
+    left: 8.2rem;
+    top: 0.3rem;
 }
