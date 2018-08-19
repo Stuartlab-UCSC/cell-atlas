@@ -95,7 +95,7 @@ const mapStateToProps = (state) => {
     return {
         info,
         detailShow: state['upload.formatShow'],
-        classes: { main: 'main'},
+        classes: { main: 'main', button: 'button' },
         fwdClasses: {
             icon: 'icon',
             summary: 'summary',
@@ -107,11 +107,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClick: ev => {
+        onSummaryClick: ev => {
             dispatch({
                 type: 'upload.formatShow.toggle',
                 id: ev.target.closest('.summary').dataset.id,
             })
+        },
+        onMoreClick: ev => {
+            console.log('more on dataset-id', ev.target.closest('.details').dataset.id)
         },
     }
 }

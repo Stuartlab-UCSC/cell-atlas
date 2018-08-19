@@ -11,8 +11,7 @@ import Matrix from 'components/Matrix'
 const onButtonClick = (ev) => {
     
     // Handle the button click outside of the normal flow because the Matrix
-    // component handles cells generically and does not know about the contents
-    // of the cell.
+    // component simply passes through cell details as received.
     let type = 'cancel'
     if (ev.target.closest('.delete')) {
         type = 'delete'
@@ -21,13 +20,16 @@ const onButtonClick = (ev) => {
 }
 
 const createButton = (type) => {
+    
+    // Handle the button outside of the normal flow because the Matrix
+    // component simply passes through cell details as received.
     let button =
         <Button
             className={type}
-            variant='flat'
             color='primary'
-            size='small'
             component='span'
+            size='small'
+            variant='flat'
             onClick={onButtonClick}
         >
         {type}

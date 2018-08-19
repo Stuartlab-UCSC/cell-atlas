@@ -5,6 +5,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
@@ -14,9 +15,13 @@ const styles = theme => ({
     main: {
         marginBottom: theme.spacing.unit * 2,
     },
+    button: {
+        verticalAlign: 'top',
+        marginTop: theme.spacing.unit * -0.7,
+    },
 });
 
-const detail = (item) => {
+const detail = (item, classes, onMoreClick) => {
 
     // The expanded part of a GrowPanel.
     // Note on Themes:
@@ -44,14 +49,24 @@ const detail = (item) => {
                     verticalAlign: 'top',
                 }}
             >
-                {item.detailText + '  '}
-                <a href='#' alt='more'>More...</a>
+                {item.detailText}
+                <Button
+                    className={classes.button}
+                    color='primary'
+                    component='span'
+                    size='small'
+                    variant='flat'
+                    onClick={onMoreClick}
+                >
+                    More...
+                </Button>
             </Typography>
         </div>
     return comp
 }
 
-const childPanel = (item, i, detailShow, fwdClasses, onClick) => {
+const childPanel = (item, i, detailShow, fwdClasses, classes,
+    onSummaryClick, onMoreClick) => {
     
     // Skip the info for the main panel.
     if (item.id === 'main') {
@@ -63,27 +78,27 @@ const childPanel = (item, i, detailShow, fwdClasses, onClick) => {
             key={i}
             id={item.id}
             summaryText={item.summaryText}
-            detail={detail(item)}
+            detail={detail(item, classes, onMoreClick)}
             detailShow={detailShow}
             classes={fwdClasses}
-            onClick={onClick}
+            onClick={onSummaryClick}
         />
     return comp
 }
 
 const UpdateFormatPres = ({ info, detailShow, classes, fwdClasses,
-    onClick } ) => (
+    onSummaryClick, onMoreClick } ) => (
     <div className={classes.main}>
         <GrowPanel
             id={info[0].id}
             summaryText={info[0].summaryText}
             detailShow={detailShow['main'] || false}
             classes={fwdClasses}
-            onClick={onClick}
+            onClick={onSummaryClick}
             detail={
                 info.map((item, i) =>
                     childPanel(item, i, detailShow[item.id], fwdClasses,
-                        onClick)
+                        classes, onSummaryClick, onMoreClick)
                 )
             }
         >
@@ -95,7 +110,9 @@ UpdateFormatPres.propTypes = {
     info: PropTypes.array.isRequired,
     detailShow: PropTypes.object.isRequired,
     fwdClasses: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
+    onSummaryClick: PropTypes.func.isRequired,
+    onMoreClick: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(UpdateFormatPres);

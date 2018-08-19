@@ -32,13 +32,14 @@ const styles = theme => ({
     },
 });
 
-const details = (detail, detailShow, classes) => {
+const details = (id, detail, detailShow, classes) => {
 
     // The collapsable area.
     let comp =
         <Collapse
             in={detailShow}
             className={classes.details}
+            data-id={id}
         >
             <div>{detail}</div>
         </Collapse>
@@ -67,14 +68,13 @@ const GrowPanel = ({ id, summaryText, detail, detailShow, classes,
             className={classes.summary}
             data-id={id}
             onClick={onClick}
-            
         >
             <Typography className={classes.summaryText}>
                 {summaryText}
             </Typography>
             {icon(detailShow, classes)}
         </div>
-        {details(detail, detailShow, classes)}
+        {details(id, detail, detailShow, classes)}
     </div>
 )
 
