@@ -30,6 +30,7 @@ const UploadFilePres = ({ classes, onChange} ) => (
                 className={classes.button}
                 variant='contained'
                 component='span'
+                color='primary'
             >
             SELECT FILES
             </Button>

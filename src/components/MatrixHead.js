@@ -16,23 +16,23 @@ class MatrixHead extends React.Component {
         return (
             <TableHead>
                 <TableRow>
-                    {head.map(row => {
+                    {head.map(col => {
                         return (
                             <TableCell
-                                key={row.id}
-                                data-id={row.id}
-                                numeric={row.numeric}
-                                padding={row.disablePadding ?
+                                key={col.id}
+                                data-id={col.id}
+                                numeric={col.numeric}
+                                padding={col.disablePadding ?
                                     'none' : 'default'}
-                                sortDirection={order.property === row.id ?
+                                sortDirection={order.property === col.id ?
                                     order.direction : false}
                             >
                                 <TableSortLabel
-                                    active={order.property === row.id}
+                                    active={order.property === col.id}
                                     direction={order.direction}
                                     onClick={onRequestSort}
                                 >
-                                    {row.label}
+                                    {col.label}
                                 </TableSortLabel>
                             </TableCell>
                         )

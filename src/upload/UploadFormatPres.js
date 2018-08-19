@@ -44,7 +44,8 @@ const detail = (item) => {
                     verticalAlign: 'top',
                 }}
             >
-                {item.detailText}
+                {item.detailText + '  '}
+                <a href='#' alt='more'>More...</a>
             </Typography>
         </div>
     return comp

@@ -26,34 +26,48 @@ const styles = theme => ({
     },
 })
 
+const dataVal = (val, j, numeric) => {
+    let comp =
+        <TableCell
+            numeric={numeric}
+            key={j}
+        >
+            {val}
+        </TableCell>
+    return comp
+}
+
+const dataRow = (row, i, head, className) => {
+    let comp =
+        <TableRow
+            className={className}
+            hover
+            tabIndex={-1}
+            key={i}
+        >
+            {head.map((col, j) =>
+                dataVal(row[col.id], j, col.numeric)
+            )}
+        </TableRow>
+    return comp
+}
+
 const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
+    data.sort(getSorting(order.direction, order.property))
     return (
         <Paper style={{width: width}}>
-            <Table aria-labelledby="tableTitle">
+            <Table
+                aria-labelledby="tableTitle"
+            >
                 <MatrixHead
                     head={head}
                     order={order}
                     onRequestSort={onRequestSort}
                 />
                 <TableBody>
-                    {data
-                        .sort(getSorting(order.direction, order.property))
-                        .map(n => {
-                            return (
-                                <TableRow
-                                    className={classes.row}
-                                    hover
-                                    tabIndex={-1}
-                                    key={n.id}
-                                >
-                                    <TableCell>{n.name}</TableCell>
-                                    <TableCell>{n.format}</TableCell>
-                                    <TableCell numeric>{n.size}</TableCell>
-                                    <TableCell>{n.date}</TableCell>
-                                </TableRow>
-                            )
-                        })
-                    }
+                    {data.map((row, i) =>
+                        dataRow(row, i, head, classes.row)
+                    )}
                 </TableBody>
             </Table>
         </Paper>
@@ -61,12 +75,12 @@ const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
 }
 
 Matrix.propTypes = {
-  data: PropTypes.array.isRequired,
-  head: PropTypes.array.isRequired,
-  order: PropTypes.object.isRequired,
-  width: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
+    data: PropTypes.array.isRequired,
+    head: PropTypes.array.isRequired,
+    order: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    classes: PropTypes.object.isRequired,
+    onRequestSort: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(Matrix)
