@@ -37,13 +37,14 @@ const dataVal = (val, j, numeric) => {
     return comp
 }
 
-const dataRow = (row, i, head, className) => {
+const dataRow = (row, i, head, classes) => {
     let comp =
         <TableRow
-            className={className}
+            className={classes.row}
             hover
             tabIndex={-1}
             key={i}
+            data-id={row.name}
         >
             {head.map((col, j) =>
                 dataVal(row[col.id], j, col.numeric)
@@ -66,7 +67,7 @@ const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
                 />
                 <TableBody>
                     {data.map((row, i) =>
-                        dataRow(row, i, head, classes.row)
+                        dataRow(row, i, head, classes)
                     )}
                 </TableBody>
             </Table>
@@ -78,7 +79,7 @@ Matrix.propTypes = {
     data: PropTypes.array.isRequired,
     head: PropTypes.array.isRequired,
     order: PropTypes.object.isRequired,
-    width: PropTypes.number.isRequired,
+    width: PropTypes.node.isRequired,
     classes: PropTypes.object.isRequired,
     onRequestSort: PropTypes.func.isRequired,
 }

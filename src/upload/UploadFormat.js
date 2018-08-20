@@ -95,7 +95,7 @@ const mapStateToProps = (state) => {
     return {
         info,
         detailShow: state['upload.formatShow'],
-        classes: { main: 'main', button: 'button' },
+        classes: { main: 'main' },
         fwdClasses: {
             icon: 'icon',
             summary: 'summary',

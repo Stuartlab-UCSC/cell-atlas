@@ -36,14 +36,24 @@ const theme = createMuiTheme({
         fontSize: '16', // 14
     },
     overrides: {
-        'MuiTableRow': {
+        MuiTableRow: {
             root: {
                 height: '36px', // 56px
             },
             head: {
-                fontWeight: '400',
                 height: '36px', // 48px
             },
+        },
+        MuiTableCell: {
+            root: {
+                paddingLeft: '0.5rem',
+                paddingRight: '0.5rem',
+            },
+        },
+        MuiButton: {
+            sizeSmall: {
+                fontSize: '0.8rem',
+            }
         },
     },
 });

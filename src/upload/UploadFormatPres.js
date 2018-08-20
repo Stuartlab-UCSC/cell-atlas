@@ -5,7 +5,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Button from '@material-ui/core/Button'
+import MoreButton from 'components/MoreButton'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
@@ -14,10 +14,6 @@ import GrowPanel from 'components/GrowPanel'
 const styles = theme => ({
     main: {
         marginBottom: theme.spacing.unit * 2,
-    },
-    button: {
-        verticalAlign: 'top',
-        marginTop: theme.spacing.unit * -0.7,
     },
 });
 
@@ -50,16 +46,9 @@ const detail = (item, classes, onMoreClick) => {
                 }}
             >
                 {item.detailText}
-                <Button
-                    className={classes.button}
-                    color='primary'
-                    component='span'
-                    size='small'
-                    variant='flat'
+                <MoreButton
                     onClick={onMoreClick}
-                >
-                    More...
-                </Button>
+                />
             </Typography>
         </div>
     return comp

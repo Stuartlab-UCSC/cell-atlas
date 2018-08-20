@@ -4,43 +4,37 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Button from '@material-ui/core/Button'
-
 import Matrix from 'components/Matrix'
+import SmallButton from 'components/SmallButton'
 
 const onButtonClick = (ev) => {
     
     // Handle the button click outside of the normal flow because the Matrix
     // component simply passes through cell details as received.
-    let type = 'cancel'
+    let id = ev.target.closest('.row').dataset.id
+    let action = 'cancel'
     if (ev.target.closest('.delete')) {
-        type = 'delete'
+        action = 'delete'
     }
-    console.log('onButtonClick type:', type)
+    console.log('onButtonClick id, action:', id, action)
 }
 
-const createButton = (type) => {
+const createButton = (action) => {
     
     // Handle the button outside of the normal flow because the Matrix
     // component simply passes through cell details as received.
     let button =
-        <Button
-            className={type}
-            color='primary'
-            component='span'
-            size='small'
-            variant='flat'
+        <SmallButton
+            action={action}
             onClick={onButtonClick}
-        >
-        {type}
-        </Button>
+        />
     return button
 }
 
 const createData = (format, name, size, date) => {
     
-    // Define the button as 'delete' or 'cancel' depending on the type
-    // of value of the date. Progress bars get a 'cancel button.
+    // Define the button depending on the type of the date value.
+    // Strings get 'delete' and progress bars get 'cancel'.
     let action
     if (date !== '----') {
     //TODO if (typeof date === 'string') {
