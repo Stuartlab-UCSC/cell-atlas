@@ -8,6 +8,9 @@ import {
       Switch
 } from 'react-router-dom'
 
+import cyan from '@material-ui/core/colors/cyan';
+import indigo from '@material-ui/core/colors/indigo';
+import lightBlue from '@material-ui/core/colors/lightBlue';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Help from 'home/Help'
@@ -26,8 +29,14 @@ const store = rxInit()
 
 const theme = createMuiTheme({
     // Values of the material-ui default theme are in comments.
+    palette: {
+        primary: indigo,
+        secondary: {
+            main: '#03a9f4',
+        },
+    },
     typography: {
-        fontFamily: [
+       fontFamily: [
             'sans-serif',
             '-apple-system',
             'BlinkMacSystemFont',
@@ -53,7 +62,7 @@ const theme = createMuiTheme({
         MuiButton: {
             sizeSmall: {
                 fontSize: '0.8rem',
-            }
+            },
         },
     },
 });

@@ -6,11 +6,14 @@
 // Where <state-bit> is one of the below.
 // Example:  rx.get('layout.name')
 const statePieces =  [ // eslint-disable-line
+    'createMap.attrShow',
+    'createMap.featureShow',
     'doNotTrack',
     'upload',
     'upload.formatShow',
     'upload.table.order',
     'upload.file',
+    'user',
 ]
 
 // Actions on state. used with rx.set().
@@ -19,6 +22,8 @@ const statePieces =  [ // eslint-disable-line
 // Example:  rx.set('layout.nameSelected', { name: 'RPPA' })
 // Actions ending with 'loadPersist' are written to localStore and bookmarks.
 export const stateActions = [
+    'createMap.attrShow.toggle',
+    'createMap.featureShow.toggle',
     'doNotTrack.displayed',
     'doNotTrack.loadPersist',
     'upload.file.add',
@@ -28,6 +33,8 @@ export const stateActions = [
     'upload.file.selected',
     'upload.formatShow.toggle',
     'upload.table.order.property',
+    'user.login',
+    'user.logout',
 ]
 
 // The global redux state.

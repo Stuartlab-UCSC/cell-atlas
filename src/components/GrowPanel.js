@@ -1,4 +1,7 @@
 
+// A panel that expands for details.
+// Much like a material-ui Expansion Panel, but more control over spacing.
+
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -35,6 +38,9 @@ const styles = theme => ({
 const details = (id, detail, detailShow, classes) => {
 
     // The collapsable area.
+    if (!detail) {
+        return null
+    }
     let comp =
         <Collapse
             in={detailShow}
@@ -60,7 +66,18 @@ const icon = (detailShow, classes) => {
     return comp
 }
 
-const GrowPanel = ({ id, summaryText, detail, detailShow, classes,
+const Hr = ({ show }) => {
+    let comp = null
+    if (show) {
+        comp =
+            <div>
+                <hr/>
+            </div>
+    }
+    return comp
+}
+
+const GrowPanel = ({ id, summaryText, detail, detailShow, dividerShow, classes,
     onClick } ) => (
 
     <div>
@@ -75,13 +92,14 @@ const GrowPanel = ({ id, summaryText, detail, detailShow, classes,
             {icon(detailShow, classes)}
         </div>
         {details(id, detail, detailShow, classes)}
+        <Hr show={dividerShow} />
     </div>
 )
 
 GrowPanel.propTypes = {
     id: PropTypes.string.isRequired,
     summaryText: PropTypes.string.isRequired,
-    detail: PropTypes.node.isRequired,
+    detail: PropTypes.node,
     detailShow: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,

@@ -8,6 +8,20 @@ import { init as rxInit, stateActions as rxStateActions } from 'app/rx'
 
 const reducers = {
 
+    'createMap.attrShow': (state = true, action) => {
+        if (action.type === 'createMap.attrShow.toggle') {
+            return !state
+        } else {
+            return state
+        }
+    },
+    'createMap.featureShow': (state = true, action) => {
+        if (action.type === 'createMap.featureShow.toggle') {
+            return !state
+        } else {
+            return state
+        }
+    },
     'doNotTrack': (state = null, action) => {
         switch(action.type) {
         case 'doNotTrack.displayed':
@@ -66,6 +80,16 @@ const reducers = {
             return next
         default:
             return state
+        }
+    },
+    'user': (state = null, action) => {
+        switch(action.type) {
+        case 'user.login':
+            return action.user
+        case 'user.logout':
+            return null
+        default:
+            return 'swat_soe.ucsc.edu'
         }
     },
 };

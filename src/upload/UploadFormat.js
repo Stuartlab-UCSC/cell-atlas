@@ -96,7 +96,7 @@ const mapStateToProps = (state) => {
         info,
         detailShow: state['upload.formatShow'],
         classes: { main: 'main' },
-        fwdClasses: {
+        growPanelClasses: {
             icon: 'icon',
             summary: 'summary',
             summaryText: 'summaryText',
@@ -108,6 +108,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onSummaryClick: ev => {
+            console.log("ev.target:", ev.target)
+            console.log("ev.target.closest('.summary'):",
+                ev.target.closest('.summary'))
             dispatch({
                 type: 'upload.formatShow.toggle',
                 id: ev.target.closest('.summary').dataset.id,

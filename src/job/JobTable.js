@@ -30,6 +30,7 @@ const createButton = (action) => {
     let button =
         <SmallButton
             action={action}
+            variant='flat'
             onClick={onButtonClick}
         />
     return button

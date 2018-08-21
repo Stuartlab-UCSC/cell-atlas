@@ -5,11 +5,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import MoreButton from 'components/MoreButton'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
 import GrowPanel from 'components/GrowPanel'
+import MoreButton from 'components/MoreButton'
 
 const styles = theme => ({
     main: {
@@ -54,7 +54,7 @@ const detail = (item, classes, onMoreClick) => {
     return comp
 }
 
-const childPanel = (item, i, detailShow, fwdClasses, classes,
+const childPanel = (item, i, detailShow, growPanelClasses, classes,
     onSummaryClick, onMoreClick) => {
     
     // Skip the info for the main panel.
@@ -69,24 +69,24 @@ const childPanel = (item, i, detailShow, fwdClasses, classes,
             summaryText={item.summaryText}
             detail={detail(item, classes, onMoreClick)}
             detailShow={detailShow}
-            classes={fwdClasses}
+            classes={growPanelClasses}
             onClick={onSummaryClick}
         />
     return comp
 }
 
-const UpdateFormatPres = ({ info, detailShow, classes, fwdClasses,
+const UpdateFormatPres = ({ info, detailShow, classes, growPanelClasses,
     onSummaryClick, onMoreClick } ) => (
     <div className={classes.main}>
         <GrowPanel
             id={info[0].id}
             summaryText={info[0].summaryText}
             detailShow={detailShow['main'] || false}
-            classes={fwdClasses}
+            classes={growPanelClasses}
             onClick={onSummaryClick}
             detail={
                 info.map((item, i) =>
-                    childPanel(item, i, detailShow[item.id], fwdClasses,
+                    childPanel(item, i, detailShow[item.id], growPanelClasses,
                         classes, onSummaryClick, onMoreClick)
                 )
             }
@@ -98,7 +98,7 @@ const UpdateFormatPres = ({ info, detailShow, classes, fwdClasses,
 UpdateFormatPres.propTypes = {
     info: PropTypes.array.isRequired,
     detailShow: PropTypes.object.isRequired,
-    fwdClasses: PropTypes.object.isRequired,
+    growPanelClasses: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     onSummaryClick: PropTypes.func.isRequired,
     onMoreClick: PropTypes.func.isRequired,

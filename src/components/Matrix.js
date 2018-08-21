@@ -79,7 +79,7 @@ Matrix.propTypes = {
     data: PropTypes.array.isRequired,
     head: PropTypes.array.isRequired,
     order: PropTypes.object.isRequired,
-    width: PropTypes.node.isRequired,
+    width: PropTypes.node,
     classes: PropTypes.object.isRequired,
     onRequestSort: PropTypes.func.isRequired,
 }
