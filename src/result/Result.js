@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import JobTable from 'job/JobTable'
+import ResultTable from 'result/ResultTable'
 
 const styles = theme => ({
     title: {
@@ -16,15 +16,15 @@ const styles = theme => ({
     },
 });
 
-const JobPres = ({classes}) => (
-    <div className='jobPage pageBody'>
+const ResultPres = ({classes}) => (
+    <div className='resultPage pageBody'>
         <Typography
             variant='title'
             className={classes.title}
         >
-            Analysis Jobs
+            Analysis Results
         </Typography>
-        <JobTable />
+        <ResultTable />
     </div>
 )
 
@@ -36,8 +36,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-const Job = connect(
+const Result = connect(
     mapStateToProps
-)(withStyles(styles)(JobPres))
+)(withStyles(styles)(ResultPres))
 
-export default Job
+export default Result

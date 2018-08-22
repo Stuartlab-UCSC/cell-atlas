@@ -40,6 +40,7 @@ const ListSelect = ({ id, value, list, classes, onChange }) => {
             multiple
             className={classNames(classes.margin, classes.textField)}
             helperText='Multiple allowed'
+            style={{ width: '100%' }}
             onChange={onChange(id)}
         >
             {list.map(option => (
@@ -56,7 +57,7 @@ const DetailColumnOne = ({id, listValue, list, classes, onChange}) => {
 
     let comp =
         <React.Fragment>
-            <Grid item xs={4}>
+            <div>
                 <ListSelect
                     id={id}
                     value={listValue}
@@ -64,14 +65,14 @@ const DetailColumnOne = ({id, listValue, list, classes, onChange}) => {
                     classes={classes}
                     onChange={onChange}
                 />
-            </Grid>
-            <Grid item xs={4}>
+            </div>
+            <div>
                 <SmallButton
                     action='upload'
                     label='Upload More'
                     onClick={ () => {} }
                 />
-            </Grid>
+            </div>
         </React.Fragment>
     return comp
 }
@@ -82,9 +83,11 @@ const Detail = (id, listValue, urlValue, list, classes, show, onChange) => {
         return null
     }
     let comp =
-        <div className={classes.root}>
-            <Grid container>
-                <Grid item xs={6} container direction='column'>
+        <div>
+            <Grid container
+                classes={classes.margin}
+            >
+                <Grid item xs={6}>
                     <DetailColumnOne
                         id={id}
                         listValue={listValue}
@@ -93,18 +96,16 @@ const Detail = (id, listValue, urlValue, list, classes, show, onChange) => {
                         onChange={onChange}
                     />
                 </Grid>
-                <Grid item xs={6} container>
-                    <Grid item xs={6}>
-                        <TextField
-                            label='From URLs'
-                            defaultValue={urlValue}
-                            className={classNames(classes.margin, classes.textField)}
-                            multiline={true}
-                            rows={3}
-                        helperText='Multiple allowed, one URL per line'
-                            onChange={onChange}
-                        />
-                    </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        label='From URLs'
+                        defaultValue={urlValue}
+                        className={classNames(classes.margin, classes.textField)}
+                        multiline={true}
+                        rows={3}
+                    helperText='Multiple allowed, one URL per line'
+                        onChange={onChange}
+                    />
                 </Grid>
             </Grid>
         </div>

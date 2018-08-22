@@ -8,15 +8,13 @@ import {
       Switch
 } from 'react-router-dom'
 
-import cyan from '@material-ui/core/colors/cyan';
 import indigo from '@material-ui/core/colors/indigo';
-import lightBlue from '@material-ui/core/colors/lightBlue';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Help from 'home/Help'
 import Home from 'home/Home'
 import Analyze from 'analyze/Analyze'
-import Job from 'job/Job'
+import Result from 'result/Result'
 import PageNotFound from 'home/PageNotFound'
 import { init as rxInit } from 'app/rxInternals'
 import Upload from 'upload/Upload'
@@ -81,7 +79,7 @@ const App = () => (
                             </li>
                             <li><Link to="/upload">Upload</Link></li>
                             <li><Link to="/analyze">Analyze</Link></li>
-                            <li><Link to="/job">Jobs</Link></li>
+                            <li><Link to="/result">Results</Link></li>
                             <li><Link to="/help">Help</Link></li>
                         </ul>
                         <img
@@ -96,7 +94,7 @@ const App = () => (
                         <Route exact path="/" component={Home}/>
                         <Route path="/upload" component={Upload}/>
                         <Route path="/analyze" component={Analyze}/>
-                        <Route path="/job" component={Job}/>
+                        <Route path="/result" component={Result}/>
                         <Route path="/help" component={Help}/>
                         <Route component={PageNotFound} />
                     </Switch>

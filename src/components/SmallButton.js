@@ -15,7 +15,7 @@ class SmallButton extends React.Component {
         return (
             <Button
                 className='action'
-                color='primary'
+                color={color}
                 component='span'
                 data-action={action}
                 size='small'

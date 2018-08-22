@@ -15,9 +15,9 @@ class About extends React.Component{
                     <h3> About Us </h3>
                     <p>
                         We research genomics in the
-                        <a href="https://sysbiowiki.soe.ucsc.edu/Welcome" rel="noopener noreferrer" target='_blank'>Stuart Laboratory</a>,
+                        <a href="https://sysbiowiki.soe.ucsc.edu/Welcome" rel="noopener noreferrer" target='_blank'> Stuart Laboratory</a>,
                         part of the
-                        <a href="http://genomics.ucsc.edu" rel="noopener noreferrer" target='_blank'>UC Santa Cruz Genomics Institute</a>.
+                        <a href="http://genomics.ucsc.edu" rel="noopener noreferrer" target='_blank'> UC Santa Cruz Genomics Institute</a>.
                     </p>
                     <p>
                         <a href='https://www.soe.ucsc.edu/people/ynewton' rel="noopener noreferrer" target='_blank'>Yulia Newton</a><br />

@@ -69,10 +69,7 @@ const icon = (detailShow, classes) => {
 const Hr = ({ show }) => {
     let comp = null
     if (show) {
-        comp =
-            <div>
-                <hr/>
-            </div>
+        comp = <div><hr/></div>
     }
     return comp
 }

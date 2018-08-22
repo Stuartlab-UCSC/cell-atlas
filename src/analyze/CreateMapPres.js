@@ -34,14 +34,9 @@ const styles = theme => ({
     }
 });
 
-const BasicOptions = (user, advanced, classes, onAnalyzeClick) => {
-    if (advanced) {
-        return null
-    }
+const MapName = (user, classes) => {
     let comp =
-        <div>
-            <CreateMapFile />
-    
+        <React.Fragment>
             <Typography
                 align='right'
                 variant='subheading'
@@ -60,18 +55,32 @@ const BasicOptions = (user, advanced, classes, onAnalyzeClick) => {
                 defaultValue='map'
                 helperText='some helper text'
             />
+        </React.Fragment>
+
+    return comp
+}
+
+const BasicOptions = (user, advanced, classes, onAnalyzeClick) => {
+    if (advanced) {
+        return null
+    }
+    let comp =
+        <React.Fragment>
+            <CreateMapFile />
+            <MapName />
             <hr/>
     
             <Typography variant='caption'>
                 * Required
             </Typography>
-        </div>
+        </React.Fragment>
+
     return comp
 }
 
 const CreateMapPres = ({ user, advanced, classes, onAnalyzeClick } ) => (
     
-    <div>
+    <div style={{ width: '1200px' }}>
         {BasicOptions(user, advanced, classes, onAnalyzeClick)}
     </div>
 )

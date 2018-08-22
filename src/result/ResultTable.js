@@ -38,8 +38,8 @@ const createButton = (action) => {
 
 const createData = (name, analysis, date, result, status) => {
 
-    // All jobs get a duplicate button.
-    let duplicate = createButton('duplicate')
+    // All jobs get a copy button.
+    let copy = createButton('copy')
 
     // Define the remove button depending on the job status.
     // 'Running' status gets 'cancel' and others get 'delete'.
@@ -64,7 +64,7 @@ const createData = (name, analysis, date, result, status) => {
             }}
         >
             {resultAction}
-            {duplicate}
+            {copy}
             {remove}
         </div>
     
