@@ -5,17 +5,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
 import GrowPanel from 'components/GrowPanel'
 import MoreButton from 'components/MoreButton'
-
-const styles = theme => ({
-    main: {
-        marginBottom: theme.spacing.unit * 2,
-    },
-});
 
 const detail = (item, classes, onMoreClick) => {
 
@@ -77,7 +70,7 @@ const childPanel = (item, i, detailShow, growPanelClasses, classes,
 
 const UpdateFormatPres = ({ info, detailShow, classes, growPanelClasses,
     onSummaryClick, onMoreClick } ) => (
-    <div className={classes.main}>
+    <div className='LookAtMe' style={{ marginBottom: '1rem' }}>
         <GrowPanel
             id={info[0].id}
             summaryText={info[0].summaryText}
@@ -104,5 +97,5 @@ UpdateFormatPres.propTypes = {
     onMoreClick: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(UpdateFormatPres);
+export default UpdateFormatPres;
 

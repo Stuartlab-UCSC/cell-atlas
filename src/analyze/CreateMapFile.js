@@ -38,25 +38,20 @@ const mapStateToProps = (state) => {
             show: state['createMap.attrShow'],
             list: attrList,
         },
-        classes: {
-            root: 'root',
-            margin: 'margin',
-            textField: 'textField',
-        },
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onSummaryClick: ev => {
-            let id = ev.target.closest('.summary').dataset.id
+            const id = ev.target.closest('.summary').dataset.id
             dispatch({
                 type: (id === 'attr') ?
                     'createMap.attrShow.toggle' : 'createMap.featureShow.toggle'
             })
         },
         onChange: (ev, key) => {
-            console.log('onChange key:', key)
+            //console.log('onChange key:', key)
         },
     }
 }

@@ -32,7 +32,7 @@ class WhatIs extends React.Component {
 const CreateMap = () => {
     
     // A placeholder for the create map widget.
-    let create = null
+    const create = null
     return create
 }
 

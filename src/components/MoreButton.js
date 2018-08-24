@@ -1,5 +1,5 @@
 
-// A table head component with sortable columns.
+// A button used to activate the text: "More..."
 
 import React from 'react'
 import PropTypes from 'prop-types'

@@ -82,14 +82,14 @@ const reducers = {
             return state
         }
     },
-    'user': (state = null, action) => {
+    'user': (state = 'swat_soe.ucsc.edu', action) => {
         switch(action.type) {
         case 'user.login':
             return action.user
         case 'user.logout':
             return null
         default:
-            return 'swat_soe.ucsc.edu'
+            return state
         }
     },
 };

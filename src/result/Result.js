@@ -5,22 +5,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import ResultTable from 'result/ResultTable'
-
-const styles = theme => ({
-    title: {
-        marginBottom: theme.spacing.unit * 2,
-    },
-});
 
 const ResultPres = ({classes}) => (
     <div className='resultPage pageBody'>
         <Typography
             variant='title'
-            className={classes.title}
+            style={{marginBottom: '1rem' }}
         >
             Analysis Results
         </Typography>
@@ -38,6 +31,6 @@ const mapStateToProps = (state) => {
 
 const Result = connect(
     mapStateToProps
-)(withStyles(styles)(ResultPres))
+)(ResultPres)
 
 export default Result

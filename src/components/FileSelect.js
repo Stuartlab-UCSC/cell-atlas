@@ -4,42 +4,19 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import classNames from 'classnames';
-
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles'
 
 import GrowPanel from 'components/GrowPanel'
 import SmallButton from 'components/SmallButton'
 
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        //justifyContent: 'space-around',
-        //flexWrap: 'wrap',
-        //flexDirection: 'column',
-    },
-    margin: {
-        margin: theme.spacing.unit,
-    },
-    textField: {
-        //width: 300,
-        //flexBasis: 200,
-    },
-});
-
-const ListSelect = ({ id, value, list, classes, onChange }) => {
-    let comp =
+const ListSelect = ({ id, value, list, onChange }) => {
+    const comp =
         <TextField
-            label='From uploaded and system files'
+            label='Files'
             value={value}
             select
-            multiple
-            className={classNames(classes.margin, classes.textField)}
-            helperText='Multiple allowed'
             style={{ width: '100%' }}
             onChange={onChange(id)}
         >
@@ -52,21 +29,16 @@ const ListSelect = ({ id, value, list, classes, onChange }) => {
     return comp
 }
 
-const DetailColumnOne = ({id, listValue, list, classes, onChange}) => {
-    console.log('DetailColumnOne:classes:', classes)
-
-    let comp =
+const DetailColumnOne = ({id, listValue, list, onChange}) => {
+    const comp =
         <React.Fragment>
-            <div>
-                <ListSelect
-                    id={id}
-                    value={listValue}
-                    list={list}
-                    classes={classes}
-                    onChange={onChange}
-                />
-            </div>
-            <div>
+            <ListSelect
+                id={id}
+                value={listValue}
+                list={list}
+                onChange={onChange}
+            />
+            <div style={{ marginTop: '1rem' }}>
                 <SmallButton
                     action='upload'
                     label='Upload More'
@@ -77,33 +49,28 @@ const DetailColumnOne = ({id, listValue, list, classes, onChange}) => {
     return comp
 }
 
-const Detail = (id, listValue, urlValue, list, classes, show, onChange) => {
-    console.log('Detail:classes:', classes)
+const Detail = (id, listValue, urlValue, list, show, onChange) => {
     if (!show) {
         return null
     }
-    let comp =
+    const comp =
         <div>
-            <Grid container
-                classes={classes.margin}
-            >
-                <Grid item xs={6}>
+            <Grid container>
+                <Grid item xs={5}
+                    style={{marginLeft: '0px'}}
+                >
                     <DetailColumnOne
                         id={id}
                         listValue={listValue}
                         list={list}
-                        classes={classes}
                         onChange={onChange}
                     />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={5}>
                     <TextField
-                        label='From URLs'
+                        label='URL'
                         defaultValue={urlValue}
-                        className={classNames(classes.margin, classes.textField)}
-                        multiline={true}
-                        rows={3}
-                    helperText='Multiple allowed, one URL per line'
+                        style={{ width: '100%' }}
                         onChange={onChange}
                     />
                 </Grid>
@@ -112,13 +79,13 @@ const Detail = (id, listValue, urlValue, list, classes, show, onChange) => {
     return comp
 }
 
-const FileSelect = ({ id, listValue, urlValue, list, show, classes, onChange,
+const FileSelect = ({ id, listValue, urlValue, list, show, onChange,
     growPanel }) => (
 
     <GrowPanel
         id={id}
         summaryText={growPanel.label}
-        detail={Detail(id, listValue, urlValue, list, classes, show, onChange)}
+        detail={Detail(id, listValue, urlValue, list, show, onChange)}
         detailShow={show}
         dividerShow={growPanel.dividerShow}
         classes={growPanel.classes}
@@ -133,8 +100,7 @@ FileSelect.propTypes = {
     list: PropTypes.array.isRequired,
     show: PropTypes.bool,
     growPanel: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(FileSelect)
+export default FileSelect

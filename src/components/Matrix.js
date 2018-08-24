@@ -27,7 +27,7 @@ const styles = theme => ({
 })
 
 const dataVal = (val, j, numeric) => {
-    let comp =
+    const comp =
         <TableCell
             numeric={numeric}
             key={j}
@@ -38,7 +38,7 @@ const dataVal = (val, j, numeric) => {
 }
 
 const dataRow = (row, i, head, classes) => {
-    let comp =
+    const comp =
         <TableRow
             className={classes.row}
             hover

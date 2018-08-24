@@ -38,10 +38,10 @@ const createButton = (action) => {
 
 const createData = (name, analysis, date, result, status) => {
 
-    // All jobs get a copy button.
+    // All results get a copy button.
     let copy = createButton('copy')
 
-    // Define the remove button depending on the job status.
+    // Define the remove button depending on the result status.
     // 'Running' status gets 'cancel' and others get 'delete'.
     let remove = null
     if (status === 'running') {
@@ -117,9 +117,9 @@ const mapDispatchToProps = (dispatch) => {
 
 // Connect the value props and eventHandler props
 // to the presentational component.
-const JobTable = connect(
+const ResultTable = connect(
     mapStateToProps,
     mapDispatchToProps
 )(Matrix)
 
-export default JobTable
+export default ResultTable

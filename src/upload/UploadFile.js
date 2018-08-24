@@ -5,12 +5,6 @@ import { connect } from 'react-redux'
 
 import UploadFilePres from 'upload/UploadFilePres'
 
-const mapStateToProps = (state) => {
-    return {
-        classes: { button: 'button', input: 'input' },
-    }
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
         onChange: ev => {
@@ -26,7 +20,6 @@ const mapDispatchToProps = (dispatch) => {
 // Connect the value props and eventHandler props
 // to the presentational component.
 const UploadFile = connect(
-    mapStateToProps,
     mapDispatchToProps
 )(UploadFilePres)
 

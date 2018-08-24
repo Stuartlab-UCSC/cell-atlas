@@ -43,12 +43,40 @@ const theme = createMuiTheme({
         fontSize: '16', // 14
     },
     overrides: {
+        MuiGrid: {
+            item: {
+                marginBottom: '0.5rem',
+                marginLeft: '1rem',
+                marginRight: '1rem',
+                marginTop: '0.5rem',
+            },
+        },
+        MuiInput: {
+            input: {
+                fontSize: '1rem',
+            },
+        },
+
+        MuiListItem: {
+            root: {
+                paddingTop: '0.3rem',
+                paddingBottom: '0.3rem',
+            },
+        },
+        MuiMenuItem: {
+            root: {
+                fontSize: '1rem',
+                lineHeight: '1rem',
+                paddingLeft: '0.5rem',
+                paddingRight: '0.5rem',
+            },
+        },
         MuiTableRow: {
             root: {
-                height: '36px', // 56px
+                height: '2rem', // 56px
             },
             head: {
-                height: '36px', // 48px
+                height: '2rem', // 48px
             },
         },
         MuiTableCell: {
@@ -103,5 +131,7 @@ const App = () => (
         </MuiThemeProvider>
     </Provider>
 )
+/*
+*/
 
 export default App

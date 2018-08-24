@@ -4,32 +4,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import UploadFile from 'upload/UploadFile'
 import UploadFormat from 'upload/UploadFormat'
 import UploadTable from 'upload/UploadTable'
 
-const styles = theme => ({
-    title: {
-        marginBottom: theme.spacing.unit * 2,
-    },
-});
-
-const UploadPres = ({classes}) => (
-    <div className='uploadPage pageBody'>
-        <Typography
-            variant='title'
-            className={classes.title}
-        >
-            Upload Files
-        </Typography>
-        <UploadFile />
-        <UploadFormat />
-        <UploadTable />
-    </div>
-)
+const UploadPres = ({classes}) => {
+    return (
+        <div className='uploadPage pageBody'>
+            <Typography
+                variant='title'
+                style={{ marginBottom: '1rem' }}
+            >
+                Upload Files
+            </Typography>
+            <UploadFile />
+            <UploadFormat />
+            <UploadTable />
+        </div>
+    )
+}
 
 const mapStateToProps = (state) => {
     return {
@@ -41,6 +36,6 @@ const mapStateToProps = (state) => {
 
 const Upload = connect(
     mapStateToProps
-)(withStyles(styles)(UploadPres))
+)(UploadPres)
 
 export default Upload

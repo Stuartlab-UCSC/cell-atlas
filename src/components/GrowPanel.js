@@ -41,7 +41,7 @@ const details = (id, detail, detailShow, classes) => {
     if (!detail) {
         return null
     }
-    let comp =
+    const comp =
         <Collapse
             in={detailShow}
             className={classes.details}

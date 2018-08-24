@@ -10,12 +10,6 @@ const mapStateToProps = (state) => {
     return {
         advanced: false, // TODO
         user: state['user'],
-        classes: {
-            root: 'root',
-            margin: 'margin',
-            textField: 'textField',
-            user: 'user',
-        },
     }
 }
 

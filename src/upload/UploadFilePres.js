@@ -4,43 +4,32 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 
-const styles = theme => ({
-    input: {
-        display: 'none',
-    },
-    button: {
-        marginBottom: theme.spacing.unit * 2,
-    },
-});
-
-const UploadFilePres = ({ classes, onChange} ) => (
-    <div>
+const UploadFilePres = ({ onChange} ) => (
+    <React.Fragment>
         <input
-            className={classes.input}
             id='uploadFileInput'
             multiple
             type='file'
+            style={{ display: 'none' }}
             onChange={onChange}
         />
         <label htmlFor='uploadFileInput'>
             <Button
-                className={classes.button}
                 variant='contained'
                 component='span'
                 color='primary'
+                style={{ marginBottom: '1rem' }}
             >
             SELECT FILES
             </Button>
         </label>
-    </div>
+    </React.Fragment>
 )
 
 UploadFilePres.propTypes = {
-    classes: PropTypes.object.isRequired,
     onChange: PropTypes.func,
 }
 
-export default withStyles(styles)(UploadFilePres);
+export default UploadFilePres;

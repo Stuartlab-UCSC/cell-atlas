@@ -3,93 +3,95 @@
 
 import PropTypes from 'prop-types'
 import React from 'react'
-import classNames from 'classnames';
 
-//import Divider from '@material-ui/core/Divider';
-//import InputAdornment from '@material-ui/core/InputAdornment';
-//import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup'
+import Grid from '@material-ui/core/Grid';
+import Switch from '@material-ui/core/Switch'
+import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
 import CreateMapFile from 'analyze/CreateMapFile'
 
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        //justifyContent: 'space-around',
-        //flexWrap: 'wrap',
-        //flexDirection: 'column',
-    },
-    margin: {
-        margin: theme.spacing.unit,
-    },
-    textField: {
-        //width: 300,
-        //flexBasis: 200,
-    },
-    user: {
-        maxWidth: '200px',
-    }
-});
-
-const MapName = (user, classes) => {
-    let comp =
-        <React.Fragment>
+const ZeroFill = (zeroCheck, zeroOnChange) => {
+    const comp =
+        <Grid container
+            style={{marginLeft: '-1rem'}}
+        >
+            <Grid item xs={5}>
             <Typography
-                align='right'
-                variant='subheading'
-                className='user'
-                color='textSecondary'
-                style={{
-                    display: 'inline',
-                }}
+                variant='caption'
+                style={{marginTop: '1rem'}}
             >
-                {user + '/'}
+                Missing values
             </Typography>
-            <TextField
-                id='mapName'
-                label='Map name *'
-                className={classNames(classes.margin, classes.textField)}
-                defaultValue='map'
-                helperText='some helper text'
-            />
-        </React.Fragment>
-
+            <FormGroup row>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={zeroCheck}
+                            onChange={zeroOnChange}
+                            value="checkedA"
+                        />
+                    }
+                    label="Replace with zero"
+                />
+            </FormGroup>
+            </Grid>
+        </Grid>
     return comp
 }
 
-const BasicOptions = (user, advanced, classes, onAnalyzeClick) => {
+const MapName = (user) => {
+    const comp =
+        <Grid container
+            style={{marginLeft: '-1rem'}}
+        >
+            <Grid item xs={5}>
+                <TextField
+                    id='mapName'
+                    label={'Map name: ' + user + '/ *'}
+                    style={{ width: '100%' }}
+                    defaultValue='map'
+                />
+            </Grid>
+        </Grid>
+    return comp
+}
+
+const BasicOptions = ({ user, zeroCheck, advanced, onZeroChange,
+    onAnalyzeClick }) => {
+    
     if (advanced) {
         return null
     }
-    let comp =
+    const comp =
         <React.Fragment>
             <CreateMapFile />
-            <MapName />
-            <hr/>
-    
-            <Typography variant='caption'>
-                * Required
-            </Typography>
+            {MapName(user)}
+            {ZeroFill()}
         </React.Fragment>
-
     return comp
 }
 
-const CreateMapPres = ({ user, advanced, classes, onAnalyzeClick } ) => (
+const CreateMapPres = ({ user, zeroCheck, advanced, onZeroChange,
+    onAnalyzeClick } ) => (
     
-    <div style={{ width: '1200px' }}>
-        {BasicOptions(user, advanced, classes, onAnalyzeClick)}
+    <div style={{ width: '50rem' }}>
+        {BasicOptions({ user, zeroCheck, advanced, onZeroChange,
+            onAnalyzeClick })}
+        <Typography variant='caption'
+            style={{marginTop: '1em'}}
+        >
+            * Required
+        </Typography>
     </div>
 )
 
 CreateMapPres.propTypes = {
     user: PropTypes.string.isRequired,
     advanced: PropTypes.bool,
-    classes: PropTypes.object.isRequired,
     onAnalyzeClick: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(CreateMapPres);
+export default CreateMapPres;
