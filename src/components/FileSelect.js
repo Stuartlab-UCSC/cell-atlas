@@ -4,14 +4,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import TextField from '@material-ui/core/TextField';
 
 import GrowPanel from 'components/GrowPanel'
 import SmallButton from 'components/SmallButton'
 
+/*
 const ListSelect = ({ id, value, list, onChange }) => {
+
+    // A single-tier select list combining user and public files.
     const comp =
         <TextField
             label='Files'
@@ -28,6 +34,37 @@ const ListSelect = ({ id, value, list, onChange }) => {
         </TextField>
     return comp
 }
+*/
+const ListSelect = ({ id, value, list, onChange }) => {
+
+    // Define a two-tiered select list for user files and public files.
+    const comp =
+        <FormControl>
+            <InputLabel htmlFor="name-native">Files</InputLabel>
+            <NativeSelect
+                value={value}
+                onChange={onChange(id)}
+                name="Files"
+                input={<Input id="name-native" />}
+            >
+                <optgroup label="Yours">
+                    {list.yours.map((option, i) => (
+                        <option value={option} key={i}>
+                            {option}
+                        </option>
+                    ))}
+                </optgroup>
+                <optgroup label="Public">
+                   {list.public.map((option, i) => (
+                        <option value={option} key={i}>
+                            {option}
+                        </option>
+                    ))}
+                </optgroup>
+            </NativeSelect>
+        </FormControl>
+    return comp
+}
 
 const DetailColumnOne = ({id, listValue, list, onChange}) => {
     const comp =
@@ -42,7 +79,7 @@ const DetailColumnOne = ({id, listValue, list, onChange}) => {
                 <SmallButton
                     action='upload'
                     label='Upload More'
-                    onClick={ () => {} }
+                    linkTo='/upload'
                 />
             </div>
         </React.Fragment>
@@ -68,7 +105,7 @@ const Detail = (id, listValue, urlValue, list, show, onChange) => {
                 </Grid>
                 <Grid item xs={5}>
                     <TextField
-                        label='URL'
+                        label='or URL'
                         defaultValue={urlValue}
                         style={{ width: '100%' }}
                         onChange={onChange}
@@ -97,7 +134,7 @@ FileSelect.propTypes = {
     id: PropTypes.string.isRequired,
     listValue: PropTypes.string.isRequired,
     urlValue: PropTypes.string.isRequired,
-    list: PropTypes.array.isRequired,
+    list: PropTypes.object.isRequired,
     show: PropTypes.bool,
     growPanel: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,

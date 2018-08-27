@@ -8,8 +8,8 @@ import { init as rxInit, stateActions as rxStateActions } from 'app/rx'
 
 const reducers = {
 
-    'createMap.attrShow': (state = true, action) => {
-        if (action.type === 'createMap.attrShow.toggle') {
+    'createMap.metadataShow': (state = true, action) => {
+        if (action.type === 'createMap.metadataShow.toggle') {
             return !state
         } else {
             return state
@@ -54,7 +54,7 @@ const reducers = {
             return state
         }
     },
-    'upload.table.order': (state = {property: 'name', direction: 'asc'},
+    'upload.table.order': (state = {property: 'date', direction: 'desc'},
         action) => {
         
         let next = {...state}

@@ -7,15 +7,18 @@ import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import SmallButton from 'components/SmallButton'
 
+const backgrounds = {    // bootstrap message colors
+    Complete: '#D8EECE', // green
+    Error: '#EDD4D5',    // pink
+    Canceled: '#F9F5D9', // yellow
+}
+
 const onButtonClick = (ev) => {
     
     // Handle the button click outside of the normal flow because the Matrix
     // component simply passes through cell details as received.
     let id = ev.target.closest('.row').dataset.id
-    let action = 'cancel'
-    if (ev.target.closest('.delete')) {
-        action = 'delete'
-    }
+    let action = ev.target.closest('button').dataset.action
     console.log('onButtonClick id, action:', id, action)
 }
 
@@ -32,37 +35,67 @@ const createButton = (action) => {
     return button
 }
 
-const createData = (format, name, size, date) => {
+const createData = (format, name, size, status) => {
     
-    // Define the button depending on the type of the date value.
-    // Strings get 'delete' and progress bars get 'cancel'.
-    let action
-    if (date !== '----') {
-    //TODO if (typeof date === 'string') {
-        action = createButton('delete')
+    // Define the buttons depending on the status.
+    let download = null
+    let remove
+    if (status === 'Uploading') {
+        remove = createButton('cancel')
     } else {
-        action = createButton('cancel')
+        remove = createButton('delete')
+        if (status !== 'Error' && status !== 'Canceled') {
+            download = createButton('Download')
+        }
     }
-    return {format, name, size, date, action}
+    
+    // Define the background based on the status.
+    let background = null
+    if (status === 'Error' || status === 'Canceled') {
+        background = {
+            column: 3,
+            color: backgrounds[status]
+        }
+    } else if (status !== 'Uploading') {
+        background = {
+            column: 3,
+            color: backgrounds.Complete
+        }
+    }
+    
+    // Group all of the buttons.
+    let action =
+        <div
+            style={{
+                width: '100%',
+            }}
+        >
+            {download}
+            {remove}
+        </div>
+
+
+    return {format, name, size, status, action, background}
 }
 
 const getData = (state) => {
     const rows = [
-        createData('Feature', 'myClusteringData.tsv', 149.34, '----'),
-        createData('Sparse Similarity', '1clusteringData.tsv', 142.55, '----'),
-        createData('Attributes', 'myColoringAttributes.tsv', 201.96,
-            '08/08/2018  04:29:48 PM'),
+        createData('xyPositions'   , 'myClusteringData.tsv', 332.3, 'Uploading'),
+        createData('fullSimilarity', 'myBadData.tsv'       , 149.3, 'Error'),
+        createData('metadata'      , 'myCanceledUpload.tsv', 201.9, 'Canceled'),
+        createData('metadata'      , 'ExampleMetadata.tab' , 446.2, '08/02/2018  00:00:00 PM'),
+        createData('featureMatrix' , 'ExampleFeature.tab'  , 964.2, '08/01/2018  00:00:00 PM'),
     ]
     return rows
 }
 
 const getHead = (state) => {
     const head = [
-        { id: 'name', numeric: false, label: 'Name' },
+        { id: 'name'  , numeric: false, label: 'Name' },
         { id: 'format', numeric: false, label: 'Format' },
-        { id: 'size', numeric: true, label: 'Size' },
-        { id: 'date', numeric: false, label: 'Date' },
-        { id: 'action', numeric: false, label: 'Action' },
+        { id: 'size'  , numeric: true , label: 'Size' },
+        { id: 'status', numeric: false, label: 'Date' },
+        { id: 'action', numeric: true , label: 'Action' },
     ]
     return head
 }

@@ -26,11 +26,20 @@ const styles = theme => ({
     },
 })
 
-const dataVal = (val, j, numeric) => {
+const dataVal = (val, j, numeric, background) => {
+
+    // Set the background color if one was supplied for this column.
+    let style = null
+    if (background) {
+        if (background.column === j) {
+            style = {backgroundColor: background.color}
+        }
+    }
     const comp =
         <TableCell
             numeric={numeric}
             key={j}
+            style={style}
         >
             {val}
         </TableCell>
@@ -47,7 +56,7 @@ const dataRow = (row, i, head, classes) => {
             data-id={row.name}
         >
             {head.map((col, j) =>
-                dataVal(row[col.id], j, col.numeric)
+                dataVal(row[col.id], j, col.numeric, row.background)
             )}
         </TableRow>
     return comp

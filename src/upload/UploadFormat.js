@@ -11,13 +11,13 @@ const info = [
         summaryText: 'Formats: Files should contain tab delimited rows.',
     },
     {
-        id: 'feature',
-        summaryText: 'Feature',
+        id: 'featureMatrix',
+        summaryText: 'featureMatrix',
         detailText:`
-The most basic of the layout input formats where similarities and XY locations
-will be calculated for you. This contains a full matrix with sample IDs across
-the top and feature/clustering IDs in the first column. All positions in the
-matrix must be populated.`,
+The most basic of feature formats; a full matrix with sample IDs across
+the top and feature IDs in the first column. All positions in the
+matrix must be populated. This is the most basic of the layout feature formats
+where similarities and XY locations will be calculated for you.`,
         detailExample:
 `feature   sample_1  sample_2   sample_3 ...
 TP53      0.6423    0.7654     0.2345
@@ -27,7 +27,7 @@ BRCA1     0.7654    0.2345     0.6423
     },
     {
         id: 'fullSimilarity',
-        summaryText: 'Full similarity',
+        summaryText: 'fullSimilarity',
         detailText:`
 This contains similarity scores between all sample pairs as a full matrix which
 will be used to calculate xy positions. This has sample IDs across the top and
@@ -41,7 +41,7 @@ sample_3    0.6423    0.9524    0.7654
     },
     {
         id: 'sparseSimilarity',
-        summaryText: 'Sparse similarity',
+        summaryText: 'sparseSimilarity',
         detailText:`
 This contains similarity scores between the top neighbor samples of each sample
 as a sparse matrix which will be used to calculate xy positions. This has sample
@@ -55,9 +55,9 @@ sample_2    sample_4    0.6423
     },
     {
         id: 'xyPositions',
-        summaryText: 'XY positions',
+        summaryText: 'xyPositions',
         detailText:`
-This is the most processed of the layout input formats, containing the x and y
+This is the most processed of the layout feature formats, containing the x and y
 coordinates in two-dimensional space of each sample, as the the example where
 the header line is optional.`,
         detailExample:
@@ -68,11 +68,11 @@ sample_3    23.8    73.6
 ...`,
     },
     {
-        id: 'attributes',
-        summaryText: 'Attributes',
+        id: 'metadata',
+        summaryText: 'metadata',
         detailText:`
-Attributes are properties of samples used to color the map. The attribute file
-must be in TSV (tab-separated values) format with the attributes IDs across the
+Metadata are properties of samples used to color the map. The metadata file
+must be in TSV (tab-separated values) format with the metadata IDs across the
 top and sample IDs in the first column.`,
         detailExample:
 `sample      age   disease stage ...
@@ -83,7 +83,7 @@ sample_3    52    GBM     II
     },
     {
         id: 'trajectory',
-        summaryText: 'Trajectory',
+        summaryText: 'trajectory',
         detailText:`
 A description of the trajectory format.`,
         detailExample:

@@ -6,7 +6,7 @@
 // Where <state-bit> is one of the below.
 // Example:  rx.get('layout.name')
 const statePieces =  [ // eslint-disable-line
-    'createMap.attrShow',
+    'createMap.metadataShow',
     'createMap.featureShow',
     'doNotTrack',
     'upload',
@@ -22,7 +22,7 @@ const statePieces =  [ // eslint-disable-line
 // Example:  rx.set('layout.nameSelected', { name: 'RPPA' })
 // Actions ending with 'loadPersist' are written to localStore and bookmarks.
 export const stateActions = [
-    'createMap.attrShow.toggle',
+    'createMap.metadataShow.toggle',
     'createMap.featureShow.toggle',
     'doNotTrack.displayed',
     'doNotTrack.loadPersist',

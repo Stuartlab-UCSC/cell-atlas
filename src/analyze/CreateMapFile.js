@@ -1,42 +1,49 @@
 
-
-
 // The create map analysis section, logic and state.
 
 import { connect } from 'react-redux'
 
 import CreateMapFilePres from 'analyze/CreateMapFilePres'
 
-const featureList = [
-    'oneFeatureFile.tsv',
-    'anotherFeatureFile.tsv',
-    'yetAnotherFeatureFile.tsv',
-]
-
-const attrList = [
-    'oneAttrFile.tsv',
-    'anotherAttrFile.tsv',
-    'yetAnotherAttrFile.tsv',
-]
+const featureList = {
+    yours: [
+        'oneFeatureFile.tsv',
+        'anotherFeatureFile.tsv',
+        'yetAnotherFeatureFile.tsv',
+    ],
+    public: [
+        'exampleFeature.tab',
+    ],
+}
+const metadataList = {
+    yours: [
+        'oneMetadataFile.tsv',
+        'anotherMetadataFile.tsv',
+        'yetAnotherMetadataFile.tsv',
+    ],
+    public: [
+        'exampleMetadata.tab',
+    ],
+}
 
 const mapStateToProps = (state) => {
     return {
         advanced: false, // TODO
         feature: {
             id: 'feature',
-            label: 'Layout input *',
+            label: 'Layout features *',
             listValue: 'oneFeatureFile.tsv',
             urlValue: 'http://someFeature.com',
             show: state['createMap.featureShow'],
             list: featureList,
         },
-        attr: {
-            id: 'attr',
-            label: 'Color attributes',
-            listValue: 'yetAnotherAttrFile.tsv',
-            urlValue: 'http://someAttr.com',
-            show: state['createMap.attrShow'],
-            list: attrList,
+        metadata: {
+            id: 'metadata',
+            label: 'Coloring metadata',
+            listValue: 'yetAnotherMetadataFile.tsv',
+            urlValue: 'http://someMetadata.com',
+            show: state['createMap.metadataShow'],
+            list: metadataList,
         },
     }
 }
@@ -46,12 +53,15 @@ const mapDispatchToProps = (dispatch) => {
         onSummaryClick: ev => {
             const id = ev.target.closest('.summary').dataset.id
             dispatch({
-                type: (id === 'attr') ?
-                    'createMap.attrShow.toggle' : 'createMap.featureShow.toggle'
+                type: (id === 'metadata') ?
+                    'createMap.metadataShow.toggle' : 'createMap.featureShow.toggle'
             })
         },
         onChange: (ev, key) => {
             //console.log('onChange key:', key)
+        },
+        onUpload: (ev, key) => {
+            //window)
         },
     }
 }

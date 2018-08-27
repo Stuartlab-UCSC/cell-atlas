@@ -8,8 +8,7 @@ import {
       Switch
 } from 'react-router-dom'
 
-import indigo from '@material-ui/core/colors/indigo';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import Help from 'home/Help'
 import Home from 'home/Home'
@@ -17,6 +16,7 @@ import Analyze from 'analyze/Analyze'
 import Result from 'result/Result'
 import PageNotFound from 'home/PageNotFound'
 import { init as rxInit } from 'app/rxInternals'
+import theme from 'app/theme'
 import Upload from 'upload/Upload'
 
 import logo from 'app/images/logo.svg'
@@ -24,74 +24,6 @@ import logo from 'app/images/logo.svg'
 import 'app/App.css'
 
 const store = rxInit()
-
-const theme = createMuiTheme({
-    // Values of the material-ui default theme are in comments.
-    palette: {
-        primary: indigo,
-        secondary: {
-            main: '#03a9f4',
-        },
-    },
-    typography: {
-       fontFamily: [
-            'sans-serif',
-            '-apple-system',
-            'BlinkMacSystemFont',
-            'Arial',
-        ].join(','), //""Roboto", "Helvetica", "Arial", sans-serif"
-        fontSize: '16', // 14
-    },
-    overrides: {
-        MuiGrid: {
-            item: {
-                marginBottom: '0.5rem',
-                marginLeft: '1rem',
-                marginRight: '1rem',
-                marginTop: '0.5rem',
-            },
-        },
-        MuiInput: {
-            input: {
-                fontSize: '1rem',
-            },
-        },
-
-        MuiListItem: {
-            root: {
-                paddingTop: '0.3rem',
-                paddingBottom: '0.3rem',
-            },
-        },
-        MuiMenuItem: {
-            root: {
-                fontSize: '1rem',
-                lineHeight: '1rem',
-                paddingLeft: '0.5rem',
-                paddingRight: '0.5rem',
-            },
-        },
-        MuiTableRow: {
-            root: {
-                height: '2rem', // 56px
-            },
-            head: {
-                height: '2rem', // 48px
-            },
-        },
-        MuiTableCell: {
-            root: {
-                paddingLeft: '0.5rem',
-                paddingRight: '0.5rem',
-            },
-        },
-        MuiButton: {
-            sizeSmall: {
-                fontSize: '0.8rem',
-            },
-        },
-    },
-});
 
 const appName = 'CELL ATLAS   '
 

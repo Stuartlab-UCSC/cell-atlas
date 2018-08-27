@@ -1,6 +1,5 @@
 
-
-// The upload page table of files, logic and state.
+// The upload page table of files: logic and state.
 
 import React from 'react'
 import { connect } from 'react-redux'
@@ -14,6 +13,14 @@ const resultActionRef = {
     trajectory: 'download',
 }
 
+const backgrounds = {    // bootstrap message colors
+    Success: '#D8EECE',  // green
+    Error: '#EDD4D5',    // pink
+    Canceled: '#F9F5D9', // yellow
+}
+
+const statusColumn = 5
+
 const onButtonClick = (ev) => {
 
     // Handle the button click outside of the normal flow because the Matrix
@@ -21,75 +28,110 @@ const onButtonClick = (ev) => {
     let id = ev.target.closest('.row').dataset.id
     let action = ev.target.closest('.action').dataset.action
     console.log('onButtonClick id, action:', id, action)
+    switch (action) {
+        case 'show':
+        case 'download':
+        case 'copy':
+        case 'cancel':
+        case 'delete':
+        default:
+    }
 }
 
-const createButton = (action) => {
+const createButton = (action, onClick, href) => {
 
     // Handle the button outside of the normal flow because the Matrix
     // component simply passes through cell details as received.
     let button =
         <SmallButton
             action={action}
+            href={href}
             variant='flat'
-            onClick={onButtonClick}
+            onClick={onClick}
         />
     return button
 }
 
-const createData = (name, analysis, date, result, status) => {
+const createData = (name, analysis, time, result, status) => {
+
+    // All results get a show parameters button.
+    const showParms = createButton('show', onButtonClick)
 
     // All results get a copy button.
-    let copy = createButton('copy')
+    let copy = createButton('copy', null, '/analyze',)
 
     // Define the remove button depending on the result status.
-    // 'Running' status gets 'cancel' and others get 'delete'.
     let remove = null
-    if (status === 'running') {
-        remove = createButton('cancel')
+    if (status === 'Running') {
+        remove = createButton('cancel', onButtonClick)
     } else {
-        remove = createButton('delete')
-    }
-    
-    // Define the result action button depending status and the analysis.
-    let resultAction = null
-    if (status === 'success') {
-        resultAction = createButton(resultActionRef[analysis])
+        remove = createButton('delete', onButtonClick)
     }
 
-    // Group all of the buttons.
-    let action =
+    // Define the download or view button depending status and the analysis.
+    let downloadView = null
+    if (status === 'Success') {
+        const resultAction = resultActionRef[analysis]
+        let href = null
+        let onClick = null
+        if (resultAction === 'download') {
+            onClick = onButtonClick
+        } else if (resultAction === 'view' && analysis === 'createMap') {
+            href = 'http://localhost:3333'
+        }
+        downloadView = createButton(resultAction, onClick, href)
+    }
+
+    // Group all of the action buttons.
+    let actions =
         <div
             style={{
                 width: '100%',
             }}
         >
-            {resultAction}
+            {downloadView}
             {copy}
             {remove}
         </div>
     
-    return {name, analysis, date, result, status, action}
+    // Define the background based on the status.
+    let background = null
+    if (status === 'Error' || status === 'Canceled') {
+        background = {
+            column: statusColumn,
+            color: backgrounds[status]
+        }
+    } else if (status !== 'Running') {
+        background = {
+            column: statusColumn,
+            color: backgrounds.Success
+        }
+    }
+    
+    return {name, analysis, showParms, time, result, status, actions,
+        background}
 }
 
 const getData = (state) => {
     const rows = [
-        createData('myMap'            , 'createMap' , '08/08/2018  04:29:48 PM', '----'    , 'running'),
-        createData('myTrajectory'     , 'trajectory', '08/03/2018  07:11:33 AM', '----'    , 'canceled'),
-        createData('anotherTrajectory', 'trajectory', '07/08/2018  09:22:55 AM', '101.9 KB', 'success'),
-        createData('anotherMap'       , 'createMap' , '06/02/2018  08:33:66 AM', '----'    , 'success'),
-        createData('oneMoreTrajectory', 'trajectory', '06/06/2018  10:44:77 AM', '----'    , 'failed'),
+        createData('myMap'            , 'createMap' , '08/08/2018  04:29:48 PM', '----'    , 'Running'),
+        createData('myTrajectory'     , 'trajectory', '08/03/2018  07:11:33 AM', '----'    , 'Canceled'),
+        createData('anotherTrajectory', 'trajectory', '07/08/2018  09:22:55 AM', '101.9 KB', 'Success'),
+        createData('anotherMap'       , 'createMap' , '06/02/2018  08:33:66 AM', '----'    , 'Success'),
+        createData('oneMoreTrajectory', 'trajectory', '06/06/2018  10:44:77 AM', '----'    , 'Error'),
     ]
     return rows
 }
 
 const getHead = (state) => {
     const head = [
-        { id: 'name', numeric: false, label: 'Name' },
-        { id: 'analysis', numeric: false, label: 'Analysis' },
-        { id: 'date', numeric: false, label: 'Run Date' },
-        { id: 'result', numeric: true, label: 'Result' },
-        { id: 'status', numeric: false, label: 'Status' },
-        { id: 'action', numeric: true, label: 'Action' },
+        { id: 'name'     , numeric: false, label: 'Name' },
+        { id: 'analysis' , numeric: false, label: 'Analysis' },
+        { id: 'time'     , numeric: false, label: 'Start Time' },
+        { id: 'showParms', numeric: false, label: 'Parameters' },
+        { id: 'result'   , numeric: true , label: 'Result' },
+        { id: 'status'   , numeric: false, label: 'Status' },
+        { id: 'actions'  , numeric: true , label: 'Action' },
     ]
     return head
 }

@@ -35,7 +35,7 @@ function logStore (label, store) {
     }
     console.log(label, 'store...')
     _.each(store, function (val, key) {
-        //if (key === 'activeAttrs' || key === 'dynamicAttrs') {
+        //if (key === 'activeMetadatas' || key === 'dynamicMetadatas') {
         console.log(key, ':', store[key])
         //}
     })

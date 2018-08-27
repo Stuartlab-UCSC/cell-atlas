@@ -6,7 +6,9 @@ import React from 'react'
 
 import FileSelect from 'components/FileSelect'
 
-const File = ({ advanced, info, classes, onSummaryClick, onChange }) => {
+const File = ({ advanced, info, classes, linkTo, onSummaryClick,
+    onChange }) => {
+    
     const comp =
         <div style={{marginBottom: '1rem'}}>
             <FileSelect
@@ -18,6 +20,7 @@ const File = ({ advanced, info, classes, onSummaryClick, onChange }) => {
                 classes={classes}
                 onChange={onChange}
                 gridColumnWidth={6}
+                linkTo={linkTo}
                 growPanel={{
                     label: info.label,
                     classes: {
@@ -33,7 +36,7 @@ const File = ({ advanced, info, classes, onSummaryClick, onChange }) => {
     return comp
 }
 
-const CreateMapFilePres = ({ advanced, feature, attr, classes, onSummaryClick,
+const CreateMapFilePres = ({ advanced, feature, metadata, classes, onSummaryClick,
     onChange }) => (
     
     <div>
@@ -46,7 +49,7 @@ const CreateMapFilePres = ({ advanced, feature, attr, classes, onSummaryClick,
         />
         <File
             advanced={advanced}
-            info={attr}
+            info={metadata}
             classes={classes}
             onSummaryClick={onSummaryClick}
             onChange={onChange}
@@ -57,7 +60,7 @@ const CreateMapFilePres = ({ advanced, feature, attr, classes, onSummaryClick,
 CreateMapFilePres.propTypes = {
     advanced: PropTypes.bool,
     feature: PropTypes.object.isRequired,
-    attr: PropTypes.object.isRequired,
+    metadata: PropTypes.object.isRequired,
     onSummaryClick: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
 }
