@@ -29,13 +29,6 @@ class WhatIs extends React.Component {
     }
 }
 
-const CreateMap = () => {
-    
-    // A placeholder for the create map widget.
-    const create = null
-    return create
-}
-
 // main page of CellAtlas
 class Home extends React.Component {
     render() {
@@ -47,7 +40,6 @@ class Home extends React.Component {
                     }}
                 >
                     <WhatIs />
-                        { CreateMap() }
                     <img
                         src={homeSvg}
                         height='200px'

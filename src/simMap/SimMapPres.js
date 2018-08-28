@@ -11,7 +11,7 @@ import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
-import CreateMapFile from 'analyze/CreateMapFile'
+import SimMapFile from 'simMap/SimMapFile'
 
 const ZeroFill = (zeroCheck, zeroOnChange) => {
     const comp =
@@ -67,17 +67,23 @@ const BasicOptions = ({ user, zeroCheck, advanced, onZeroChange,
     }
     const comp =
         <React.Fragment>
-            <CreateMapFile />
+            <SimMapFile />
             {MapName(user)}
             {ZeroFill()}
         </React.Fragment>
     return comp
 }
 
-const CreateMapPres = ({ user, zeroCheck, advanced, onZeroChange,
+const SimMapPres = ({ user, zeroCheck, advanced, onZeroChange,
     onAnalyzeClick } ) => (
     
-    <div style={{ width: '50rem' }}>
+    <div className='analyzePage pageBody' style={{ width: '50rem' }}>
+        <Typography
+            variant='title'
+            style={{ marginBottom: '1rem' }}
+        >
+            Analyze: Create a Similarity Map
+        </Typography>
         {BasicOptions({ user, zeroCheck, advanced, onZeroChange,
             onAnalyzeClick })}
         <Typography variant='caption'
@@ -88,10 +94,10 @@ const CreateMapPres = ({ user, zeroCheck, advanced, onZeroChange,
     </div>
 )
 
-CreateMapPres.propTypes = {
+SimMapPres.propTypes = {
     user: PropTypes.string.isRequired,
     advanced: PropTypes.bool,
     onAnalyzeClick: PropTypes.func.isRequired,
 }
 
-export default CreateMapPres;
+export default SimMapPres;

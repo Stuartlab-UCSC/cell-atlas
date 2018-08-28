@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 
-import CreateMapFilePres from 'analyze/CreateMapFilePres'
+import SimMapFilePres from 'simMap/SimMapFilePres'
 
 const featureList = {
     yours: [
@@ -66,12 +66,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-// Connect the value props and eventHandler props
-// to the presentational component.
-const CreateMapFile = connect(
+const SimMapFile = connect(
     mapStateToProps,
     mapDispatchToProps
-)(CreateMapFilePres)
+)(SimMapFilePres)
 
-export default CreateMapFile
+export default SimMapFile
 

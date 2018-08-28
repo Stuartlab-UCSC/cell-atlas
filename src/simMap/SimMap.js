@@ -4,7 +4,7 @@
 
 import { connect } from 'react-redux'
 
-import CreateMapPres from 'analyze/CreateMapPres'
+import SimMapPres from 'simMap/SimMapPres'
 
 const mapStateToProps = (state) => {
     return {
@@ -21,12 +21,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-// Connect the value props and eventHandler props
-// to the presentational component.
-const CreateMap = connect(
+const SimMap = connect(
     mapStateToProps,
     mapDispatchToProps
-)(CreateMapPres)
+)(SimMapPres)
 
-export default CreateMap
+export default SimMap
 

@@ -14,32 +14,11 @@ import TextField from '@material-ui/core/TextField';
 import GrowPanel from 'components/GrowPanel'
 import SmallButton from 'components/SmallButton'
 
-/*
-const ListSelect = ({ id, value, list, onChange }) => {
-
-    // A single-tier select list combining user and public files.
-    const comp =
-        <TextField
-            label='Files'
-            value={value}
-            select
-            style={{ width: '100%' }}
-            onChange={onChange(id)}
-        >
-            {list.map(option => (
-                <MenuItem key={option} value={option}>
-                    {option}
-                </MenuItem>
-          ))}
-        </TextField>
-    return comp
-}
-*/
 const ListSelect = ({ id, value, list, onChange }) => {
 
     // Define a two-tiered select list for user files and public files.
     const comp =
-        <FormControl>
+        <FormControl style={{ width: '100%' }}>
             <InputLabel htmlFor="name-native">Files</InputLabel>
             <NativeSelect
                 value={value}

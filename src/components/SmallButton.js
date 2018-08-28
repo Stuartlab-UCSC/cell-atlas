@@ -12,6 +12,10 @@ import Button from '@material-ui/core/Button'
 const SmallButton = ({ action, label, variant, linkTo, href, onClick }) => {
     const labelVal = label || action
     const color = (variant === 'flat') ? 'primary' : 'secondary'
+    
+    // Separate those with a link and those without because we cannot supply
+    // a null or undefined value to the component property. Note that link
+    // is more responsive than href.
     if (linkTo) {
         return (
             <Button

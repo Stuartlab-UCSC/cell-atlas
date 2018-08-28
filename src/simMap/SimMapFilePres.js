@@ -36,7 +36,7 @@ const File = ({ advanced, info, classes, linkTo, onSummaryClick,
     return comp
 }
 
-const CreateMapFilePres = ({ advanced, feature, metadata, classes, onSummaryClick,
+const SimMapFilePres = ({ advanced, feature, metadata, classes, onSummaryClick,
     onChange }) => (
     
     <div>
@@ -57,7 +57,7 @@ const CreateMapFilePres = ({ advanced, feature, metadata, classes, onSummaryClic
     </div>
 )
 
-CreateMapFilePres.propTypes = {
+SimMapFilePres.propTypes = {
     advanced: PropTypes.bool,
     feature: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
@@ -65,4 +65,4 @@ CreateMapFilePres.propTypes = {
     onChange: PropTypes.func.isRequired,
 }
 
-export default CreateMapFilePres;
+export default SimMapFilePres;

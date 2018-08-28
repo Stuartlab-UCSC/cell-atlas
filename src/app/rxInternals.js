@@ -32,6 +32,14 @@ const reducers = {
             return state
         }
     },
+    'navBar': (state = 'cellAtlasHome', action) => {
+        switch(action.type) {
+        case 'navBar.select':
+            return action.selected
+        default:
+            return state
+        }
+    },
     'upload': (state = null, action) => {
         switch(action.type) {
         case 'upload.selected':
