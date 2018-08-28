@@ -83,8 +83,8 @@ const getData = (state) => {
         createData('xyPositions'   , 'myClusteringData.tsv', 332.3, 'Uploading'),
         createData('fullSimilarity', 'myBadData.tsv'       , 149.3, 'Error'),
         createData('metadata'      , 'myCanceledUpload.tsv', 201.9, 'Canceled'),
-        createData('metadata'      , 'ExampleMetadata.tab' , 446.2, '08/02/2018  00:00:00 PM'),
-        createData('featureMatrix' , 'ExampleFeature.tab'  , 964.2, '08/01/2018  00:00:00 PM'),
+        createData('metadata'      , 'ExampleMetadata.tab' , 446.2, '08/02/2018'),
+        createData('featureMatrix' , 'ExampleFeature.tab'  , 964.2, '08/01/2018'),
     ]
     return rows
 }

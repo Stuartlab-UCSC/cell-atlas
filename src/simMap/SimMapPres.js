@@ -82,7 +82,7 @@ const SimMapPres = ({ user, zeroCheck, advanced, onZeroChange,
             variant='title'
             style={{ marginBottom: '1rem' }}
         >
-            Analyze: Create a Similarity Map
+            Analyze: Create a Map
         </Typography>
         {BasicOptions({ user, zeroCheck, advanced, onZeroChange,
             onAnalyzeClick })}

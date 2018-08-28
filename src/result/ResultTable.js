@@ -52,7 +52,7 @@ const createButton = (action, onClick, href) => {
     return button
 }
 
-const createData = (name, analysis, time, result, status) => {
+const createData = (name, analysis, date, result, status) => {
 
     // All results get a show parameters button.
     const showParms = createButton('show', onButtonClick)
@@ -76,7 +76,7 @@ const createData = (name, analysis, time, result, status) => {
         let onClick = null
         if (resultAction === 'download') {
             onClick = onButtonClick
-        } else if (resultAction === 'view' && analysis === 'createMap') {
+        } else if (resultAction === 'view' && analysis === 'map') {
             href = 'http://localhost:3333'
         }
         downloadView = createButton(resultAction, onClick, href)
@@ -108,17 +108,17 @@ const createData = (name, analysis, time, result, status) => {
         }
     }
     
-    return {name, analysis, showParms, time, result, status, actions,
+    return {name, analysis, showParms, date, result, status, actions,
         background}
 }
 
 const getData = (state) => {
     const rows = [
-        createData('myMap'            , 'createMap' , '08/08/2018  04:29:48 PM', '----'    , 'Running'),
-        createData('myTrajectory'     , 'trajectory', '08/03/2018  07:11:33 AM', '----'    , 'Canceled'),
-        createData('anotherTrajectory', 'trajectory', '07/08/2018  09:22:55 AM', '101.9 KB', 'Success'),
-        createData('anotherMap'       , 'createMap' , '06/02/2018  08:33:66 AM', '----'    , 'Success'),
-        createData('oneMoreTrajectory', 'trajectory', '06/06/2018  10:44:77 AM', '----'    , 'Error'),
+        createData('myMap'            , 'map'       , '08/08/2018', '----'    , 'Running'),
+        createData('myTrajectory'     , 'trajectory', '08/03/2018', '----'    , 'Canceled'),
+        createData('anotherTrajectory', 'trajectory', '07/08/2018', '101.9 KB', 'Success'),
+        createData('anotherMap'       , 'map'       , '06/02/2018', '----'    , 'Success'),
+        createData('oneMoreTrajectory', 'trajectory', '06/06/2018', '----'    , 'Error'),
     ]
     return rows
 }
@@ -127,7 +127,7 @@ const getHead = (state) => {
     const head = [
         { id: 'name'     , numeric: false, label: 'Name' },
         { id: 'analysis' , numeric: false, label: 'Analysis' },
-        { id: 'time'     , numeric: false, label: 'Start Time' },
+        { id: 'date'     , numeric: false, label: 'Date' },
         { id: 'showParms', numeric: false, label: 'Parameters' },
         { id: 'result'   , numeric: true , label: 'Result' },
         { id: 'status'   , numeric: false, label: 'Status' },
