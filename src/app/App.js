@@ -26,26 +26,24 @@ import 'app/App.css'
 const store = rxInit()
 
 const App = () => {
-
     return (
     <Provider store={store}>
         <MuiThemeProvider theme={theme}>
             <Router>
-                <div className='App'>
+                <div>
                     <NavBar />
-                    <hr
-                        style={{marginTop: '0'}}
-                    />
-                    <Switch>
-                        <Route exact path='/' component={Home}/>
-                        <Route path='/upload' component={Upload}/>
-                        <Route path='/analyze/simMap' component={SimMap}/>
-                        <Route path='/analyze/cellTypePsychic' component={CellTypePsychic}/>
-                        <Route path='/analyze/trajectory' component={Trajectory}/>
-                        <Route path='/result' component={Result}/>
-                        <Route path='/help' component={Help}/>
-                        <Route component={PageNotFound} />
-                    </Switch>
+                    <div className='page' >
+                        <Switch>
+                            <Route exact path='/' component={Home}/>
+                            <Route path='/upload' component={Upload}/>
+                            <Route path='/analyze/simMap' component={SimMap}/>
+                            <Route path='/analyze/cellTypePsychic' component={CellTypePsychic}/>
+                            <Route path='/analyze/trajectory' component={Trajectory}/>
+                            <Route path='/result' component={Result}/>
+                            <Route path='/help' component={Help}/>
+                            <Route component={PageNotFound} />
+                        </Switch>
+                    </div>
                 </div>
             </Router>
         </MuiThemeProvider>

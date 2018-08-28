@@ -23,11 +23,13 @@ class NavBar extends React.Component {
     logo = () => {
         let comp =
             <img
-                className='logo'
                 src={appLogo}
                 width='32px'
                 alt='logo'
-                style={{marginLeft: '0.5rem', marginRight: '0.5rem'}}
+                style={{
+                    marginLeft: '0.5rem',
+                    marginRight: '0.5rem',
+                }}
             ></img>
         return comp
     }
@@ -78,7 +80,6 @@ class NavBar extends React.Component {
                     transition
                     disablePortal
                     placement='bottom-start'
-                    style={{ zIndex: '999999' }}
                 >
                     {({ TransitionProps, placement }) => (
                         <Grow
@@ -126,21 +127,31 @@ class NavBar extends React.Component {
 
     render() {
         return (
-            <ToggleButtonGroup exclusive>
-                <ToggleButton
-                    component={Link}
-                    to='/'
-                    value=''
-                    style={{color: this.color}}
+            <div
+                style={{
+                    width: '100%',
+                    zIndex: '3000',
+                    position: 'fixed'
+                }}
+            >
+                <ToggleButtonGroup exclusive
                 >
-                    Cell Atlas
-                    {this.logo()}
-                </ToggleButton>
-                {this.barItem('Upload', '/upload')}
-                {this.analyze()}
-                {this.barItem('Results', '/result')}
-                {this.barItem('Help', '/help')}
-            </ToggleButtonGroup>
+                    <ToggleButton
+                        component={Link}
+                        to='/'
+                        value=''
+                        style={{color: this.color}}
+                    >
+                        Cell Atlas
+                        {this.logo()}
+                    </ToggleButton>
+                    {this.barItem('Upload', '/upload')}
+                    {this.analyze()}
+                    {this.barItem('Results', '/result')}
+                    {this.barItem('Help', '/help')}
+                </ToggleButtonGroup>
+                <hr style={{ marginTop: '0' }} />
+            </div>
         )
     }
 }
