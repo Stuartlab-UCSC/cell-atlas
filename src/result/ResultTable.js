@@ -1,15 +1,15 @@
 
-// The upload page table of files: logic and state.
+// The result page table of results, logic and state.
 
-import React from 'react'
 import { connect } from 'react-redux'
-
-import SmallButton from 'components/SmallButton'
-
 import Matrix from 'components/Matrix'
+import ResultParms from 'result/ResultParms'
+import TableButtonGroup from 'components/TableButtonGroup'
+import { set } from 'app/rx'
 
+// Action reference by result type.
 const resultActionRef = {
-    createMap: 'view',
+    map: 'view',
     trajectory: 'download',
 }
 
@@ -19,17 +19,23 @@ const backgrounds = {    // bootstrap message colors
     Canceled: '#F9F5D9', // yellow
 }
 
-const statusColumn = 5
+const statusColumn = 5  // for coloring based on status
+
+const growPanelClasses = {
+    icon: 'icon',
+    summary: 'summary',
+    summaryText: 'summaryText',
+}
 
 const onButtonClick = (ev) => {
 
     // Handle the button click outside of the normal flow because the Matrix
-    // component simply passes through cell details as received.
+    // component simply passes through the cell details as received.
     let id = ev.target.closest('.row').dataset.id
     let action = ev.target.closest('.action').dataset.action
     console.log('onButtonClick id, action:', id, action)
     switch (action) {
-        case 'show':
+        case 'view':
         case 'download':
         case 'copy':
         case 'cancel':
@@ -38,62 +44,42 @@ const onButtonClick = (ev) => {
     }
 }
 
-const createButton = (action, onClick, href) => {
-
-    // Handle the button outside of the normal flow because the Matrix
-    // component simply passes through cell details as received.
-    let button =
-        <SmallButton
-            action={action}
-            href={href}
-            variant='flat'
-            onClick={onClick}
-        />
-    return button
+const onParmClick = (ev) => {
+    let id = ev.target.closest('.summary').dataset.id
+    set('result.parmShow.toggle', {id} )
 }
 
-const createData = (name, analysis, date, result, status) => {
+const createData = (name, analysis, parmText, date, result, status, state) => {
 
-    // All results get a show parameters button.
-    const showParms = createButton('show', onButtonClick)
-
-    // All results get a copy button.
-    let copy = createButton('copy', null, '/analyze',)
-
-    // Define the remove button depending on the result status.
-    let remove = null
-    if (status === 'Running') {
-        remove = createButton('cancel', onButtonClick)
-    } else {
-        remove = createButton('delete', onButtonClick)
-    }
+    // All results get a view parameters control.
+    let parmShow = state['result.parmShow'][name] || false
+    let parms = ResultParms(name, parmText, parmShow, growPanelClasses,
+        onParmClick )
 
     // Define the download or view button depending status and the analysis.
-    let downloadView = null
+    let buttonGroup = []
     if (status === 'Success') {
         const resultAction = resultActionRef[analysis]
-        let href = null
-        let onClick = null
         if (resultAction === 'download') {
-            onClick = onButtonClick
+            buttonGroup.push({ action: 'download', onClick: onButtonClick })
         } else if (resultAction === 'view' && analysis === 'map') {
-            href = 'http://localhost:3333'
+            buttonGroup.push({ action: 'download', href: 'http://localhost:3333' })
         }
-        downloadView = createButton(resultAction, onClick, href)
+    }
+
+    // All results get a copy button.
+    buttonGroup.push({ action: 'copy', link: '/analyze'})
+
+    // Define the remove button depending on the result status.
+    if (status === 'Running') {
+        buttonGroup.push({ action:'cancel', onClick: onButtonClick })
+    } else {
+        buttonGroup.push({ action:'delete', onClick: onButtonClick })
     }
 
     // Group all of the action buttons.
-    let actions =
-        <div
-            style={{
-                width: '100%',
-            }}
-        >
-            {downloadView}
-            {copy}
-            {remove}
-        </div>
-    
+    let actions = TableButtonGroup({ group: buttonGroup })
+
     // Define the background based on the status.
     let background = null
     if (status === 'Error' || status === 'Canceled') {
@@ -108,17 +94,16 @@ const createData = (name, analysis, date, result, status) => {
         }
     }
     
-    return {name, analysis, showParms, date, result, status, actions,
-        background}
+    return {name, analysis, parms, date, result, status, actions, background}
 }
 
 const getData = (state) => {
     const rows = [
-        createData('myMap'            , 'map'       , '08/08/2018', '----'    , 'Running'),
-        createData('myTrajectory'     , 'trajectory', '08/03/2018', '----'    , 'Canceled'),
-        createData('anotherTrajectory', 'trajectory', '07/08/2018', '101.9 KB', 'Success'),
-        createData('anotherMap'       , 'map'       , '06/02/2018', '----'    , 'Success'),
-        createData('oneMoreTrajectory', 'trajectory', '06/06/2018', '----'    , 'Error'),
+        createData('myMap'            , 'map'       , ['mapName: swat_soe.ucsc.edu', 'layoutFeatures: myClusteringData.tsv'], '08/08/2018', '----'    , 'Running', state),
+        createData('myTrajectory'     , 'trajectory', [], '08/03/2018', '----'   , 'Canceled', state),
+        createData('anotherTrajectory', 'trajectory', [], '07/08/2018', '01.9 KB', 'Success' , state),
+        createData('anotherMap'       , 'map'       , [], '06/02/2018', '----'   , 'Success' , state),
+        createData('oneMoreTrajectory', 'trajectory', [], '06/06/2018', '----'   , 'Error'   , state),
     ]
     return rows
 }
@@ -127,11 +112,11 @@ const getHead = (state) => {
     const head = [
         { id: 'name'     , numeric: false, label: 'Name' },
         { id: 'analysis' , numeric: false, label: 'Analysis' },
+        { id: 'parms'    , numeric: false, label: '' },
         { id: 'date'     , numeric: false, label: 'Date' },
-        { id: 'showParms', numeric: false, label: 'Parameters' },
         { id: 'result'   , numeric: true , label: 'Result' },
         { id: 'status'   , numeric: false, label: 'Status' },
-        { id: 'actions'  , numeric: true , label: 'Action' },
+        { id: 'actions'  , numeric: true , label: '' },
     ]
     return head
 }
@@ -140,9 +125,11 @@ const mapStateToProps = (state) => {
     return {
         data: getData(state),
         head: getHead(state),
-        order: state['upload.table.order'],
+        parmShow: state['upload.parmShow'],
+        order: state['table.order'].result,
         width: '100%',
         classes: { row: 'row' },
+        growPanelClasses,
     }
 }
 
@@ -150,15 +137,14 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
             dispatch({
-                type: 'upload.table.order.property',
+                type: 'table.order.property',
+                id: 'result',
                 property: ev.target.closest('th').dataset.id,
             })
         },
     }
 }
 
-// Connect the value props and eventHandler props
-// to the presentational component.
 const ResultTable = connect(
     mapStateToProps,
     mapDispatchToProps

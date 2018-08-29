@@ -13,10 +13,6 @@ import MoreButton from 'components/MoreButton'
 const detail = (item, classes, onMoreClick) => {
 
     // The expanded part of a GrowPanel.
-    // Note on Themes:
-    // We don't use the usual "styles = theme" method because this component is
-    // rendered under the GrowPanel component and somehow that method's styles
-    // are not picked up here.
     let comp =
         <div>
             <pre
@@ -62,6 +58,7 @@ const childPanel = (item, i, detailShow, growPanelClasses, classes,
             summaryText={item.summaryText}
             detail={detail(item, classes, onMoreClick)}
             detailShow={detailShow}
+            detailStyle={{marginLeft: '2rem'}}
             classes={growPanelClasses}
             onClick={onSummaryClick}
         />
@@ -76,6 +73,7 @@ const UpdateFormatPres = ({ info, detailShow, classes, growPanelClasses,
             summaryText={info[0].summaryText}
             detailShow={detailShow['main'] || false}
             classes={growPanelClasses}
+            detailStyle={{marginLeft: '2rem'}}
             onClick={onSummaryClick}
             detail={
                 info.map((item, i) =>

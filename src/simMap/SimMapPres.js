@@ -1,5 +1,5 @@
 
-// The create map analysis section, the presentational component.
+// The similarity map, the presentational component.
 
 import PropTypes from 'prop-types'
 import React from 'react'

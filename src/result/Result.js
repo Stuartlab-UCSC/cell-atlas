@@ -1,6 +1,6 @@
 
 
-// The upload page.
+// The result page.
 
 import React from 'react'
 import { connect } from 'react-redux'

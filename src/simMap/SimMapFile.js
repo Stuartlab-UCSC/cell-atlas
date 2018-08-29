@@ -1,5 +1,5 @@
 
-// The create map analysis section, logic and state.
+// The similarity map analysis file selection, logic and state.
 
 import { connect } from 'react-redux'
 

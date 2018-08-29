@@ -10,9 +10,10 @@ const statePieces =  [ // eslint-disable-line
     'createMap.featureShow',
     'doNotTrack',
     'navBar',
+    'result.parmShow',
+    'table.order',
     'upload',
     'upload.formatShow',
-    'upload.table.order',
     'upload.file',
     'user',
 ]
@@ -28,13 +29,14 @@ export const stateActions = [
     'doNotTrack.displayed',
     'doNotTrack.loadPersist',
     'navBar.select',
+    'result.parmShow.toggle',
+    'table.order.property',
     'upload.file.add',
     'upload.file.cancel',
     'upload.file.delete',
     'upload.file.rename',
     'upload.file.selected',
     'upload.formatShow.toggle',
-    'upload.table.order.property',
     'user.login',
     'user.logout',
 ]
@@ -119,3 +121,5 @@ export function copyStringArray(orig) {
 export const init = (store) => {
     reduxStore = store
 }
+
+export default ()=>{}

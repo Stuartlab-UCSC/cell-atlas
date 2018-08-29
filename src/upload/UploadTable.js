@@ -1,11 +1,9 @@
 
 // The upload page table of files, logic and state.
 
-import React from 'react'
 import { connect } from 'react-redux'
-
 import Matrix from 'components/Matrix'
-import SmallButton from 'components/SmallButton'
+import TableButtonGroup from 'components/TableButtonGroup'
 
 const backgrounds = {    // bootstrap message colors
     Complete: '#D8EECE', // green
@@ -22,33 +20,25 @@ const onButtonClick = (ev) => {
     console.log('onButtonClick id, action:', id, action)
 }
 
-const createButton = (action) => {
-    
-    // Handle the button outside of the normal flow because the Matrix
-    // component simply passes through cell details as received.
-    let button =
-        <SmallButton
-            action={action}
-            variant='flat'
-            onClick={onButtonClick}
-        />
-    return button
-}
-
 const createData = (format, name, size, status) => {
     
     // Define the buttons depending on the status.
-    let download = null
-    let remove
+    let group = []
     if (status === 'Uploading') {
-        remove = createButton('cancel')
+        group.push({ action: 'cancel', onClick: onButtonClick })
+        //remove = createButton('cancel')
     } else {
-        remove = createButton('delete')
+        //remove = createButton('delete')
         if (status !== 'Error' && status !== 'Canceled') {
-            download = createButton('Download')
+            group.push({ action: 'download', onClick: onButtonClick })
+            //download = createButton('Download')
         }
+        group.push({ action: 'delete', onClick: onButtonClick })
     }
     
+    // Group all of the action buttons.
+    let action = TableButtonGroup({ group })
+
     // Define the background based on the status.
     let background = null
     if (status === 'Error' || status === 'Canceled') {
@@ -62,18 +52,6 @@ const createData = (format, name, size, status) => {
             color: backgrounds.Complete
         }
     }
-    
-    // Group all of the buttons.
-    let action =
-        <div
-            style={{
-                width: '100%',
-            }}
-        >
-            {download}
-            {remove}
-        </div>
-
 
     return {format, name, size, status, action, background}
 }
@@ -95,7 +73,7 @@ const getHead = (state) => {
         { id: 'format', numeric: false, label: 'Format' },
         { id: 'size'  , numeric: true , label: 'Size' },
         { id: 'status', numeric: false, label: 'Date' },
-        { id: 'action', numeric: true , label: 'Action' },
+        { id: 'action', numeric: true , label: '' },
     ]
     return head
 }
@@ -104,7 +82,7 @@ const mapStateToProps = (state) => {
     return {
         data: getData(state),
         head: getHead(state),
-        order: state['upload.table.order'],
+        order: state['table.order'].upload,
         width: 850,
         classes: { row: 'row' },
     }
@@ -114,7 +92,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
             dispatch({
-                type: 'upload.table.order.property',
+                type: 'table.order.property',
+                id: 'upload',
                 property: ev.target.closest('th').dataset.id,
             })
         },

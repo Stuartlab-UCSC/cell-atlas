@@ -53,7 +53,8 @@ const themeData = createMuiTheme({
         },
         MuiTableRow: {
             root: {
-                height: '2rem', // 56px
+                height: '3rem', // 56px
+                verticalAlign: 'top',
             },
             head: {
                 height: '2rem', // 48px
@@ -61,8 +62,10 @@ const themeData = createMuiTheme({
         },
         MuiTableCell: {
             root: {
+                paddingTop: '1rem',
                 paddingLeft: '0.5rem',
                 paddingRight: '0.5rem',
+                paddingBottom: '0px',
             },
         },
         MuiButton: {

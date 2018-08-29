@@ -30,22 +30,19 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit / 2,
         cursor: 'pointer',
     },
-    details: {
-        marginLeft: theme.spacing.unit * 4,
-    },
 });
 
-const details = (id, detail, detailShow, classes) => {
-
+const details = (id, detail, detailShow, detailStyle, classes) => {
     // The collapsable area.
     if (!detail) {
         return null
     }
+    
     const comp =
         <Collapse
             in={detailShow}
-            className={classes.details}
             data-id={id}
+            style={detailStyle}
         >
             <div>{detail}</div>
         </Collapse>
@@ -74,13 +71,14 @@ const Hr = ({ show }) => {
     return comp
 }
 
-const GrowPanel = ({ id, summaryText, detail, detailShow, dividerShow, classes,
-    onClick } ) => (
+const GrowPanel = ({ id, summaryText, detail, detailShow, dividerShow,
+    summaryStyle, detailStyle, classes, onClick } ) => (
 
     <div>
         <div
             className={classes.summary}
             data-id={id}
+            style={summaryStyle}
             onClick={onClick}
         >
             <Typography className={classes.summaryText}>
@@ -88,7 +86,7 @@ const GrowPanel = ({ id, summaryText, detail, detailShow, dividerShow, classes,
             </Typography>
             {icon(detailShow, classes)}
         </div>
-        {details(id, detail, detailShow, classes)}
+        {details(id, detail, detailShow, detailStyle, classes)}
         <Hr show={dividerShow} />
     </div>
 )
@@ -98,6 +96,8 @@ GrowPanel.propTypes = {
     summaryText: PropTypes.string.isRequired,
     detail: PropTypes.node,
     detailShow: PropTypes.bool.isRequired,
+    summaryStyle: PropTypes.object,
+    detailStyle: PropTypes.object,
     classes: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired,
 }

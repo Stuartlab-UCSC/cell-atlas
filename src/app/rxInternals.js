@@ -40,6 +40,52 @@ const reducers = {
             return state
         }
     },
+    'result.parmShow': (state = {}, action) => {
+        let next = {...state}
+        switch(action.type) {
+        case 'result.parmShow.toggle':
+            if (state[action.id] === undefined) {
+                next[action.id] = true
+            } else {
+                next[action.id] = !state[action.id]
+            }
+            return next
+        default:
+            return state
+        }
+    },
+    'table.order': (state = {
+            upload: {property: 'date', direction: 'desc'},
+            result: {property: 'date', direction: 'desc'},
+        }, action) => {
+        
+        let next
+        let id
+        switch(action.type) {
+        case 'table.order.property':
+            console.log('state:', state)
+            console.log('action:', action)
+
+            // If the property is the same, just change the direction.
+            next = {...state}
+            id = action.id
+            if (state[id].property === action.property) {
+                if (state[id].direction === 'desc') {
+                    next[id].direction = 'asc'
+                } else {
+                    next[id].direction = 'desc'
+                }
+            } else {
+            
+                // With the property changed, reset the direction to descending.
+                next[id].property = action.property
+                next[id].direction = 'asc'
+            }
+            return next
+        default:
+            return state
+        }
+    },
     'upload': (state = null, action) => {
         switch(action.type) {
         case 'upload.selected':
@@ -57,34 +103,6 @@ const reducers = {
             } else {
                 next[action.id] = !state[action.id]
             }
-            return next
-        default:
-            return state
-        }
-    },
-    'upload.table.order': (state = {property: 'date', direction: 'desc'},
-        action) => {
-        
-        let next = {...state}
-        switch(action.type) {
-        case 'upload.table.order.property':
-
-            // If the property is the same, just change the direction.
-            if (state.property === action.property) {
-                if (state.direction === 'desc') {
-                    next.direction = 'asc'
-                } else {
-                    next.direction = 'desc'
-                }
-            } else {
-            
-                // With the property changed, reset the direction to descending.
-                next.property = action.property
-                next.direction = 'asc'
-            }
-            
-            //console.log('upload.table.order, state, action, next:', state, action, next)
-        
             return next
         default:
             return state

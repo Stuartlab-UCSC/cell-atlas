@@ -1,5 +1,5 @@
 
-// Create map, the presentational component.
+// The similarity map file selection, the presentational component.
 
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -27,7 +27,6 @@ const File = ({ advanced, info, classes, linkTo, onSummaryClick,
                         icon: 'icon',
                         summary: 'summary',
                         summaryText: 'summaryText',
-                        details: 'details',
                     },
                     onClick: onSummaryClick,
                 }}

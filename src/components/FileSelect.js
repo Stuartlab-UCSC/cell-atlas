@@ -104,6 +104,7 @@ const FileSelect = ({ id, listValue, urlValue, list, show, onChange,
         detail={Detail(id, listValue, urlValue, list, show, onChange)}
         detailShow={show}
         dividerShow={growPanel.dividerShow}
+        detailStyle={{marginLeft: '2rem'}}
         classes={growPanel.classes}
         onClick={growPanel.onClick}
     />
