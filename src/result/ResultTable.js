@@ -126,7 +126,7 @@ const mapStateToProps = (state) => {
         data: getData(state),
         head: getHead(state),
         parmShow: state['upload.parmShow'],
-        order: state['table.order'].result,
+        order: state['result.order'],
         width: '100%',
         classes: { row: 'row' },
         growPanelClasses,
@@ -137,8 +137,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
             dispatch({
-                type: 'table.order.column',
-                id: 'result',
+                type: 'result.order.column',
                 column: ev.target.closest('th').dataset.id,
             })
         },

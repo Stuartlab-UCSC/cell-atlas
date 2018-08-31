@@ -30,15 +30,14 @@ const onButtonClick = (ev) => {
     
         // Save the row's position so its position will be
         // restored after any sort on status.
-        rxSet('table.order.position', {
-            id: 'upload',
+        rxSet('upload.order.position', {
             position: rowData.position,
             positionRowId: rowData.id,
         })
     } else {
         
         // Clear any leftover stored row position.
-        rxSet('table.order.positionReset', {id: 'upload'})
+        rxSet('upload.order.positionReset')
     }
     
     // Perform the action on the row.
@@ -118,7 +117,8 @@ const getData = (state) => {
         tableRows.push(createTableRow(stateData[id]))
     }
     if (tableRows.length < 1) {
-        tableRows = fetchData(state)
+        tableRows = []
+        //tableRows = fetchData(state)
     }
     return tableRows
 }
@@ -138,7 +138,7 @@ const mapStateToProps = (state) => {
     return {
         data: getData(state),
         head: getHead(state),
-        order: state['table.order'].upload,
+        order: state['upload.order'],
         width: 850,
         classes: { row: 'row' },
     }
@@ -148,8 +148,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
             dispatch({
-                type: 'table.order.column',
-                id: 'upload',
+                type: 'upload.order.column',
                 column: ev.target.closest('th').dataset.id,
             })
         },

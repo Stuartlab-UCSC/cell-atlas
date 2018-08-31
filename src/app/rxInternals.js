@@ -7,6 +7,51 @@ import { createStore, combineReducers } from 'redux'
 import rx from 'app/rx'
 import { stateActions as rxStateActions } from 'app/rx'
 
+const tableOrderPosition = (action, state) => {
+    let next = {...state}
+    next.positionRowId = action.positionRowId
+    next.position = action.position
+    return next
+}
+
+const tableOrderColumn = (action, state) => {
+    let next = {...state}
+    
+    // Reset any stored row position.
+    delete next.position
+    delete next.positionRowId
+    
+    // If the previous state was not sorted on anything,
+    // set the column and reset the direction.
+    if (state.column === 'none') {
+        next.column = action.column
+        next.direction = state.defaltDir
+        
+    // If the column is the same, change direction.
+    } else if (state.column === action.column) {
+        next.direction =
+            (state.direction === 'desc') ? 'asc' : 'desc'
+    
+    // The column changed so reset the direction.
+    } else {
+        next.column = action.column
+        next.direction = state.defaltDir
+    }
+    return next
+}
+
+const tableOrderPositionReset = (state) => {
+    if (state.position) {
+        let next = {...state}
+        delete next.position
+        delete next.positionRowId
+        return next
+    } else {
+        return state
+    }
+}
+
+
 const reducers = {
 
     'createMap.metadataShow': (state = true, action) => {
@@ -41,6 +86,24 @@ const reducers = {
             return state
         }
     },
+    'result.order': (state = {column: 'status', direction: 'desc',
+        defaltDir: 'desc'}, action) => {
+        
+        let next
+        switch(action.type) {
+        case 'result.order.position':
+            next = tableOrderPosition(action, state)
+            return next
+        case 'result.order.column':
+            next = tableOrderColumn(action, state)
+            return next
+        case 'result.order.positionReset':
+            next = tableOrderPositionReset(state)
+            return next
+        default:
+            return state
+        }
+    },
     'result.parmShow': (state = {}, action) => {
         let next = {...state}
         switch(action.type) {
@@ -51,62 +114,6 @@ const reducers = {
                 next[action.id] = !state[action.id]
             }
             return next
-        default:
-            return state
-        }
-    },
-    'table.order': (state = {
-            upload: {column: 'status', direction: 'desc', defaltDir: 'desc'},
-            result: {column: 'date'  , direction: 'desc', defaltDir: 'desc'},
-        }, action) => {
-        
-        let next
-        let id
-        switch(action.type) {
-        
-        // For 'none' set the order to none.
-        // Save a row's position if requested.
-        case 'table.order.position':
-            next = {...state}
-            id = action.id
-            next[id].positionRowId = action.positionRowId
-            next[id].position = action.position
-            return next
-        case 'table.order.column':
-            next = {...state}
-            id = action.id
-            
-            // Reset any stored row position.
-            delete next[id].position
-            delete next[id].positionRowId
-            
-            // If the previous state was not sorted on anything,
-            // set the column and reset the direction.
-            if (state[id].column === 'none') {
-                next[id].column = action.column
-                next[id].direction = state[id].defaltDir
-                
-            // If the column is the same, change direction.
-            } else if (state[id].column === action.column) {
-                next[id].direction =
-                    (state[id].direction === 'desc') ? 'asc' : 'desc'
-            
-            // The column changed so reset the direction.
-            } else {
-                next[id].column = action.column
-                next[id].direction = state[id].defaltDir
-            }
-            return next
-        case 'table.order.positionReset':
-            id = action.id
-            if (state[id].position) {
-                next = {...state}
-                delete next[id].position
-                delete next[id].positionRowId
-                return next
-            } else {
-                return state
-            }
         default:
             return state
         }
@@ -138,6 +145,24 @@ const reducers = {
         if (action.type === 'upload.idSeq.assign') {
             return (parseInt(state, 10) + 1).toString()
         } else {
+            return state
+        }
+    },
+    'upload.order': (state = {column: 'status', direction: 'desc',
+        defaltDir: 'desc'}, action) => {
+        
+        let next
+        switch(action.type) {
+        case 'upload.order.position':
+            next = tableOrderPosition(action, state)
+            return next
+        case 'upload.order.column':
+            next = tableOrderColumn(action, state)
+            return next
+        case 'upload.order.positionReset':
+            next = tableOrderPositionReset(state)
+            return next
+        default:
             return state
         }
     },
