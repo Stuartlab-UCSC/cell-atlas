@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import Typography from '@material-ui/core/Typography';
 
 import UploadFile from 'upload/UploadFile'
+import UploadTransfer from 'upload/UploadTransfer'
 import UploadFormat from 'upload/UploadFormat'
 import UploadTable from 'upload/UploadTable'
 
@@ -20,8 +21,10 @@ const UploadPres = ({classes}) => {
                 Upload Files
             </Typography>
             <UploadFile />
+            <UploadTransfer />
             <UploadFormat />
             <UploadTable />
+            
         </div>
     )
 }

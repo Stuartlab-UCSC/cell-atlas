@@ -4,6 +4,12 @@
 import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
+import { set as rxSet } from 'app/rx'
+import { checkFetchStatus, parseFetchedJson, fetchError } from 'app/util'
+
+// TODO put in config
+const HUB_URL = 'http://localhost:5000'  // TODO
+const USER = 'swat_soe.ucsc.edu'
 
 const backgrounds = {    // bootstrap message colors
     Complete: '#D8EECE', // green
@@ -15,12 +21,31 @@ const onButtonClick = (ev) => {
     
     // Handle the button click outside of the normal flow because the Matrix
     // component simply passes through cell details as received.
-    let id = ev.target.closest('.row').dataset.id
     let action = ev.target.closest('button').dataset.action
-    console.log('onButtonClick id, action:', id, action)
+    
+    // Save the row's position or clear the save position,
+    // depending on the action button pressed.
+    let rowData = ev.target.closest('.row').dataset
+    if (action === 'cancel') {
+    
+        // Save the row's position so its position will be
+        // restored after any sort on status.
+        rxSet('table.order.position', {
+            id: 'upload',
+            position: rowData.position,
+            positionRowId: rowData.id,
+        })
+    } else {
+        
+        // Clear any leftover stored row position.
+        rxSet('table.order.positionReset', {id: 'upload'})
+    }
+    
+    // Perform the action on the row.
+    rxSet('upload.table.' + action, { id: rowData.id })
 }
 
-const createData = (format, name, size, status) => {
+const createTableRow = ({ id, name, size, format, status }) => {
     
     // Define the buttons depending on the status.
     let group = []
@@ -53,25 +78,56 @@ const createData = (format, name, size, status) => {
         }
     }
 
-    return {format, name, size, status, action, background}
+    return { id, name, size, format, status, action, background }
+}
+
+const fetchData = (state) => {
+
+    // Fetch the table data from the server.
+    let tableRows
+    
+    const loadData = (data) => {
+    
+        // Load the received data.
+        tableRows = data.id.forEach((id, i) => {
+            return createTableRow({
+                id,
+                name: data.names[i],
+                size: data.sizes[i],
+                format: data.formats[i],
+                status: data.statuses[i]
+            })
+        })
+    }
+
+    // Request the data from the server.
+    const url = HUB_URL + '/groupUploads/groupId/' + USER
+    fetch(url)
+        .then(checkFetchStatus)
+        .then(parseFetchedJson)
+        .then(loadData)
+        .catch(fetchError)
 }
 
 const getData = (state) => {
-    const rows = [
-        createData('xyPositions'   , 'myClusteringData.tsv', 332.3, 'Uploading'),
-        createData('fullSimilarity', 'myBadData.tsv'       , 149.3, 'Error'),
-        createData('metadata'      , 'myCanceledUpload.tsv', 201.9, 'Canceled'),
-        createData('metadata'      , 'ExampleMetadata.tab' , 446.2, '08/02/2018'),
-        createData('featureMatrix' , 'ExampleFeature.tab'  , 964.2, '08/01/2018'),
-    ]
-    return rows
+
+    // Populate the table.
+    const stateData = state['upload.table']
+    let tableRows = []
+    for (let id in stateData) {
+        tableRows.push(createTableRow(stateData[id]))
+    }
+    if (tableRows.length < 1) {
+        tableRows = fetchData(state)
+    }
+    return tableRows
 }
 
 const getHead = (state) => {
     const head = [
         { id: 'name'  , numeric: false, label: 'Name' },
-        { id: 'format', numeric: false, label: 'Format' },
         { id: 'size'  , numeric: true , label: 'Size' },
+        { id: 'format', numeric: false, label: 'Format' },
         { id: 'status', numeric: false, label: 'Date' },
         { id: 'action', numeric: true , label: '' },
     ]
@@ -92,9 +148,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
             dispatch({
-                type: 'table.order.property',
+                type: 'table.order.column',
                 id: 'upload',
-                property: ev.target.closest('th').dataset.id,
+                column: ev.target.closest('th').dataset.id,
             })
         },
     }

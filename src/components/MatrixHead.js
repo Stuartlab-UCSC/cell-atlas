@@ -24,11 +24,11 @@ class MatrixHead extends React.Component {
                                 numeric={col.numeric}
                                 padding={col.disablePadding ?
                                     'none' : 'default'}
-                                sortDirection={order.property === col.id ?
+                                sortDirection={order.column === col.id ?
                                     order.direction : false}
                             >
                                 <TableSortLabel
-                                    active={order.property === col.id}
+                                    active={order.column === col.id}
                                     direction={order.direction}
                                     onClick={onRequestSort}
                                 >

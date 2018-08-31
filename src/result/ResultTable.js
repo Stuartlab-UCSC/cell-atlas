@@ -35,7 +35,7 @@ const onButtonClick = (ev) => {
     let action = ev.target.closest('.action').dataset.action
     console.log('onButtonClick id, action:', id, action)
     switch (action) {
-        case 'view':
+        case 'iew':
         case 'download':
         case 'copy':
         case 'cancel':
@@ -137,9 +137,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
             dispatch({
-                type: 'table.order.property',
+                type: 'table.order.column',
                 id: 'result',
-                property: ev.target.closest('th').dataset.id,
+                column: ev.target.closest('th').dataset.id,
             })
         },
     }

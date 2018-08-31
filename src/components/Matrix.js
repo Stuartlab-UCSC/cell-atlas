@@ -20,7 +20,7 @@ function getSorting(order, orderBy) {
 
 const styles = theme => ({
     row: {
-        '&:nth-of-type(odd)': {
+        '&:nth-of-type(even)': {
             backgroundColor: theme.palette.background.default,
         },
     },
@@ -53,7 +53,8 @@ const dataRow = (row, i, head, classes) => {
             hover
             tabIndex={-1}
             key={i}
-            data-id={row.name}
+            data-position={i}
+            data-id={row.id}
         >
             {head.map((col, j) =>
                 dataVal(row[col.id], j, col.numeric, row.background)
@@ -62,8 +63,49 @@ const dataRow = (row, i, head, classes) => {
     return comp
 }
 
+const tableBody = (data, head, classes) => {
+    let comp
+    if (data.length < 1) {
+    
+        // With no data, give a message.
+        comp =
+            <TableBody>
+                <TableRow
+                    className={classes.row}
+                    tabIndex={-1}
+                >
+                    <TableCell width='50%' numeric={true}>
+                        (no data)
+                    </TableCell>
+                </TableRow>
+            </TableBody>
+
+    } else {
+        comp =
+            <TableBody>
+                {data.map((row, i) =>
+                    dataRow(row, i, head, classes)
+                )}
+            </TableBody>
+    }
+
+    return comp
+}
+
 const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
-    data.sort(getSorting(order.direction, order.property))
+
+    // Sort the rows.
+    data.sort(getSorting(order.direction, order.column))
+
+    // Restore the position of a row if requested.
+    if (order.position) {
+        const fromPos = data.findIndex(row => {
+            return row.id === order.positionRowId
+        })
+        const row = data[fromPos]
+        data.splice(fromPos, 1)
+        data.splice(order.position, 0, row)
+    }
     return (
         <Paper style={{width: width}}>
             <Table
@@ -74,11 +116,7 @@ const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
                     order={order}
                     onRequestSort={onRequestSort}
                 />
-                <TableBody>
-                    {data.map((row, i) =>
-                        dataRow(row, i, head, classes)
-                    )}
-                </TableBody>
+                {tableBody(data, head, classes)}
             </Table>
         </Paper>
     )

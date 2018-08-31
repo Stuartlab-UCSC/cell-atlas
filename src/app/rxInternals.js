@@ -4,7 +4,8 @@
 
 //import redux from 'redux'
 import { createStore, combineReducers } from 'redux'
-import { init as rxInit, stateActions as rxStateActions } from 'app/rx'
+import rx from 'app/rx'
+import { stateActions as rxStateActions } from 'app/rx'
 
 const reducers = {
 
@@ -55,54 +56,137 @@ const reducers = {
         }
     },
     'table.order': (state = {
-            upload: {property: 'date', direction: 'desc'},
-            result: {property: 'date', direction: 'desc'},
+            upload: {column: 'status', direction: 'desc', defaltDir: 'desc'},
+            result: {column: 'date'  , direction: 'desc', defaltDir: 'desc'},
         }, action) => {
         
         let next
         let id
         switch(action.type) {
-        case 'table.order.property':
-            console.log('state:', state)
-            console.log('action:', action)
-
-            // If the property is the same, just change the direction.
+        
+        // For 'none' set the order to none.
+        // Save a row's position if requested.
+        case 'table.order.position':
             next = {...state}
             id = action.id
-            if (state[id].property === action.property) {
-                if (state[id].direction === 'desc') {
-                    next[id].direction = 'asc'
-                } else {
-                    next[id].direction = 'desc'
-                }
-            } else {
+            next[id].positionRowId = action.positionRowId
+            next[id].position = action.position
+            return next
+        case 'table.order.column':
+            next = {...state}
+            id = action.id
             
-                // With the property changed, reset the direction to descending.
-                next[id].property = action.property
-                next[id].direction = 'asc'
+            // Reset any stored row position.
+            delete next[id].position
+            delete next[id].positionRowId
+            
+            // If the previous state was not sorted on anything,
+            // set the column and reset the direction.
+            if (state[id].column === 'none') {
+                next[id].column = action.column
+                next[id].direction = state[id].defaltDir
+                
+            // If the column is the same, change direction.
+            } else if (state[id].column === action.column) {
+                next[id].direction =
+                    (state[id].direction === 'desc') ? 'asc' : 'desc'
+            
+            // The column changed so reset the direction.
+            } else {
+                next[id].column = action.column
+                next[id].direction = state[id].defaltDir
+            }
+            return next
+        case 'table.order.positionReset':
+            id = action.id
+            if (state[id].position) {
+                next = {...state}
+                delete next[id].position
+                delete next[id].positionRowId
+                return next
+            } else {
+                return state
+            }
+        default:
+            return state
+        }
+    },
+    'upload.fileList': (state =[], action) => {
+        switch(action.type) {
+        case 'upload.fileList.selected':
+            return action.fileList
+        default:
+            return state
+        }
+    },
+    'upload.formatShow': (state = {}, action) => {
+        let next
+        switch(action.type) {
+        case 'upload.formatShow.toggle':
+            next = {...state}
+            if (state[action.id] === undefined) {
+                next[action.id] = true
+            } else {
+                next[action.id] = !state[action.id]
             }
             return next
         default:
             return state
         }
     },
-    'upload': (state = null, action) => {
-        switch(action.type) {
-        case 'upload.selected':
-            return action.files
-        default:
+    'upload.idSeq': (state = '5', action) => { // TODO set to 1 later
+        if (action.type === 'upload.idSeq.assign') {
+            return (parseInt(state, 10) + 1).toString()
+        } else {
             return state
         }
     },
-    'upload.formatShow': (state = {}, action) => {
-        let next = {...state}
+    'upload.table': (state = {
+            1: {
+                id: 1,
+                name: 'myBadData.tsv',
+                size: 149.3,
+                status: 'Error'
+            },
+            2: {
+                id: 2,
+                name: 'myCanceledUpload.tsv',
+                size: 201.9,
+                status: 'Canceled'
+            },
+            3: {
+                id: 3,
+                name: 'ExampleMetadata.tab',
+                size: 446.2,
+                format: 'metadata',
+                status: '08/02/2018'
+            },
+            4: {
+                id: 4,
+                name: 'ExampleFeature.tab',
+                size: 964.2,
+                format: 'featureMatrix',
+                status: '08/01/2018'
+            },
+
+        }, action) => {
+        
+        let next
         switch(action.type) {
-        case 'upload.formatShow.toggle':
-            if (state[action.id] === undefined) {
-                next[action.id] = true
-            } else {
-                next[action.id] = !state[action.id]
-            }
+        case 'upload.table.cancel':
+            next = {...state}
+            next[action.id].status = 'Canceled'
+            return next
+        case 'upload.table.delete':
+            next = {...state}
+            delete next[action.id]
+            return next
+        case 'upload.table.download':
+        case 'upload.table.load':
+            return action.tableData
+        case 'upload.table.uploading':
+            next = {...state}
+            next[action.id] = action.data
             return next
         default:
             return state
@@ -151,7 +235,7 @@ export const init = () => {
         combineReducers(reducers), /* preloadedState, */
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
-    rxInit(store)
+    rx(store)
     return store
     /* eslint-enable */
 }
