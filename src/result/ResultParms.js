@@ -13,10 +13,7 @@ const createDetail = (text) => {
         <div>
             {
                 text.map((line, i) =>
-                    <Typography
-                        variant='caption'
-                        key={i}
-                    >
+                    <Typography variant='caption' key={i}>
                         {line}
                     </Typography>
                 )
@@ -26,17 +23,15 @@ const createDetail = (text) => {
 }
 
 const ResultParms = (id, text, detailShow, classes, onSummaryClick ) => {
-    
-    let detail = createDetail(text)
     let comp =
         <GrowPanel
             id={id}
-            data={{}}
+            data={{ id: id }}
             summaryText='Parameters'
-            detail={detail}
+            detail={createDetail(text)}
             detailShow={detailShow}
             summaryStyle={{ marginTop: '-0.35rem' }}
-            detailStyle={{ marginLeft: '0px', marginBottom: '0.5rem' }}
+            detailStyle={{ marginLeft: '0px', marginBottom: '1rem' }}
             classes={classes}
             onClick={onSummaryClick}
         />

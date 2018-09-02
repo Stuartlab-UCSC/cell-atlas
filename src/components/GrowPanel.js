@@ -33,6 +33,7 @@ const styles = theme => ({
 });
 
 const details = (id, detail, detailShow, detailStyle, classes) => {
+
     // The collapsable area.
     if (!detail) {
         return null
@@ -72,24 +73,26 @@ const Hr = ({ show }) => {
 }
 
 const GrowPanel = ({ id, summaryText, detail, detailShow, dividerShow,
-    summaryStyle, detailStyle, classes, onClick } ) => (
-
-    <div>
-        <div
-            className={classes.summary}
-            data-id={id}
-            style={summaryStyle}
-            onClick={onClick}
-        >
-            <Typography className={classes.summaryText}>
-                {summaryText}
-            </Typography>
-            {icon(detailShow, classes)}
+    summaryStyle, detailStyle, classes, onClick } ) => {
+    
+    return (
+        <div>
+            <div
+                className={classes.summary}
+                data-id={id}
+                style={summaryStyle}
+                onClick={onClick}
+            >
+                <Typography className={classes.summaryText}>
+                    {summaryText}
+                </Typography>
+                {icon(detailShow, classes)}
+            </div>
+            {details(id, detail, detailShow, detailStyle, classes)}
+            <Hr show={dividerShow} />
         </div>
-        {details(id, detail, detailShow, detailStyle, classes)}
-        <Hr show={dividerShow} />
-    </div>
-)
+    )
+}
 
 GrowPanel.propTypes = {
     id: PropTypes.string.isRequired,

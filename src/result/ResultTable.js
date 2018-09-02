@@ -39,11 +39,8 @@ const onButtonClick = (ev) => {
 }
 
 const onParmClick = (ev) => {
-    let id = ev.target.closest('.summary').dataset.id
-    rxSet('result.parmShow.toggle', {id} )
-    //let data = ev.target.closest('.summary').dataset
-    //console.log('dataset:', data)
-    //rxSet('result.parmShow.toggle', { id: parseInt(data.id, 10) } )
+    let data = ev.target.closest('.summary').dataset
+    rxSet('result.parmShow.toggle', { id: data.id } )
 }
 
 const createTableRow = ({id, name, analysis, parms, date, result,
@@ -117,7 +114,7 @@ const getHead = (state) => {
     const head = [
         { id: 'name'     , numeric: false, label: 'Name' },
         { id: 'analysis' , numeric: false, label: 'Analysis' },
-        { id: 'parms'    , numeric: false, label: '' },
+        { id: 'parmObj'    , numeric: false, label: '' },
         { id: 'date'     , numeric: false, label: 'Date' },
         { id: 'result'   , numeric: true , label: 'Result' },
         { id: 'status'   , numeric: false, label: 'Status' },

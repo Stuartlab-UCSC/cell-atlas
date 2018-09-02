@@ -21,10 +21,9 @@ const uploadState = {
     'upload.formatShow': (state = {}, action) => {
         switch(action.type) {
         case 'upload.formatShow.toggle':
-            return {
-                ...state,
-                id: (state[action.id] === undefined) ? true : !state[action.id]
-            }
+            let next = {...state}
+                next[action.id] = (state[action.id] === undefined) ? true : !state[action.id]
+            return next
         default:
             return state
         }

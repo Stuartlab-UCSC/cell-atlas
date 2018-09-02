@@ -35,18 +35,16 @@ const resultState = {
     ]}, action) => {
 
        // With status changes, retain the same order so the row stays in place.
-        let index, next
+        let next
+        let id = parseInt(action.id, 10)
         switch(action.type) {
         case 'result.table.cancel':
             next = {...state}
-            index = rowIndex(action.id, state.data)
-            next.data[index].status = 'Canceled'
-            delete next.order
+            next.data[rowIndex(id , state.data)].status = 'Canceled'
             return next
         case 'result.table.delete':
             next = {...state}
-            index = rowIndex(action.id, state.data)
-            next.data.splice(index, 1)
+            next.data.splice(rowIndex(id, state.data), 1)
             return next
         case 'result.table.sorted':
             return { data: action.data, order: action.order }
@@ -60,14 +58,11 @@ const resultState = {
         }
     },
     'result.parmShow': (state = {}, action) => {
-        let next = {...state}
+        let id = parseInt(action.id, 10)
         switch(action.type) {
         case 'result.parmShow.toggle':
-            if (state[action.id] === undefined) {
-                next[action.id] = true
-            } else {
-                next[action.id] = !state[action.id]
-            }
+            let next = {...state}
+            next[id] = (state[id] === undefined) ? true : !state[id]
             return next
         default:
             return state

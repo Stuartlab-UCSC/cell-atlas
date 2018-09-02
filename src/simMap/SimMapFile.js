@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     return {
         advanced: false, // TODO
         feature: {
-            id: 'feature',
+            id: 'simMapFeatureFile',
             label: 'Layout features *',
             listValue: 'oneFeatureFile.tsv',
             urlValue: 'http://someFeature.com',
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
             list: featureList,
         },
         metadata: {
-            id: 'metadata',
+            id: 'simMapMetadataFile',
             label: 'Coloring metadata',
             listValue: 'yetAnotherMetadataFile.tsv',
             urlValue: 'http://someMetadata.com',
@@ -53,8 +53,9 @@ const mapDispatchToProps = (dispatch) => {
         onSummaryClick: ev => {
             const id = ev.target.closest('.summary').dataset.id
             dispatch({
-                type: (id === 'metadata') ?
-                    'createMap.metadataShow.toggle' : 'createMap.featureShow.toggle'
+                type: (id === 'simMapMetadataFile') ?
+                    'createMap.metadataShow.toggle' :
+                    'createMap.featureShow.toggle'
             })
         },
         onChange: (ev, key) => {
