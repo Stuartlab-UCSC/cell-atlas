@@ -40,7 +40,7 @@ const onButtonClick = (ev) => {
 
 const onParmClick = (ev) => {
     let id = ev.target.closest('.summary').dataset.id
-    set('result.parmShow.toggle', {id} )
+    rxSet('result.parmShow.toggle', {id} )
     //let data = ev.target.closest('.summary').dataset
     //console.log('dataset:', data)
     //rxSet('result.parmShow.toggle', { id: parseInt(data.id, 10) } )
