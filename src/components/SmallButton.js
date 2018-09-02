@@ -9,12 +9,12 @@ import { Link } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
 
-const SmallButton = ({ action, label, variant, linkTo, href, onClick }) => {
+const SmallButton = ({ id, action, label, variant, linkTo, href, onClick }) => {
     const labelVal = label || action
     const color = (variant === 'flat') ? 'primary' : 'secondary'
     
     // Separate those with a link and those without because we cannot supply
-    // a null or undefined value to the component property. Note that link
+    // a null or undefined value to the "component" property. Note that link
     // is more responsive than href.
     if (linkTo) {
         return (
@@ -24,6 +24,7 @@ const SmallButton = ({ action, label, variant, linkTo, href, onClick }) => {
                 component={Link}
                 to={linkTo}
                 data-action={action}
+                data-id={id}
                 size='small'
                 variant={variant}
                 onClick={onClick}
@@ -37,6 +38,7 @@ const SmallButton = ({ action, label, variant, linkTo, href, onClick }) => {
                 className='action'
                 color={color}
                 data-action={action}
+                data-id={id}
                 href={href}
                 size='small'
                 variant={variant}
@@ -50,6 +52,7 @@ const SmallButton = ({ action, label, variant, linkTo, href, onClick }) => {
 
 SmallButton.propTypes = {
     action: PropTypes.string.isRequired,
+    id: PropTypes.string,
     href: PropTypes.string,
     label: PropTypes.string,
     linkTo: PropTypes.string,

@@ -4,6 +4,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -11,12 +12,6 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
 import MatrixHead from 'components/MatrixHead'
-
-function getSorting(order, orderBy) {
-    return order === 'desc' ?
-        (a, b) => ((b[orderBy] > a[orderBy]) ? 1 : -1) :
-        (a, b) => ((b[orderBy] < a[orderBy]) ? 1 : -1)
-}
 
 const styles = theme => ({
     row: {
@@ -27,10 +22,14 @@ const styles = theme => ({
 })
 
 const dataVal = (val, j, numeric, background) => {
-
-    // Set the background color if one was supplied for this column.
     let style = null
-    if (background) {
+    let formattedVal = val
+    if (val === 'toBeDetermined') {
+        formattedVal =
+            <Typography variant='caption'>
+                {val}
+            </Typography>
+    } else if (background) {
         if (background.column === j) {
             style = {backgroundColor: background.color}
         }
@@ -41,7 +40,7 @@ const dataVal = (val, j, numeric, background) => {
             key={j}
             style={style}
         >
-            {val}
+            {formattedVal}
         </TableCell>
     return comp
 }
@@ -67,7 +66,7 @@ const tableBody = (data, head, classes) => {
     let comp
     if (data.length < 1) {
     
-        // With no data, give a message.
+        // With no data, give a message to that effect.
         comp =
             <TableBody>
                 <TableRow
@@ -92,20 +91,8 @@ const tableBody = (data, head, classes) => {
     return comp
 }
 
-const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
+const Matrix = ({ table, head, width, classes, onRequestSort }) => {
 
-    // Sort the rows.
-    data.sort(getSorting(order.direction, order.column))
-
-    // Restore the position of a row if requested.
-    if (order.position) {
-        const fromPos = data.findIndex(row => {
-            return row.id === order.positionRowId
-        })
-        const row = data[fromPos]
-        data.splice(fromPos, 1)
-        data.splice(order.position, 0, row)
-    }
     return (
         <Paper style={{width: width}}>
             <Table
@@ -113,22 +100,21 @@ const Matrix = ({ data, head, order, width, classes, onRequestSort }) => {
             >
                 <MatrixHead
                     head={head}
-                    order={order}
+                    order={table.order}
                     onRequestSort={onRequestSort}
                 />
-                {tableBody(data, head, classes)}
+                {tableBody(table.data, head, classes)}
             </Table>
         </Paper>
     )
 }
 
 Matrix.propTypes = {
-    data: PropTypes.array.isRequired,
+    table: PropTypes.object.isRequired,
     head: PropTypes.array.isRequired,
-    order: PropTypes.object.isRequired,
-    width: PropTypes.node,
     classes: PropTypes.object.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
+    width: PropTypes.node,
+    onRequestSort: PropTypes.func,
 }
 
 export default withStyles(styles)(Matrix)

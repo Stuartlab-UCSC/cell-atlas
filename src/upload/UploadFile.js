@@ -14,40 +14,42 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onChange: (ev) => {
             
-            // Save the file list in state after converting
-            // it to an array of file objects.
+            // Add each file to the table while transforming the list into
+            // a standard array of {id: uploadFileId, fileObj: fileObj }.
             let fileListObj = ev.target.files
             let fileList = []
             for (let key in fileListObj) {
                 if (!isNaN(key)) {
-                    fileList.push(fileListObj[key])
+
+                    // Get an ID for this file and increment the ID in state.
+                    const id = rxGet('upload.idSeq')
+                    dispatch({ type: 'upload.idSeq.assign' })
+                    
+                    // Add this id and fileObj to a normal array.
+                    let fileObj = fileListObj[key]
+                    fileList.push({ id, fileObj })
+                    
+                    // Add this file to the table state.
+                    dispatch({
+                        type: 'upload.table.uploading',
+                        id,
+                        data: {
+                            id,
+                            name: fileObj.name,
+                            size: fileObj.size,
+                        }
+                    })
                 }
             }
+            
+            // Reset the progress indicator.
+            dispatch({ type: 'upload.progress.reset'})
+            
+            // Save the fileList to state.
             dispatch({
                 type: 'upload.fileList.selected',
                 fileList,
             })
-            
-            // Add each file to the table state.
-            for (let fileEntry in fileList) {
-
-                // Get an ID for this file and increment the ID in state.
-                const id = rxGet('upload.idSeq')
-                dispatch({ type: 'upload.idSeq.assign' })
-                
-                // Add this file to the table state.
-                let file = fileList[fileEntry]
-                dispatch({
-                    type: 'upload.table.uploading',
-                    id,
-                    data: {
-                        id,
-                        name: file.name,
-                        size: file.size,
-                        status: 'Uploading',
-                    }
-                })
-            }
         },
     }
 }

@@ -4,12 +4,14 @@
 import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
-import { set as rxSet } from 'app/rx'
-import { checkFetchStatus, parseFetchedJson, fetchError } from 'app/util'
+import { get as rxGet, set as rxSet } from 'app/rx'
+import { tableSortCompare } from 'app/util'
+//import { checkFetchStatus, fetchError, parseFetchedJson, tableSortCompare }
+//    from 'app/util'
 
 // TODO put in config
-const HUB_URL = 'http://localhost:5000'  // TODO
-const USER = 'swat_soe.ucsc.edu'
+//const HUB_URL = 'http://localhost:5000'  // TODO
+//const USER = 'swat_soe.ucsc.edu'
 
 const backgrounds = {    // bootstrap message colors
     Complete: '#D8EECE', // green
@@ -20,44 +22,27 @@ const backgrounds = {    // bootstrap message colors
 const onButtonClick = (ev) => {
     
     // Handle the button click outside of the normal flow because the Matrix
-    // component simply passes through cell details as received.
-    let action = ev.target.closest('button').dataset.action
-    
-    // Save the row's position or clear the save position,
-    // depending on the action button pressed.
-    let rowData = ev.target.closest('.row').dataset
-    if (action === 'cancel') {
-    
-        // Save the row's position so its position will be
-        // restored after any sort on status.
-        rxSet('upload.order.position', {
-            position: rowData.position,
-            positionRowId: rowData.id,
-        })
-    } else {
-        
-        // Clear any leftover stored row position.
-        rxSet('upload.order.positionReset')
-    }
+    // component simply passes through cell details as a black box.
+    let data = ev.target.closest('button').dataset
     
     // Perform the action on the row.
-    rxSet('upload.table.' + action, { id: rowData.id })
+    rxSet('upload.table.' + data.action, { id: parseInt(data.id, 10) })
 }
 
 const createTableRow = ({ id, name, size, format, status }) => {
+
+    // Transform the state table data into the presentational component format.
     
     // Define the buttons depending on the status.
     let group = []
+    let idStr = id.toString()
     if (status === 'Uploading') {
-        group.push({ action: 'cancel', onClick: onButtonClick })
-        //remove = createButton('cancel')
+        group.push({ id: idStr, action: 'cancel', onClick: onButtonClick })
     } else {
-        //remove = createButton('delete')
         if (status !== 'Error' && status !== 'Canceled') {
-            group.push({ action: 'download', onClick: onButtonClick })
-            //download = createButton('Download')
+            group.push({ id: idStr, action: 'download', onClick: onButtonClick })
         }
-        group.push({ action: 'delete', onClick: onButtonClick })
+        group.push({ id: idStr, action: 'delete', onClick: onButtonClick })
     }
     
     // Group all of the action buttons.
@@ -80,6 +65,7 @@ const createTableRow = ({ id, name, size, format, status }) => {
     return { id, name, size, format, status, action, background }
 }
 
+/*
 const fetchData = (state) => {
 
     // Fetch the table data from the server.
@@ -107,20 +93,21 @@ const fetchData = (state) => {
         .then(loadData)
         .catch(fetchError)
 }
+*/
 
 const getData = (state) => {
 
-    // Populate the table.
-    const stateData = state['upload.table']
-    let tableRows = []
-    for (let id in stateData) {
-        tableRows.push(createTableRow(stateData[id]))
+    // Get the table data and order.
+    const table = state['upload.table']
+    let data = table.data.map(stateRow => {
+        return createTableRow(stateRow)
+    })
+    if (!data) {
+        data = [] // TODO
+        //data = fetchData(state)
     }
-    if (tableRows.length < 1) {
-        tableRows = []
-        //tableRows = fetchData(state)
-    }
-    return tableRows
+    
+    return { data, order: table.order }
 }
 
 const getHead = (state) => {
@@ -136,21 +123,39 @@ const getHead = (state) => {
 
 const mapStateToProps = (state) => {
     return {
-        data: getData(state),
+        table: getData(state),
         head: getHead(state),
-        order: state['upload.order'],
         width: 850,
         classes: { row: 'row' },
     }
 }
 
+const updateOrderBy = (property, prev) => {
+
+    // Update the order given the new column and previous order.
+    let next = { property, direction: 'desc' }
+    
+    // If the column is the same, toggle direction.
+    if (prev && prev.property === property && prev.direction === 'desc') {
+        next.direction = 'asc'
+    }
+    return next
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
-            dispatch({
-                type: 'upload.order.column',
-                column: ev.target.closest('th').dataset.id,
-            })
+        
+            // Get the current data and sort order.
+            let table = rxGet('upload.table')
+            let data = table.data.slice()
+
+            let order =
+                updateOrderBy(ev.target.closest('th').dataset.id, table.order)
+
+            // Sort and save the sorted data to state.
+            data.sort(tableSortCompare(order.property, order.direction))
+            dispatch({ type: 'upload.table.sorted', data, order })
         },
     }
 }

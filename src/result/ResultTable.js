@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import ResultParms from 'result/ResultParms'
 import TableButtonGroup from 'components/TableButtonGroup'
-import { set } from 'app/rx'
+import { get as rxGet, set as rxSet } from 'app/rx'
+import { tableSortCompare } from 'app/util'
 
 // Action reference by result type.
 const resultActionRef = {
@@ -30,55 +31,54 @@ const growPanelClasses = {
 const onButtonClick = (ev) => {
 
     // Handle the button click outside of the normal flow because the Matrix
-    // component simply passes through the cell details as received.
-    let id = ev.target.closest('.row').dataset.id
-    let action = ev.target.closest('.action').dataset.action
-    console.log('onButtonClick id, action:', id, action)
-    switch (action) {
-        case 'iew':
-        case 'download':
-        case 'copy':
-        case 'cancel':
-        case 'delete':
-        default:
-    }
+    // component simply passes through cell details as a black box.
+    let data = ev.target.closest('button').dataset
+    
+    // Perform the action on the row.
+    rxSet('result.table.' + data.action, { id: parseInt(data.id, 10) })
 }
 
 const onParmClick = (ev) => {
     let id = ev.target.closest('.summary').dataset.id
     set('result.parmShow.toggle', {id} )
+    //let data = ev.target.closest('.summary').dataset
+    //console.log('dataset:', data)
+    //rxSet('result.parmShow.toggle', { id: parseInt(data.id, 10) } )
 }
 
-const createData = (name, analysis, parmText, date, result, status, state) => {
+const createTableRow = ({id, name, analysis, parms, date, result,
+    status}, state) => {
 
     // All results get a view parameters control.
-    let parmShow = state['result.parmShow'][name] || false
-    let parms = ResultParms(name, parmText, parmShow, growPanelClasses,
-        onParmClick )
+    let idStr = id.toString()
+    let parmShow = state['result.parmShow'][id] || false
+    let parmObj = ResultParms(idStr, parms, parmShow, growPanelClasses,
+        onParmClick)
 
     // Define the download or view button depending status and the analysis.
-    let buttonGroup = []
+    let group = []
     if (status === 'Success') {
         const resultAction = resultActionRef[analysis]
         if (resultAction === 'download') {
-            buttonGroup.push({ action: 'download', onClick: onButtonClick })
+            group.push({ id: idStr, action: 'download', onClick: onButtonClick })
         } else if (resultAction === 'view' && analysis === 'map') {
-            buttonGroup.push({ action: 'download', href: 'http://localhost:3333' })
+            group.push({ id: idStr, action: 'download', href: 'http://localhost:3333' })
         }
     }
 
     // All results get a copy button.
-    buttonGroup.push({ action: 'copy', link: '/analyze'})
+    group.push({ id: idStr, action: 'copy', linkTo: 'analyze/' + analysis })
+    
 
-    // Define the remove button depending on the result status.
+    // Define the cancel/delete button depending on the result status.
     if (status === 'Running') {
-        buttonGroup.push({ action:'cancel', onClick: onButtonClick })
+        group.push({ id: idStr, action:'cancel', onClick: onButtonClick })
     } else {
-        buttonGroup.push({ action:'delete', onClick: onButtonClick })
+        group.push({ id: idStr, action:'delete', onClick: onButtonClick })
     }
 
     // Group all of the action buttons.
-    let actions = TableButtonGroup({ group: buttonGroup })
+    let actions = TableButtonGroup({ group: group })
 
     // Define the background based on the status.
     let background = null
@@ -94,18 +94,23 @@ const createData = (name, analysis, parmText, date, result, status, state) => {
         }
     }
     
-    return {name, analysis, parms, date, result, status, actions, background}
+    return {id, name, analysis, parmObj, date, result, status, actions, background}
 }
 
 const getData = (state) => {
-    const rows = [
-        createData('myMap'            , 'map'       , ['mapName: swat_soe.ucsc.edu', 'layoutFeatures: myClusteringData.tsv'], '08/08/2018', '----'    , 'Running', state),
-        createData('myTrajectory'     , 'trajectory', [], '08/03/2018', '----'   , 'Canceled', state),
-        createData('anotherTrajectory', 'trajectory', [], '07/08/2018', '01.9 KB', 'Success' , state),
-        createData('anotherMap'       , 'map'       , [], '06/02/2018', '----'   , 'Success' , state),
-        createData('oneMoreTrajectory', 'trajectory', [], '06/06/2018', '----'   , 'Error'   , state),
-    ]
-    return rows
+
+    // Get the table data and order.
+    const table = state['result.table']
+
+    let data = table.data.map(stateRow => {
+        return createTableRow(stateRow, state)
+    })
+    if (!data) {
+        data = [] // TODO
+        //data = fetchData(state)
+    }
+    
+    return { data, order: table.order }
 }
 
 const getHead = (state) => {
@@ -123,23 +128,41 @@ const getHead = (state) => {
 
 const mapStateToProps = (state) => {
     return {
-        data: getData(state),
+        table: getData(state),
         head: getHead(state),
-        parmShow: state['upload.parmShow'],
-        order: state['result.order'],
+        parmShow: state['result.parmShow'],
         width: '100%',
         classes: { row: 'row' },
         growPanelClasses,
     }
 }
 
+const updateOrderBy = (property, prev) => {
+
+    // Update the order given the new column and previous order.
+    let next = { property, direction: 'desc' }
+    
+    // If the column is the same, toggle direction.
+    if (prev && prev.property === property && prev.direction === 'desc') {
+        next.direction = 'asc'
+    }
+    return next
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onRequestSort: (ev) => {
-            dispatch({
-                type: 'result.order.column',
-                column: ev.target.closest('th').dataset.id,
-            })
+        
+            // Get the current data and sort order.
+            let table = rxGet('result.table')
+            let data = table.data.slice()
+
+            let order =
+                updateOrderBy(ev.target.closest('th').dataset.id, table.order)
+
+            // Sort and save the sorted data to state.
+            data.sort(tableSortCompare(order.property, order.direction))
+            dispatch({ type: 'result.table.sorted', data, order })
         },
     }
 }

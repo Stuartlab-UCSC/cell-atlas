@@ -26,7 +26,9 @@ const TableButtonGroup = ({group}) => {
                     <SmallButton
                         key = {i}
                         action={info.action}
+                        id = {info.id}
                         href={info.href}
+                        linkTo={info.linkTo}
                         variant='flat'
                         onClick={info.onClick}
                     />

@@ -6,43 +6,17 @@
 // Where <state-bit> is one of the below.
 // Example:  rx.get('layout.name')
 const statePieces =  [ // eslint-disable-line
-    'createMap.metadataShow',
-    'createMap.featureShow',
-    'doNotTrack',
-    'navBar',
-    'result.parmShow',
-    'result.order',
+    'createMap.metadataShow', // show metadata section on createMap
+    'createMap.featureShow', // show feature section on createMap
+    'doNotTrack', // save the user browser preference for this
+    'navBar', // handle navigation bar actions
+    'result.parmShow', // show an operation's parameters on the result page
+    'result.order', 
     'upload.fileList',
     'upload.formatShow',
     'upload.idSeq',
-    'upload.order',
     'upload.table',
     'user',
-]
-
-// Actions on state. used with rx.set().
-// Usage:  rx.set(<action>, <opts>)
-// Where <action> is one of the below, <opts> are defined in rxInternal.js.
-// Example:  rx.set('layout.nameSelected', { name: 'RPPA' })
-// Actions ending with 'loadPersist' are written to localStore and bookmarks.
-export const stateActions = [
-    'createMap.metadataShow.toggle',
-    'createMap.featureShow.toggle',
-    'doNotTrack.displayed',
-    'doNotTrack.loadPersist',
-    'navBar.select',
-    'result.parmShow.toggle',
-    'upload.order.column',
-    'upload.fileList.selected',
-    'upload.formatShow.toggle',
-    'upload.idSeq.assign',
-    'upload.table.load',
-    'upload.table.cancel',
-    'upload.table.delete',
-    'upload.table.download',
-    'upload.table.uploading',
-    'user.login',
-    'user.logout',
 ]
 
 // The global redux state.

@@ -4,6 +4,7 @@
 import { connect } from 'react-redux'
 import { get as rxGet } from 'app/rx'
 import UploadTransferPres from 'upload/UploadTransferPres'
+import { isoToday } from 'app/util'
 
 const mapStateToProps = (state) => {
     return {
@@ -16,67 +17,52 @@ const mapStateToProps = (state) => {
     }
 }
 
+const currentFileId = () => {
+    return rxGet('upload.fileList')[0].id
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onProgress: ev => {
-            //console.log('onProgress:ev.loaded,total:', ev.loaded, ev.total)
-            //console.log('ev:', ev)
-            // TODO what is the file identifier?
-            /*
             if (ev.lengthComputable) {
                 dispatch({
-                    type: 'upload.progress',
+                    type: 'upload.progress.update',
                     loaded: ev.loaded,
                     total: ev.total,
                 })
             }
-            */
         },
         onLoad: ev => {
-        
-            // This is a successful upload.
-            //console.log('onLoad:ev.loaded,total:', ev.loaded, ev.total)
-            //console.log('ev:', ev)
-            //const fileObj = rxGet('upload.fileList')[0]
-            //console.log('fileObj:', fileObj)
-            /*
+    
+            // A successful upload.
             dispatch({
                 type: 'upload.table.success',
-                name: rx.get('upload.fileList')[0].name }
-            }
-            */
+                id: currentFileId(),
+                date: isoToday(),
+            })
         },
         onLoadEnd: ev => {
             
-            // Upload is complete, success or failure.
-            // So start the next upload if there is one.
-            
-            /*
+            // Upload of file is complete, after success or failure.
+            // Start the next upload.
             dispatch({
                 type: 'upload.fileList.pop',
             })
-            */
         },
         onTimeout: ev => {
-            console.log('onTimeout:ev.loaded,total:', ev.loaded, ev.total)
-            console.log('ev:', ev)
+            dispatch({
+                type: 'upload.table.error',
+                id: currentFileId(),
+            })
         },
         onAbort: ev => {
             console.log('onAbort:ev.loaded,total:', ev.loaded, ev.total)
-            console.log('ev:', ev)
         },
         onError: ev => {
-            console.log('onAbort:ev.loaded,total:', ev.loaded, ev.total)
-            console.log('ev:', ev)
-            /*
-            var error = normalizeErrorResponse(errorIn, url);
-            error.error = 'Uploading ' + opts.sourceFile.name +
-                ' failed with: ' + error.error;
-            if (opts.error) {
-                opts.error(error);
-            }
-            rx.set('uploading.done');
-            */
+            dispatch({
+                type: 'upload.table.error',
+                id: currentFileId(),
+            })
         },
     }
 }

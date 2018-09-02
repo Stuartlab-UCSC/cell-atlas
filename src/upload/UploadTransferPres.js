@@ -17,7 +17,7 @@ const UploadTransferPres = ({ fileList, onProgress, onLoad, onLoadEnd,
     }
     
     // Only upload the first file in the list during this pass.
-    const fileObj = fileList[0]
+    const fileObj = fileList[0].fileObj
 
     // Check the upload size.
     // TODO should be on the server to catch all clients in one place.
