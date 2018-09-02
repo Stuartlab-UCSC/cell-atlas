@@ -42,11 +42,14 @@ const reducers = {
             return state
         }
     },
-    'user': (state = 'swat_soe.ucsc.edu', action) => {
+    'user.email': (state = null, action) => {
         switch(action.type) {
-        case 'user.login':
-            return action.user
-        case 'user.logout':
+        case 'user.email.login':
+            if (action.user) {
+                return action.user
+            }
+            return null
+        case 'user.email.logout':
             return null
         default:
             return state

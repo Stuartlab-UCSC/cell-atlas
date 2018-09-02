@@ -11,7 +11,7 @@ const UPLOAD_MAX_BYTES = 1024 * 1024 * 1024 * UPLOAD_MAX_GIGABYTES
 const UploadTransferPres = ({ fileList, onProgress, onLoad, onLoadEnd,
     onAbort, onTimeout, onError }) => {
     
-    // Upload the file first in line in the list.
+    // Upload one file to the server.
     if (fileList.length < 1) {
         return null
     }
@@ -56,8 +56,12 @@ const UploadTransferPres = ({ fileList, onProgress, onLoad, onLoadEnd,
 
 UploadTransferPres.propTypes = {
     fileList: PropTypes.array.isRequired,
-    onLoad: PropTypes.func.isRequired,
     onProgress: PropTypes.func,
+    onLoad: PropTypes.func,
+    onLoadEnd: PropTypes.func,
+    onAbort: PropTypes.func,
+    onTimeout: PropTypes.func,
+    onError: PropTypes.func,
 }
 
 export default UploadTransferPres

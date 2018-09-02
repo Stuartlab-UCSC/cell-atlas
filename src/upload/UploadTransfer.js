@@ -9,11 +9,7 @@ import { isoToday } from 'app/util'
 const mapStateToProps = (state) => {
     return {
         fileList: state['upload.fileList'],
-        /*
         userSpace: 'swat_soe.ucsc.edu',
-        sourceFile: state[''],
-        targetFile the base file name of the file to save
-        */
     }
 }
 
@@ -51,7 +47,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         onTimeout: ev => {
             dispatch({
-                type: 'upload.table.error',
+                type: 'upload.table.timeout',
                 id: currentFileId(),
             })
         },

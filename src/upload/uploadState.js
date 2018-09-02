@@ -8,7 +8,7 @@ const rowIndex = (id, data) => {
 const defaultTableOrder = { property: 'status', direction: 'desc' }
 
 const uploadState = {
-    'upload.fileList': (state =[], action) => {
+    'upload.fileList': (state = [], action) => {
         switch(action.type) {
         case 'upload.fileList.pop':
             return state.slice(1)
@@ -19,16 +19,12 @@ const uploadState = {
         }
     },
     'upload.formatShow': (state = {}, action) => {
-        let next
         switch(action.type) {
         case 'upload.formatShow.toggle':
-            next = {...state}
-            if (state[action.id] === undefined) {
-                next[action.id] = true
-            } else {
-                next[action.id] = !state[action.id]
+            return {
+                ...state,
+                id: (state[action.id] === undefined) ? true : !state[action.id]
             }
-            return next
         default:
             return state
         }
@@ -56,15 +52,15 @@ const uploadState = {
                 id: 1,
                 name: 'myBadData.tsv',
                 size: 149.3,
-                format: 'toBeDetermined',
+                format: 'TBD',
                 status: 'Error'
             },
             {
                 id: 2,
                 name: 'myCanceledUpload.tsv',
                 size: 201.9,
-                format: 'toBeDetermined',
-                status: 'Canceled'
+                format: 'tbd',
+                status: 'Uploading'
             },
             {
                 id: 3,
@@ -83,18 +79,19 @@ const uploadState = {
         ]}, action) => {
         
         // With status changes, retain the same order so the row stays in place.
-        let index, next
+        // Data and order are combined so when both change, subscribers are only
+        // notified once.
+        let next
+        let id = parseInt(action.id, 10)  // catch most id type mistakes
         switch(action.type) {
         case 'upload.table.cancel':
             next = {...state}
-            index = rowIndex(action.id, state.data)
-            next.data[index].status = 'Canceled'
+            next.data[rowIndex(id, state.data)].status = 'Canceled'
             delete next.order
             return next
         case 'upload.table.delete':
             next = {...state}
-            index = rowIndex(action.id, state.data)
-            next.data.splice(index, 1)
+            next.data.splice(rowIndex(id, state.data), 1)
             return next
         case 'upload.table.sorted':
             return { data: action.data, order: action.order }
@@ -104,16 +101,24 @@ const uploadState = {
                 order: defaultTableOrder,
             }
         case 'upload.table.success':
-            next = {...state}
-            index = rowIndex(action.id, state.data)
-            next.data[index].status = action.date
-            delete next.order
+            next = { data: state.data.slice() }
+            next.data[rowIndex(id, state.data)].status = action.date
+            return next
+        case 'upload.table.error':
+            next = { data: state.data.slice() }
+            next.data[rowIndex(id, state.data)].status = 'Error'
+            return next
+        case 'upload.table.timeout':
+            next = { data: state.data.slice() }
+            next.data[rowIndex(id, state.data)].status = 'Timeout'
             return next
         case 'upload.table.uploading':
             next = {...state}
-            action.data.status = 'Uploading'
-            action.data.format = 'toBeDetermined'
-            next.data.unshift(action.data)
+            next.data.unshift({
+                ...action.data,
+                status: 'Uploading',
+                format: 'TBD',
+            })
             delete next.order
             return next
         default:

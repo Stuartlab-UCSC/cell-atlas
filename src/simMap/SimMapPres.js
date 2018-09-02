@@ -11,6 +11,7 @@ import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
+import Email from 'components/Email'
 import SimMapFile from 'simMap/SimMapFile'
 
 const ZeroFill = (zeroCheck, zeroOnChange) => {
@@ -42,7 +43,19 @@ const ZeroFill = (zeroCheck, zeroOnChange) => {
     return comp
 }
 
-const MapName = (user) => {
+const email = () => {
+    const comp =
+        <Grid container
+            style={{marginBottom: '1rem', marginLeft: '-1rem'}}
+        >
+            <Grid item xs={5}>
+                <Email />
+            </Grid>
+        </Grid>
+    return comp
+}
+
+const mapName = () => {
     const comp =
         <Grid container
             style={{marginLeft: '-1rem'}}
@@ -50,7 +63,7 @@ const MapName = (user) => {
             <Grid item xs={5}>
                 <TextField
                     id='mapName'
-                    label={'Map name: ' + user + '/ *'}
+                    label={'Map name: *'}
                     style={{ width: '100%' }}
                     defaultValue='map'
                 />
@@ -59,7 +72,7 @@ const MapName = (user) => {
     return comp
 }
 
-const BasicOptions = ({ user, zeroCheck, advanced, onZeroChange,
+const BasicOptions = ({ zeroCheck, advanced, onZeroChange,
     onAnalyzeClick }) => {
     
     if (advanced) {
@@ -68,13 +81,14 @@ const BasicOptions = ({ user, zeroCheck, advanced, onZeroChange,
     const comp =
         <React.Fragment>
             <SimMapFile />
-            {MapName(user)}
+            {email()}
+            {mapName()}
             {ZeroFill()}
         </React.Fragment>
     return comp
 }
 
-const SimMapPres = ({ user, zeroCheck, advanced, onZeroChange,
+const SimMapPres = ({ zeroCheck, advanced, onZeroChange,
     onAnalyzeClick } ) => (
     
     <div className='analyzePage pageBody' style={{ width: '50rem' }}>
@@ -84,7 +98,7 @@ const SimMapPres = ({ user, zeroCheck, advanced, onZeroChange,
         >
             Analyze: Create a Map
         </Typography>
-        {BasicOptions({ user, zeroCheck, advanced, onZeroChange,
+        {BasicOptions({ zeroCheck, advanced, onZeroChange,
             onAnalyzeClick })}
         <Typography variant='caption'
             style={{marginTop: '1em'}}
@@ -95,7 +109,6 @@ const SimMapPres = ({ user, zeroCheck, advanced, onZeroChange,
 )
 
 SimMapPres.propTypes = {
-    user: PropTypes.string.isRequired,
     advanced: PropTypes.bool,
     onAnalyzeClick: PropTypes.func.isRequired,
 }

@@ -24,7 +24,7 @@ const styles = theme => ({
 const dataVal = (val, j, numeric, background) => {
     let style = null
     let formattedVal = val
-    if (val === 'toBeDetermined') {
+    if (val === 'toBeDetermined' || val === 'TBD' || val === 'tbd') {
         formattedVal =
             <Typography variant='caption'>
                 {val}

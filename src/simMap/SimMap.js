@@ -8,7 +8,6 @@ import SimMapPres from 'simMap/SimMapPres'
 const mapStateToProps = (state) => {
     return {
         advanced: false, // TODO
-        user: state['user'],
     }
 }
 

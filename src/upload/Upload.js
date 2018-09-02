@@ -2,16 +2,27 @@
 // The upload page.
 
 import React from 'react'
-import { connect } from 'react-redux'
-
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
+import Email from 'components/Email'
 import UploadFile from 'upload/UploadFile'
 import UploadTransfer from 'upload/UploadTransfer'
 import UploadFormat from 'upload/UploadFormat'
 import UploadTable from 'upload/UploadTable'
 
-const UploadPres = ({classes}) => {
+const getEmail = () => {
+    const comp =
+        <Grid container
+            style={{marginBottom: '1rem', marginLeft: '-1rem'}}
+        >
+            <Grid item xs={4}>
+                <Email />
+            </Grid>
+        </Grid>
+    return comp
+}
+
+const Upload = () => {
     return (
         <div className='uploadPage pageBody'>
             <Typography
@@ -20,6 +31,7 @@ const UploadPres = ({classes}) => {
             >
                 Upload Files
             </Typography>
+            {getEmail()}
             <UploadFile />
             <UploadTransfer />
             <UploadFormat />
@@ -28,17 +40,5 @@ const UploadPres = ({classes}) => {
         </div>
     )
 }
-
-const mapStateToProps = (state) => {
-    return {
-        classes: {
-            title: 'title',
-        },
-    }
-}
-
-const Upload = connect(
-    mapStateToProps
-)(UploadPres)
 
 export default Upload

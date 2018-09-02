@@ -7,8 +7,10 @@ import { get as rxGet } from 'app/rx'
 
 const mapStateToProps = (state) => {
     return {
+        email: state['user.email'],
     }
 }
+let savedFilesObjs = []
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -17,6 +19,8 @@ const mapDispatchToProps = (dispatch) => {
             // Add each file to the table while transforming the list into
             // a standard array of {id: uploadFileId, fileObj: fileObj }.
             let fileListObj = ev.target.files
+            savedFilesObjs.push(fileListObj)
+            console.log('fileListObj:', fileListObj)
             let fileList = []
             for (let key in fileListObj) {
                 if (!isNaN(key)) {
@@ -26,15 +30,14 @@ const mapDispatchToProps = (dispatch) => {
                     dispatch({ type: 'upload.idSeq.assign' })
                     
                     // Add this id and fileObj to a normal array.
-                    let fileObj = fileListObj[key]
+                    const fileObj = Object.assign(fileListObj[key])
                     fileList.push({ id, fileObj })
                     
                     // Add this file to the table state.
                     dispatch({
                         type: 'upload.table.uploading',
-                        id,
                         data: {
-                            id,
+                            id: parseInt(id, 10),
                             name: fileObj.name,
                             size: fileObj.size,
                         }
@@ -50,6 +53,13 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'upload.fileList.selected',
                 fileList,
             })
+            
+            // Reset the files value on the element.
+            try {
+                ev.target.value = ''; //for IE11, latest Chrome/Firefox/Opera...
+            } catch(err) { }
+            console.log('savedFilesObjs:', savedFilesObjs)
+
         },
     }
 }

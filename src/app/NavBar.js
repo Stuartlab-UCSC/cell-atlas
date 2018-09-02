@@ -62,7 +62,7 @@ class NavBar extends React.Component {
                     buttonRef={node => {
                         this.anchorEl = node;
                     }}
-                    aria-owns={analyzeOpen ? 'analyzeGrow' : null}
+                    aria-owns={analyzeOpen ? 'analyzeMenuGrow' : null}
                     aria-haspopup="true"
                      style={{
                         textTransform: 'none',
@@ -84,7 +84,7 @@ class NavBar extends React.Component {
                     {({ TransitionProps, placement }) => (
                         <Grow
                             {...TransitionProps}
-                            id='analyzeGrow'
+                            id='analyzeMenuGrow'
                             style={{ transformOrigin: 'left top' }}
                         >
                             <Paper>

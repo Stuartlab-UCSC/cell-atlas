@@ -26,7 +26,7 @@ const onButtonClick = (ev) => {
     let data = ev.target.closest('button').dataset
     
     // Perform the action on the row.
-    rxSet('upload.table.' + data.action, { id: parseInt(data.id, 10) })
+    rxSet('upload.table.' + data.action, { id: data.id })
 }
 
 const createTableRow = ({ id, name, size, format, status }) => {

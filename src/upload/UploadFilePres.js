@@ -9,37 +9,37 @@ import Button from '@material-ui/core/Button'
 const UploadFilePres = ({ onChange} ) => (
     <React.Fragment>
         <input
-            id='feature'
+            id='uploadFeature'
             multiple
             type='file'
             style={{ display: 'none' }}
             onChange={onChange}
         />
-        <label htmlFor='feature'>
+        <label htmlFor='uploadFeature'>
             <Button
                 variant='contained'
                 component='span'
                 color='primary'
                 style={{ marginBottom: '1rem', marginRight: '1rem' }}
             >
-            FEATURES
+                Features
             </Button>
         </label>
         <input
-            id='metadata'
+            id='uploadMetadata'
             multiple
             type='file'
             style={{ display: 'none' }}
             onChange={onChange}
         />
-        <label htmlFor='metadata'>
+        <label htmlFor='uploadMetadata'>
             <Button
                 variant='contained'
                 component='span'
                 color='primary'
                 style={{ marginBottom: '1rem' }}
             >
-            METADATA
+                Metadata
             </Button>
         </label>
     </React.Fragment>
