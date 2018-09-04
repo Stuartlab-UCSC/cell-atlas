@@ -5,92 +5,84 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import GrowPanel from 'components/GrowPanel'
 import MoreButton from 'components/MoreButton'
 
-const detail = (item, classes, onMoreClick) => {
+const detail = (item, onMoreClick) => {
 
-    // The expanded part of a GrowPanel.
+    // The expanded part of the panel.
     let comp =
-        <div>
-            <pre
-                style={{
-                    display: 'inline-Block',
-                    verticalAlign: 'top',
-                    margin: 0,
-                }}
-            >
-                <code style={{ width: '500px' }}>
-                    {item.detailExample}
-                </code>
-            </pre>
-            <Typography
-                style={{
-                    display: 'inline-Block',
-                    width: '500px',
-                    marginLeft: '40px',
-                    verticalAlign: 'top',
-                }}
-            >
-                {item.detailText}
-                <MoreButton
-                    onClick={onMoreClick}
-                />
-            </Typography>
-        </div>
+        <Grid container>
+            <Grid item xs={5}>
+                <pre style={{marginBottom: '0rem', marginTop: '0rem'}}>
+                    <code>
+                        {item.detailExample}
+                    </code>
+                </pre>
+            </Grid>
+            <Grid item xs={5} style={{marginLeft: '1rem', marginRight: '0rem'}}>
+                <Typography style={{marginRight: '-6rem'}}>
+                    {item.detailText}
+                    <MoreButton
+                        onClick={onMoreClick}
+                    />
+                </Typography>
+            </Grid>
+        </Grid>
     return comp
 }
 
-const childPanel = (item, i, detailShow, growPanelClasses, classes,
-    onSummaryClick, onMoreClick) => {
+const childPanel = (item, i, defaultExpanded, onSummaryClick, onMoreClick) => {
     
     // Skip the info for the main panel.
+    //if (!defaultExpanded || item.id === 'main') {
     if (item.id === 'main') {
         return null
     }
-    detailShow = detailShow || false
+    defaultExpanded = defaultExpanded || false
+    console.log('item.id, defaultExpanded:', item.id, defaultExpanded)
     let comp =
         <GrowPanel
-            key={i}
             id={item.id}
+            key={i}
             summaryText={item.summaryText}
-            detail={detail(item, classes, onMoreClick)}
-            detailShow={detailShow}
-            detailStyle={{marginLeft: '2rem'}}
-            classes={growPanelClasses}
+            detail={detail(item, onMoreClick)}
+            defaultExpanded={defaultExpanded || false}
+            detailStyle={{}}
             onClick={onSummaryClick}
         />
     return comp
 }
 
-const UpdateFormatPres = ({ info, detailShow, classes, growPanelClasses,
-    onSummaryClick, onMoreClick } ) => (
-    <div className='LookAtMe' style={{ marginBottom: '1rem' }}>
+const UpdateFormatPres = ({ info, defaultExpanded, onSummaryClick,
+    onMoreClick } ) => {
+    
+    return (
+    <div style={{ marginBottom: '1rem' }}>
         <GrowPanel
             id={info[0].id}
             summaryText={info[0].summaryText}
-            detailShow={detailShow['main'] || false}
-            classes={growPanelClasses}
+            defaultExpanded={defaultExpanded['main']}
             detailStyle={{marginLeft: '2rem'}}
-            onClick={onSummaryClick}
+            onSummaryClick={onSummaryClick}
             detail={
                 info.map((item, i) =>
-                    childPanel(item, i, detailShow[item.id], growPanelClasses,
-                        classes, onSummaryClick, onMoreClick)
+                    childPanel(item, i, defaultExpanded[item.id],
+                        onSummaryClick, onMoreClick)
                 )
             }
         >
         </GrowPanel>
     </div>
-)
+    )
+}
 
 UpdateFormatPres.propTypes = {
     info: PropTypes.array.isRequired,
-    detailShow: PropTypes.object.isRequired,
-    growPanelClasses: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
+    defaultExpanded: PropTypes.object.isRequired,
     onSummaryClick: PropTypes.func.isRequired,
     onMoreClick: PropTypes.func.isRequired,
 }

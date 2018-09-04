@@ -85,9 +85,9 @@ class NavBar extends React.Component {
                         <Grow
                             {...TransitionProps}
                             id='analyzeMenuGrow'
-                            style={{ transformOrigin: 'left top' }}
+                            style={{ transformOrigin: 'top' }}
                         >
-                            <Paper>
+                            <Paper style={{ backgroundColor: 'white' }}>
                                 <ClickAwayListener
                                     onClickAway={this.onAnalyzeClose}
                                 >

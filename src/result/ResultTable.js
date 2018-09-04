@@ -48,8 +48,8 @@ const createTableRow = ({id, name, analysis, parms, date, result,
 
     // All results get a view parameters control.
     let idStr = id.toString()
-    let parmShow = state['result.parmShow'][id] || false
-    let parmObj = ResultParms(idStr, parms, parmShow, growPanelClasses,
+    let defaultExpanded = state['result.parmShow'][id] || false
+    let parmObj = ResultParms(idStr, parms, defaultExpanded, growPanelClasses,
         onParmClick)
 
     // Define the download or view button depending status and the analysis.

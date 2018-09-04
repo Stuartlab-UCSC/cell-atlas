@@ -6,12 +6,12 @@
 // Where <state-bit> is one of the below.
 // Example:  rx.get('layout.name')
 const statePieces =  [ // eslint-disable-line
-    'createMap.metadataShow', // show metadata section on createMap
-    'createMap.featureShow', // show feature section on createMap
     'doNotTrack', // save the user browser preference for this
     'navBar', // handle navigation bar actions
+    'result.order',
     'result.parmShow', // show an operation's parameters on the result page
-    'result.order', 
+    'simMap.featureShow', // show feature section on simMap
+    'simMap.metadataShow', // show metadata section on simMap
     'upload.fileList',
     'upload.formatShow',
     'upload.idSeq',

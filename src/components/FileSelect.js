@@ -65,10 +65,7 @@ const DetailColumnOne = ({id, listValue, list, onChange}) => {
     return comp
 }
 
-const Detail = (id, listValue, urlValue, list, show, onChange) => {
-    if (!show) {
-        return null
-    }
+const Detail = (id, listValue, urlValue, list, onChange) => {
     const comp =
         <div>
             <Grid container>
@@ -95,29 +92,32 @@ const Detail = (id, listValue, urlValue, list, show, onChange) => {
     return comp
 }
 
-const FileSelect = ({ id, listValue, urlValue, list, show, onChange,
-    growPanel }) => (
+const FileSelect = ({ id, listValue, urlValue, list, label, defaultExpanded,
+    onChange, onSummaryClick }) => {
 
+    return (
     <GrowPanel
-        id={id}
-        summaryText={growPanel.label}
-        detail={Detail(id, listValue, urlValue, list, show, onChange)}
-        detailShow={show}
-        dividerShow={growPanel.dividerShow}
+        defaultExpanded={defaultExpanded}
+        detail={Detail(id, listValue, urlValue, list, onChange)}
         detailStyle={{marginLeft: '2rem'}}
-        classes={growPanel.classes}
-        onClick={growPanel.onClick}
+        id={id}
+        summaryText={label}
+        onSummaryClick={onSummaryClick}
     />
-)
+    )
+}
 
 FileSelect.propTypes = {
-    id: PropTypes.string.isRequired,
-    listValue: PropTypes.string.isRequired,
-    urlValue: PropTypes.string.isRequired,
+    // Required
     list: PropTypes.object.isRequired,
-    show: PropTypes.bool,
-    growPanel: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
+    // Not required
+    defaultExpanded: PropTypes.bool,
+    id: PropTypes.string,
+    label: PropTypes.string,
+    listValue: PropTypes.string,
+    urlValue: PropTypes.string,
+    onSummaryClick: PropTypes.func,
 }
 
 export default FileSelect

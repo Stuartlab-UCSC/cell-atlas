@@ -10,7 +10,7 @@ const createDetail = (text) => {
     // The expanded part of a GrowPanel.
     // Where text is an array of text lines.
     let comp =
-        <div>
+        <span>
             {
                 text.map((line, i) =>
                     <Typography variant='caption' key={i}>
@@ -18,22 +18,23 @@ const createDetail = (text) => {
                     </Typography>
                 )
             }
-        </div>
+        </span>
     return comp
 }
 
-const ResultParms = (id, text, detailShow, classes, onSummaryClick ) => {
+
+const ResultParms = (id, text, defaultExpanded, classes, onParmClick ) => {
     let comp =
         <GrowPanel
             id={id}
             data={{ id: id }}
             summaryText='Parameters'
+            summaryStyle={{ marginTop: '-1rem',padding: '0rem', paddingLeft: '1rem' }}
             detail={createDetail(text)}
-            detailShow={detailShow}
-            summaryStyle={{ marginTop: '-0.35rem' }}
-            detailStyle={{ marginLeft: '0px', marginBottom: '1rem' }}
+            defaultExpanded={defaultExpanded}
+            detailStyle={{ marginBottom: '-0.7rem'}}
             classes={classes}
-            onClick={onSummaryClick}
+            onSummaryClick={onParmClick}
         />
 
     return comp

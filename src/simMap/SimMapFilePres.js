@@ -6,8 +6,7 @@ import React from 'react'
 
 import FileSelect from 'components/FileSelect'
 
-const File = ({ advanced, info, classes, linkTo, onSummaryClick,
-    onChange }) => {
+const File = ({ advanced, info, label, onChange, onSummaryClick }) => {
     
     const comp =
         <div style={{marginBottom: '1rem'}}>
@@ -16,52 +15,45 @@ const File = ({ advanced, info, classes, linkTo, onSummaryClick,
                 list={info.list}
                 listValue={info.listValue}
                 urlValue={info.urlValue}
-                show={info.show}
-                classes={classes}
+                label={label}
+                defaultExpanded={info.show}
                 onChange={onChange}
+                onSummaryClick={onSummaryClick}
                 gridColumnWidth={6}
-                linkTo={linkTo}
-                growPanel={{
-                    label: info.label,
-                    classes: {
-                        icon: 'icon',
-                        summary: 'summary',
-                        summaryText: 'summaryText',
-                    },
-                    onClick: onSummaryClick,
-                }}
             />
         </div>
     return comp
 }
 
-const SimMapFilePres = ({ advanced, feature, metadata, classes, onSummaryClick,
-    onChange }) => (
+const SimMapFilePres = ({ advanced, feature, metadata, onChange,
+    onSummaryClick }) => (
     
     <div>
         <File
+            label='LayoutFeatures *'
             advanced={advanced}
             info={feature}
-            classes={classes}
-            onSummaryClick={onSummaryClick}
             onChange={onChange}
+            onSummaryClick={onSummaryClick}
         />
         <File
+            label='Coloring metadata'
             advanced={advanced}
             info={metadata}
-            classes={classes}
-            onSummaryClick={onSummaryClick}
             onChange={onChange}
+            onSummaryClick={onSummaryClick}
         />
     </div>
 )
 
 SimMapFilePres.propTypes = {
-    advanced: PropTypes.bool,
+    // Required
     feature: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
-    onSummaryClick: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    // Not required
+    advanced: PropTypes.bool,
+    onSummaryClick: PropTypes.func,
 }
 
 export default SimMapFilePres;

@@ -23,6 +23,22 @@ const themeData = createMuiTheme({
         fontSize: '16', // 14
     },
     overrides: {
+        MuiPaper: {
+            root: {
+                backgroundColor: 'transparent',
+            },
+        },
+        MuiExpansionPanelSummary: {
+            content: {
+                marginBottom: '-0.2rem',
+                marginTop: '0rem',
+            },        },
+        MuiExpansionPanelDetails: {
+            root: {
+                paddingBottom: '0.3rem',
+                paddingTop: '0.1rem',
+            },
+        },
         MuiGrid: {
             item: {
                 marginBottom: '0.5rem',

@@ -94,13 +94,8 @@ A description of the trajectory format.`,
 const mapStateToProps = (state) => {
     return {
         info,
-        detailShow: state['upload.formatShow'],
+        defaultExpanded: state['upload.formatShow'],
         classes: { main: 'main' },
-        growPanelClasses: {
-            icon: 'icon',
-            summary: 'summary',
-            summaryText: 'summaryText',
-        },
     }
 }
 
@@ -118,8 +113,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-// Connect the value props and eventHandler props
-// to the presentational component.
 const UploadFormat = connect(
     mapStateToProps,
     mapDispatchToProps

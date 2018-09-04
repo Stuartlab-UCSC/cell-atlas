@@ -20,24 +20,18 @@ const ZeroFill = (zeroCheck, zeroOnChange) => {
             style={{marginLeft: '-1rem'}}
         >
             <Grid item xs={5}>
-            <Typography
-                variant='caption'
-                style={{marginTop: '1rem'}}
-            >
-                Missing values
-            </Typography>
-            <FormGroup row>
-                <FormControlLabel
-                    control={
-                        <Switch
-                            checked={zeroCheck}
-                            onChange={zeroOnChange}
-                            value="checkedA"
-                        />
-                    }
-                    label="Replace with zero"
-                />
-            </FormGroup>
+                <FormGroup row>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={zeroCheck}
+                                onChange={zeroOnChange}
+                                value="checkedA"
+                            />
+                        }
+                        label="Fill empty feature values with zero"
+                    />
+                </FormGroup>
             </Grid>
         </Grid>
     return comp

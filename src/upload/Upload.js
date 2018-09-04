@@ -24,7 +24,10 @@ const getEmail = () => {
 
 const Upload = () => {
     return (
-        <div className='uploadPage pageBody'>
+        <div
+            className='uploadPage pageBody'
+            style={{ maxWidth: '60rem'}}
+        >
             <Typography
                 variant='title'
                 style={{ marginBottom: '1rem' }}

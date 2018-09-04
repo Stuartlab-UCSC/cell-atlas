@@ -2,28 +2,14 @@
 
 // Redux implementation.
 
-//import redux from 'redux'
 import { createStore, combineReducers } from 'redux'
 import rx from 'app/rx'
 import resultState from 'result/resultState'
+import simMapState from 'simMap/simMapState'
 import uploadState from 'upload/uploadState'
 
 const reducers = {
 
-    'createMap.metadataShow': (state = true, action) => {
-        if (action.type === 'createMap.metadataShow.toggle') {
-            return !state
-        } else {
-            return state
-        }
-    },
-    'createMap.featureShow': (state = true, action) => {
-        if (action.type === 'createMap.featureShow.toggle') {
-            return !state
-        } else {
-            return state
-        }
-    },
     'doNotTrack': (state = null, action) => {
         switch(action.type) {
         case 'doNotTrack.displayed':
@@ -63,6 +49,7 @@ export const init = () => {
     
     // Combine the other reducers with these local reducers.
     Object.assign(reducers, resultState)
+    Object.assign(reducers, simMapState)
     Object.assign(reducers, uploadState)
 
     // Create the store.

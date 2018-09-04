@@ -125,7 +125,7 @@ const mapStateToProps = (state) => {
     return {
         table: getData(state),
         head: getHead(state),
-        width: 850,
+        width: '100%',
         classes: { row: 'row' },
     }
 }
