@@ -39,7 +39,12 @@ const Upload = () => {
             <UploadTransfer />
             <UploadFormat />
             <UploadTable />
-            
+            <Typography
+                variant='caption'
+                style={{ marginTop: '1rem' }}
+            >
+                TBD = To Be Determined
+            </Typography>
         </div>
     )
 }

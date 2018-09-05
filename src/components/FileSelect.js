@@ -65,11 +65,25 @@ const DetailColumnOne = ({id, listValue, list, onChange}) => {
     return comp
 }
 
-const Detail = (id, listValue, urlValue, list, onChange) => {
+const buildThirdColumn = (thirdColumn, thirdColumnGridSize) => {
+    if (!thirdColumn) {
+        return null
+    }
+    const comp =
+        <Grid item xs={thirdColumnGridSize}>
+            {thirdColumn}
+        </Grid>
+    return comp
+}
+
+const Detail = ({id, listValue, urlValue, list, gridSize, thirdColumn,
+    thirdColumnGridSize, onChange}) => {
+    
+    let xs = gridSize || 6
     const comp =
         <div>
             <Grid container>
-                <Grid item xs={5}
+                <Grid item xs={xs}
                     style={{marginLeft: '0px'}}
                 >
                     <DetailColumnOne
@@ -79,7 +93,7 @@ const Detail = (id, listValue, urlValue, list, onChange) => {
                         onChange={onChange}
                     />
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={xs}>
                     <TextField
                         label='or URL'
                         defaultValue={urlValue}
@@ -87,19 +101,22 @@ const Detail = (id, listValue, urlValue, list, onChange) => {
                         onChange={onChange}
                     />
                 </Grid>
+                {buildThirdColumn(thirdColumn, thirdColumnGridSize)}
             </Grid>
         </div>
     return comp
 }
 
-const FileSelect = ({ id, listValue, urlValue, list, label, defaultExpanded,
-    onChange, onSummaryClick }) => {
+const FileSelect = ({ id, listValue, urlValue, list, label, gridSize,
+    defaultExpanded, thirdColumn, thirdColumnGridSize, onChange,
+    onSummaryClick }) => {
 
     return (
     <GrowPanel
         defaultExpanded={defaultExpanded}
-        detail={Detail(id, listValue, urlValue, list, onChange)}
-        detailStyle={{marginLeft: '2rem'}}
+        detail={Detail({id, listValue, urlValue, list, gridSize, thirdColumn,
+            thirdColumnGridSize, onChange})}
+        detailStyle={{}}
         id={id}
         summaryText={label}
         onSummaryClick={onSummaryClick}
@@ -112,7 +129,9 @@ FileSelect.propTypes = {
     list: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     // Not required
-    defaultExpanded: PropTypes.bool,
+    defaultExpanded: PropTypes.bool, // true to default the detail panel to open
+    thirdColumn: PropTypes.node, // any component to be in the 3rd column
+    gridSize: PropTypes.number,
     id: PropTypes.string,
     label: PropTypes.string,
     listValue: PropTypes.string,

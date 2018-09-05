@@ -32,7 +32,7 @@ const ResultParms = (id, text, defaultExpanded, classes, onParmClick ) => {
             summaryStyle={{ marginTop: '-1rem',padding: '0rem', paddingLeft: '1rem' }}
             detail={createDetail(text)}
             defaultExpanded={defaultExpanded}
-            detailStyle={{ marginBottom: '-0.7rem'}}
+            detailStyle={{ marginBottom: '1rem' }}
             classes={classes}
             onSummaryClick={onParmClick}
         />

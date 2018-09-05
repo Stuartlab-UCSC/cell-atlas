@@ -4,45 +4,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
+import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
-import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
 import Email from 'components/Email'
 import SimMapFile from 'simMap/SimMapFile'
 
-const ZeroFill = (zeroCheck, zeroOnChange) => {
-    const comp =
-        <Grid container
-            style={{marginLeft: '-1rem'}}
-        >
-            <Grid item xs={5}>
-                <FormGroup row>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={zeroCheck}
-                                onChange={zeroOnChange}
-                                value="checkedA"
-                            />
-                        }
-                        label="Fill empty feature values with zero"
-                    />
-                </FormGroup>
-            </Grid>
-        </Grid>
-    return comp
-}
-
 const email = () => {
     const comp =
         <Grid container
             style={{marginBottom: '1rem', marginLeft: '-1rem'}}
         >
-            <Grid item xs={5}>
+            <Grid item xs={4}>
                 <Email />
             </Grid>
         </Grid>
@@ -54,7 +29,7 @@ const mapName = () => {
         <Grid container
             style={{marginLeft: '-1rem'}}
         >
-            <Grid item xs={5}>
+            <Grid item xs={4}>
                 <TextField
                     id='mapName'
                     label={'Map name: *'}
@@ -77,15 +52,13 @@ const BasicOptions = ({ zeroCheck, advanced, onZeroChange,
             <SimMapFile />
             {email()}
             {mapName()}
-            {ZeroFill()}
         </React.Fragment>
     return comp
 }
 
-const SimMapPres = ({ zeroCheck, advanced, onZeroChange,
-    onAnalyzeClick } ) => (
+const SimMapPres = ({ zeroCheck, advanced, onZeroChange, onAnalyzeClick } ) => (
     
-    <div className='analyzePage pageBody' style={{ width: '50rem' }}>
+    <div className='analyzePage pageBody' style={{ maxWidth: '60rem'}}>
         <Typography
             variant='title'
             style={{ marginBottom: '1rem' }}
@@ -99,6 +72,15 @@ const SimMapPres = ({ zeroCheck, advanced, onZeroChange,
         >
             * Required
         </Typography>
+        <Button
+            variant='contained'
+            component='span'
+            color='primary'
+            onClick={onAnalyzeClick}
+            style={{ marginTop: '1rem' }}
+        >
+            Build Map
+        </Button>
     </div>
 )
 

@@ -3,10 +3,12 @@
 
 import PropTypes from 'prop-types'
 import React from 'react'
-
+import Switch from '@material-ui/core/Switch'
+import Typography from '@material-ui/core/Typography'
 import FileSelect from 'components/FileSelect'
 
-const File = ({ advanced, info, label, onChange, onSummaryClick }) => {
+const File = ({ advanced, info, label, zeroReplace,
+    onChange, onSummaryClick }) => {
     
     const comp =
         <div style={{marginBottom: '1rem'}}>
@@ -16,23 +18,41 @@ const File = ({ advanced, info, label, onChange, onSummaryClick }) => {
                 listValue={info.listValue}
                 urlValue={info.urlValue}
                 label={label}
+                gridSize={4}
+                thirdColumn={zeroReplace}
+                thirdColumnGridSize={2}
                 defaultExpanded={info.show}
                 onChange={onChange}
                 onSummaryClick={onSummaryClick}
-                gridColumnWidth={6}
             />
         </div>
     return comp
 }
 
-const SimMapFilePres = ({ advanced, feature, metadata, onChange,
-    onSummaryClick }) => (
+const ZeroReplace = (zeroReplace, onZeroReplaceChange) => {
+    const comp =
+        <React.Fragment>
+            <Typography variant='caption'>
+                Zero fill empty values
+            </Typography>
+            <Switch
+                checked={zeroReplace}
+                onChange={onZeroReplaceChange}
+                value='zeroReplace'
+            />
+        </React.Fragment>
+    return comp
+}
+
+const SimMapFilePres = ({ advanced, feature, metadata, zeroReplace, onChange,
+    onZeroReplaceChange, onSummaryClick }) => (
     
     <div>
         <File
             label='LayoutFeatures *'
             advanced={advanced}
             info={feature}
+            zeroReplace={ZeroReplace(zeroReplace, onZeroReplaceChange)}
             onChange={onChange}
             onSummaryClick={onSummaryClick}
         />
@@ -47,13 +67,13 @@ const SimMapFilePres = ({ advanced, feature, metadata, onChange,
 )
 
 SimMapFilePres.propTypes = {
-    // Required
+    advanced: PropTypes.bool,
     feature: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
+    zeroReplace: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
-    // Not required
-    advanced: PropTypes.bool,
     onSummaryClick: PropTypes.func,
+    onZeroReplaceChange: PropTypes.func,
 }
 
 export default SimMapFilePres;

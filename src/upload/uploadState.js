@@ -58,7 +58,7 @@ const uploadState = {
                 id: 2,
                 name: 'myCanceledUpload.tsv',
                 size: 201.9,
-                format: 'tbd',
+                format: 'TBD',
                 status: 'Uploading'
             },
             {

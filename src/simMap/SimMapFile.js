@@ -43,6 +43,7 @@ const mapStateToProps = (state) => {
             show: state['simMap.metadataShow'],
             urlValue: 'http://someMetadata.com',
         },
+        zeroReplace: state['simMap.zeroReplace'],
     }
 }
 
@@ -55,6 +56,9 @@ const mapDispatchToProps = (dispatch) => {
                     'simMap.metadataShow.toggle' :
                     'simMap.featureShow.toggle'
             })
+        },
+        onZeroReplaceChange: (ev) => {
+            dispatch ({ type: 'simMap.zeroReplace.toggle' })
         },
         onChange: (ev, key) => {
             //console.log('onChange key:', key)

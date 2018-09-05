@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onAnalyzeClick: ev => {
-            console.log('more on dataset-id', ev.target.closest('.details').dataset.id)
+            console.log('Build Map button was clicked')
         },
     }
 }

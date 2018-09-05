@@ -43,7 +43,6 @@ const childPanel = (item, i, defaultExpanded, onSummaryClick, onMoreClick) => {
         return null
     }
     defaultExpanded = defaultExpanded || false
-    console.log('item.id, defaultExpanded:', item.id, defaultExpanded)
     let comp =
         <GrowPanel
             id={item.id}

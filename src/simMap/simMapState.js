@@ -15,6 +15,13 @@ const reducers = {
             return state
         }
     },
+    'simMap.zeroReplace': (state = false, action) => {
+        if (action.type === 'simMap.zeroReplace.toggle') {
+            return !state
+        } else {
+            return state
+        }
+    },
 }
 
 export default reducers
