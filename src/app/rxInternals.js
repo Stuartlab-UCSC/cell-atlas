@@ -4,6 +4,7 @@
 
 import { createStore, combineReducers } from 'redux'
 import rx from 'app/rx'
+import { aboutState } from 'home/About'
 import resultState from 'result/resultState'
 import simMapState from 'simMap/simMapState'
 import uploadState from 'upload/uploadState'
@@ -48,6 +49,7 @@ export const init = () => {
     // Create the redux actions.
     
     // Combine the other reducers with these local reducers.
+    Object.assign(reducers, aboutState)
     Object.assign(reducers, resultState)
     Object.assign(reducers, simMapState)
     Object.assign(reducers, uploadState)

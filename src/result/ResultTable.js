@@ -8,12 +8,6 @@ import TableButtonGroup from 'components/TableButtonGroup'
 import { get as rxGet, set as rxSet } from 'app/rx'
 import { tableSortCompare } from 'app/util'
 
-// Action reference by result type.
-const resultActionRef = {
-    map: 'view',
-    trajectory: 'download',
-}
-
 const backgrounds = {    // bootstrap message colors
     Success: '#D8EECE',  // green
     Error: '#EDD4D5',    // pink
@@ -55,12 +49,8 @@ const createTableRow = ({id, name, analysis, parms, date, result,
     // Define the download or view button depending status and the analysis.
     let group = []
     if (status === 'Success') {
-        const resultAction = resultActionRef[analysis]
-        if (resultAction === 'download') {
-            group.push({ id: idStr, action: 'download', onClick: onButtonClick })
-        } else if (resultAction === 'view' && analysis === 'map') {
-            group.push({ id: idStr, action: 'download', href: 'http://localhost:3333' })
-        }
+        group.push({ id: idStr, action: 'view', href: 'http://localhost:3333' })
+        group.push({ id: idStr, action: 'download', onClick: onButtonClick })
     }
 
     // All results get a copy button.
@@ -77,21 +67,25 @@ const createTableRow = ({id, name, analysis, parms, date, result,
     // Group all of the action buttons.
     let actions = TableButtonGroup({ group: group })
 
-    // Define the background based on the status.
-    let background = null
+    // Define the chip based on the status.
+    let chip = null
     if (status === 'Error' || status === 'Canceled') {
-        background = {
+        chip = {
             column: statusColumn,
             color: backgrounds[status]
         }
-    } else if (status !== 'Running') {
-        background = {
+    } else if (status === 'Running') {
+        chip = {
+            column: statusColumn,
+        }
+    } else {
+        chip = {
             column: statusColumn,
             color: backgrounds.Success
         }
     }
     
-    return {id, name, analysis, parmObj, date, result, status, actions, background}
+    return {id, name, analysis, parmObj, date, result, status, actions, chip}
 }
 
 const getData = (state) => {

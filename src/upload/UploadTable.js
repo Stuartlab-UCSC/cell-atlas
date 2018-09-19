@@ -48,21 +48,25 @@ const createTableRow = ({ id, name, size, format, status }) => {
     // Group all of the action buttons.
     let action = TableButtonGroup({ group })
 
-    // Define the background based on the status.
-    let background = null
+    // Define the chip based on the status.
+    let chip = null
     if (status === 'Error' || status === 'Canceled') {
-        background = {
+        chip = {
             column: 3,
             color: backgrounds[status]
         }
-    } else if (status !== 'Uploading') {
-        background = {
+    } else if (status === 'Uploading') {
+        chip = {
+            column: 3,
+        }
+    } else {
+        chip = {
             column: 3,
             color: backgrounds.Complete
         }
     }
 
-    return { id, name, size, format, status, action, background }
+    return { id, name, size, format, status, action, chip }
 }
 
 /*
@@ -160,8 +164,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-// Connect the value props and eventHandler props
-// to the presentational component.
 const UploadTable = connect(
     mapStateToProps,
     mapDispatchToProps

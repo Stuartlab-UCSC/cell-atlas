@@ -4,6 +4,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -21,7 +22,7 @@ const styles = theme => ({
     },
 })
 
-const dataVal = (val, j, numeric, background) => {
+const dataVal = (val, j, numeric, chip) => {
     let style = null
     let formattedVal = val
     if (val === 'TBD') {
@@ -29,9 +30,13 @@ const dataVal = (val, j, numeric, background) => {
             <Typography variant='caption'>
                 {val}
             </Typography>
-    } else if (background) {
-        if (background.column === j) {
-            style = {backgroundColor: background.color}
+    } else if (chip) {
+        if (chip.column === j) {
+            formattedVal =
+                <Chip
+                    label={val}
+                    style = {{backgroundColor: chip.color, marginTop: '-0.5rem'}}
+                />
         }
     }
     const comp =
@@ -56,7 +61,7 @@ const dataRow = (row, i, head, classes) => {
             data-id={row.id}
         >
             {head.map((col, j) =>
-                dataVal(row[col.id], j, col.numeric, row.background)
+                dataVal(row[col.id], j, col.numeric, row.chip)
             )}
         </TableRow>
     return comp

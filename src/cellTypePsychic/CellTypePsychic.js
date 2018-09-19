@@ -3,7 +3,7 @@ import React from 'react'
 
 const CellTypePsychic = () => (
     <div className='pageBody'>
-        <h3>(Cell Type Psychic Page)</h3>
+        <h3>(Analyze: Cell Type Psychic)</h3>
     </div>
 )
 

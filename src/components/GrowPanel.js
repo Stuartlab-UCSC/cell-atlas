@@ -1,6 +1,6 @@
 
 // A panel that expands for details.
-// Much like a material-ui Expansion Panel, but more control over spacing.
+// A wrapper around the material-ui Expansion Panel, with our options.
 
 import PropTypes from 'prop-types'
 import React from 'react'

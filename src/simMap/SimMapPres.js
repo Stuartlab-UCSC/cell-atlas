@@ -63,7 +63,7 @@ const SimMapPres = ({ zeroCheck, advanced, onZeroChange, onAnalyzeClick } ) => (
             variant='title'
             style={{ marginBottom: '1rem' }}
         >
-            Analyze: Create a Map
+            Analyze: Map Molecular Similarity
         </Typography>
         {BasicOptions({ zeroCheck, advanced, onZeroChange,
             onAnalyzeClick })}

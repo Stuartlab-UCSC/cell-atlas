@@ -16,8 +16,6 @@ const themeData = createMuiTheme({
     typography: {
        fontFamily: [
             'sans-serif',
-            '-apple-system',
-            'BlinkMacSystemFont',
             'Arial',
         ].join(','), //""Roboto", "Helvetica", "Arial", sans-serif"
         fontSize: '16', // 14

@@ -92,12 +92,12 @@ class NavBar extends React.Component {
                                     onClickAway={this.onAnalyzeClose}
                                 >
                                     <MenuList>
-                                        {this.menuItem('Map',
-                                            '/analyze/simMap')}
+                                        {this.menuItem('Trajectory Similarity',
+                                            '/analyze/trajSim')}
                                         {this.menuItem('Cell Type Psychic',
-                                            '/analyze/cellTypePsychic')}
-                                        {this.menuItem('Trajectory',
-                                            '/analyze/trajectory')}
+                                            '/analyze/typePsych')}
+                                        {this.menuItem('Molecular Similarity',
+                                            '/analyze/molecularSim')}
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>

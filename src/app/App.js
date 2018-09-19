@@ -36,9 +36,9 @@ const App = () => {
                         <Switch>
                             <Route exact path='/' component={Home}/>
                             <Route path='/upload' component={Upload}/>
-                            <Route path='/analyze/simMap' component={SimMap}/>
-                            <Route path='/analyze/cellTypePsychic' component={CellTypePsychic}/>
-                            <Route path='/analyze/trajectory' component={Trajectory}/>
+                            <Route path='/analyze/molecularSim' component={SimMap}/>
+                            <Route path='/analyze/typePsych' component={CellTypePsychic}/>
+                            <Route path='/analyze/trajSim' component={Trajectory}/>
                             <Route path='/result' component={Result}/>
                             <Route path='/help' component={Help}/>
                             <Route component={PageNotFound} />
@@ -50,7 +50,5 @@ const App = () => {
     </Provider>
     )
 }
-/*
-*/
 
 export default App
