@@ -7,8 +7,8 @@ import Switch from '@material-ui/core/Switch'
 import Typography from '@material-ui/core/Typography'
 import FileSelect from 'components/FileSelect'
 
-const File = ({ advanced, info, label, zeroReplace,
-    onChange, onSummaryClick }) => {
+const File = ({ advanced, info, label, zeroReplace, onChange,
+    onSummaryClick }) => {
     
     const comp =
         <div style={{marginBottom: '1rem'}}>
@@ -20,7 +20,6 @@ const File = ({ advanced, info, label, zeroReplace,
                 label={label}
                 gridSize={4}
                 thirdColumn={zeroReplace}
-                thirdColumnGridSize={2}
                 defaultExpanded={info.show}
                 onChange={onChange}
                 onSummaryClick={onSummaryClick}
@@ -33,7 +32,7 @@ const ZeroReplace = (zeroReplace, onZeroReplaceChange) => {
     const comp =
         <React.Fragment>
             <Typography variant='caption'>
-                Zero fill empty values
+                Zero fill empty values in matrix
             </Typography>
             <Switch
                 checked={zeroReplace}
@@ -44,7 +43,7 @@ const ZeroReplace = (zeroReplace, onZeroReplaceChange) => {
     return comp
 }
 
-const SimMapFilePres = ({ advanced, feature, metadata, zeroReplace, onChange,
+const MoleSimFilePres = ({ advanced, feature, metadata, zeroReplace, onChange,
     onZeroReplaceChange, onSummaryClick }) => (
     
     <div>
@@ -66,7 +65,7 @@ const SimMapFilePres = ({ advanced, feature, metadata, zeroReplace, onChange,
     </div>
 )
 
-SimMapFilePres.propTypes = {
+MoleSimFilePres.propTypes = {
     advanced: PropTypes.bool,
     feature: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
@@ -76,4 +75,4 @@ SimMapFilePres.propTypes = {
     onZeroReplaceChange: PropTypes.func,
 }
 
-export default SimMapFilePres;
+export default MoleSimFilePres;

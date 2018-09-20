@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField'
 const EmailPres = ({user, onMouseOut}) => {
     return (
         <TextField
-            label='Email address (owner of files, results)'
+            label='Email address'
             style={{ width: '100%' }}
             defaultValue={user}
             onMouseOut={onMouseOut}

@@ -6,47 +6,64 @@ import React from 'react'
 
 import Button from '@material-ui/core/Button'
 
-const UploadFilePres = ({ onChange} ) => (
+const FileInput = ({ id, label, marginRight, onChange }) => {
+
+    const buttonStyle = { marginBottom: '1rem' }
+    if (marginRight) {
+        buttonStyle.marginRight = marginRight
+    }
+    const comp =
     <React.Fragment>
         <input
-            id='uploadFeature'
+            id={id}
             multiple
             type='file'
             style={{ display: 'none' }}
             onChange={onChange}
         />
-        <label htmlFor='uploadFeature'>
+        <label htmlFor={id}>
             <Button
                 variant='contained'
                 component='span'
                 color='primary'
-                style={{ marginBottom: '1rem', marginRight: '1rem' }}
+                style={buttonStyle}
             >
-                Features
-            </Button>
-        </label>
-        <input
-            id='uploadMetadata'
-            multiple
-            type='file'
-            style={{ display: 'none' }}
-            onChange={onChange}
-        />
-        <label htmlFor='uploadMetadata'>
-            <Button
-                variant='contained'
-                component='span'
-                color='primary'
-                style={{ marginBottom: '1rem' }}
-            >
-                Metadata
+                {label}
             </Button>
         </label>
     </React.Fragment>
-)
+
+    return comp
+}
+
+FileInput.propTypes = {
+    id: PropTypes.string.isRequired,    // unique identifier
+    label: PropTypes.string.isRequired, // text to appear on button
+    marginRight: PropTypes.string,      // size of right margin, like '1rem'
+    onChange: PropTypes.func,           // function to call on file selection
+}
+
+const UploadFilePres = ({ onChange }) => {
+
+    return (
+        <React.Fragment>
+        <FileInput
+                id='uploadFeature'
+                label='Features'
+                marginRight='2rem'
+                onChange={onChange}
+            />
+            <FileInput
+                id='uploadMetadata'
+                label='Metadata'
+                onChange={onChange}
+            />
+        </React.Fragment>
+    )
+}
 
 UploadFilePres.propTypes = {
-    onChange: PropTypes.func,
+    onChange: PropTypes.func,           // function to call on file selection
 }
 
 export default UploadFilePres;

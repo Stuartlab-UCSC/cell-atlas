@@ -1,9 +1,9 @@
 
-// The similarity map analysis file selection, logic and state.
+// The trajectory similarity file selection, logic and state.
 
 import { connect } from 'react-redux'
 
-import SimMapFilePres from 'simMap/SimMapFilePres'
+import TrajSimFilePres from 'trajSim/TrajSimFilePres'
 
 const featureList = {
     yours: [
@@ -30,20 +30,19 @@ const mapStateToProps = (state) => {
     return {
         advanced: false, // TODO
         feature: {
-            id: 'simMapFeatureFile',
+            id: 'trajSimFeatureFile',
             list: featureList,
             listValue: 'oneFeatureFile.tsv',
-            show: state['simMap.featureShow'],
+            show: state['trajSim.featureShow'],
             urlValue: 'http://someFeature.com',
         },
         metadata: {
-            id: 'simMapMetadataFile',
+            id: 'trajSimMetadataFile',
             list: metadataList,
             listValue: 'yetAnotherMetadataFile.tsv',
-            show: state['simMap.metadataShow'],
+            show: state['trajSim.metadataShow'],
             urlValue: 'http://someMetadata.com',
         },
-        zeroReplace: state['simMap.zeroReplace'],
     }
 }
 
@@ -52,13 +51,10 @@ const mapDispatchToProps = (dispatch) => {
         onSummaryClick: ev => {
             const id = ev.target.closest('.summary').dataset.id
             dispatch({
-                type: (id === 'simMapMetadataFile') ?
-                    'simMap.metadataShow.toggle' :
-                    'simMap.featureShow.toggle'
+                type: (id === 'trajSimMetadataFile') ?
+                    'trajSim.metadataShow.toggle' :
+                    'trajSim.featureShow.toggle'
             })
-        },
-        onZeroReplaceChange: (ev) => {
-            dispatch ({ type: 'simMap.zeroReplace.toggle' })
         },
         onChange: (ev, key) => {
             //console.log('onChange key:', key)
@@ -69,10 +65,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const SimMapFile = connect(
+const TrajSimFile = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SimMapFilePres)
+)(TrajSimFilePres)
 
-export default SimMapFile
+export default TrajSimFile
 

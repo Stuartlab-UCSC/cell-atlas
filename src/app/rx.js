@@ -10,8 +10,8 @@ const statePieces =  [ // eslint-disable-line
     'navBar', // handle navigation bar actions
     'result.order',
     'result.parmShow', // show an operation's parameters on the result page
-    'simMap.featureShow', // show feature section on simMap
-    'simMap.metadataShow', // show metadata section on simMap
+    'moleSim.featureShow', // show feature section on moleSim
+    'moleSim.metadataShow', // show metadata section on moleSim
     'upload.fileList',
     'upload.formatShow',
     'upload.idSeq',

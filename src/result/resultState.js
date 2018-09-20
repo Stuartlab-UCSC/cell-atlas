@@ -17,7 +17,7 @@ const resultState = {
     },
     'result.table': (state = { order: defaultTableOrder, data: [
         {id: 1,
-            name: 'myMap', analysis: 'simMap', date: '2018-08-08', result: '----', status: 'Canceled',
+            name: 'myMap', analysis: 'moleSim', date: '2018-08-08', result: '----', status: 'Canceled',
             parms: ['mapName: swat_soe.ucsc.edu', 'layoutFeatures: myClusteringData.tsv']
         },
         {id: 2, name: 'myTrajectory', analysis: 'trajectory', date: '2018-08-03', result: '----', status: 'Running',
@@ -26,10 +26,10 @@ const resultState = {
         {id: 3, name: 'anotherTrajectory', analysis: 'trajectory', date: '2018-08-07', result: 1.9, status: 'Success',
             parms: ['mapName: swat_soe.ucsc.edu', 'layoutFeatures: myClusteringData.tsv']
         },
-        {id: 4, name: 'anotherMap', analysis: 'simMap', date: '2018-06-02', result: '----', status: 'Success',
+        {id: 4, name: 'anotherMap', analysis: 'moleSim', date: '2018-06-02', result: '----', status: 'Success',
             parms: ['mapName: swat_soe.ucsc.edu', 'layoutFeatures: myClusteringData.tsv']
         },
-        {id: 5, name: 'myCellTypes', analysis: 'cellTypePsychic', date: '2018-06-06', result: '----', status: 'Error',
+        {id: 5, name: 'myCellTypes', analysis: 'typePsych', date: '2018-06-06', result: '----', status: 'Error',
             parms: ['mapName: swat_soe.ucsc.edu', 'layoutFeatures: myClusteringData.tsv']
         },
     ]}, action) => {

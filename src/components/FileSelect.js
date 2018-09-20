@@ -65,19 +65,19 @@ const DetailColumnOne = ({id, listValue, list, onChange}) => {
     return comp
 }
 
-const buildThirdColumn = (thirdColumn, thirdColumnGridSize) => {
+const buildThirdColumn = (thirdColumn) => {
     if (!thirdColumn) {
         return null
     }
     const comp =
-        <Grid item xs={thirdColumnGridSize}>
+        <Grid item xs>
             {thirdColumn}
         </Grid>
     return comp
 }
 
 const Detail = ({id, listValue, urlValue, list, gridSize, thirdColumn,
-    thirdColumnGridSize, onChange}) => {
+    onChange}) => {
     
     let xs = gridSize || 6
     const comp =
@@ -101,21 +101,20 @@ const Detail = ({id, listValue, urlValue, list, gridSize, thirdColumn,
                         onChange={onChange}
                     />
                 </Grid>
-                {buildThirdColumn(thirdColumn, thirdColumnGridSize)}
+                {buildThirdColumn(thirdColumn)}
             </Grid>
         </div>
     return comp
 }
 
 const FileSelect = ({ id, listValue, urlValue, list, label, gridSize,
-    defaultExpanded, thirdColumn, thirdColumnGridSize, onChange,
-    onSummaryClick }) => {
+    defaultExpanded, thirdColumn, onChange, onSummaryClick }) => {
 
     return (
     <GrowPanel
         defaultExpanded={defaultExpanded}
         detail={Detail({id, listValue, urlValue, list, gridSize, thirdColumn,
-            thirdColumnGridSize, onChange})}
+            onChange})}
         detailStyle={{}}
         id={id}
         summaryText={label}

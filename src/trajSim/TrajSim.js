@@ -1,28 +1,25 @@
 
-// The similarity map analysis, logic and state.
+// The trajectory similarity analysis, logic and state.
 
 import { connect } from 'react-redux'
-
-import SimMapPres from 'simMap/SimMapPres'
+import TrajSimPres from 'trajSim/TrajSimPres'
 
 const mapStateToProps = (state) => {
     return {
-        advanced: false, // TODO
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onAnalyzeClick: ev => {
-            console.log('Build Map button was clicked')
+            console.log('analyze button was clicked')
         },
     }
 }
 
-const SimMap = connect(
+const TrajSim = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SimMapPres)
+)(TrajSimPres)
 
-export default SimMap
-
+export default TrajSim

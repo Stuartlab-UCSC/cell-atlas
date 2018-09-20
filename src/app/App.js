@@ -11,9 +11,9 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import Help from 'home/Help'
 import Home from 'home/Home'
-import SimMap from 'simMap/SimMap'
-import CellTypePsychic from 'cellTypePsychic/CellTypePsychic'
-import Trajectory from 'trajectory/Trajectory'
+import MoleSim from 'moleSim/MoleSim'
+import TypePsych from 'typePsych/TypePsych'
+import TrajSim from 'trajSim/TrajSim'
 import Result from 'result/Result'
 import PageNotFound from 'home/PageNotFound'
 import { init as rxInit } from 'app/rxInternals'
@@ -36,9 +36,9 @@ const App = () => {
                         <Switch>
                             <Route exact path='/' component={Home}/>
                             <Route path='/upload' component={Upload}/>
-                            <Route path='/analyze/molecularSim' component={SimMap}/>
-                            <Route path='/analyze/typePsych' component={CellTypePsychic}/>
-                            <Route path='/analyze/trajSim' component={Trajectory}/>
+                            <Route path='/analyze/molecularSim' component={MoleSim}/>
+                            <Route path='/analyze/typePsych' component={TypePsych}/>
+                            <Route path='/analyze/trajSim' component={TrajSim}/>
                             <Route path='/result' component={Result}/>
                             <Route path='/help' component={Help}/>
                             <Route component={PageNotFound} />

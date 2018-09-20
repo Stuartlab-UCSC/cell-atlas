@@ -9,9 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
-import Email from 'components/Email'
-import SimMapFile from 'simMap/SimMapFile'
+//import Email from 'components/Email'
+import MoleSimFile from 'moleSim/MoleSimFile'
 
+/*
 const email = () => {
     const comp =
         <Grid container
@@ -23,7 +24,7 @@ const email = () => {
         </Grid>
     return comp
 }
-
+*/
 const mapName = () => {
     const comp =
         <Grid container
@@ -49,44 +50,45 @@ const BasicOptions = ({ zeroCheck, advanced, onZeroChange,
     }
     const comp =
         <React.Fragment>
-            <SimMapFile />
-            {email()}
+            <MoleSimFile />
             {mapName()}
         </React.Fragment>
     return comp
 }
 
-const SimMapPres = ({ zeroCheck, advanced, onZeroChange, onAnalyzeClick } ) => (
+const MoleSimPres = ({ zeroCheck, advanced, onZeroChange, onAnalyzeClick } ) => {
     
-    <div className='analyzePage pageBody' style={{ maxWidth: '60rem'}}>
-        <Typography
-            variant='title'
-            style={{ marginBottom: '1rem' }}
-        >
-            Analyze: Map Molecular Similarity
-        </Typography>
-        {BasicOptions({ zeroCheck, advanced, onZeroChange,
-            onAnalyzeClick })}
-        <Typography variant='caption'
-            style={{marginTop: '1em'}}
-        >
-            * Required
-        </Typography>
-        <Button
-            variant='contained'
-            component='span'
-            color='primary'
-            onClick={onAnalyzeClick}
-            style={{ marginTop: '1rem' }}
-        >
-            Build Map
-        </Button>
-    </div>
-)
+        return (
+            <div className='analyzePage pageBody' style={{ maxWidth: '60rem'}}>
+                <Typography
+                    variant='title'
+                    style={{ marginBottom: '1rem' }}
+                >
+                    Analyze: Map Molecular Similarity
+                </Typography>
+                {BasicOptions({ zeroCheck, advanced, onZeroChange,
+                    onAnalyzeClick })}
+                <Typography variant='caption'
+                    style={{marginTop: '1em'}}
+                >
+                    * Required
+                </Typography>
+                <Button
+                    variant='contained'
+                    component='span'
+                    color='primary'
+                    onClick={onAnalyzeClick}
+                    style={{ marginTop: '1rem' }}
+                >
+                    Build Map
+                </Button>
+            </div>
+        )
+}
 
-SimMapPres.propTypes = {
+MoleSimPres.propTypes = {
     advanced: PropTypes.bool,
     onAnalyzeClick: PropTypes.func.isRequired,
 }
 
-export default SimMapPres;
+export default MoleSimPres;

@@ -94,11 +94,11 @@ class NavBar extends React.Component {
                                     <MenuList>
                                         {this.menuItem('Trajectory Similarity',
                                             '/analyze/trajSim')}
-                                        {this.menuItem('Cell Type Psychic',
-                                            '/analyze/typePsych')}
                                         {this.menuItem('Molecular Similarity',
                                             '/analyze/molecularSim')}
-                                    </MenuList>
+                                        {this.menuItem('Cell Type Psychic',
+                                            '/analyze/typePsych')}
+                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>
                         </Grow>

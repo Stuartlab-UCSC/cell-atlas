@@ -5,8 +5,9 @@
 import { createStore, combineReducers } from 'redux'
 import rx from 'app/rx'
 import { aboutState } from 'home/About'
+import moleSimState from 'moleSim/moleSimState'
 import resultState from 'result/resultState'
-import simMapState from 'simMap/simMapState'
+import trajSimState from 'trajSim/trajSimState'
 import uploadState from 'upload/uploadState'
 
 const reducers = {
@@ -50,8 +51,9 @@ export const init = () => {
     
     // Combine the other reducers with these local reducers.
     Object.assign(reducers, aboutState)
+    Object.assign(reducers, moleSimState)
     Object.assign(reducers, resultState)
-    Object.assign(reducers, simMapState)
+    Object.assign(reducers, trajSimState)
     Object.assign(reducers, uploadState)
 
     // Create the store.

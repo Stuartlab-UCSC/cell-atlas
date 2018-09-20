@@ -2,14 +2,15 @@
 // The upload page.
 
 import React from 'react'
-import Grid from '@material-ui/core/Grid';
+//import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Email from 'components/Email'
+//import Email from 'components/Email'
 import UploadFile from 'upload/UploadFile'
 import UploadTransfer from 'upload/UploadTransfer'
 import UploadFormat from 'upload/UploadFormat'
 import UploadTable from 'upload/UploadTable'
 
+/*
 const getEmail = () => {
     const comp =
         <Grid container
@@ -21,6 +22,7 @@ const getEmail = () => {
         </Grid>
     return comp
 }
+*/
 
 const Upload = () => {
     return (
@@ -34,7 +36,6 @@ const Upload = () => {
             >
                 Upload Files
             </Typography>
-            {getEmail()}
             <UploadFile />
             <UploadTransfer />
             <UploadFormat />
