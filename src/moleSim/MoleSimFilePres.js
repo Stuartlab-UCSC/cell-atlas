@@ -1,78 +1,41 @@
 
-// The similarity map file selection, the presentational component.
+// Molecular similarity map file selection: presentation
 
 import PropTypes from 'prop-types'
 import React from 'react'
-import Switch from '@material-ui/core/Switch'
-import Typography from '@material-ui/core/Typography'
-import FileSelect from 'components/FileSelect'
+import InputFile from 'inputFile/InputFile'
+import InputFileMatrixZero from 'inputFile/InputFileMatrixZero'
 
-const File = ({ advanced, info, label, zeroReplace, onChange,
-    onSummaryClick }) => {
+const MoleSimFilePres = ({ feature, metadata, zero, onChange,
+    onZeroChange, onSummaryClick }) => {
     
-    const comp =
-        <div style={{marginBottom: '1rem'}}>
-            <FileSelect
-                id={info.id}
-                list={info.list}
-                listValue={info.listValue}
-                urlValue={info.urlValue}
-                label={label}
+    return (
+        <div>
+            <InputFileMatrixZero
+                data={feature}
+                zero={zero}
                 gridSize={4}
-                thirdColumn={zeroReplace}
-                defaultExpanded={info.show}
+                onChange={onChange}
+                onZeroChange={onZeroChange}
+                onSummaryClick={onSummaryClick}
+            />
+            <InputFile
+                data={metadata}
+                gridSize={4}
                 onChange={onChange}
                 onSummaryClick={onSummaryClick}
             />
         </div>
-    return comp
+    )
 }
-
-const ZeroReplace = (zeroReplace, onZeroReplaceChange) => {
-    const comp =
-        <React.Fragment>
-            <Typography variant='caption'>
-                Zero fill empty values in matrix
-            </Typography>
-            <Switch
-                checked={zeroReplace}
-                onChange={onZeroReplaceChange}
-                value='zeroReplace'
-            />
-        </React.Fragment>
-    return comp
-}
-
-const MoleSimFilePres = ({ advanced, feature, metadata, zeroReplace, onChange,
-    onZeroReplaceChange, onSummaryClick }) => (
-    
-    <div>
-        <File
-            label='LayoutFeatures *'
-            advanced={advanced}
-            info={feature}
-            zeroReplace={ZeroReplace(zeroReplace, onZeroReplaceChange)}
-            onChange={onChange}
-            onSummaryClick={onSummaryClick}
-        />
-        <File
-            label='Coloring metadata'
-            advanced={advanced}
-            info={metadata}
-            onChange={onChange}
-            onSummaryClick={onSummaryClick}
-        />
-    </div>
-)
 
 MoleSimFilePres.propTypes = {
-    advanced: PropTypes.bool,
     feature: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
-    zeroReplace: PropTypes.bool,
+    zero: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     onSummaryClick: PropTypes.func,
-    onZeroReplaceChange: PropTypes.func,
+    onZeroChange: PropTypes.func,
 }
 
 export default MoleSimFilePres;

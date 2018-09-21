@@ -34,7 +34,7 @@ const onButtonClick = (ev) => {
 
 const onParmClick = (ev) => {
     let data = ev.target.closest('.summary').dataset
-    rxSet('result.parmShow.toggle', { id: data.id } )
+    rxSet('result.parm.expand.toggle', { id: data.id } )
 }
 
 const createTableRow = ({id, name, analysis, parms, date, result,
@@ -42,7 +42,7 @@ const createTableRow = ({id, name, analysis, parms, date, result,
 
     // All results get a view parameters control.
     let idStr = id.toString()
-    let defaultExpanded = state['result.parmShow'][id] || false
+    let defaultExpanded = state['result.parm.expand'][id] || false
     let parmObj = ResultParms(idStr, parms, defaultExpanded, growPanelClasses,
         onParmClick)
 
@@ -121,7 +121,7 @@ const mapStateToProps = (state) => {
     return {
         table: getData(state),
         head: getHead(state),
-        parmShow: state['result.parmShow'],
+        parmShow: state['result.parm.expand'],
         width: '100%',
         classes: { row: 'row' },
         growPanelClasses,

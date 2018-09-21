@@ -1,51 +1,30 @@
 
 
-// The trajectory similarity file selection, the presentational component.
+// Trajectory similarity analysis file selection: presentation
 
 import PropTypes from 'prop-types'
 import React from 'react'
-import Switch from '@material-ui/core/Switch'
-import Typography from '@material-ui/core/Typography'
-import FileSelect from 'components/FileSelect'
+import InputFile from 'inputFile/InputFile'
 
-const File = ({ advanced, info, label, zeroReplace, onChange,
-    onSummaryClick }) => {
-    
-    const comp =
-        <div style={{marginBottom: '1rem'}}>
-            <FileSelect
-                id={info.id}
-                list={info.list}
-                listValue={info.listValue}
-                urlValue={info.urlValue}
-                label={label}
-                gridSize={4}
-                thirdColumn={zeroReplace}
-                defaultExpanded={info.show}
-                onChange={onChange}
-                onSummaryClick={onSummaryClick}
-            />
-        </div>
-    return comp
-}
-
-
-const TrajSimFilePres = ({ advanced, feature, metadata, zeroReplace, onChange,
-    onZeroReplaceChange, onSummaryClick }) => (
+const TrajSimFilePres = ({ cellXbranch, geneMatrixTransposed, featureMatrix,
+    onChange, onSummaryClick }) => (
     
     <div>
-        <File
-            label='LayoutFeatures *'
-            advanced={advanced}
-            info={feature}
-            zeroReplace={ZeroReplace(zeroReplace, onZeroReplaceChange)}
+        <InputFile
+            data={cellXbranch}
+            gridSize={4}
             onChange={onChange}
             onSummaryClick={onSummaryClick}
         />
-        <File
-            label='Coloring metadata'
-            advanced={advanced}
-            info={metadata}
+        <InputFile
+            data={geneMatrixTransposed}
+            gridSize={4}
+            onChange={onChange}
+            onSummaryClick={onSummaryClick}
+        />
+        <InputFile
+            data={featureMatrix}
+            gridSize={4}
             onChange={onChange}
             onSummaryClick={onSummaryClick}
         />
@@ -53,13 +32,11 @@ const TrajSimFilePres = ({ advanced, feature, metadata, zeroReplace, onChange,
 )
 
 TrajSimFilePres.propTypes = {
-    advanced: PropTypes.bool,
-    feature: PropTypes.object.isRequired,
-    metadata: PropTypes.object.isRequired,
-    zeroReplace: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
-    onSummaryClick: PropTypes.func,
-    onZeroReplaceChange: PropTypes.func,
+    cellXbranch: PropTypes.object.isRequired, // data for this file selector
+    geneMatrixTransposed: PropTypes.object.isRequired, // data for this file selector
+    featureMatrix: PropTypes.object.isRequired, // data for this file selector
+    onChange: PropTypes.func.isRequired, // on change of file value
+    onSummaryClick: PropTypes.func.isRequired, // on click of collapsable icon
 }
 
 export default TrajSimFilePres;

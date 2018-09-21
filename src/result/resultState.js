@@ -57,10 +57,10 @@ const resultState = {
             return state
         }
     },
-    'result.parmShow': (state = {}, action) => {
+    'result.parm.expand': (state = {}, action) => {
         let id = parseInt(action.id, 10)
         switch(action.type) {
-        case 'result.parmShow.toggle':
+        case 'result.parm.expand.toggle':
             let next = {...state}
             next[id] = (state[id] === undefined) ? true : !state[id]
             return next

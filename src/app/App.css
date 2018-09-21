@@ -8,13 +8,12 @@ html, body {
 .page {
     overflow-y: auto;
     position: absolute;
-    top: 2.5rem;
+    top: 7rem;
     width: 100%;
     height: 100%;
 }
 
 .pageBody {
-    padding-top: 2rem;
     padding-left: 2rem;
     padding-right: 2rem;
     padding-bottom: 1rem;

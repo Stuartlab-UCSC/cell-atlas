@@ -15,7 +15,7 @@ const detail = (item, onMoreClick) => {
 
     // The expanded part of the panel.
     let comp =
-        <Grid container>
+        <Grid container style={{marginLeft: '2rem'}}>
             <Grid item xs={5}>
                 <pre style={{marginBottom: '0rem', marginTop: '0rem'}}>
                     <code>

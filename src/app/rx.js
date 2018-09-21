@@ -8,15 +8,16 @@
 const statePieces =  [ // eslint-disable-line
     'doNotTrack', // save the user browser preference for this
     'navBar', // handle navigation bar actions
-    'result.order',
-    'result.parmShow', // show an operation's parameters on the result page
+    'result.order', // column & direction of result table sort
+    'result.parm.expand', // show an operation's parameters on the result page
     'moleSim.featureShow', // show feature section on moleSim
     'moleSim.metadataShow', // show metadata section on moleSim
-    'upload.fileList',
-    'upload.formatShow',
-    'upload.idSeq',
-    'upload.table',
-    'user',
+    'moleSim.name', // map name
+    'upload.fileList', // file list for uploads
+    'upload.formatShow', // panel expansion state for upload formats
+    'upload.idSeq', // next ID to be assigned to an upload
+    'upload.table', // table on the upload page
+    'user', // user email
 ]
 
 // The global redux state.

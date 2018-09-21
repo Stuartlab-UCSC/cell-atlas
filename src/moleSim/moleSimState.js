@@ -1,26 +1,31 @@
 
+// Molecular similarity map: state
+
 const reducers = {
 
-    'moleSim.metadataShow': (state = false, action) => {
-        if (action.type === 'moleSim.metadataShow.toggle') {
+    'moleSim.feature.expand': (state = true, action) => {
+        if (action.type === 'moleSim.feature.expand.toggle') {
             return !state
-        } else {
-            return state
         }
+        return state
     },
-    'moleSim.featureShow': (state = true, action) => {
-        if (action.type === 'moleSim.featureShow.toggle') {
+    'moleSim.metadata.expand': (state = false, action) => {
+        if (action.type === 'moleSim.metadata.expand.toggle') {
             return !state
-        } else {
-            return state
         }
+        return state
     },
-    'moleSim.zeroReplace': (state = false, action) => {
-        if (action.type === 'moleSim.zeroReplace.toggle') {
-            return !state
-        } else {
-            return state
+    'moleSim.name': (state = 'map', action) => {
+        if (action.type === 'moleSim.name.uiSet') {
+            return action.value
         }
+        return state
+    },
+    'moleSim.zero': (state = false, action) => {
+        if (action.type === 'moleSim.zero.toggle') {
+            return !state
+        }
+        return state
     },
 }
 

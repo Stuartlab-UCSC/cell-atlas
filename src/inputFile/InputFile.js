@@ -45,97 +45,79 @@ const ListSelect = ({ id, value, list, onChange }) => {
     return comp
 }
 
-const DetailColumnOne = ({id, listValue, list, onChange}) => {
-    const comp =
-        <React.Fragment>
-            <ListSelect
-                id={id}
-                value={listValue}
-                list={list}
-                onChange={onChange}
-            />
-            <div style={{ marginTop: '1rem' }}>
-                <SmallButton
-                    action='upload'
-                    label='Upload More'
-                    linkTo='/upload'
-                />
-            </div>
-        </React.Fragment>
-    return comp
-}
-
-const buildThirdColumn = (thirdColumn) => {
-    if (!thirdColumn) {
+const ThirdColumn = ({ column }) => {
+    if (!column) {
         return null
     }
     const comp =
         <Grid item xs>
-            {thirdColumn}
+            {column}
         </Grid>
     return comp
 }
 
-const Detail = ({id, listValue, urlValue, list, gridSize, thirdColumn,
-    onChange}) => {
+const Detail = ({ data, gridSize, thirdColumn, onChange}) => {
     
-    let xs = gridSize || 6
+    let xs = gridSize || 5
+    const buttonGridStyle = {
+        marginTop: (thirdColumn) ? '-0.5rem' : '0.5em',
+        marginBottom: '0.5rem',
+    }
     const comp =
         <div>
             <Grid container>
-                <Grid item xs={xs}
-                    style={{marginLeft: '0px'}}
-                >
-                    <DetailColumnOne
-                        id={id}
-                        listValue={listValue}
-                        list={list}
+                <Grid item xs={xs}>
+                    <ListSelect
+                        id={data.id}
+                        value={data.listValue}
+                        list={data.list}
                         onChange={onChange}
                     />
                 </Grid>
                 <Grid item xs={xs}>
                     <TextField
                         label='or URL'
-                        defaultValue={urlValue}
+                        defaultValue={data.urlValue}
                         style={{ width: '100%' }}
                         onChange={onChange}
                     />
                 </Grid>
-                {buildThirdColumn(thirdColumn)}
+                <ThirdColumn column={thirdColumn} />
+            </Grid>
+            <Grid container style={buttonGridStyle}>
+                <Grid item xs={xs}>
+                    <SmallButton
+                        action='upload'
+                        label='Upload More'
+                        linkTo='/upload'
+                    />
+                </Grid>
             </Grid>
         </div>
     return comp
 }
 
-const FileSelect = ({ id, listValue, urlValue, list, label, gridSize,
-    defaultExpanded, thirdColumn, onChange, onSummaryClick }) => {
+const InputFilePres = ({ data, gridSize, thirdColumn, onChange,
+    onSummaryClick }) => {
 
     return (
-    <GrowPanel
-        defaultExpanded={defaultExpanded}
-        detail={Detail({id, listValue, urlValue, list, gridSize, thirdColumn,
-            onChange})}
-        detailStyle={{}}
-        id={id}
-        summaryText={label}
-        onSummaryClick={onSummaryClick}
-    />
+        <GrowPanel
+            defaultExpanded={data.show}
+            detail={Detail({data, gridSize, thirdColumn, onChange})}
+            detailStyle={{}}
+            id={data.id}
+            summaryText={data.summaryText}
+            onSummaryClick={onSummaryClick}
+        />
     )
 }
 
-FileSelect.propTypes = {
-    // Required
-    list: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired,
-    // Not required
-    defaultExpanded: PropTypes.bool, // true to default the detail panel to open
+InputFilePres.propTypes = {
+    data: PropTypes.object.isRequired,  // values associated with this instance
+    onChange: PropTypes.func.isRequired, // on file selection changing
+    gridSize: PropTypes.number, // with rows being 12 units wide
     thirdColumn: PropTypes.node, // any component to be in the 3rd column
-    gridSize: PropTypes.number,
-    id: PropTypes.string,
-    label: PropTypes.string,
-    listValue: PropTypes.string,
-    urlValue: PropTypes.string,
-    onSummaryClick: PropTypes.func,
+    onSummaryClick: PropTypes.func, // clicks on the header of collapsable
 }
 
-export default FileSelect
+export default InputFilePres

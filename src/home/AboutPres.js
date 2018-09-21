@@ -146,9 +146,19 @@ const Section = ({id, title, detail, expand, onExpandClick}) => {
 
 const AboutPres = ({expand, onExpandClick }) => {
 
+    // Allow space on top for navBar.
+    // The home page gets bigger spaces between everything.
+    const containerStyle = {
+        marginLeft: '2rem',
+        marginTop: '500px',
+    }
+    const itemStyle = {
+        marginRight: '4rem',
+    }
+    
     return (
-        <Grid container style={{ marginTop: '500px' }}>
-            <Grid item xs={3}>
+        <Grid container style={containerStyle}>
+            <Grid item xs={3} style={itemStyle}>
                 <Section onExpandClick={onExpandClick}
                     id='whatIs'
                     title='What is ...?'
@@ -156,7 +166,7 @@ const AboutPres = ({expand, onExpandClick }) => {
                     expand={expand.whatIs}
                 />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={3} style={itemStyle}>
                 <Section onExpandClick={onExpandClick}
                     id='mission'
                     title='Our Mission'
@@ -164,7 +174,7 @@ const AboutPres = ({expand, onExpandClick }) => {
                     expand={expand.mission}
                 />
             </Grid>
-            <Grid item xs>
+            <Grid item xs style={itemStyle}>
                 <Section onExpandClick={onExpandClick}
                     id='about'
                     title='About Us'
@@ -172,7 +182,7 @@ const AboutPres = ({expand, onExpandClick }) => {
                     expand={expand.about}
                 />
             </Grid>
-            <Grid item xs>
+            <Grid item xs style={itemStyle}>
                 <Section onExpandClick={onExpandClick}
                     id='method'
                     title='Method'

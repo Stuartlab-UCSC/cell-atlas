@@ -112,7 +112,7 @@ const CziButton = () => {
     return comp
 }
 
-const AnalysisButton = () => {
+const AnalyzeButton = () => {
     const buttonStyle = {
         borderRadius: '20px',
         borderWidth: '20px',
@@ -157,8 +157,8 @@ const AnalysisButton = () => {
 }
 
 /*
-    // for analysis tool buttons
-    // https://material-ui.com/demos/buttons/
+    // example for analysis tool buttons from:
+    //      https://material-ui.com/demos/buttons/
     <div className={classes.root}>
       {images.map(image => (
         <ButtonBase
@@ -245,7 +245,7 @@ const Home = () => {
                     alt='datasets'
                     style={mainImageStyle}
                 />
-                {AnalysisButton()}
+                {AnalyzeButton()}
                 <YourData />
             <CirmButton />
             <CziButton />

@@ -1,5 +1,5 @@
 
-// The similarity map analysis file selection, logic and state.
+// Molecular similarity map file selection: logic
 
 import { connect } from 'react-redux'
 
@@ -30,20 +30,22 @@ const mapStateToProps = (state) => {
     return {
         advanced: false, // TODO
         feature: {
-            id: 'moleSimFeatureFile',
+            id: 'moleSimFeature',
+            summaryText: 'Layout Features *',
             list: featureList,
             listValue: 'oneFeatureFile.tsv',
-            show: state['moleSim.featureShow'],
+            show: state['moleSim.feature.expand'],
             urlValue: 'http://someFeature.com',
         },
         metadata: {
-            id: 'moleSimMetadataFile',
+            id: 'moleSimMetadata',
+            summaryText: 'Coloring Metadata *',
             list: metadataList,
             listValue: 'yetAnotherMetadataFile.tsv',
-            show: state['moleSim.metadataShow'],
+            show: state['moleSim.metadata.expand'],
             urlValue: 'http://someMetadata.com',
         },
-        zeroReplace: state['moleSim.zeroReplace'],
+        zero: state['moleSim.zero'],
     }
 }
 
@@ -51,20 +53,18 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onSummaryClick: ev => {
             const id = ev.target.closest('.summary').dataset.id
+            //console.log('onSummaryClick')
             dispatch({
-                type: (id === 'moleSimMetadataFile') ?
-                    'moleSim.metadataShow.toggle' :
-                    'moleSim.featureShow.toggle'
+                type: (id === 'moleSimMetadata') ?
+                    'moleSim.metadata.expand.toggle' :
+                    'moleSim.feature.expand.toggle'
             })
         },
-        onZeroReplaceChange: (ev) => {
-            dispatch ({ type: 'moleSim.zeroReplace.toggle' })
+        onZeroChange: (ev) => {
+            dispatch ({ type: 'moleSim.zero.toggle' })
         },
         onChange: (ev, key) => {
-            //console.log('onChange key:', key)
-        },
-        onUpload: (ev, key) => {
-            //window)
+            //console.log('onChange')
         },
     }
 }

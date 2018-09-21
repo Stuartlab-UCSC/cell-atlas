@@ -39,10 +39,10 @@ const themeData = createMuiTheme({
         },
         MuiGrid: {
             item: {
-                marginBottom: '0.5rem',
-                marginLeft: '1rem',
-                marginRight: '1rem',
                 marginTop: '0.5rem',
+                //marginLeft: '1rem',
+                marginRight: '2rem',
+                marginBottom: '0.5rem',
             },
         },
         MuiInput: {

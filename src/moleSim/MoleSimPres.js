@@ -1,16 +1,18 @@
 
-// The similarity map, the presentational component.
+// Molecular similarity map: presentation
 
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
 //import Email from 'components/Email'
+import AnalyzeButton from 'components/AnalyzeButton'
 import MoleSimFile from 'moleSim/MoleSimFile'
+
+const gridSize = 4
 
 /*
 const email = () => {
@@ -25,70 +27,59 @@ const email = () => {
     return comp
 }
 */
-const mapName = () => {
+const Name = ({ name, onMouseOut }) => {
     const comp =
-        <Grid container
-            style={{marginLeft: '-1rem'}}
-        >
-            <Grid item xs={4}>
+        <Grid container style={{marginTop: '2rem'}}  >
+            <Grid item xs={gridSize}>
                 <TextField
-                    id='mapName'
-                    label={'Map name: *'}
+                    id='moleSimName'
+                    label={'Map name *'}
                     style={{ width: '100%' }}
-                    defaultValue='map'
+                    defaultValue={name}
+                    onMouseOut={onMouseOut}
                 />
             </Grid>
         </Grid>
     return comp
 }
 
-const BasicOptions = ({ zeroCheck, advanced, onZeroChange,
+const MoleSimPres = ({
+    name, onNameMouseOut,
+    zero, onZeroChange,
     onAnalyzeClick }) => {
     
-    if (advanced) {
-        return null
-    }
-    const comp =
-        <React.Fragment>
+    return (
+        <div className='analyzePage pageBody' style={{ maxWidth: '60rem'}}>
+            <Typography
+                variant='title'
+                style={{ marginBottom: '1rem' }}
+            >
+                Analyze: Map Molecular Similarity
+            </Typography>
             <MoleSimFile />
-            {mapName()}
-        </React.Fragment>
-    return comp
-}
-
-const MoleSimPres = ({ zeroCheck, advanced, onZeroChange, onAnalyzeClick } ) => {
-    
-        return (
-            <div className='analyzePage pageBody' style={{ maxWidth: '60rem'}}>
-                <Typography
-                    variant='title'
-                    style={{ marginBottom: '1rem' }}
-                >
-                    Analyze: Map Molecular Similarity
-                </Typography>
-                {BasicOptions({ zeroCheck, advanced, onZeroChange,
-                    onAnalyzeClick })}
-                <Typography variant='caption'
-                    style={{marginTop: '1em'}}
-                >
-                    * Required
-                </Typography>
-                <Button
-                    variant='contained'
-                    component='span'
-                    color='primary'
-                    onClick={onAnalyzeClick}
-                    style={{ marginTop: '1rem' }}
-                >
-                    Build Map
-                </Button>
-            </div>
-        )
+            <Name
+                name={name}
+                onNameMouseOut={onNameMouseOut}
+            />
+            <Typography variant='caption'
+                style={{marginTop: '2em'}}
+            >
+                * Required
+            </Typography>
+            <AnalyzeButton
+                label='Build Map'
+                onClick={onAnalyzeClick}
+            />
+        </div>
+    )
 }
 
 MoleSimPres.propTypes = {
-    advanced: PropTypes.bool,
-    onAnalyzeClick: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired, // minor map name
+    onNameMouseOut: PropTypes.func.isRequired, // upon leaving name field
+    zero: PropTypes.bool.isRequired, // zero replace toggle
+    onZeroChange: PropTypes.func.isRequired, // upon toggle
+    onAnalyzeClick: PropTypes.func.isRequired, // upon analyze button click
 }
 
 export default MoleSimPres;
