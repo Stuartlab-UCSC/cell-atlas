@@ -26,7 +26,7 @@ const MoleSimPres = ({ id, feature, metadata, name, onAnalyzeClick }) => {
                     </Typography>
                 </Grid>
                 <InputFileMatrixZero data={feature} />
-                <InputFile data={metadata} />
+                <InputFile data={metadata} lastColumn={<br />} />
                 <Grid item xs={5}>
                     <TextFieldGrid
                         id={id + '.name'}
@@ -51,6 +51,9 @@ const MoleSimPres = ({ id, feature, metadata, name, onAnalyzeClick }) => {
 }
 
 MoleSimPres.propTypes = {
+    id: PropTypes.string.isRequired, // ID of page
+    feature: PropTypes.object.isRequired, // feature data
+    metadata: PropTypes.object.isRequired, // metadata data
     name: PropTypes.string.isRequired, // minor map name
     onAnalyzeClick: PropTypes.func.isRequired, // upon analyze button click
 }

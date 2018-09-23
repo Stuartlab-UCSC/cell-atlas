@@ -52,12 +52,22 @@ const ListSelect = ({ id, value, list }) => {
 }
 
 const InputFile = ({ data, lastColumn }) => {
+    console.log('InputFile: lastColumn:', lastColumn)
+    let xs = 5
+    let column = null
+    if (lastColumn) {
+        xs = 4
+        column =
+            <Grid item xs={2}>
+                {lastColumn}
+            </Grid>
+    }
     return (
         <React.Fragment>
             <Grid item xs={1}>
                 {data.label}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={xs}>
                 <ListSelect
                     id={data.id}
                     value={data.file}
@@ -72,16 +82,14 @@ const InputFile = ({ data, lastColumn }) => {
                     style={{textAlign: 'center'}}
                 />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={xs}>
                 <TextFieldGrid
                     id={data.id + '.url'}
                     label='or URL'
                     defaultValue={data.url}
                 />
             </Grid>
-            <Grid item xs={2}>
-                {lastColumn}
-            </Grid>
+            {column}
         </React.Fragment>
     )
 }

@@ -47,7 +47,7 @@ const UploadFilePres = ({ onChange }) => {
 
     return (
         <React.Fragment>
-        <FileInput
+            <FileInput
                 id='uploadFeature'
                 label='Features'
                 marginRight='2rem'
@@ -63,7 +63,7 @@ const UploadFilePres = ({ onChange }) => {
 }
 
 UploadFilePres.propTypes = {
-    onChange: PropTypes.func,           // function to call on file selection
+    onChange: PropTypes.func, // function to call on file selection
 }
 
 export default UploadFilePres;

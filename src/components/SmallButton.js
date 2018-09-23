@@ -9,8 +9,6 @@ import { Link } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
 
-import 'components/smallButton.css'
-
 const SmallButton = ({ id, action, label, variant, linkTo, href, style,
     onClick }) => {
     
