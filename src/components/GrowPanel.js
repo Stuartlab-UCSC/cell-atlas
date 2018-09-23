@@ -30,14 +30,14 @@ const details = (id, detail, detailStyle) => {
 }
 
 const GrowPanel = ({detail, summaryText, id, summaryStyle, defaultExpanded,
-    detailStyle, onSummaryClick } ) => {
+    detailStyle, onExpandClick } ) => {
     
     return (
         <div className='summary' data-id={id} key={id} style={{display: 'block'}}>
             <ExpansionPanel defaultExpanded={defaultExpanded}>
                 <ExpansionPanelSummary
                     style={summaryStyle}
-                    onClick={onSummaryClick}
+                    onClick={onExpandClick}
                     expandIcon={<ExpandMoreIcon />}
                 >
                     <Typography>
@@ -57,7 +57,7 @@ GrowPanel.propTypes = {
     summaryStyle: PropTypes.object,
     defaultExpanded: PropTypes.bool,
     detailStyle: PropTypes.object,
-    onSummaryClick: PropTypes.func,
+    onExpandClick: PropTypes.func,
 }
 
 export default GrowPanel;

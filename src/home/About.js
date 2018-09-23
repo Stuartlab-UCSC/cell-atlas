@@ -5,29 +5,29 @@ import { connect } from 'react-redux'
 import AboutPres from 'home/AboutPres'
 
 const aboutState = {
-    'about.aboutExpand': (state = false, action) => {
-        if (action.type === 'about.aboutExpand.toggle') {
+    'about.about.expand': (state = false, action) => {
+        if (action.type === 'about.about.expand.toggle') {
             return !state
         } else {
             return state
         }
     },
-    'about.missionExpand': (state = false, action) => {
-        if (action.type === 'about.missionExpand.toggle') {
+    'about.mission.expand': (state = false, action) => {
+        if (action.type === 'about.mission.expand.toggle') {
             return !state
         } else {
             return state
         }
     },
-    'about.methodExpand': (state = false, action) => {
-        if (action.type === 'about.methodExpand.toggle') {
+    'about.method.expand': (state = false, action) => {
+        if (action.type === 'about.method.expand.toggle') {
             return !state
         } else {
             return state
         }
     },
-    'about.whatIsExpand': (state = false, action) => {
-        if (action.type === 'about.whatIsExpand.toggle') {
+    'about.whatIs.expand': (state = false, action) => {
+        if (action.type === 'about.whatIs.expand.toggle') {
             return !state
         } else {
             return state
@@ -38,19 +38,20 @@ const aboutState = {
 const mapStateToProps = (state) => {
     return {
         expand: {
-            about: state['about.aboutExpand'],
-            mission: state['about.missionExpand'],
-            method: state['about.methodExpand'],
-            whatIs: state['about.whatIsExpand'],
+            'about.about.expand': state['about.about.expand'],
+            'about.mission.expand': state['about.mission.expand'],
+            'about.method.expand': state['about.method.expand'],
+            'about.whatIs.expand': state['about.whatIs.expand'],
         }
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onExpandClick: (ev) => {
-            const which = ev.target.closest('.parent').dataset.which
-            const type = 'about.' + which + 'Expand.toggle'
+        onClick: (ev) => {
+        
+            // Click of the expand icon.
+            const type = ev.target.closest('.parent').id  + '.toggle'
             dispatch ({ type })
         },
     }

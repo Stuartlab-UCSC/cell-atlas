@@ -35,7 +35,7 @@ const detail = (item, onMoreClick) => {
     return comp
 }
 
-const childPanel = (item, i, defaultExpanded, onSummaryClick, onMoreClick) => {
+const childPanel = (item, i, defaultExpanded, onExpandClick, onMoreClick) => {
     
     // Skip the info for the main panel.
     //if (!defaultExpanded || item.id === 'main') {
@@ -51,12 +51,12 @@ const childPanel = (item, i, defaultExpanded, onSummaryClick, onMoreClick) => {
             detail={detail(item, onMoreClick)}
             defaultExpanded={defaultExpanded || false}
             detailStyle={{}}
-            onClick={onSummaryClick}
+            onClick={onExpandClick}
         />
     return comp
 }
 
-const UpdateFormatPres = ({ info, defaultExpanded, onSummaryClick,
+const UpdateFormatPres = ({ info, defaultExpanded, onExpandClick,
     onMoreClick } ) => {
     
     return (
@@ -66,11 +66,11 @@ const UpdateFormatPres = ({ info, defaultExpanded, onSummaryClick,
             summaryText={info[0].summaryText}
             defaultExpanded={defaultExpanded['main']}
             detailStyle={{marginLeft: '2rem'}}
-            onSummaryClick={onSummaryClick}
+            onExpandClick={onExpandClick}
             detail={
                 info.map((item, i) =>
                     childPanel(item, i, defaultExpanded[item.id],
-                        onSummaryClick, onMoreClick)
+                        onExpandClick, onMoreClick)
                 )
             }
         >
@@ -82,7 +82,7 @@ const UpdateFormatPres = ({ info, defaultExpanded, onSummaryClick,
 UpdateFormatPres.propTypes = {
     info: PropTypes.array.isRequired,
     defaultExpanded: PropTypes.object.isRequired,
-    onSummaryClick: PropTypes.func.isRequired,
+    onExpandClick: PropTypes.func.isRequired,
     onMoreClick: PropTypes.func.isRequired,
 }
 

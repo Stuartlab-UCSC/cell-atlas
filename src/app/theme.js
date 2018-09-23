@@ -37,14 +37,6 @@ const themeData = createMuiTheme({
                 paddingTop: '0.1rem',
             },
         },
-        MuiGrid: {
-            item: {
-                marginTop: '0.5rem',
-                //marginLeft: '1rem',
-                marginRight: '2rem',
-                marginBottom: '0.5rem',
-            },
-        },
         MuiInput: {
             input: {
                 fontSize: '1rem',

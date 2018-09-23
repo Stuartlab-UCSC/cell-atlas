@@ -34,7 +34,7 @@ const ResultParms = (id, text, defaultExpanded, classes, onParmClick ) => {
             defaultExpanded={defaultExpanded}
             detailStyle={{ marginBottom: '1rem' }}
             classes={classes}
-            onSummaryClick={onParmClick}
+            onExpandClick={onParmClick}
         />
 
     return comp

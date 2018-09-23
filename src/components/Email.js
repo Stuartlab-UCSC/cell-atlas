@@ -5,13 +5,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 
-const EmailPres = ({user, onMouseOut}) => {
+const EmailPres = ({user, onChange}) => {
     return (
         <TextField
             label='Email address'
             style={{ width: '100%' }}
             defaultValue={user}
-            onMouseOut={onMouseOut}
+            onChange={onChange}
         />
     )
 }
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onMouseOut: ev => {
+        onChange: ev => {
             dispatch({
                 type: 'user.email.login',
                 user: ev.target.value,

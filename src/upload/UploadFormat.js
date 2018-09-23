@@ -101,7 +101,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSummaryClick: ev => {
+        onExpandClick: ev => {
             dispatch({
                 type: 'upload.formatShow.toggle',
                 id: ev.target.closest('.summary').dataset.id,

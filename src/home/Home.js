@@ -227,9 +227,14 @@ const Home = () => {
         left: 50,  // datasets1: 50
         height: 300,  // datasets1: 300
     }
+    const pageBodyStyle = {
+        paddingLeft: '4rem',
+        paddingRight: '4rem',
+        paddingBottom: '4rem',
+    }
 
     return (
-        <div className='pageBody'>
+        <div className='pageBody' style={pageBodyStyle}>
             <Typography variant='caption' style={topTitleStyle}>
                 the UC Santa Cruz, Genomics Institute, Stuart Lab
             </Typography>

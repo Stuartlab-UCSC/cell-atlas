@@ -12,6 +12,13 @@ import uploadState from 'upload/uploadState'
 
 const reducers = {
 
+    'input.file': (state = null, action) => {
+        if (action.type === 'input.file.update') {
+            return action
+        } else {
+            return state
+        }
+    },
     'doNotTrack': (state = null, action) => {
         switch(action.type) {
         case 'doNotTrack.displayed':
