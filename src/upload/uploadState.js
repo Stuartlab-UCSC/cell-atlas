@@ -18,15 +18,47 @@ const uploadState = {
             return state
         }
     },
-    'upload.formatShow': (state = {}, action) => {
-        switch(action.type) {
-        case 'upload.formatShow.toggle':
-            let next = {...state}
-                next[action.id] = (state[action.id] === undefined) ? true : !state[action.id]
-            return next
-        default:
-            return state
+    'upload.format.expand': (state = false, action) => {
+        if (action.type === 'upload.format.expand.toggle') {
+            return !state
         }
+        return state
+    },
+    'upload.featureMatrix.expand': (state = false, action) => {
+        if (action.type === 'upload.featureMatrix.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'upload.fullSimilarity.expand': (state = false, action) => {
+        if (action.type === 'upload.fullSimilarity.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'upload.sparseSimilarity.expand': (state = false, action) => {
+        if (action.type === 'upload.sparseSimilarity.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'upload.xyPositions.expand': (state = false, action) => {
+        if (action.type === 'upload.xyPositions.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'upload.metadata.expand': (state = false, action) => {
+        if (action.type === 'upload.metadata.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'upload.trajectory.expand': (state = false, action) => {
+        if (action.type === 'upload.trajectory.expand.toggle') {
+            return !state
+        }
+        return state
     },
     'upload.idSeq': (state = '5', action) => { // TODO set to 1 later
         if (action.type === 'upload.idSeq.assign') {

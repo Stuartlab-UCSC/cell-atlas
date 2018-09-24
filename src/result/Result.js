@@ -5,21 +5,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import ResultTable from 'result/ResultTable'
 
-const ResultPres = ({classes}) => (
-    <div className='resultPage pageBody'>
-        <Typography
-            variant='title'
-            style={{marginBottom: '1rem' }}
+const ResultPres = ({classes}) => {
+    return (
+        <Grid container spacing={16}
+            className='pageBody'
         >
-            Analysis Results
-        </Typography>
-        <ResultTable />
-    </div>
-)
+            <Grid item xs={12}>
+                <Typography variant='title'>
+                    Analysis Results
+                </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <ResultTable />
+            </Grid>
+        </Grid>
+    )
+}
 
 const mapStateToProps = (state) => {
     return {

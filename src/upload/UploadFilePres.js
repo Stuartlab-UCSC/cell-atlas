@@ -8,9 +8,9 @@ import Button from '@material-ui/core/Button'
 
 const FileInput = ({ id, label, marginRight, onChange }) => {
 
-    const buttonStyle = { marginBottom: '1rem' }
+    let buttonStyle = null
     if (marginRight) {
-        buttonStyle.marginRight = marginRight
+        buttonStyle = { marginRight: marginRight }
     }
     const comp =
     <React.Fragment>

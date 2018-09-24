@@ -119,7 +119,7 @@ const WhatIsDetail = () => {
     return comp
 }
 
-const AboutPres = ({expand, onClick }) => {
+const AboutPres = ({expand }) => {
     const style = {
         marginTop: '500px',
     }
@@ -127,7 +127,7 @@ const AboutPres = ({expand, onClick }) => {
     return (
         <Grid container spacing={40} style={style}>
             <Grid item xs>
-                <Expander onClick={onClick}
+                <Expander
                     id='about.whatIs.expand'
                     summary='What is ...?'
                     summaryVarient='title'
@@ -136,7 +136,7 @@ const AboutPres = ({expand, onClick }) => {
                 />
             </Grid>
             <Grid item xs>
-                <Expander onClick={onClick}
+                <Expander
                     id='about.mission.expand'
                     summary='Our Mission'
                     summaryVarient='title'
@@ -145,7 +145,7 @@ const AboutPres = ({expand, onClick }) => {
                 />
             </Grid>
             <Grid item xs>
-                <Expander onClick={onClick}
+                <Expander
                     id='about.about.expand'
                     summary='About Us'
                     summaryVarient='title'
@@ -154,7 +154,7 @@ const AboutPres = ({expand, onClick }) => {
                 />
             </Grid>
             <Grid item xs>
-                <Expander onClick={onClick}
+                <Expander
                     id='about.method.expand'
                     summary='Method'
                     summaryVarient='title'
@@ -170,7 +170,6 @@ const AboutPres = ({expand, onClick }) => {
 
 Expander.propTypes = {
     expand: PropTypes.bool.isRequired, // true means section is to be expanded
-    onClick: PropTypes.func.isRequired, // function upon click of expand icon
 }
 
 export default AboutPres;

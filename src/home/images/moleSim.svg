@@ -11,13 +11,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="3355.3857"
-   height="3180.6335"
-   viewBox="0 0 887.77913 841.54263"
+   width="2973.0962"
+   height="2777.2253"
+   viewBox="0 0 786.63169 734.80754"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="molecularSim.svg"
+   sodipodi:docname="moleSim.svg"
    inkscape:export-filename="/Users/riapanjwani/Desktop/cell_atlas_graphic.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -30,8 +30,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.1767767"
-     inkscape:cx="1579.3496"
-     inkscape:cy="1529.6457"
+     inkscape:cx="546.97366"
+     inkscape:cy="1126.2376"
      inkscape:document-units="mm"
      inkscape:current-layer="layer8"
      showgrid="false"
@@ -2573,7 +2573,7 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="original"
-     transform="translate(-2626.3338,534.82739)"
+     transform="translate(-2626.3338,534.82736)"
      style="display:none">
     <ellipse
        ry="176.0378"
@@ -3629,7 +3629,7 @@
      id="layer2"
      inkscape:label="main"
      style="display:none;filter:url(#filter19069)"
-     transform="translate(-2626.3338,231.82739)">
+     transform="translate(-2626.3338,231.82736)">
     <flowRoot
        transform="translate(2280.5322,-1459.8259)"
        xml:space="preserve"
@@ -4230,7 +4230,7 @@
      inkscape:label="samples"
      inkscape:groupmode="layer"
      style="display:none"
-     transform="translate(-2626.3338,231.82739)">
+     transform="translate(-2626.3338,231.82736)">
     <g
        id="g19231"
        transform="translate(-470.65555,113.87067)">
@@ -4713,23 +4713,6 @@
        preserveAspectRatio="none"
        height="626.9314"
        width="712.50226" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:88.19444275px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.19794703"
-       x="2717.1511"
-       y="1950.0634"
-       id="text6554-5-3-5-7"
-       transform="scale(0.97944651,1.0209848)"><tspan
-         sodipodi:role="line"
-         id="tspan6552-6-6-4-9"
-         x="2717.1511"
-         y="1950.0634"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:88.19444275px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:1.19794703">Molecular Similarity</tspan><tspan
-         sodipodi:role="line"
-         x="2717.1511"
-         y="2060.3064"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:88.19444275px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:1.19794703"
-         id="tspan6556-8-6-2-3" /></text>
     <ellipse
        style="display:inline;opacity:1;fill:none;fill-opacity:0;stroke:#c8c8c8;stroke-width:5.52639771;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path1763-7"
@@ -4831,7 +4814,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="czi datasets"
-     transform="translate(-2626.3338,231.82739)"
+     transform="translate(-2626.3338,231.82736)"
      style="display:none">
     <image
        y="11.278782"
@@ -4847,7 +4830,7 @@
      id="layer4"
      inkscape:label="cirm datasets"
      style="display:none"
-     transform="translate(-2626.3338,231.82739)">
+     transform="translate(-2626.3338,231.82736)">
     <flowRoot
        xml:space="preserve"
        id="flowRoot6544-6"

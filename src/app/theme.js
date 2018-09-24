@@ -73,6 +73,9 @@ const themeData = createMuiTheme({
                 paddingRight: '0.5rem',
                 paddingBottom: '0px',
             },
+            head: {
+                paddingBottom: '1rem',
+            },
         },
         MuiButton: {
             sizeSmall: {

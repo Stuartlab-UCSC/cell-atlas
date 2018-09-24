@@ -8,10 +8,12 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
-import GrowPanel from 'components/GrowPanel'
+import Expander from 'components/Expander'
 import MoreButton from 'components/MoreButton'
 
-const detail = (item, onMoreClick) => {
+import { data } from 'upload/UploadFormatData'
+
+const Detail = ({format, onMoreClick}) => {
 
     // The expanded part of the panel.
     let comp =
@@ -19,14 +21,15 @@ const detail = (item, onMoreClick) => {
             <Grid item xs={5}>
                 <pre style={{marginBottom: '0rem', marginTop: '0rem'}}>
                     <code>
-                        {item.detailExample}
+                        {format.detailExample}
                     </code>
                 </pre>
             </Grid>
             <Grid item xs={5} style={{marginLeft: '1rem', marginRight: '0rem'}}>
                 <Typography style={{marginRight: '-6rem'}}>
-                    {item.detailText}
+                    {format.detailText}
                     <MoreButton
+                        id={format.id + '.more'}
                         onClick={onMoreClick}
                     />
                 </Typography>
@@ -35,54 +38,54 @@ const detail = (item, onMoreClick) => {
     return comp
 }
 
-const childPanel = (item, i, defaultExpanded, onExpandClick, onMoreClick) => {
+const ChildPanel = ({ format, expand, onMoreClick }) => {
     
-    // Skip the info for the main panel.
-    //if (!defaultExpanded || item.id === 'main') {
-    if (item.id === 'main') {
+    // Skip the main panel, we already did that.
+    if (format.id === 'upload.format.expand') {
         return null
     }
-    defaultExpanded = defaultExpanded || false
+    expand = expand || false
     let comp =
-        <GrowPanel
-            id={item.id}
-            key={i}
-            summaryText={item.summaryText}
-            detail={detail(item, onMoreClick)}
-            defaultExpanded={defaultExpanded || false}
-            detailStyle={{}}
-            onClick={onExpandClick}
+        <Expander
+            id={format.id}
+            summary={format.summary}
+            expand={expand || false}
+            detail={<Detail format={format} onMoreClick={onMoreClick} />}
         />
     return comp
 }
 
-const UpdateFormatPres = ({ info, defaultExpanded, onExpandClick,
-    onMoreClick } ) => {
-    
-    return (
-    <div style={{ marginBottom: '1rem' }}>
-        <GrowPanel
-            id={info[0].id}
-            summaryText={info[0].summaryText}
-            defaultExpanded={defaultExpanded['main']}
-            detailStyle={{marginLeft: '2rem'}}
-            onExpandClick={onExpandClick}
-            detail={
-                info.map((item, i) =>
-                    childPanel(item, i, defaultExpanded[item.id],
-                        onExpandClick, onMoreClick)
+const MainDetail = ({ expand, onMoreClick }) => {
+    const margin = '0.5rem'
+    const comp =
+        <div style={{ marginTop: margin, marginLeft: '2rem', marginBottom: margin }}>
+            {
+                data.map((format, i) =>
+                    <ChildPanel
+                        format={format}
+                        key={format.id}
+                        expand={expand[format.id]}
+                        onMoreClick={onMoreClick}
+                    />
                 )
             }
-        >
-        </GrowPanel>
-    </div>
+        </div>
+    return comp
+}
+
+const UpdateFormatPres = ({ expand, onMoreClick } ) => {
+    return (
+        <Expander
+            id={data[0].id}
+            summary={data[0].summary}
+            expand={expand[data[0].id]}
+            detail={<MainDetail expand={expand} onMoreClick={onMoreClick}/>}
+        />
     )
 }
 
 UpdateFormatPres.propTypes = {
-    info: PropTypes.array.isRequired,
-    defaultExpanded: PropTypes.object.isRequired,
-    onExpandClick: PropTypes.func.isRequired,
+    expand: PropTypes.object.isRequired,
     onMoreClick: PropTypes.func.isRequired,
 }
 

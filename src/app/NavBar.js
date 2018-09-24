@@ -95,7 +95,7 @@ class NavBar extends React.Component {
                                         {this.menuItem('Trajectory Similarity',
                                             '/analyze/trajSim')}
                                         {this.menuItem('Molecular Similarity',
-                                            '/analyze/molecularSim')}
+                                            '/analyze/moleSim')}
                                         {this.menuItem('Cell Type Psychic',
                                             '/analyze/typePsych')}
                                      </MenuList>

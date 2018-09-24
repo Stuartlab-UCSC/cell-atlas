@@ -8,6 +8,7 @@ import { aboutState } from 'home/About'
 import moleSimState from 'moleSim/moleSimState'
 import resultState from 'result/resultState'
 import trajSimState from 'trajSim/trajSimState'
+import typePsychState from 'typePsych/typePsychState'
 import uploadState from 'upload/uploadState'
 
 const reducers = {
@@ -61,6 +62,7 @@ export const init = () => {
     Object.assign(reducers, moleSimState)
     Object.assign(reducers, resultState)
     Object.assign(reducers, trajSimState)
+    Object.assign(reducers, typePsychState)
     Object.assign(reducers, uploadState)
 
     // Create the store.

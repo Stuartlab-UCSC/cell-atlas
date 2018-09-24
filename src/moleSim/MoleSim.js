@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
             id: featId,
             file: state[featId + '.file'],
             list: state[featId + '.list'],
-            label: 'Feature',
+            label: 'Feature *',
             url: state[featId + '.url'],
             zero: state[featId + '.zero'],
         },

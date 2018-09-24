@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import AnalyzeButton from 'components/AnalyzeButton'
+import AnalyzeHead from 'components/AnalyzeHead'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 
@@ -15,18 +16,15 @@ const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
     algorithm, description, name, species, tissue, onAnalyzeClick }) => {
     
     return (
-        <Grid container className='pageBody' spacing={32}>
-            <Grid item xs={12}>
-                <Typography
-                    variant='title'
-                    style={{ marginBottom: '1rem' }}
-                >
-                    Analyze: Trajectory Similarity
-                </Typography>
-            </Grid>
-                <InputFile data={cellXbranch} />
-                <InputFile data={geneMatrixTransposed} />
-                <InputFile data={featureMatrix} />
+        <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
+            <AnalyzeHead
+                id={id}
+                title='Trajectory Similarity'
+                xs={4}
+            />
+            <InputFile data={cellXbranch} />
+            <InputFile data={geneMatrixTransposed} />
+            <InputFile data={featureMatrix} />
             <Grid item xs={3}>
                 <TextFieldGrid
                     id={id + '.species'}

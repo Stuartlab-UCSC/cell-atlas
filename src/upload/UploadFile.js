@@ -7,7 +7,6 @@ import { get as rxGet } from 'app/rx'
 
 const mapStateToProps = (state) => {
     return {
-        //email: state['user.email'],
     }
 }
 let savedFilesObjs = []

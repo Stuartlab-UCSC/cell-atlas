@@ -3,11 +3,11 @@
 
 import React from 'react'
 import Typography from '@material-ui/core/Typography';
-import GrowPanel from 'components/GrowPanel'
+import Expander from 'components/Expander'
 
-const createDetail = (text) => {
+const Detail = ({ text }) => {
 
-    // The expanded part of a GrowPanel.
+    // The expanded section.
     // Where text is an array of text lines.
     let comp =
         <span>
@@ -22,19 +22,18 @@ const createDetail = (text) => {
     return comp
 }
 
+const ResultParms = ({ id, subId, text, expand }) => {
 
-const ResultParms = (id, text, defaultExpanded, classes, onParmClick ) => {
+    console.log('ResultParms: id, subId:', id, subId)
+    
     let comp =
-        <GrowPanel
+        <Expander
             id={id}
-            data={{ id: id }}
-            summaryText='Parameters'
-            summaryStyle={{ marginTop: '-1rem',padding: '0rem', paddingLeft: '1rem' }}
-            detail={createDetail(text)}
-            defaultExpanded={defaultExpanded}
-            detailStyle={{ marginBottom: '1rem' }}
-            classes={classes}
-            onExpandClick={onParmClick}
+            subId={subId}
+            summary='Parameters'
+            summaryVariant='body1'
+            expand={expand}
+            detail={<Detail text={text} />}
         />
 
     return comp

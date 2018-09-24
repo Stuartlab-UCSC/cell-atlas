@@ -6,12 +6,9 @@ import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 
-class MoreButton extends React.Component {
-
-    render() {
-        const { onClick } = this.props
-
-        return (
+const MoreButton = ({ id, onClick }) => {
+    return (
+        <span id={id} className='moreParent'>
             <Button
                 color='primary'
                 component='span'
@@ -25,8 +22,8 @@ class MoreButton extends React.Component {
             >
                 More...
             </Button>
-        )
-    }
+        </span>
+    )
 }
 
 MoreButton.propTypes = {

@@ -4,53 +4,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
-import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 import cirm from 'home/images/cirm.svg'
 import czi from 'home/images/czi.svg'
 import datasets from 'home/images/datasets1.svg'
-import trajSim from 'home/images/trajSim.svg'
-import typePsych from 'home/images/typePsych.svg'
-import molecularSim from 'home/images/molecularSim.svg'
 import { About } from 'home/About'
-
-const images = [
-    {
-        img: typePsych,
-        key: 'typePsych',
-        linkTo: '/analyze/typePsych',
-        height: '165px',
-        style: {
-            top: '0px',
-            left: '700px',
-            height: '130px',
-            position: 'absolute',
-        },
-    },
-    {
-        img: trajSim,
-        key: 'trajSim',
-        linkTo: '/analyze/trajSim',
-        height: '130px',
-        style: {
-            top: '100px',
-            left: '350px',
-            height: '130px',
-            position: 'absolute',
-        },
-    },
-    {
-        img: molecularSim,
-        key: 'molecularSim',
-        linkTo: '/analyze/molecularSim',
-        height: '200px',
-        style: {
-            top: '200px',
-            left: '650px',
-            position: 'absolute',
-        },
-    },
-]
+import HomeAnalyze from 'home/HomeAnalyze'
 
 const CirmButton = () => {
     const imgStyle = {
@@ -112,78 +71,6 @@ const CziButton = () => {
     return comp
 }
 
-const AnalyzeButton = () => {
-    const buttonStyle = {
-        borderRadius: '20px',
-        borderWidth: '20px',
-        borderStyle: 'solid',
-        borderColor: 'white',
-        zIndex: 1,
-    }
-    /*
-    const focusVisibleStyle = {
-        borderColor: 'grey',
-        zIndex: 2,
-    }
-    */
-    const comp =
-        <React.Fragment>
-            {images.map(img => (
-                <div style={img.style} key={img.key}>
-                    <ButtonBase
-                        focusRipple
-                        focusVisibleClassName='focusVisible'
-                        style={buttonStyle}
-                        component={Link}
-                        to={img.linkTo}
-                        key={img.key}
-                    >
-                        <span className='imageSrc'>
-                            <img
-                                src={img.img}
-                                alt={img.key}
-                                height={img.height}
-                            />
-                        </span>
-                        <span className='imageBackdrop' />
-                        <span className='imageButton'>
-                        </span>
-                    </ButtonBase>
-                </div>
-            ))}
-        </React.Fragment>
-
-    return comp
-}
-
-/*
-    // example for analysis tool buttons from:
-    //      https://material-ui.com/demos/buttons/
-    <div className={classes.root}>
-      {images.map(image => (
-        <ButtonBase
-          focusRipple
-          key={image.title}
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
-          style={{
-            width: image.width,
-          }}
-        >
-          <span
-            className={classes.imageSrc}
-            style={{
-              backgroundImage: `url(${image.url})`,
-            }}
-          />
-          <span className={classes.imageBackdrop} />
-          <span className={classes.imageButton}>
-          </span>
-        </ButtonBase>
-      ))}
-    </div>
-  );
-*/
 
 const YourData = () => {
     const style = {
@@ -223,7 +110,7 @@ const Home = () => {
     }
     const mainImageStyle = {
         position: 'absolute',
-        top: 55, // datasets1: 55
+        top: 53, // datasets1: 53
         left: 50,  // datasets1: 50
         height: 300,  // datasets1: 300
     }
@@ -250,7 +137,7 @@ const Home = () => {
                     alt='datasets'
                     style={mainImageStyle}
                 />
-                {AnalyzeButton()}
+                <HomeAnalyze />
                 <YourData />
             <CirmButton />
             <CziButton />

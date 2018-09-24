@@ -47,14 +47,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        onClick: (ev) => {
-        
-            // Click of the expand icon.
-            const type = ev.target.closest('.parent').id  + '.toggle'
-            dispatch ({ type })
-        },
-    }
+    return {}
 }
 
 const About = connect(
@@ -62,7 +55,4 @@ const About = connect(
     mapDispatchToProps
 )(AboutPres)
 
-
 export { About, aboutState }
-
-

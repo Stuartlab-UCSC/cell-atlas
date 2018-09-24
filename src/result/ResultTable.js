@@ -2,6 +2,7 @@
 // The result page table of results, logic and state.
 
 import { connect } from 'react-redux'
+import React from 'react'
 import Matrix from 'components/Matrix'
 import ResultParms from 'result/ResultParms'
 import TableButtonGroup from 'components/TableButtonGroup'
@@ -32,19 +33,20 @@ const onButtonClick = (ev) => {
     rxSet('result.table.' + data.action, { id: parseInt(data.id, 10) })
 }
 
-const onParmClick = (ev) => {
-    let data = ev.target.closest('.summary').dataset
-    rxSet('result.parm.expand.toggle', { id: data.id } )
-}
-
 const createTableRow = ({id, name, analysis, parms, date, result,
     status}, state) => {
 
     // All results get a view parameters control.
     let idStr = id.toString()
-    let defaultExpanded = state['result.parm.expand'][id] || false
-    let parmObj = ResultParms(idStr, parms, defaultExpanded, growPanelClasses,
-        onParmClick)
+    let parmId = 'result.parm.expand'
+    let expand = state['result.parm.expand'][parmId] || false
+    let parmObj =
+        <ResultParms
+            id={parmId}
+            subId={idStr}
+            parms={parms}
+            expand={expand}
+        />
 
     // Define the download or view button depending status and the analysis.
     let group = []
@@ -108,7 +110,7 @@ const getHead = (state) => {
     const head = [
         { id: 'name'     , numeric: false, label: 'Name' },
         { id: 'analysis' , numeric: false, label: 'Analysis' },
-        { id: 'parmObj'    , numeric: false, label: '' },
+        { id: 'parmObj'  , numeric: false, label: '' },
         { id: 'date'     , numeric: false, label: 'Date' },
         { id: 'result'   , numeric: true , label: 'Result' },
         { id: 'status'   , numeric: false, label: 'Status' },

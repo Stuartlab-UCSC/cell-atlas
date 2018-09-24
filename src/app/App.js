@@ -36,7 +36,7 @@ const App = () => {
                         <Switch>
                             <Route exact path='/' component={Home}/>
                             <Route path='/upload' component={Upload}/>
-                            <Route path='/analyze/molecularSim' component={MoleSim}/>
+                            <Route path='/analyze/moleSim' component={MoleSim}/>
                             <Route path='/analyze/typePsych' component={TypePsych}/>
                             <Route path='/analyze/trajSim' component={TrajSim}/>
                             <Route path='/result' component={Result}/>
