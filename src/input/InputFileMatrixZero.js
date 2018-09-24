@@ -15,6 +15,8 @@ const InputFileMatrixZero = ({ data }) => {
                     id={data.id + '.zero'}
                     label='Zero-fill empty values'
                     checked={data.zero}
+                    tooltip={'Turn this on to fill any empty values in this ' +
+                        'full matrix with zeroes'}
                 />
             }
         />

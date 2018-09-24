@@ -36,6 +36,14 @@ const uploadState = {
         }
         return state
     },
+    'upload.project': (state = '', action) => {
+        switch (action.type) {
+        case 'upload.project.uiSet':
+            return action.value
+        default:
+            return state
+        }
+    },
     'upload.sparseSimilarity.expand': (state = false, action) => {
         if (action.type === 'upload.sparseSimilarity.expand.toggle') {
             return !state

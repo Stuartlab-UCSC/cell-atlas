@@ -7,7 +7,17 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { onChange, onToggle } from 'input/inputEvent'
 
-export const TextFieldGrid = ({ id, label, defaultValue }) => {
+export const TextFieldGrid = ({ id, label, defaultValue, tooltip }) => {
+
+    // Tooltip is optional.
+    let title = defaultValue
+    if (defaultValue) {
+        if (tooltip) {
+            title += ': ' + tooltip
+        }
+    } else if (tooltip) {
+            title = tooltip
+    }
     const comp =
         <TextField
             id={id}
@@ -15,20 +25,24 @@ export const TextFieldGrid = ({ id, label, defaultValue }) => {
             style={{ width: '100%' }}
             defaultValue={defaultValue}
             onChange={onChange}
+            title={title}
         />
     return comp
 }
 
-export const ToggleGrid = ({ id, label, checked }) => {
+export const ToggleGrid = ({ id, label, checked, tooltip }) => {
+
+    // Tooltip is optional.
     const comp =
         <React.Fragment>
-            <Typography variant='caption'>
+            <Typography variant='caption' title={tooltip}>
                 {label}
             </Typography>
             <Switch
                 id={id}
                 checked={checked}
                 onChange={onToggle}
+                title={tooltip}
             />
         </React.Fragment>
     return comp

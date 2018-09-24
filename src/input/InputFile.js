@@ -53,7 +53,6 @@ const ListSelect = ({ id, value, list }) => {
 }
 
 const InputFile = ({ data, lastColumn }) => {
-    console.log('InputFile: lastColumn:', lastColumn)
     let xs = 5
     let column = null
     if (lastColumn) {
