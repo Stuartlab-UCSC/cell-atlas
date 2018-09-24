@@ -8,7 +8,7 @@ import AnalyzeButton from 'components/AnalyzeButton'
 import AnalyzeHead from 'components/AnalyzeHead'
 import InputFile from 'input/InputFile'
 
-const TypePsychPres = ({ geneMatrix, onAnalyzeClick }) => {
+const TypePsychPres = ({ clusters, geneMatrix, metadata, onAnalyzeClick }) => {
     const id = 'typePsych'
     return (
         <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
@@ -17,7 +17,9 @@ const TypePsychPres = ({ geneMatrix, onAnalyzeClick }) => {
                 title='Cell Type Psychic *'
                 xs={4}
             />
+            <InputFile data={clusters} />
             <InputFile data={geneMatrix} />
+            <InputFile data={metadata} />
             <Grid item xs={12}>
                 <Typography variant='caption'>
                     * Required
