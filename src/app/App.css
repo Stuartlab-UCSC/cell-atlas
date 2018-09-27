@@ -19,3 +19,8 @@ html, body {
     padding-right: 3rem;
     padding-bottom: 4rem;
 }
+
+#homePage .analyzeButton:hover .imageTitle {
+    color: blue;
+    font-weight: bold;
+}

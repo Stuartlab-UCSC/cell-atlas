@@ -28,6 +28,7 @@ const images = [
             top: '160px',
             left: '0px',
             position: 'absolute',
+            minWidth: '11rem',
         },
     },
     {
@@ -79,7 +80,7 @@ const HomeAnalyze = () => {
     const comp =
         <React.Fragment>
             {images.map(img => (
-                <div style={img.style} key={img.key}>
+                <div className='analyzeButton' style={img.style} key={img.key}>
                     <ButtonBase
                         focusRipple
                         focusVisibleClassName='focusVisible'
