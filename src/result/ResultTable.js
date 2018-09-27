@@ -33,16 +33,16 @@ const onButtonClick = (ev) => {
     rxSet('result.table.' + data.action, { id: parseInt(data.id, 10) })
 }
 
-const createTableRow = ({id, name, analysis, parms, date, result,
-    status}, state) => {
+const createTableRow = ({id, name, analysis, parms, date, result, status},
+    state) => {
 
-    // All results get a view parameters control.
+    // All results get a control to view parameters.
     let idStr = id.toString()
-    let parmId = 'result.parm.expand'
-    let expand = state['result.parm.expand'][parmId] || false
+    let expand = state['result.parm.expand'][id] || false
+    
     let parmObj =
         <ResultParms
-            id={parmId}
+            id={'result.parm.expand'}
             subId={idStr}
             parms={parms}
             expand={expand}
@@ -58,7 +58,6 @@ const createTableRow = ({id, name, analysis, parms, date, result,
     // All results get a copy button.
     group.push({ id: idStr, action: 'copy', linkTo: 'analyze/' + analysis })
     
-
     // Define the cancel/delete button depending on the result status.
     if (status === 'Running') {
         group.push({ id: idStr, action:'cancel', onClick: onButtonClick })

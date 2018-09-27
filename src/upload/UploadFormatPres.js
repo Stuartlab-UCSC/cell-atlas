@@ -51,6 +51,7 @@ const ChildPanel = ({ format, expand, onMoreClick }) => {
             summary={format.summary}
             expand={expand || false}
             detail={<Detail format={format} onMoreClick={onMoreClick} />}
+            collapseStyle={{ marginBottom: '-1rem'}}
         />
     return comp
 }
@@ -80,6 +81,7 @@ const UpdateFormatPres = ({ expand, onMoreClick } ) => {
             summary={data[0].summary}
             expand={expand[data[0].id]}
             detail={<MainDetail expand={expand} onMoreClick={onMoreClick}/>}
+            collapseStyle={{ marginBottom: '-1rem'}}
         />
     )
 }

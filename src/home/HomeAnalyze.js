@@ -76,12 +76,6 @@ const HomeAnalyze = () => {
         borderColor: 'white',
         zIndex: 1,
     }
-    /*
-    const focusVisibleStyle = {
-        borderColor: 'grey',
-        zIndex: 2,
-    }
-    */
     const comp =
         <React.Fragment>
             {images.map(img => (
@@ -116,44 +110,5 @@ const HomeAnalyze = () => {
 
     return comp
 }
-/*
-                        <span className='imageBackdrop' />
-                            <Typography
-                                component="span"
-                                variant="subheading"
-                                color="inherit"
-                                className={classes.imageTitle}
-                            >
-
-*/
-/*
-    // example for analysis tool buttons from:
-    //      https://material-ui.com/demos/buttons/
-    <div className={classes.root}>
-      {images.map(image => (
-        <ButtonBase
-          focusRipple
-          key={image.title}
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
-          style={{
-            width: image.width,
-          }}
-        >
-          <span
-            className={classes.imageSrc}
-            style={{
-              backgroundImage: `url(${image.url})`,
-            }}
-          />
-          <span className={classes.imageBackdrop} />
-          <span className={classes.imageButton}>
-          </span>
-        </ButtonBase>
-      ))}
-    </div>
-  );
-*/
-
 
 export default HomeAnalyze

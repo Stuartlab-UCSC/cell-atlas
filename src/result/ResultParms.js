@@ -5,14 +5,14 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import Expander from 'components/Expander'
 
-const Detail = ({ text }) => {
+const Detail = ({ parms }) => {
 
     // The expanded section.
     // Where text is an array of text lines.
     let comp =
         <span>
             {
-                text.map((line, i) =>
+                parms.map((line, i) =>
                     <Typography variant='caption' key={i}>
                         {line}
                     </Typography>
@@ -22,10 +22,8 @@ const Detail = ({ text }) => {
     return comp
 }
 
-const ResultParms = ({ id, subId, text, expand }) => {
+const ResultParms = ({ id, subId, parms, expand }) => {
 
-    console.log('ResultParms: id, subId:', id, subId)
-    
     let comp =
         <Expander
             id={id}
@@ -33,7 +31,9 @@ const ResultParms = ({ id, subId, text, expand }) => {
             summary='Parameters'
             summaryVariant='body1'
             expand={expand}
-            detail={<Detail text={text} />}
+            detail={<Detail parms={parms} />}
+            parentStyle={{ marginTop: '-0.9rem', width: '9rem' }}
+            collapseStyle={{ paddingBottom: '1rem', width: '50rem'}}
         />
 
     return comp

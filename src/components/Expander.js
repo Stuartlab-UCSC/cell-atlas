@@ -12,36 +12,53 @@ import Typography from '@material-ui/core/Typography'
 
 import { set as rxSet } from 'app/rx'
 
-const margin = '-0.5rem'
-
 const onClick = (ev) => {
-    
-        // Click of the expand icon.
-        const data = ev.target.closest('.expandParent').dataset
-        const type = data.id  + '.toggle'
-        const subId = data.subid
-        if (subId) {
-            rxSet(type, { id: subId })
-        } else {
-            rxSet(type)
-        }
+
+    // Click of the expand icon.
+    const data = ev.target.closest('.expandParent').dataset
+    const type = data.id  + '.toggle'
+    const subId = data.subid
+
+    if (subId) {
+        rxSet(type, { id: subId })
+    } else {
+        rxSet(type)
+    }
 }
 
-const Expander = ({id, subId, detail, expand, summary, summaryVarient}) => {
+const Expander = ({id, subId, detail, expand, summary, summaryVarient,
+    parentStyle, collapseStyle}) => {
+    
+    parentStyle = parentStyle || { marginTop: '-0.9rem'}
+    collapseStyle = collapseStyle || { marginBottom: '1rem' }
+    const sumStyle = { display: 'inline' }
     const comp =
-        <div id={id + '.' + subId} className='expandParent' data-id={id} data-subid={subId}>
-            <Typography variant={summaryVarient} style={{display: 'inline', marginTop: '-3rem', marginBottom: '-1rem'}}>
+        <div
+            id={id + '.' + subId}
+            className='expandParent'
+            data-id={id}
+            data-subid={subId}
+            style={parentStyle}
+        >
+            <Typography
+                variant={summaryVarient}
+                style={sumStyle}
+            >
                 {summary}
             </Typography>
             <IconButton
                 onClick={onClick}
                 aria-expanded={expand}
                 aria-label="Show more"
-                style={{marginTop: margin, marginBottom: margin}}
             >
                 {expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </IconButton>
-            <Collapse in={expand} timeout="auto" unmountOnExit>
+            <Collapse
+                in={expand}
+                timeout="auto"
+                unmountOnExit
+                style={collapseStyle}
+            >
                 {detail}
             </Collapse>
         </div>

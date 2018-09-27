@@ -121,7 +121,7 @@ const Home = () => {
     }
 
     return (
-        <div className='pageBody' style={pageBodyStyle}>
+        <div id='homePage' className='pageBody' style={pageBodyStyle}>
             <Typography variant='caption' style={topTitleStyle}>
                 the UC Santa Cruz, Genomics Institute, Stuart Lab
             </Typography>
