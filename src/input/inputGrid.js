@@ -2,12 +2,14 @@
 // Simple input components, usually as part of a grid.
 
 import React from 'react'
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import { onChange, onToggle } from 'input/inputEvent'
 
-export const TextFieldGrid = ({ id, label, defaultValue, tooltip }) => {
+export const TextFieldGrid = ({ id, label, defaultValue, tooltip, style }) => {
 
     // Tooltip is optional.
     let title = defaultValue
@@ -26,6 +28,7 @@ export const TextFieldGrid = ({ id, label, defaultValue, tooltip }) => {
             defaultValue={defaultValue}
             onChange={onChange}
             title={title}
+            style={style}
         />
     return comp
 }
@@ -34,16 +37,21 @@ export const ToggleGrid = ({ id, label, checked, tooltip }) => {
 
     // Tooltip is optional.
     const comp =
-        <React.Fragment>
-            <Typography variant='caption' title={tooltip}>
-                {label}
-            </Typography>
-            <Switch
-                id={id}
-                checked={checked}
-                onChange={onToggle}
-                title={tooltip}
-            />
-        </React.Fragment>
+
+      <FormControl component="fieldset">
+        <FormGroup>
+          <FormControlLabel
+            control={
+                <Switch
+                    id={id}
+                    checked={checked}
+                    onChange={onToggle}
+                    title={tooltip}
+                />
+            }
+            label={label}
+        />
+        </FormGroup>
+        </FormControl>
     return comp
 }

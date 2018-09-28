@@ -37,6 +37,7 @@ const Upload = ({ project }) => {
                     label='Project'
                     defaultValue={project}
                     tooltip='An optional project name to organize your data'
+                    style={{marginTop: '-1rem'}}
                 />
             </Grid>
             <Grid item xs={12}>

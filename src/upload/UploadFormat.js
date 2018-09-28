@@ -1,35 +1,35 @@
 
-// Show the upload file formats available and their details, logic and state.
+// Show the upload file formats available and their details, logic.
 
 import { connect } from 'react-redux'
 
-import UploadFormatPres from 'upload/UploadFormatPres'
+import Format from 'format/Format'
 
 const mapStateToProps = (state) => {
     return {
-        expand: {
-            'upload.format.expand': state['upload.format.expand'],
-            'upload.featureMatrix.expand': state['upload.featureMatrix.expand'],
-            'upload.fullSimilarity.expand': state['upload.fullSimilarity.expand'],
-            'upload.sparseSimilarity.expand': state['upload.sparseSimilarity.expand'],
-            'upload.xyPositions.expand': state['upload.xyPositions.expand'],
-            'upload.metadata.expand': state['upload.metadata.expand'],
-            'upload.trajectory.expand': state['upload.trajectory.expand'],
-        },
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onMoreClick: ev => {
-            console.log('onMoreClick: ID:', ev.target.closest('.moreParent').id)
-        },
+        id: 'upload',
+        expand: [
+            { id: 'upload.format.expand',
+                value: state['upload.format.expand']},
+            { id: 'upload.featureMatrix.expand',
+                value: state['upload.featureMatrix.expand']},
+            { id: 'upload.fullSimilarity.expand',
+                value: state['upload.fullSimilarity.expand']},
+            { id: 'upload.sparseSimilarity.expand',
+                value: state['upload.sparseSimilarity.expand']},
+            { id: 'upload.xyPositions.expand',
+                value: state['upload.xyPositions.expand']},
+            { id: 'upload.metadata.expand',
+                value: state['upload.metadata.expand']},
+            { id: 'upload.trajectory.expand',
+                value: state['upload.trajectory.expand']},
+        ],
+        xsTotal: 12,
     }
 }
 
 const UploadFormat = connect(
     mapStateToProps,
-    mapDispatchToProps
-)(UploadFormatPres)
+)(Format)
 
 export default UploadFormat

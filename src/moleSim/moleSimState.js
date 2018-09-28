@@ -49,6 +49,30 @@ const reducers = {
         }
         return state
     },
+    'moleSim.featureMatrix.expand': (state = false, action) => {
+        if (action.type === 'moleSim.featureMatrix.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'moleSim.format.expand': (state = false, action) => {
+        if (action.type === 'moleSim.format.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'moleSim.fullSimilarity.expand': (state = false, action) => {
+        if (action.type === 'moleSim.fullSimilarity.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'moleSim.metadata.expand': (state = false, action) => {
+        if (action.type === 'moleSim.metadata.expand.toggle') {
+            return !state
+        }
+        return state
+    },
     'moleSim.metadata.file': (state = '/fullPath/oneMetadataFile.tsv',
         action) => {
         switch (action.type) {
@@ -93,6 +117,18 @@ const reducers = {
     'moleSim.name': (state = 'map', action) => {
         if (action.type === 'moleSim.name.uiSet') {
             return action.value
+        }
+        return state
+    },
+    'moleSim.sparseSimilarity.expand': (state = false, action) => {
+        if (action.type === 'moleSim.sparseSimilarity.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'moleSim.xyPositions.expand': (state = false, action) => {
+        if (action.type === 'moleSim.xyPositions.expand.toggle') {
+            return !state
         }
         return state
     },

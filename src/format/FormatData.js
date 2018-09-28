@@ -1,13 +1,11 @@
 
 // The information for each of the file formats.
 
-export const data = [
-    {
-        id: 'upload.format.expand',
+export const data = {
+    format: {
         summary: 'Formats: Files should contain tab delimited rows.',
     },
-    {
-        id: 'upload.featureMatrix.expand',
+    featureMatrix: {
         summary: 'featureMatrix',
         detailText:`
 The most basic of feature formats; a full matrix with sample IDs across
@@ -21,8 +19,7 @@ NAS1      0.2345    0.6423     0.7654
 BRCA1     0.7654    0.2345     0.6423
  ...`,
     },
-    {
-        id: 'upload.fullSimilarity.expand',
+    fullSimilarity: {
         summary: 'fullSimilarity',
         detailText:`
 This contains similarity scores between all sample pairs as a full matrix which
@@ -35,8 +32,7 @@ sample_2    0.9524    0.7654    0.6423
 sample_3    0.6423    0.9524    0.7654
 ...`,
     },
-    {
-        id: 'upload.sparseSimilarity.expand',
+    sparseSimilarity: {
         summary: 'sparseSimilarity',
         detailText:`
 This contains similarity scores between the top neighbor samples of each sample
@@ -49,8 +45,7 @@ sample_1    sample_3    0.76543
 sample_2    sample_4    0.6423
 ...`,
     },
-    {
-        id: 'upload.xyPositions.expand',
+    xyPositions: {
         summary: 'xyPositions',
         detailText:`
 This is the most processed of the layout feature formats, containing the x and y
@@ -63,8 +58,7 @@ sample_2    63.6    23.8
 sample_3    23.8    73.6
 ...`,
     },
-    {
-        id: 'upload.metadata.expand',
+    metadata: {
         summary: 'metadata',
         detailText:`
 Metadata are properties of samples used to color the map. The metadata file
@@ -77,12 +71,11 @@ sample_2    96    COAD    III
 sample_3    52    GBM     II
 ...`,
     },
-    {
-        id: 'upload.trajectory.expand',
+    trajectory: {
         summary: 'trajectory',
         detailText:`
 A description of the trajectory format.`,
         detailExample:
 `Example of the trajectory format.`
     },
-]
+}

@@ -29,7 +29,7 @@ const onButtonClick = (ev) => {
     rxSet('upload.table.' + data.action, { id: data.id })
 }
 
-const createTableRow = ({ id, name, size, format, status }) => {
+const createTableRow = ({ id, project, name, size, format, status }) => {
 
     // Transform the state table data into the presentational component format.
     
@@ -66,7 +66,7 @@ const createTableRow = ({ id, name, size, format, status }) => {
         }
     }
 
-    return { id, name, size, format, status, action, chip }
+    return { id, project, name, size, format, status, action, chip }
 }
 
 /*
@@ -116,11 +116,12 @@ const getData = (state) => {
 
 const getHead = (state) => {
     const head = [
-        { id: 'name'  , numeric: false, label: 'Name' },
-        { id: 'size'  , numeric: true , label: 'Size' },
-        { id: 'format', numeric: false, label: 'Format' },
-        { id: 'status', numeric: false, label: 'Date' },
-        { id: 'action', numeric: true , label: '' },
+        { id: 'project', numeric: false, label: 'Project' },
+        { id: 'name'   , numeric: false, label: 'Name' },
+        { id: 'size'   , numeric: true , label: 'Size' },
+        { id: 'format' , numeric: false, label: 'Format' },
+        { id: 'status' , numeric: false, label: 'Date' },
+        { id: 'action' , numeric: true , label: '' },
     ]
     return head
 }

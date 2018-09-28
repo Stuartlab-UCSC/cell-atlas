@@ -89,14 +89,16 @@ const uploadState = {
     'upload.table': (state = { order: defaultTableOrder, data: [
             {
                 id: 1,
-                name: 'oneProject/myBadData.tsv',
+                project: 'oneProject',
+                name: 'myBadData.tsv',
                 size: 149.3,
                 format: 'TBD',
                 status: 'Error'
             },
             {
                 id: 2,
-                name: 'anotherProject/myCanceledUpload.tsv',
+                project: 'anotherProject',
+                name: 'myCanceledUpload.tsv',
                 size: 201.9,
                 format: 'TBD',
                 status: 'Uploading'

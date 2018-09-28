@@ -165,8 +165,6 @@ const AboutPres = ({expand }) => {
         </Grid>
     )
 }
-/*
-*/
 
 Expander.propTypes = {
     expand: PropTypes.bool.isRequired, // true means section is to be expanded
