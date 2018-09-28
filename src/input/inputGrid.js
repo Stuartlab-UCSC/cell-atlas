@@ -1,5 +1,5 @@
 
-// Simple input components, usually as part of a grid.
+// Simple input components, style for being within a grid item.
 
 import React from 'react'
 import FormControl from '@material-ui/core/FormControl';
@@ -11,6 +11,11 @@ import { onChange, onToggle } from 'input/inputEvent'
 
 export const TextFieldGrid = ({ id, label, defaultValue, tooltip, style }) => {
 
+    if (!style) {
+        style = {}
+    }
+    style.width = '100%'
+    
     // Tooltip is optional.
     let title = defaultValue
     if (defaultValue) {
@@ -24,7 +29,6 @@ export const TextFieldGrid = ({ id, label, defaultValue, tooltip, style }) => {
         <TextField
             id={id}
             label={label}
-            style={{ width: '100%' }}
             defaultValue={defaultValue}
             onChange={onChange}
             title={title}

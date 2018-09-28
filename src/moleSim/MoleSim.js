@@ -18,8 +18,11 @@ const mapStateToProps = (state) => {
             zero: state[featId + '.zero'],
         },
         featureExpand: [
-            { id: 'moleSim.format.expand',
-                value: state['moleSim.format.expand']},
+            {
+                id: 'moleSim.format.expand',
+                value: state['moleSim.format.expand'],
+                summary: 'Formats?',
+            },
             { id: 'moleSim.featureMatrix.expand',
                 value: state['moleSim.featureMatrix.expand']},
             { id: 'moleSim.fullSimilarity.expand',
@@ -36,10 +39,11 @@ const mapStateToProps = (state) => {
             label: 'Metadata',
             url: state[metaId + '.url'],
         },
-        metadataExpand: [
-            { id: 'moleSim.metadata.expand',
-                value: state['moleSim.metadata.expand']},
-        ],
+        metadataExpand: [{
+                id: 'moleSim.metadata.expand',
+                value: state['moleSim.metadata.expand'],
+                summary: 'Format?',
+        }],
         name: state['moleSim.name'],
     }
 }
