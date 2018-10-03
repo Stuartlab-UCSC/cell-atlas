@@ -61,7 +61,7 @@ const createTableRow = ({ id, project, name, size, format, status }) => {
         }
     } else {
         chip = {
-            column: 3,
+            column: 4,
             color: backgrounds.Complete
         }
     }
@@ -114,7 +114,7 @@ const getData = (state) => {
     return { data, order: table.order }
 }
 
-const getHead = (state) => {
+const getHead = () => {
     const head = [
         { id: 'project', numeric: false, label: 'Project' },
         { id: 'name'   , numeric: false, label: 'Name' },
