@@ -2,6 +2,12 @@
 // Cell Type Psychic: state
 
 const reducers = {
+    'typePsych.clusters.expand': (state = false, action) => {
+        if (action.type === 'typePsych.clusters.expand.toggle') {
+            return !state
+        }
+        return state
+    },
     'typePsych.clusters.file': (state = '/fullPath/oneClustersFile.tsv', action) => {
         switch (action.type) {
         case 'typePsych.clusters.file.uiSet':
@@ -43,6 +49,12 @@ const reducers = {
             return state
         }
     },
+    'typePsych.geneMatrix.expand': (state = false, action) => {
+        if (action.type === 'typePsych.geneMatrix.expand.toggle') {
+            return !state
+        }
+        return state
+    },
     'typePsych.geneMatrix.file': (state = '/fullPath/oneGeneMatrixFile.tsv', action) => {
         switch (action.type) {
         case 'typePsych.geneMatrix.file.uiSet':
@@ -83,6 +95,12 @@ const reducers = {
         default:
             return state
         }
+    },
+    'typePsych.metadata.expand': (state = false, action) => {
+        if (action.type === 'typePsych.metadata.expand.toggle') {
+            return !state
+        }
+        return state
     },
     'typePsych.metadata.file': (state = '/fullPath/oneMetadataFile.tsv', action) => {
         switch (action.type) {

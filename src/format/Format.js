@@ -1,6 +1,5 @@
 
 // Show the file formats available and their details,
-// the presentational component.
 
 import PropTypes from 'prop-types'
 import React from 'react'

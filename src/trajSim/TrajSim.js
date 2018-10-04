@@ -7,7 +7,7 @@ import TrajSimPres from 'trajSim/TrajSimPres'
 const mapStateToProps = (state) => {
     const id = 'trajSim'
     const cellId = id + '.cellXbranch'
-    const geneId = id + '.geneMatrixTransposed'
+    const transId = id + '.geneMatrixTransposed'
     const featId = id + '.featureMatrix'
     return {
         id: id,
@@ -22,20 +22,35 @@ const mapStateToProps = (state) => {
             list: state[cellId + '.list'],
             label: 'Cell by Branch Matrix *',
             url: state[cellId + '.url'],
+            expand: [{
+                id: cellId + '.expand',
+                value: state[cellId + '.expand'],
+                summary: 'Format',
+            }],
         },
         geneMatrixTransposed: {
-            id: geneId,
-            file: state[geneId + '.file'],
-            list: state[geneId + '.list'],
+            id: transId,
+            file: state[transId + '.file'],
+            list: state[transId + '.list'],
             label: 'Gene Matrix Transposed *',
-            url: state[geneId + '.url'],
+            url: state[transId + '.url'],
+            expand: [{
+                id: transId + '.expand',
+                value: state[transId + '.expand'],
+                summary: 'Format',
+            }],
         },
         featureMatrix: {
             id: featId,
             file: state[featId + '.file'],
             list: state[featId + '.list'],
-            label: 'Gene Matrix *',
+            label: 'Marker Gene Matrix *',
             url: state[featId + '.url'],
+            expand: [{
+                id: featId + '.expand',
+                value: state[featId + '.expand'],
+                summary: 'Format',
+            }],
         },
     }
 }

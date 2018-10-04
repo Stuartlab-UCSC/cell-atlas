@@ -14,8 +14,7 @@ import InputFile from 'input/InputFile'
 import InputFileMatrixZero from 'input/InputFileMatrixZero'
 import { TextFieldGrid } from 'input/inputGrid'
 
-const MoleSimPres = ({ feature, metadata, featureExpand, metadataExpand,
-    name, onAnalyzeClick }) => {
+const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
     
     const id = 'moleSim'
 
@@ -30,9 +29,9 @@ const MoleSimPres = ({ feature, metadata, featureExpand, metadataExpand,
                 imageBottom='-4.5rem'
             />
             <InputFileMatrixZero data={feature} />
-            <Format id={id} expand={featureExpand} xsTotal={11} />
+            <Format id={id} expand={feature.expand} xsTotal={11} />
             <InputFile data={metadata} lastColumn={<br />} />
-            <Format id={id} expand={metadataExpand} xsTotal={11} />
+            <Format id={id} expand={metadata.expand} xsTotal={11} />
             <Grid item xs={5}>
                 <TextFieldGrid
                     id={id + '.name'}

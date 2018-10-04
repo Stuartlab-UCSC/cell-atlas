@@ -3,6 +3,18 @@
 
 const reducers = {
 
+    'trajSim.algorithm': (state = '', action) => {
+        if (action.type === 'trajSim.algorithm.uiSet') {
+            return action.value
+        }
+        return state
+    },
+    'trajSim.cellXbranch.expand': (state = false, action) => {
+        if (action.type === 'trajSim.cellXbranch.expand.toggle') {
+            return !state
+        }
+        return state
+    },
     'trajSim.cellXbranch.file': (state = '/fullPath/oneCellXbranchFile.tsv',
         action) => {
         switch (action.type) {
@@ -44,6 +56,66 @@ const reducers = {
         default:
             return state
         }
+    },
+    'trajSim.description': (state = '', action) => {
+        if (action.type === 'trajSim.description.uiSet') {
+            return action.value
+        }
+        return state
+    },
+    'trajSim.featureMatrix.expand': (state = false, action) => {
+        if (action.type === 'trajSim.featureMatrix.expand.toggle') {
+            return !state
+        }
+        return state
+    },
+    'trajSim.featureMatrix.file': (state = '/fullPath/oneFeatureMatrixFile.tsv',
+                                   action) => {
+        switch (action.type) {
+            case 'trajSim.featureMatrix.file.uiSet':
+                return action.value
+            default:
+                return state
+        }
+    },
+    'trajSim.featureMatrix.list': (state = [
+        {
+            label: 'yours',
+            list: [
+                {label: 'oneFeatureMatrix.tsv', value: '/fullPath/oneFeatureMatrix.tsv'},
+                {label: 'anotherFeatureMatrix.tsv', value: '/fullPath/anotherFeatureMatrix.tsv'},
+                {label: 'yetAnotherFeatureMatrix.tsv', value: '/fullPath/yetAnotherFeatureMatrix.tsv'},
+            ],
+        },
+        {
+            label: 'public',
+            list: [
+                {label: 'exampleFeatureMatrix.tab', value: '/fullPath/exampleFeatureMatrix.tab'},
+            ],
+        }
+    ], action) => {
+
+        switch (action.type) {
+            case 'trajSim.featureMatrix.list.load':
+                return action.value
+            default:
+                return state
+        }
+    },
+    'trajSim.featureMatrix.url': (
+        state = 'http://some.com/exampleFeatureMatrixUrl', action) => {
+        switch (action.type) {
+            case 'trajSim.featureMatrix.url.uiSet':
+                return action.value
+            default:
+                return state
+        }
+    },
+    'trajSim.geneMatrixTransposed.expand': (state = false, action) => {
+        if (action.type === 'trajSim.geneMatrixTransposed.expand.toggle') {
+            return !state
+        }
+        return state
     },
     'trajSim.geneMatrixTransposed.file': (
         state = '/fullPath/oneGeneMatrixTransposedFile.tsv', action) => {
@@ -87,61 +159,7 @@ const reducers = {
             return state
         }
     },
-    'trajSim.featureMatrix.file': (state = '/fullPath/oneFeatureMatrixFile.tsv',
-        action) => {
-        switch (action.type) {
-        case 'trajSim.featureMatrix.file.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'trajSim.featureMatrix.list': (state = [
-            {
-                label: 'yours',
-                list: [
-                    {label: 'oneFeatureMatrix.tsv', value: '/fullPath/oneFeatureMatrix.tsv'},
-                    {label: 'anotherFeatureMatrix.tsv', value: '/fullPath/anotherFeatureMatrix.tsv'},
-                    {label: 'yetAnotherFeatureMatrix.tsv', value: '/fullPath/yetAnotherFeatureMatrix.tsv'},
-                ],
-            },
-            {
-                label: 'public',
-                list: [
-                    {label: 'exampleFeatureMatrix.tab', value: '/fullPath/exampleFeatureMatrix.tab'},
-                ],
-            }
-        ], action) => {
-        
-        switch (action.type) {
-        case 'trajSim.featureMatrix.list.load':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'trajSim.featureMatrix.url': (
-        state = 'http://some.com/exampleFeatureMatrixUrl', action) => {
-        switch (action.type) {
-        case 'trajSim.featureMatrix.url.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'trajSim.algorithm': (state = '', action) => {
-        if (action.type === 'trajSim.algorithm.uiSet') {
-            return action.value
-        }
-        return state
-    },
-    'trajSim.description': (state = '', action) => {
-        if (action.type === 'trajSim.description.uiSet') {
-            return action.value
-        }
-        return state
-    },
-    'trajSim.name': (state = '', action) => {
+     'trajSim.name': (state = '', action) => {
         if (action.type === 'trajSim.name.uiSet') {
             return action.value
         }
