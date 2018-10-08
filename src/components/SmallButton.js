@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
 
-const SmallButton = ({ id, action, label, variant, linkTo, href, style,
+const SmallButton = ({ id, action, label, variant, linkTo, href, style, title,
     onClick }) => {
     
     const labelVal = label || action
@@ -30,6 +30,7 @@ const SmallButton = ({ id, action, label, variant, linkTo, href, style,
                 size='small'
                 style={style}
                 variant={variant}
+                title={title}
                 onClick={onClick}
             >
                 {labelVal}
@@ -45,6 +46,7 @@ const SmallButton = ({ id, action, label, variant, linkTo, href, style,
                 href={href}
                 size='small'
                 variant={variant}
+                title={title}
                 onClick={onClick}
             >
                 {labelVal}

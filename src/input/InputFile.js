@@ -1,6 +1,5 @@
 
-// A multi-file selection tool with selection from a list or URL entry,
-// presentational component.
+// Select a file from a list or URL entry.
 
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -19,7 +18,7 @@ const OptGroup = ({ label, list }) => {
     const comp =
         <optgroup label={label}>
             {list.map((option, i) => (
-                <option value={option.value} key={i}>
+                <option value={option.value} key={i} title={option.title}>
                     {option.label}
                 </option>
             ))}
@@ -44,6 +43,7 @@ const ListSelect = ({ id, value, list }) => {
                     <OptGroup
                         label={group.label}
                         list={group.list}
+                        title={group.title}
                         key={i}
                     />
                 ))}
@@ -80,6 +80,7 @@ const InputFile = ({ data, lastColumn }) => {
                     label='Upload More'
                     linkTo='/upload'
                     style={{textAlign: 'center'}}
+                    title={'Upload another file'}
                 />
             </Grid>
             <Grid item xs={xs}>

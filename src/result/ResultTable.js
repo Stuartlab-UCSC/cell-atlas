@@ -51,18 +51,18 @@ const createTableRow = ({id, name, analysis, parms, date, result, status},
     // Define the download or view button depending status and the analysis.
     let group = []
     if (status === 'Success') {
-        group.push({ id: idStr, action: 'view', href: 'http://localhost:3333' })
-        group.push({ id: idStr, action: 'download', onClick: onButtonClick })
+        group.push({ id: idStr, action: 'view', href: 'http://localhost:3333', title: 'View the results' })
+        group.push({ id: idStr, action: 'download', onClick: onButtonClick, title: 'Download the results' })
     }
 
     // All results get a copy button.
-    group.push({ id: idStr, action: 'copy', linkTo: 'analyze/' + analysis })
+    group.push({ id: idStr, action: 'copy', linkTo: 'analyze/' + analysis, title: 'Copy the parameters for a new analysis run' })
     
     // Define the cancel/delete button depending on the result status.
     if (status === 'Running') {
-        group.push({ id: idStr, action:'cancel', onClick: onButtonClick })
+        group.push({ id: idStr, action:'cancel', onClick: onButtonClick, title: 'Cancel this analysis run' })
     } else {
-        group.push({ id: idStr, action:'delete', onClick: onButtonClick })
+        group.push({ id: idStr, action:'delete', onClick: onButtonClick, title: 'Remove all results of this analysis' })
     }
 
     // Group all of the action buttons.

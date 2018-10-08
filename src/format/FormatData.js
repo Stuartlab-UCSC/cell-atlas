@@ -1,6 +1,56 @@
 
 // The information for each of the file formats.
 
+export const formats = {
+    reference: [
+        {
+            id: 'cluster',
+            formats: [
+                'clusterReference',
+                'geneMatrix',
+                'metadata',
+            ]
+        },
+        {
+            id: 'trajSim',
+            formats: [
+                'cellByBranchMatrix',
+                'geneMatrixTransposed',
+                'markerGenes',
+            ]
+        },
+    ],
+    analysisInput: [
+        {
+            id: 'typePsych',
+            label: 'Cell Type Psychic',
+            formats: [
+                'geneExpressionMatrix',
+                'metadata',
+            ],
+        },
+        {
+            id: 'trajSim',
+            label: 'Trajectory Similarity',
+            formats: [
+                'cellByBranchMatrix',
+                'geneMatrixTransposed',
+                'markerGenes',
+            ],
+        },
+        {
+            id: 'moleSim',
+            label: 'Molecular Similarity',
+            formats: [
+                'geneExpressionMatrix',
+                'sparseSimilarity',
+                'fullSimilarity',
+                'xyPositions',
+                'metadata',
+            ],
+        },
+    ]
+}
 export const data = {
     cellXbranch: {
         summary: 'cellXbranch',

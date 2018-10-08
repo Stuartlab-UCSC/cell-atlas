@@ -31,6 +31,7 @@ const TableButtonGroup = ({group}) => {
                         linkTo={info.linkTo}
                         variant='flat'
                         onClick={info.onClick}
+                        title={info.title}
                     />
                 )
             }

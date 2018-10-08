@@ -34,15 +34,18 @@ const createTableRow = ({ id, project, name, size, format, status }) => {
     // Transform the state table data into the presentational component format.
     
     // Define the buttons depending on the status.
-    let group = []
     let idStr = id.toString()
+    const viewButton = { id: idStr, action: 'view', onClick: onButtonClick, title: 'View this file' }
+    let group = []
     if (status === 'Uploading') {
-        group.push({ id: idStr, action: 'cancel', onClick: onButtonClick })
+        group.push(viewButton)
+        group.push({ id: idStr, action: 'cancel', onClick: onButtonClick, title: 'Cancel upload of this file' })
     } else {
         if (status !== 'Error' && status !== 'Canceled') {
-            group.push({ id: idStr, action: 'download', onClick: onButtonClick })
+            group.push({ id: idStr, action: 'download', onClick: onButtonClick, title: 'Download this file' })
         }
-        group.push({ id: idStr, action: 'delete', onClick: onButtonClick })
+        group.push(viewButton)
+        group.push({ id: idStr, action: 'delete', onClick: onButtonClick, title: 'Permanently remove this file' })
     }
     
     // Group all of the action buttons.
@@ -52,12 +55,12 @@ const createTableRow = ({ id, project, name, size, format, status }) => {
     let chip = null
     if (status === 'Error' || status === 'Canceled') {
         chip = {
-            column: 3,
+            column: 4,
             color: backgrounds[status]
         }
     } else if (status === 'Uploading') {
         chip = {
-            column: 3,
+            column: 4,
         }
     } else {
         chip = {
@@ -118,8 +121,8 @@ const getHead = () => {
     const head = [
         { id: 'project', numeric: false, label: 'Project' },
         { id: 'name'   , numeric: false, label: 'Name' },
-        { id: 'size'   , numeric: true , label: 'Size' },
         { id: 'format' , numeric: false, label: 'Format' },
+        { id: 'size'   , numeric: true , label: 'Size' },
         { id: 'status' , numeric: false, label: 'Date' },
         { id: 'action' , numeric: true , label: '' },
     ]

@@ -3,13 +3,10 @@
 
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-
 import Expander from 'components/Expander'
 import MoreButton from 'components/MoreButton'
-
 import { data } from 'format/FormatData'
 
 const onMoreClick = ev => {
@@ -18,6 +15,7 @@ const onMoreClick = ev => {
 
 const Tbd = ({ last, marginTop }) => {
 
+    // Render the TBD message line at the bottom of the file formats.
     let comp = null
     if (last) {
         if (!marginTop) {
@@ -38,7 +36,7 @@ const Tbd = ({ last, marginTop }) => {
 
 const Detail = ({ data, last }) => {
 
-    // The expanded part of a format section.
+    // The expanded part of a file format section.
     let comp =
         <Grid container>
             <Grid item xs={1} />
@@ -64,18 +62,19 @@ const Detail = ({ data, last }) => {
 }
 
 const getFormatId = (id, stateId) => {
+    // Find the particular file format, X, where X is in the stateId as:
+    // id.X.expand
     return stateId.slice(id.length + 1, -7)
 }
 
-const EachFormat = ({ id, expand, last }) => {
+const OneFormat = ({ id, expand, last }) => {
 
-    // Render each file format section.
+    // Render one file format section.
     let dataId = getFormatId(id, expand.id)
     let summary = expand.summary
     if (!summary) {
         summary = data[dataId].summary
     }
-
     const comp =
         <Expander
             id={expand.id}
@@ -90,14 +89,15 @@ const EachFormat = ({ id, expand, last }) => {
 
 const AllFormats = ({ id, expand }) => {
 
-    // Render a single format section or all of the child format sections.
+    // If a group is included this renders all fo the child formats. Without a
+    // group provided, this renders all of the format sections.
     const comp =
         <React.Fragment>
             {expand.map((state, i) =>
                 <React.Fragment key={state.id}>
                     <Grid item xs={1} />
                     <Grid item xs={11}>
-                        <EachFormat
+                        <OneFormat
                             id={id}
                             expand={expand[i]}
                             last={(expand.length === 1)}
@@ -109,20 +109,18 @@ const AllFormats = ({ id, expand }) => {
     return comp
 }
 
-const Format = ({ id, expand, xsTotal } ) => {
+const FormatDescribe = ({ id, expand } ) => {
     
     // Render one or more file format sections, with/without a group section.
+    // This function adds the group section if there is one, then renders the
+    // rest of the formats requested.
     
-    // Is there a group section?
-    const groupId = 'format'
+    // Find the optional group for this instance by looking for a state variable
+    // with the name: id + '.format.expand'.
+    //console.log('FormatDescribe: expand:', expand)
     const group = expand.find(state => {
-        return groupId === getFormatId(id, state.id)
+        return getFormatId(id, state.id) === 'format'
     })
-    
-    let xsPad = false
-    if (xsTotal < 12) {
-        xsPad = 12 - xsTotal
-    }
 
     if (group) {
         let summary = expand[0].summary
@@ -131,25 +129,20 @@ const Format = ({ id, expand, xsTotal } ) => {
         }
         
         return (
-            <React.Fragment>
-                <Grid item xs={xsPad} />
-                <Grid item xs={12-xsPad}>
-                    <Expander
-                        id={group.id}
-                        summary={summary}
-                        expand={group.value}
-                        detail={
-                            <Grid container>
-                                <AllFormats
-                                    id={id}
-                                    expand={expand.slice(1)}
-                                />
-                                <Tbd last={true} marginTop='0rem' />
-                            </Grid>
-                        }
-                    />
-                </Grid>
-            </React.Fragment>
+            <Expander
+                id={group.id}
+                summary={summary}
+                expand={group.value}
+                detail={
+                    <Grid container>
+                        <AllFormats
+                            id={id}
+                            expand={expand.slice(1)}
+                        />
+                        <Tbd last={true} marginTop='0rem' />
+                    </Grid>
+                }
+            />
         )
     } else {
         return (
@@ -161,9 +154,13 @@ const Format = ({ id, expand, xsTotal } ) => {
     }
 }
 
-Format.propTypes = {
-    expand: PropTypes.array.isRequired,
+FormatDescribe.propTypes = {
+    expand: PropTypes.array.isRequired, // expand ids and values
+    id: PropTypes.string.isRequired, // unique ID for this instance
 }
 
-export default Format;
+FormatDescribe.default = {
+    xsTotal: false,
+}
+export default FormatDescribe;
 

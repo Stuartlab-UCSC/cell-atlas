@@ -30,6 +30,13 @@ const uploadState = {
         }
         return state
     },
+    'upload.format': (state = 'none', action) => {
+        if (action.type === 'upload.format.uiSet') {
+            return action.value
+        } else {
+            return state
+        }
+    },
     'upload.fullSimilarity.expand': (state = false, action) => {
         if (action.type === 'upload.fullSimilarity.expand.toggle') {
             return !state

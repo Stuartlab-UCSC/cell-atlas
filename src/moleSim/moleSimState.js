@@ -14,15 +14,15 @@ const reducers = {
             {
                 label: 'yours',
                 list: [
-                    {label: 'oneFeature.tsv', value: '/fullPath/oneFeature.tsv'},
-                    {label: 'anotherFeature.tsv', value: '/fullPath/anotherFeature.tsv'},
-                    {label: 'yetAnotherFeature.tsv', value: '/fullPath/yetAnotherFeature.tsv'},
+                    {label: 'oneFeature.tsv  (featureMatrix)', value: '/fullPath/oneFeature.tsv'},
+                    {label: 'anotherFeature.tsv  (xyPositions)', value: '/fullPath/anotherFeature.tsv'},
+                    {label: 'yetAnotherFeature.tsv  (TBD)', value: '/fullPath/yetAnotherFeature.tsv'},
                 ],
             },
             {
                 label: 'public',
                 list: [
-                    {label: 'exampleFeature.tab', value: '/fullPath/exampleFeature.tab'},
+                    {label: 'exampleFeature.tab  (featureMatrix)', value: '/fullPath/exampleFeature.tab', title: 'The gene matrix for the Pancan12 similarity map'},
                 ],
             }
         ], action) => {
@@ -86,15 +86,15 @@ const reducers = {
             {
                 label: 'yours',
                 list: [
-                    {label: 'oneMetadata.tsv', value: '/fullPath/oneMetadata.tsv'},
-                    {label: 'anotherMetadata.tsv', value: '/fullPath/anotherMetadata.tsv'},
-                    {label: 'yetAnotherMetadata.tsv', value: '/fullPath/yetAnotherMetadata.tsv'},
+                    {label: 'oneMetadata.tsv  (metadata)', value: '/fullPath/oneMetadata.tsv'},
+                    {label: 'anotherMetadata.tsv  (TBD)', value: '/fullPath/anotherMetadata.tsv'},
+                    {label: 'yetAnotherMetadata.tsv  (metadata)', value: '/fullPath/yetAnotherMetadata.tsv'},
                 ],
             },
             {
                 label: 'public',
                 list: [
-                    {label: 'exampleMetadata.tab', value: '/fullPath/exampleMetadata.tab'},
+                    {label: 'exampleMetadata.tab  (metadata)', value: '/fullPath/exampleMetadata.tab'},
                 ],
             }
         ], action) => {

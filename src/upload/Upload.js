@@ -21,16 +21,10 @@ const Upload = ({ project }) => {
         >
             <Grid item xs={12}>
                 <Typography variant='title'>
-                    Upload Files
+                    Upload Analysis Input Files
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
-                <UploadFile />
-                <UploadTransfer />
-            </Grid>
-            <Grid item xs={12}>
-                <UploadFormat />
-            </Grid>
+            <UploadFormat />
             <Grid item xs={4}>
                 <TextFieldGrid
                     id={id + '.project'}
@@ -39,6 +33,10 @@ const Upload = ({ project }) => {
                     tooltip='An optional project name to organize your data'
                     style={{marginTop: '-1rem'}}
                 />
+            </Grid>
+            <Grid item xs={12}>
+                <UploadFile />
+                <UploadTransfer />
             </Grid>
             <Grid item xs={12}>
                 <UploadTable />

@@ -26,11 +26,9 @@ const onClick = (ev) => {
     }
 }
 
-const Expander = ({id, subId, detail, expand, summary, summaryVarient,
+const Expander = ({id, subId, detail, expand, summary, summaryVariant,
     parentStyle, collapseStyle}) => {
     
-    parentStyle = parentStyle || { marginTop: '-0.9rem'}
-    collapseStyle = collapseStyle || { marginBottom: '1rem' }
     const sumStyle = { display: 'inline' }
     const comp =
         <div
@@ -41,7 +39,7 @@ const Expander = ({id, subId, detail, expand, summary, summaryVarient,
             style={parentStyle}
         >
             <Typography
-                variant={summaryVarient}
+                variant={summaryVariant}
                 style={sumStyle}
             >
                 {summary}
@@ -66,12 +64,21 @@ const Expander = ({id, subId, detail, expand, summary, summaryVarient,
 }
 
 Expander.propTypes = {
-    id: PropTypes.string.isRequired, // unique ID, recommend using state ID
+    // Unique ID, or the first part of the unique ID if subIDs are provided.
+    id: PropTypes.string.isRequired,
+    subId: PropTypes.string, // unique ID, could be state ID
     detail: PropTypes.node.isRequired, // function to display expandable section
     expand: PropTypes.bool.isRequired, // true means section is to be expanded
     summary: PropTypes.string.isRequired, // text to display in top section
-    
-    summaryVarient: PropTypes.string, // typography varient of summary text
+    summaryVariant: PropTypes.string, // typography varient of summary text
+    parentStyle: PropTypes.object, // style for the outer div
+    collapseStyle: PropTypes.object, // style for the collapsible section
+}
+
+Expander.defaults = {
+    subId: null,
+    parentStyle: { marginTop: '-0.9rem'},
+    collapseStyle: { marginBottom: '1rem' },
 }
 
 export default Expander;
