@@ -2,7 +2,7 @@
 // Select files for upload, logic and state.
 
 import { connect } from 'react-redux'
-import UploadFilePres from 'upload/UploadFilePres'
+import UploadFilePres from 'upload/page/UploadFilePres'
 import { get as rxGet } from 'app/rx'
 
 const mapStateToProps = (state) => {

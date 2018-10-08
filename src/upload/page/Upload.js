@@ -5,10 +5,10 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { TextFieldGrid } from 'input/inputGrid';
-import UploadFile from 'upload/UploadFile'
-import UploadTransfer from 'upload/UploadTransfer'
-import UploadFormat from 'upload/UploadFormat'
-import UploadTable from 'upload/UploadTable'
+import UploadFile from 'upload/page/UploadFile'
+import UploadTransfer from 'upload/page/UploadTransfer'
+import UploadFormat from 'upload/page/UploadFormat'
+import UploadTable from 'upload/page/UploadTable'
 
 /*
 */
@@ -46,7 +46,8 @@ const Upload = ({ project }) => {
                     variant='caption'
                     style={{ marginTop: '1rem' }}
                 >
-                    TBD = To Be Determined
+                    <p>* Required</p>
+                    <p>TBD = To Be Determined</p>
                 </Typography>
             </Grid>
         </Grid>

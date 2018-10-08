@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 import { get as rxGet } from 'app/rx'
-import UploadTransferPres from 'upload/UploadTransferPres'
+import UploadTransferPres from 'upload/page/UploadTransferPres'
 import { isoToday } from 'app/util'
 
 const mapStateToProps = (state) => {

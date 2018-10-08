@@ -18,7 +18,7 @@ import Result from 'result/Result'
 import PageNotFound from 'home/PageNotFound'
 import { init as rxInit } from 'app/rxInternals'
 import theme from 'app/theme'
-import Upload from 'upload/Upload'
+import Upload from 'upload/page/Upload'
 import NavBar from 'app/NavBar'
 
 import 'app/App.css'

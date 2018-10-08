@@ -9,7 +9,7 @@ import moleSimState from 'moleSim/moleSimState'
 import resultState from 'result/resultState'
 import trajSimState from 'trajSim/trajSimState'
 import typePsychState from 'typePsych/typePsychState'
-import uploadState from 'upload/uploadState'
+import uploadState from 'upload/page/uploadState'
 
 const reducers = {
 

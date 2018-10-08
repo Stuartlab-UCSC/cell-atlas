@@ -1,5 +1,6 @@
 
-// Show the upload file formats available and their details, logic.
+// Select an upload file format.
+// Also show format details in expandable sections.
 
 import { connect } from 'react-redux'
 import React from 'react'
