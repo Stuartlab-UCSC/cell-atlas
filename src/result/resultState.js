@@ -64,8 +64,6 @@ const resultState = {
             let next = {...state}
             next[id] = (state[id] === undefined) ? true : !state[id]
             return next
-        case 'result.parm.expand.remove':
-            break
         default:
             return state
         }

@@ -80,14 +80,14 @@ sample_3    NA    0.23
         summary: 'Formats: Files should contain tab delimited rows.',
     },
     featureMatrix: {
-        summary: 'featureMatrix',
+        summary: 'geneMatrix',
         detailText:`
 The most basic of feature formats; a full matrix with sample IDs across
 the top and feature IDs in the first column. All positions in the
 matrix must be populated. This is the most basic of the layout feature formats
 where similarities and XY locations will be calculated for you.`,
         detailExample:
-`feature   sample_1  sample_2   sample_3 ...
+`gene     sample_1  sample_2   sample_3 ...
 TP53      0.6423    0.7654     0.2345
 NAS1      0.2345    0.6423     0.7654
 BRCA1     0.7654    0.2345     0.6423
@@ -137,11 +137,11 @@ sample_3    52    GBM     II
 Metadata are properties of samples used to color the map. The metadata file
 must be in TSV (tab-separated values) format with the metadata IDs across the
 top and sample IDs in the first column.`,
-        detailExample:
-            `sample      age   disease stage ...
-sample_1    81    BRCA    IV
-sample_2    96    COAD    III
-sample_3    52    GBM     II
+        detailExample: `
+sample      age   organ organLocation  tissue ...
+sample_1    81    heart    IV
+sample_2    96    heart    III
+sample_3    52    immune     II
 ...`,
     },
     sparseSimilarity: {

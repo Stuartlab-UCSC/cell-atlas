@@ -9,6 +9,7 @@ import {
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
+import Dataset from 'dataset/Dataset'
 import Help from 'home/Help'
 import Home from 'home/Home'
 import MoleSim from 'moleSim/MoleSim'
@@ -35,6 +36,7 @@ const App = () => {
                     <div className='page' >
                         <Switch>
                             <Route exact path='/' component={Home}/>
+                            <Route path='/dataset' component={Dataset}/>
                             <Route path='/upload' component={Upload}/>
                             <Route path='/analyze/moleSim' component={MoleSim}/>
                             <Route path='/analyze/typePsych' component={TypePsych}/>

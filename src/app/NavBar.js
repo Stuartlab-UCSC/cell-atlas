@@ -145,6 +145,7 @@ class NavBar extends React.Component {
                         Cell Atlas
                         {this.logo()}
                     </ToggleButton>
+                    {this.barItem('Datasets', '/dataset')}
                     {this.barItem('Upload', '/upload')}
                     {this.analyze()}
                     {this.barItem('Results', '/result')}

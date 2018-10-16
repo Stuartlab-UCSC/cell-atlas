@@ -36,7 +36,7 @@ const onButtonClick = (ev) => {
 const createTableRow = ({id, name, analysis, parms, date, result, status},
     state) => {
 
-    // All results get a control to view parameters.
+    // Create the displayable row for a row of data.
     let idStr = id.toString()
     let expand = state['result.parm.expand'][id] || false
     

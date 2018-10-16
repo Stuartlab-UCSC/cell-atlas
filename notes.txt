@@ -1,0 +1,80 @@
+
+MAX CELL BROWSER:
+https://github.com/maximilianh/cellBrowser
+
+MAX: 9:30
+- running trajectory analysis on simulated data
+- interested in trajectory analysis with clustering draft data
+
+ROJIN: 10
+- immune data
+- reduce the size of data:
+    = unsupervised clustering methods
+        - auto encorder looks promising
+- draft could be scanPy, easy to run
+    - Andrew has been looking at it
+    - Henry knows something about it
+
+VERENA: 10:30
+- expression profiles
+- from clustering find a good representation of cell types
+    - expression profile for each cluster
+
+MOLLY: 11
+- auto-encoder to get 1000, 100, 2 dimensions
+- maybe first draft of all data
+
+ANDREW: 12
+- import seurat & scanPy objects
+- marker genes per organ/tissue
+
+YIANNI: 4
+machine learning
+
+
+JOSH QUESTIONS:
+- Rojin:
+    - how to get to aws
+    - should scanPy
+
+WEDNESDAY MEETING AGENDA:
+- preliminary data using a simple tool
+- a common output format
+- connect cluster analysis people together
+- tools for clustering
+
+INDIVIDUAL MEETINGS:
+    - meet Josh' commitments for the chan-zucherberg grant
+    - analysis in tandem
+    - something tangible you can point to show others what you've done
+    - veracity score:
+       - just testing the database
+       - prior to preliminary draft
+       - preliminary draft
+       - first draft
+       - second draft
+       - third draft
+       - my rotation time is up, this is the best I have
+       - I am now a PhD, this is the best I have
+       - I am satisfied with this data and probably won't have revisions
+
+- erich: other machines
+
+UI BEFORE ANYONE UPLOADS:
+- logins
+- proxy
+- on production
+- 'draft storyboard' on all pages
+- ui: upload reference files
+- thermometer
+
+UPLOADS:
+- generalize NavBar analysis menu list for use by other lists
+- make upload/page work for analysisInput and reference
+- format aliases:
+    - expressionMatrix, geneMatrix, featureMatrix
+    - geneList, markerGenes, geneBag, pathway
+
+CROWD SOURCING:
+- give recognition on web page
+- allow access to our data if you donate

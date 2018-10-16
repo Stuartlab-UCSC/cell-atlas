@@ -22,7 +22,7 @@ const label = (col, order, onRequestSort) => {
             direction={direction}
             onClick={onRequestSort}
         >
-            {col.label}
+            {col.label ? col.label : col.id}
         </TableSortLabel>
     return comp
 }
