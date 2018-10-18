@@ -6,6 +6,8 @@ import Matrix from 'components/Matrix'
 import { get as rxGet } from 'app/rx'
 import { tableSortCompare } from 'app/util'
 
+let firstRender = true // We sort the table before the first display.
+
 const growPanelClasses = {
     icon: 'icon',
     summary: 'summary',
@@ -44,6 +46,7 @@ const createTableRow = (row, state) => {
  const getData = (state) => {
 
     // Get the table data and order.
+    // TODO this could be extracted as a common helper function for tables.
     const table = state['dataset.table']
 
     let data = table.data.map(row => {
@@ -51,19 +54,34 @@ const createTableRow = (row, state) => {
     })
     if (!data) {
         data = [] // TODO
-        //data = fetchData(state)
+        //data = fetchData(state) // TODO
     }
-    return { data, order: table.order }
+
+    // Upon the first render the data needs to be sorted.
+    const order = table.order
+    if (firstRender) {
+        data.sort(tableSortCompare(order.property, order.direction))
+        firstRender = false
+    }
+
+     return { data, order }
 }
 
 const getHead = () => {
     const head = [
         { id: 'organ' },
+        { id: 'species' },
         { id: 'name' },
-        { id: 'primaryData' },
-        { id: 'scanpyObject' },
-        { id: 'sampleMetadata' },
-        { id: 'sampleCount', numeric: true },
+        { id: 'sample count', numeric: true },
+        { id: 'platform' },
+        { id: 'primary data' },
+        { id: 'scanpy object' },
+        { id: 'sample metadata' },
+        { id: 'clustering script' },
+        { id: 'reasonable for trajectory analysis' },
+        { id: 'trajectory analysis script' },
+        { id: 'expression data source' },
+        { id: 'expression data source URL' },
     ]
     return head
 }
@@ -97,9 +115,10 @@ const mapDispatchToProps = (dispatch) => {
         
             // Get the current data and sort order.
             let table = rxGet('dataset.table')
-            let data = table.data.slice()
+            let data = table.data
 
             let order =
+                // Grab the column ID from the column header element.
                 updateOrderBy(ev.target.closest('th').dataset.id, table.order)
 
             // Sort and save the sorted data to state.

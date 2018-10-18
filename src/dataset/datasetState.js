@@ -10,25 +10,26 @@ const datasetState = {
             return state
         }
     },
+    //'dataset.table': (state = { order: defaultTableOrder, data: [] },
     'dataset.table': (state = { order: defaultTableOrder, data: [
         {
             id: 1,
             organ: 'immune bone',
             name: 'Immune Bone',
-            primaryData: 'immune_census',
-            scanpyObject: 'ica_bone_marrow.h5ad',
-            sampleMetadata: 'yes',
-            sampleCount: 378000,
+            'primary data': 'immune_census',
+            'scanpy object': 'ica_bone_marrow.h5ad',
+            'sample metadata': 'yes',
+            'sample count': 378000,
             species: 'human',
         },
         {
             id: 2,
             organ: 'blood',
             name: 'Hemotopoietic',
-            primaryData: 'hematopoietic',
-            scanpyObject: 'GSE79331_hematopoietic.h5ad',
-            sampleMetadata: 'yes',
-            sampleCount: 681,
+            'primary data': 'hematopoietic',
+            'scanpy object': 'GSE79331_hematopoietic.h5ad',
+            'sample metadata': 'yes',
+            'sample count': 681,
             species: 'human',
         },
     ]}, action) => {
