@@ -1,5 +1,5 @@
 
-const defaultTableOrder = { property: 'status', direction: 'desc' }
+const defaultTableOrder = { property: 'status', direction: 'asc' }
 
 const rowIndex = (id, data) => {
     return data.findIndex(row => {

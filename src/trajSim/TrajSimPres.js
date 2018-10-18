@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography'
 import InputFile from 'input/InputFile'
 import { TextFieldGrid } from 'input/inputGrid'
 import Format from 'format/FormatDescribe'
+import MockUp from 'app/MockUp'
 
 const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
     algorithm, description, name, species, tissue, onAnalyzeClick }) => {
@@ -75,6 +76,7 @@ const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
                     onClick={onAnalyzeClick}
                 />
             </Grid>
+            <MockUp />
         </Grid>
     )
 }

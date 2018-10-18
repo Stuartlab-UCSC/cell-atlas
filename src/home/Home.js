@@ -5,42 +5,11 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import cirm from 'home/images/cirm.svg'
-import czi from 'home/images/czi.svg'
-import datasets from 'home/images/datasets1.svg'
+import czi from 'home/images/czi.png'
+import datasets from 'home/images/datasets2.png'
+import brackets from 'home/images/brackets.png'
 import { About } from 'home/About'
 import HomeAnalyze from 'home/HomeAnalyze'
-
-const CirmButton = () => {
-    const imgStyle = {
-        height: '34px',
-        margin: '-15px',
-    }
-    const buttonStyle = {
-        position: 'absolute',
-        top: '140px',
-        left: '56px',
-        backgroundColor: 'white',
-    }
-    const comp =
-        <Button
-            variant="extendedFab"
-            aria-label="CIRM"
-            className='button'
-            href='http://cirm.ucsc.edu'
-            target='_blank'
-            style={buttonStyle}
-        >
-            <img
-                src={cirm}
-                alt='CIRM'
-                style={imgStyle}
-            />
-        </Button>
- 
-    return comp
-}
-
 const CziButton = () => {
     const imgStyle = {
         height: '34px',
@@ -49,7 +18,7 @@ const CziButton = () => {
     const buttonStyle = {
         position: 'absolute',
         top: '160px',
-        left: '120px',
+        left: '130px',
         backgroundColor: 'white',
     }
     const comp =
@@ -70,12 +39,10 @@ const CziButton = () => {
  
     return comp
 }
-
-
 const YourData = () => {
     const style = {
         position: 'absolute',
-        top: '230px',
+        top: '240px',
         left: '90px',
     }
     const comp =
@@ -108,11 +75,17 @@ const Home = () => {
         ...smallTitleStyle,
         marginTop: -5
     }
-    const mainImageStyle = {
+    const datasetsStyle = {
         position: 'absolute',
-        top: 53, // datasets1: 53
-        left: 50,  // datasets1: 50
-        height: 300,  // datasets1: 300
+        top: 135,
+        left: 73,
+        height: 115,
+    }
+    const bracketsStyle = {
+        position: 'absolute',
+        top: 60,
+        left: 200,
+        height: 300,
     }
     const pageBodyStyle = {
         paddingLeft: '4rem',
@@ -135,11 +108,15 @@ const Home = () => {
                 <img
                     src={datasets}
                     alt='datasets'
-                    style={mainImageStyle}
+                    style={datasetsStyle}
+                />
+                <img
+                    src={brackets}
+                    alt='brackets'
+                    style={bracketsStyle}
                 />
                 <HomeAnalyze />
                 <YourData />
-            <CirmButton />
             <CziButton />
             </div>
             <About />

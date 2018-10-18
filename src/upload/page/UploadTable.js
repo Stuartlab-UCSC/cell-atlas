@@ -9,6 +9,8 @@ import { tableSortCompare } from 'app/util'
 //import { checkFetchStatus, fetchError, parseFetchedJson, tableSortCompare }
 //    from 'app/util'
 
+let firstRender = true // We sort the table before the first display.
+
 // TODO put in config
 //const HUB_URL = 'http://localhost:5000'  // TODO
 //const USER = 'swat_soe.ucsc.edu'
@@ -113,8 +115,15 @@ const getData = (state) => {
         data = [] // TODO
         //data = fetchData(state)
     }
-    
-    return { data, order: table.order }
+
+    // Upon the first render the data needs to be sorted.
+    const order = table.order
+    if (firstRender) {
+        data.sort(tableSortCompare(order.property, order.direction))
+        firstRender = false
+    }
+
+    return { data, order }
 }
 
 const getHead = () => {

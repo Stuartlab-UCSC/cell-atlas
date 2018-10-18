@@ -8,6 +8,7 @@ import AnalyzeButton from 'components/AnalyzeButton'
 import AnalyzeHead from 'components/AnalyzeHead'
 import Format from 'format/FormatDescribe'
 import InputFile from 'input/InputFile'
+import MockUp from 'app/MockUp'
 
 const TypePsychPres = ({ clusters, geneMatrix, metadata, onAnalyzeClick }) => {
     const id = 'typePsych'
@@ -35,6 +36,7 @@ const TypePsychPres = ({ clusters, geneMatrix, metadata, onAnalyzeClick }) => {
                     onClick={onAnalyzeClick}
                 />
             </Grid>
+            <MockUp />
         </Grid>
     )
 }

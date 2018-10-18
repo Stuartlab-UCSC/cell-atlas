@@ -9,6 +9,8 @@ import TableButtonGroup from 'components/TableButtonGroup'
 import { get as rxGet, set as rxSet } from 'app/rx'
 import { tableSortCompare } from 'app/util'
 
+let firstRender = true // We sort the table before the first display.
+
 const backgrounds = {    // bootstrap message colors
     Success: '#D8EECE',  // green
     Error: '#EDD4D5',    // pink
@@ -101,8 +103,15 @@ const getData = (state) => {
         data = [] // TODO
         //data = fetchData(state)
     }
-    
-    return { data, order: table.order }
+
+    // Upon the first render the data needs to be sorted.
+    const order = table.order
+    if (firstRender) {
+        data.sort(tableSortCompare(order.property, order.direction))
+        firstRender = false
+    }
+
+    return { data, order }
 }
 
 const getHead = (state) => {

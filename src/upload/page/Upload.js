@@ -9,9 +9,8 @@ import UploadFile from 'upload/page/UploadFile'
 import UploadTransfer from 'upload/page/UploadTransfer'
 import UploadFormat from 'upload/page/UploadFormat'
 import UploadTable from 'upload/page/UploadTable'
+import MockUp from 'app/MockUp'
 
-/*
-*/
 const Upload = ({ project }) => {
     const id = 'upload'
     return (
@@ -50,6 +49,7 @@ const Upload = ({ project }) => {
                     <p>TBD = To Be Determined</p>
                 </Typography>
             </Grid>
+            <MockUp />
         </Grid>
     )
 }

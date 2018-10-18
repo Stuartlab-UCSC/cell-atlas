@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 
-import trajSim from 'home/images/trajSim.svg'
-import typePsych from 'home/images/typePsych.svg'
-import moleSim from 'home/images/moleSim2.svg'
+import trajSim from 'home/images/trajSim.png'
+import typePsych from 'home/images/typePsych.png'
+import moleSim from 'home/images/moleSim2.png'
 
 const images = [
     {

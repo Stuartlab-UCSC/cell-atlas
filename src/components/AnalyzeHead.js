@@ -8,9 +8,9 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 
-import moleSim from 'home/images/moleSim2.svg'
-import trajSim from 'home/images/trajSim.svg'
-import typePsych from 'home/images/typePsych.svg'
+import moleSim from 'home/images/moleSim2.png'
+import trajSim from 'home/images/trajSim.png'
+import typePsych from 'home/images/typePsych.png'
 
 const images = { moleSim, trajSim, typePsych}
 

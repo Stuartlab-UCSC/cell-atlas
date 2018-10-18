@@ -13,6 +13,7 @@ import Format from 'format/FormatDescribe'
 import InputFile from 'input/InputFile'
 import InputFileMatrixZero from 'input/InputFileMatrixZero'
 import { TextFieldGrid } from 'input/inputGrid'
+import MockUp from 'app/MockUp'
 
 const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
     
@@ -50,6 +51,7 @@ const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
                     onClick={onAnalyzeClick}
                 />
             </Grid>
+            <MockUp />
         </Grid>
     )
 }

@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import ResultTable from 'result/ResultTable'
+import MockUp from 'app/MockUp'
 
 const ResultPres = ({classes}) => {
     return (
@@ -23,6 +24,7 @@ const ResultPres = ({classes}) => {
             <Grid item xs={12}>
                 <ResultTable />
             </Grid>
+            <MockUp />
         </Grid>
     )
 }

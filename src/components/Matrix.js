@@ -25,12 +25,7 @@ const styles = theme => ({
 const dataVal = (val, j, numeric, chip) => {
     let style = null
     let formattedVal = val
-    if (val === 'TBD') {
-        formattedVal =
-            <Typography variant='caption'>
-                {val}
-            </Typography>
-    } else if (chip) {
+    if (chip) {
         if (chip.column === j) {
             formattedVal =
                 <Chip
@@ -38,6 +33,15 @@ const dataVal = (val, j, numeric, chip) => {
                     style = {{backgroundColor: chip.color, marginTop: '-0.5rem'}}
                 />
         }
+     } else if (numeric) {
+        formattedVal = val.toLocaleString()
+    } else if (val === 'TBD') {
+        formattedVal =
+            <Typography variant='caption'>
+                {val}
+            </Typography>
+    } else if (val === undefined) {
+        return null
     }
     const comp =
         <TableCell
