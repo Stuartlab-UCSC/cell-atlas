@@ -28,17 +28,11 @@ const label = (col, order, onRequestSort) => {
 }
 
 const cell = (col, order, onRequestSort) => {
-    let sortDirection = false
-    if (order && order.property === col.id) {
-        sortDirection = order.direction
-    }
     let comp =
         <TableCell
             key={col.id}
             data-id={col.id}
             numeric={col.numeric}
-            padding={col.disablePadding ? 'none' : 'default'}
-            sortDirection={sortDirection}
         >
             {label(col, order, onRequestSort)}
         </TableCell>

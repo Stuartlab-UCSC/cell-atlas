@@ -14,6 +14,17 @@ const datasetState = {
     'dataset.table': (state = { order: defaultTableOrder, data: [
         {
             id: 1,
+            organ: `Bladder, Heart_and_Aorta, Kidney, Limb_Muscle, Liver, Lung, 
+Mammary_Gland, Marrow, Spleen, Thymus, Tongue, Trachea'`,
+            name: 'Tabula Muris droplet',
+            'primary data': 'data/mouse/tabula_muris',
+            'scanpy object': 'mouse_tabulaMuris_droplet.h5ad',
+            'sample metadata': 'yes',
+            'sample count': 70118,
+            species: 'mouse: Tabula Muris',
+        },
+        {
+            id: 2,
             organ: 'immune bone',
             name: 'Immune Bone',
             'primary data': 'immune_census',
@@ -23,7 +34,7 @@ const datasetState = {
             species: 'human',
         },
         {
-            id: 2,
+            id: 3,
             organ: 'blood',
             name: 'Hemotopoietic',
             'primary data': 'hematopoietic',

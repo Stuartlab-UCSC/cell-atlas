@@ -34,14 +34,18 @@ const dataVal = (val, j, numeric, chip) => {
                 />
         }
      } else if (numeric) {
+
+        // Insert commas.
         formattedVal = val.toLocaleString()
     } else if (val === 'TBD') {
+
+        // Give this one a different font.
         formattedVal =
             <Typography variant='caption'>
                 {val}
             </Typography>
     } else if (val === undefined) {
-        return null
+        formattedVal = null
     }
     const comp =
         <TableCell
