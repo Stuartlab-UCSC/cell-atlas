@@ -5,10 +5,10 @@
 import { connect } from 'react-redux'
 import React from 'react'
 import Grid from '@material-ui/core/Grid/Grid'
-import FormatDescribe from 'format/FormatDescribe'
+import FormatDetailGroup from 'format/FormatDetailGroup'
 import FormatSelect from 'format/FormatSelect'
 
-const UploadFormatPres = ({ id, select, expand }) => {
+const UploadFormatPres = ({ id, select, formatGroup, expand }) => {
     //console.log('UploadFormatPres: expand:', expand)
     return (
         <React.Fragment>
@@ -19,15 +19,15 @@ const UploadFormatPres = ({ id, select, expand }) => {
                     type='analysisInput'
                 />
             </Grid>
-            <Grid item xs={8} />
-            <Grid item xs={1} />
-            <Grid item xs={11}>
-                <FormatDescribe
-                    id={id}
-                    expand={expand}
-                />
+            <Grid item xs={8}>
+                <Grid item xs={11}>
+                    <FormatDetailGroup
+                        id={id}
+                        expand={expand}
+                    />
+                </Grid>
             </Grid>
-        </React.Fragment>
+         </React.Fragment>
     )
 }
 
@@ -40,22 +40,42 @@ const mapStateToProps = (state) => {
             type: 'analysisInput',
         },
         expand: [
-            { id: 'upload.format.expand',
-                value: state['upload.format.expand']},
-            { id: 'upload.featureMatrix.expand',
-                value: state['upload.featureMatrix.expand']},
-            { id: 'upload.metadata.expand',
-                value: state['upload.metadata.expand']},
-            { id: 'upload.fullSimilarity.expand',
-                value: state['upload.fullSimilarity.expand']},
-            { id: 'upload.sparseSimilarity.expand',
-                value: state['upload.sparseSimilarity.expand']},
-            { id: 'upload.xyPositions.expand',
-                value: state['upload.xyPositions.expand']},
-            { id: 'upload.trajectory.expand',
-                value: state['upload.trajectory.expand']},
-        ],
-        xsTotal: 12,
+            {
+                id: 'upload.format.expand',
+                summary: 'Formats',
+                value: state['upload.format.expand']
+            },
+            {
+                id: 'upload.featureMatrix.expand',
+                summary: 'Gene expression matrix',
+                value: state['upload.featureMatrix.expand']
+            },
+            {
+                id: 'upload.metadata.expand',
+                summary: 'Sample metadata',
+                value: state['upload.metadata.expand']
+            },
+            {
+                id: 'upload.fullSimilarity.expand',
+                summary: 'Full similarity',
+                value: state['upload.fullSimilarity.expand']
+            },
+            {
+                id: 'upload.sparseSimilarity.expand',
+                summary: 'Sparse similarity',
+                value: state['upload.sparseSimilarity.expand']
+            },
+            {
+                id: 'upload.xyPositions.expand',
+                summary: 'XY positions',
+                value: state['upload.xyPositions.expand']
+            },
+            {
+                id: 'upload.trajectory.expand',
+                summary: 'Trajectoruy',
+                value: state['upload.trajectory.expand']
+            },
+         ],
     }
 }
 

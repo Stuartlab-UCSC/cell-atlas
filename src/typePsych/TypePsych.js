@@ -17,11 +17,11 @@ const mapStateToProps = (state) => {
             list: state[clusId + '.list'],
             label: 'Cluster Reference *',
             url: state[clusId + '.url'],
-            expand: [{
+            expand: {
                 id: clusId + 'expand',
                 value: state[clusId + '.expand'],
                 summary: 'Format',
-            }],
+            },
         },
         geneMatrix: {
             id: geneId,
@@ -29,11 +29,11 @@ const mapStateToProps = (state) => {
             list: state[geneId + '.list'],
             label: 'Gene Matrix *',
             url: state[geneId + '.url'],
-            expand: [{
+            expand: {
                 id: geneId + '.expand',
                 value: state[geneId + '.expand'],
                 summary: 'Format',
-            }],
+            },
         },
         metadata: {
             id: metaId,
@@ -41,11 +41,11 @@ const mapStateToProps = (state) => {
             list: state[metaId + '.list'],
             label: 'Metadata *',
             url: state[metaId + '.url'],
-            expand: [{
+            expand: {
                 id: metaId + '.expand',
                 value: state[metaId + '.expand'],
                 summary: 'Format',
-            }],
+            },
         },
     }
 }

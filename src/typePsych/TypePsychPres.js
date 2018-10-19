@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 
 import AnalyzeButton from 'components/AnalyzeButton'
 import AnalyzeHead from 'components/AnalyzeHead'
-import Format from 'format/FormatDescribe'
+import Format from 'format/FormatDetail'
 import InputFile from 'input/InputFile'
 import MockUp from 'app/MockUp'
 

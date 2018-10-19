@@ -11,12 +11,13 @@ import Typography from '@material-ui/core/Typography'
 
 import InputFile from 'input/InputFile'
 import { TextFieldGrid } from 'input/inputGrid'
-import Format from 'format/FormatDescribe'
+import Format from 'format/FormatDetail'
 import MockUp from 'app/MockUp'
 
 const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
     algorithm, description, name, species, tissue, onAnalyzeClick }) => {
-    
+
+    console.log('TrajSimPres: id, cellXbranch.expand:', id, cellXbranch.expand)
     return (
         <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
             <AnalyzeHead
@@ -25,11 +26,11 @@ const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
                 xs={4}
             />
             <InputFile data={cellXbranch} />
-            <Format id={id} expand={cellXbranch.expand} xsTotal={11} />
+            <Format id={id} expand={cellXbranch.expand} />
             <InputFile data={geneMatrixTransposed} />
-            <Format id={id} expand={geneMatrixTransposed.expand} xsTotal={11} />
+            <Format id={id} expand={geneMatrixTransposed.expand} />
             <InputFile data={featureMatrix} />
-            <Format id={id} expand={featureMatrix.expand} xsTotal={11} />
+            <Format id={id} expand={featureMatrix.expand} />
             <Grid item xs={3}>
                 <TextFieldGrid
                     id={id + '.species'}

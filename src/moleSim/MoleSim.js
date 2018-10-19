@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
                     id: 'moleSim.featureMatrix.expand',
                     value: state['moleSim.featureMatrix.expand']
                 },
-                {
+/*
                     id: 'moleSim.fullSimilarity.expand',
                     value: state['moleSim.fullSimilarity.expand']
                 },
@@ -38,6 +38,7 @@ const mapStateToProps = (state) => {
                     id: 'moleSim.xyPositions.expand',
                     value: state['moleSim.xyPositions.expand']
                 },
+*/
             ],
         },
         metadata: {
@@ -46,11 +47,11 @@ const mapStateToProps = (state) => {
             list: state[metaId + '.list'],
             label: 'Metadata',
             url: state[metaId + '.url'],
-            expand: [{
+            expand: {
                 id: metaId + '.expand',
                 value: state[metaId + '.expand'],
                 summary: 'Format',
-            }],
+            },
         },
         name: state['moleSim.name'],
     }

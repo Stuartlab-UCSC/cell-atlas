@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography'
 
 import AnalyzeButton from 'components/AnalyzeButton'
 import AnalyzeHead from 'components/AnalyzeHead'
-import Format from 'format/FormatDescribe'
+//import FormatDetail from 'format/FormatDetail'
+import FormatDetailGroup from 'format/FormatDetailGroup'
 import InputFile from 'input/InputFile'
 import InputFileMatrixZero from 'input/InputFileMatrixZero'
 import { TextFieldGrid } from 'input/inputGrid'
@@ -18,7 +19,9 @@ import MockUp from 'app/MockUp'
 const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
     
     const id = 'moleSim'
-
+/*
+            <FormatDetail id={id} expand={metadata.expand} />
+ */
     return (
         <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
             <AnalyzeHead
@@ -30,9 +33,11 @@ const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
                 imageBottom='-4.5rem'
             />
             <InputFileMatrixZero data={feature} />
-            <Format id={id} expand={feature.expand} xsTotal={11} />
+            <Grid item xs={1} />
+            <Grid item xs={11}>
+                <FormatDetailGroup id={id} expand={feature.expand} xsTotal={11} />
+            </Grid>
             <InputFile data={metadata} lastColumn={<br />} />
-            <Format id={id} expand={metadata.expand} xsTotal={11} />
             <Grid item xs={5}>
                 <TextFieldGrid
                     id={id + '.name'}

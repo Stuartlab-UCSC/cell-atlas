@@ -22,11 +22,11 @@ const mapStateToProps = (state) => {
             list: state[cellId + '.list'],
             label: 'Cell by Branch Matrix *',
             url: state[cellId + '.url'],
-            expand: [{
+            expand: {
                 id: cellId + '.expand',
                 value: state[cellId + '.expand'],
                 summary: 'Format',
-            }],
+            },
         },
         geneMatrixTransposed: {
             id: transId,
@@ -34,11 +34,11 @@ const mapStateToProps = (state) => {
             list: state[transId + '.list'],
             label: 'Gene Matrix Transposed *',
             url: state[transId + '.url'],
-            expand: [{
+            expand: {
                 id: transId + '.expand',
                 value: state[transId + '.expand'],
                 summary: 'Format',
-            }],
+            },
         },
         featureMatrix: {
             id: featId,
@@ -46,11 +46,11 @@ const mapStateToProps = (state) => {
             list: state[featId + '.list'],
             label: 'Marker Gene Matrix *',
             url: state[featId + '.url'],
-            expand: [{
+            expand: {
                 id: featId + '.expand',
                 value: state[featId + '.expand'],
                 summary: 'Format',
-            }],
+            },
         },
     }
 }
