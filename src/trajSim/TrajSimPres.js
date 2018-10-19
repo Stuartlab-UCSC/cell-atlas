@@ -25,6 +25,7 @@ const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
                 title='Trajectory Similarity'
                 xs={4}
             />
+            <MockUp />
             <InputFile data={cellXbranch} />
             <Format id={id} expand={cellXbranch.expand} />
             <InputFile data={geneMatrixTransposed} />
@@ -77,7 +78,6 @@ const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
                     onClick={onAnalyzeClick}
                 />
             </Grid>
-            <MockUp />
         </Grid>
     )
 }

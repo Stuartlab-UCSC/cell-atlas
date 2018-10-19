@@ -18,6 +18,7 @@ const Upload = ({ project }) => {
             className='pageBody'
             style={{ maxWidth: '70rem'}}
         >
+            <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Upload Analysis Input Files
@@ -49,7 +50,6 @@ const Upload = ({ project }) => {
                     <p>TBD = To Be Determined</p>
                 </Typography>
             </Grid>
-            <MockUp />
         </Grid>
     )
 }

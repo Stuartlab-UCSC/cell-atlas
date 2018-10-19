@@ -16,6 +16,7 @@ const DatasetPres = ({classes}) => {
         <Grid container spacing={16}
             className='pageBody'
         >
+            <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Datasets
@@ -24,7 +25,6 @@ const DatasetPres = ({classes}) => {
             <Grid item xs={12}>
                 <DatasetTable />
             </Grid>
-            <MockUp />
         </Grid>
     )
 }

@@ -19,6 +19,7 @@ const TypePsychPres = ({ clusters, geneMatrix, metadata, onAnalyzeClick }) => {
                 title='Cell Type Psychic *'
                 xs={4}
             />
+            <MockUp />
             <InputFile data={clusters} />
             <Format id={id} expand={clusters.expand} xsTotal={11} />
             <InputFile data={geneMatrix} />
@@ -36,7 +37,6 @@ const TypePsychPres = ({ clusters, geneMatrix, metadata, onAnalyzeClick }) => {
                     onClick={onAnalyzeClick}
                 />
             </Grid>
-            <MockUp />
         </Grid>
     )
 }

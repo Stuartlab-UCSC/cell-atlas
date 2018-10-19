@@ -16,6 +16,7 @@ const ResultPres = ({classes}) => {
         <Grid container spacing={16}
             className='pageBody'
         >
+            <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Analysis Results
@@ -24,7 +25,6 @@ const ResultPres = ({classes}) => {
             <Grid item xs={12}>
                 <ResultTable />
             </Grid>
-            <MockUp />
         </Grid>
     )
 }

@@ -9,12 +9,12 @@ const Help = () => {
         <Grid container spacing={16}
               className='pageBody'
         >
+            <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Help
                 </Typography>
             </Grid>
-            <MockUp />
         </Grid>
     )
 }

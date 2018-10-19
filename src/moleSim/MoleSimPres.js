@@ -32,6 +32,7 @@ const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
                 imageTop='0.5rem'
                 imageBottom='-4.5rem'
             />
+            <MockUp />
             <InputFileMatrixZero data={feature} />
             <Grid item xs={1} />
             <Grid item xs={11}>
@@ -56,7 +57,6 @@ const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
                     onClick={onAnalyzeClick}
                 />
             </Grid>
-            <MockUp />
         </Grid>
     )
 }
