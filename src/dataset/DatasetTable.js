@@ -3,8 +3,9 @@
 
 import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
-import { get as rxGet } from 'app/rx'
-import { tableSortCompare } from 'app/util'
+import { get as rxGet, set as rxSet } from 'app/rx'
+import { tableSortCompare, checkFetchStatus, parseFetchedJson, fetchError}
+    from 'app/util'
 
 let firstRender = true // We sort the table before the first display.
 
@@ -14,48 +15,61 @@ const growPanelClasses = {
     summaryText: 'summaryText',
 }
 
-const createTableRow = (row, state) => {
+const createTableRow = ({organ, species, name, sampleCount}, state) => {
 
     // Create the displayable row for a row of data.
-    /*
-    let idStr = row.id.toString()
-    Object.keys(row).forEach(key => {
-
-        let expand = state['dataset.expand'][idStr][key] || false
-        let columnObj =
-            <ResultColumn
-                id={'dataset.' + key + '.expand'}
-                subId={idStr}
-                parms={row[key]}
-                expand={expand}
-            />
-    })
-    */
-    return row
+    // This is the place to insert any components other than text input.
+    return {organ, species, name, sampleCount}
 }
-    /*
-        let parmObj =
-            <ResultParms
-                id={'result.parm.expand'}
-                subId={idStr}
-                parms={parms}
-                expand={expand}
-            />
-        */
 
- const getData = (state) => {
+const receiveData = (dataIN) => {
+
+    // Receive the data from the fetch.
+    const data = dataIN.map(row => {
+        return {
+            id: row[0],
+            organ: row[1],
+            species: row[2],
+            name: row[3],
+            sampleCount: row[4],
+        }
+    })
+
+    rxSet('dataset.table.load', { data })
+}
+const fetchData = (state) => {
+
+    // Retrieve all of the dataset-level metadata. All is OK for now because
+    // there are not very many.
+    const url = process.env.REACT_APP_DATA_URL + '/cell/dataset/getAll'
+    //console.log('url:', url)
+    fetch(url)
+        .then(checkFetchStatus)
+        .then(parseFetchedJson)
+        .then(receiveData)
+        .catch((e) => {
+            fetchError(e);
+        })
+}
+
+const getData = (state) => {
 
     // Get the table data and order.
     // TODO this could be extracted as a common helper function for tables.
-    const table = state['dataset.table']
+
+    let table = state['dataset.table']
+
+
+    if (table.data.length < 1) {
+
+        // With no data in state, go fetch it.
+        fetchData(state)
+        table = state['dataset.table']
+    }
 
     let data = table.data.map(row => {
         return createTableRow(row, state)
     })
-    if (!data) {
-        data = [] // TODO
-        //data = fetchData(state) // TODO
-    }
 
     // Upon the first render the data needs to be sorted.
     const order = table.order
@@ -72,16 +86,7 @@ const getHead = () => {
         { id: 'organ' },
         { id: 'species' },
         { id: 'name' },
-        { id: 'sample count', numeric: true },
-        { id: 'platform' },
-        { id: 'primary data' },
-        { id: 'scanpy object' },
-        { id: 'sample metadata' },
-        { id: 'clustering script' },
-        { id: 'reasonable for trajectory analysis' },
-        { id: 'trajectory analysis script' },
-        { id: 'expression data source' },
-        { id: 'expression data source URL' },
+        { id: 'sampleCount', numeric: true },
     ]
     return head
 }

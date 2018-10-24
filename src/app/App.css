@@ -6,6 +6,7 @@ html, body {
 }
 
 .page {
+    overflow-x: auto; /* doesn't work */
     overflow-y: auto;
     position: fixed;
     top: 2.5rem;

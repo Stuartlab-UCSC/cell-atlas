@@ -10,7 +10,9 @@ const datasetState = {
             return state
         }
     },
-    //'dataset.table': (state = { order: defaultTableOrder, data: [] },
+    'dataset.table': (state = { order: defaultTableOrder, data: [] },
+          action) => {
+    /*
     'dataset.table': (state = { order: defaultTableOrder, data: [
         {
             id: 1,
@@ -44,6 +46,7 @@ Mammary_Gland, Marrow, Spleen, Thymus, Tongue, Trachea'`,
             species: 'human',
         },
     ]}, action) => {
+    */
         switch(action.type) {
         case 'dataset.table.load':
             return {
