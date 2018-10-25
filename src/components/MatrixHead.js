@@ -27,6 +27,12 @@ const label = (col, order, onRequestSort) => {
     return comp
 }
 
+const width = (col) => {
+    let comp =
+        <col style={{width: col.width}} key={col.id} />
+    return comp
+}
+
 const cell = (col, order, onRequestSort) => {
     let comp =
         <TableCell
@@ -41,13 +47,21 @@ const cell = (col, order, onRequestSort) => {
 
 const MatrixHead = ({ head, order, onRequestSort }) => {
     return (
-        <TableHead>
-            <TableRow>
+        <React.Fragment>
+            <colgroup>
                 {
-                    head.map(col => cell(col, order, onRequestSort))
+                    head.map(col => width(col))
                 }
-            </TableRow>
-        </TableHead>
+            </colgroup>
+
+            <TableHead>
+                <TableRow>
+                    {
+                        head.map(col => cell(col, order, onRequestSort))
+                    }
+                </TableRow>
+            </TableHead>
+        </React.Fragment>
     )
 }
 

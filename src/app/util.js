@@ -32,9 +32,3 @@ export const isoToday = () => {
     day = (day < 10) ? '0' + day : day.toString()
     return date.getFullYear() + '-' + month + '-' + day
 }
-
-export const tableSortCompare = (column, direction) => {
-    return direction === 'desc' ?
-        (a, b) => ((b[column] > a[column]) ? 1 : -1) :
-        (a, b) => ((b[column] < a[column]) ? 1 : -1)
-}

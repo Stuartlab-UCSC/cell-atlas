@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import MockUp from 'app/MockUp'
 
 import DatasetTable from 'dataset/DatasetTable'
 
@@ -15,8 +14,8 @@ const DatasetPres = ({classes}) => {
     return (
         <Grid container spacing={16}
             className='pageBody'
+            style={{ maxWidth: '60rem'}}
         >
-            <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Datasets
