@@ -1,0 +1,16 @@
+#!/bin/bash
+
+FILE=cell.tgz
+LOCALTAR=$CELL/ops/$FILE
+FROMTAR=plaza:ops/$FILE
+echo "scp'g from $FROMTAR to $LOCALTAR..."
+scp $FROMTAR $LOCALTAR
+
+cd $CELL
+echo "moving old code go build.old"
+mv build build.old
+echo "untarring..."
+tar -xf $LOCALTAR -C $CELL
+
+echo "kill old process and issue 'start'"
+ps -eaf | grep server.js

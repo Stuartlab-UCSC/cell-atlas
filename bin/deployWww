@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Build a production bundle and deploy it.
+
+cd ~/dev/cell
+npm run build
+echo "tarring..."
+tar -czf ops/cell.tgz build
+scp ops/cell.tgz plaza:ops
+echo
+echo If the scp session timed out, do:
+echo "scp ops/cell.tgz plaza:ops"
+
