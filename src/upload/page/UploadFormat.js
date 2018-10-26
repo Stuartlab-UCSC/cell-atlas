@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
         expand: [
             {
                 id: 'upload.format.expand',
-                summary: 'Formats',
+                summary: 'About formats',
                 value: state['upload.format.expand']
             },
             {
