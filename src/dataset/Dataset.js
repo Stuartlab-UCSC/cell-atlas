@@ -14,14 +14,13 @@ const DatasetPres = ({classes}) => {
     return (
         <Grid container spacing={16}
             className='pageBody'
-            style={{ maxWidth: '60rem'}}
         >
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Datasets
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item>
                 <DatasetTable />
             </Grid>
         </Grid>

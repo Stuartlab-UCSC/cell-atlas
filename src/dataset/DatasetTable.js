@@ -7,61 +7,73 @@ import { set as rxSet } from 'app/rx'
 import { stateMatrixMapDispatchToProps, stateMatrixGetData }
     from 'state/stateMatrix.js'
 
-const MINIMAL = true
+const MINIMAL = false
 let firstRender = true // To sort the table before the first display.
 
-const createTableRow = ({organ, species, name, sampleCount}, state) => {
+const createTableRow = (row, state) => {
 
     // Create the displayable row for a row of data.
-    // This is the place to insert any components other than text input.
-    return {organ, species, name, sampleCount}
+    // This is the place to insert any components other than text display.
+    return row
 }
+
+// The column IDs for the table.
+let colId
+if (MINIMAL) {
+    colId = [
+        'name' ,
+        'organ',
+        'species',
+        'sample count',
+    ]
+} else {
+    colId = [
+        'name' ,
+        'organ',
+        'species',
+        'sample count',
+        'abnormality',
+        'primary data',
+        'scanpy object of primary data',
+        'sample metadata',
+        'primary data normalization status',
+        'clustering script',
+        'reasonable for trajectory analysis',
+        'trajectory analysis script',
+        'platform',
+        'expression data source',
+        'expression data source URL',
+    ]
+}
+
+// Those column IDs that should be formatted as numeric.
+const numericId = ['sample count']
 
 const receiveData = (dataIn) => {
 
     // Receive the data from the fetch.
-    const data = dataIn.map(row => {
-        return {
-            id: row[0],
-            name: row[1],
-            organ: row[2],
-            species: row[3],
-            sampleCount: row[4],
-        }
+    const data = dataIn.map(rowIn => {
+        let row = {}
+        colId.forEach((id, i) => {
+            row[id] = rowIn[i+1]
+        })
+        return row
     })
-
     rxSet('dataset.table.load', { data })
 }
 
 const getData = (state) => {
-    return stateMatrixGetData('dataset', state, firstRender, createTableRow, receiveData)
+    return stateMatrixGetData(
+        'dataset', state, firstRender, createTableRow, receiveData)
 }
 
 const getHead = () => {
-    if (MINIMAL) {
-        return [
-            { id: 'name', width: '35%' },
-            { id: 'organ', width: '30%'  },
-            { id: 'species', width: '20%'  },
-            { id: 'sampleCount', width: '15%' , numeric: true },
-        ]
-    } else {
-         return [
-            { id: 'name' },
-            { id: 'organ' },
-            { id: 'species' },
-            { id: 'sampleCount', numeric: true },
-            { id: 'platform' },
-            { id: 'primary data' },
-            { id: 'scanpy object' },
-            { id: 'sample metadata' },
-            { id: 'clustering script' },
-            { id: 'reasonable for trajectory analysis' },
-            { id: 'trajectory analysis script' },
-            { id: 'expression data source' },
-            { id: 'expression data source URL' },
-        ]
-    }
+    return colId.map(id => {
+         if (numericId.includes(id)) {
+             return { id: id, numeric: true }
+         }
+         return {id: id}
+    })
 }
 
 const mapStateToProps = (state) => {
@@ -69,7 +81,6 @@ const mapStateToProps = (state) => {
         table: getData(state),
         head: getHead(),
         expand: state['dataset.expand'],
-        width: '100%',
         classes: { row: 'row' },
     }
 }

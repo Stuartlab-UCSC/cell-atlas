@@ -33,6 +33,8 @@ const dataVal = (val, j, numeric, chip) => {
                     style = {{backgroundColor: chip.color, marginTop: '-0.5rem'}}
                 />
         }
+    } else if (val === undefined) {
+        formattedVal = null
      } else if (numeric) {
 
         // Insert commas.
@@ -44,8 +46,6 @@ const dataVal = (val, j, numeric, chip) => {
             <Typography variant='caption'>
                 {val}
             </Typography>
-    } else if (val === undefined) {
-        formattedVal = null
     }
     const comp =
         <TableCell

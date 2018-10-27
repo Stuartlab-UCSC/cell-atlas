@@ -24,7 +24,7 @@ export const stateMatrixGetData = (
         // Retrieve all rows of the datasbase. All is OK for now because
         // there are not very many in our databases.
         const url = process.env.REACT_APP_DATA_URL + '/cell/' + id + '/getAll'
-        console.log('url:', url)
+        //console.log('url:', url)
         fetch(url)
             .then(checkFetchStatus)
             .then(parseFetchedJson)
