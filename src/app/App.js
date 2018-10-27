@@ -13,14 +13,15 @@ import Dataset from 'dataset/Dataset'
 import Help from 'home/Help'
 import Home from 'home/Home'
 import MoleSim from 'moleSim/MoleSim'
-import TypePsych from 'typePsych/TypePsych'
-import TrajSim from 'trajSim/TrajSim'
-import Result from 'result/Result'
+import NavBar from 'app/NavBar'
 import PageNotFound from 'home/PageNotFound'
+import Result from 'result/Result'
 import { init as rxInit } from 'state/rxInternals'
 import theme from 'app/theme'
+import TrajExplore from 'trajExplore/TrajExplore'
+import TrajSim from 'trajSim/TrajSim'
+import TypePsych from 'typePsych/TypePsych'
 import Upload from 'upload/page/Upload'
-import NavBar from 'app/NavBar'
 
 import 'app/App.css'
 
@@ -36,7 +37,8 @@ const App = () => {
                     <div className='page' >
                         <Switch>
                             <Route exact path='/' component={Home}/>
-                            <Route path='/dataset' component={Dataset}/>
+                            <Route path='/explore/dataset' component={Dataset}/>
+                            <Route path='/explore/traj' component={TrajExplore}/>
                             <Route path='/upload' component={Upload}/>
                             <Route path='/analyze/moleSim' component={MoleSim}/>
                             <Route path='/analyze/typePsych' component={TypePsych}/>

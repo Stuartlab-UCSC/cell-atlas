@@ -8,13 +8,13 @@ import { checkFetchStatus, parseFetchedJson, fetchError}
     from 'app/util'
 
 export const stateMatrixGetData = (
-    id, state, firstRender, prettifyRow, receiveData) => {
+    id, state, firstSort, prettifyRow, receiveData) => {
 
     // Get the table data and order for a matrix instance.
     // @param id: ID of the table instance, used as:
     //            - part of the state name
     //            - the data server route
-    // @param firstRender: true when data will be sorted on first render
+    // @param firstSort: true when data will be sorted on first render
     // @param prettifyRow: function that will transform data for rendering
     // @param receiveData: function called when data is received from server
     let table = state[id + '.table']
@@ -42,7 +42,7 @@ export const stateMatrixGetData = (
 
     // Upon the first render the data needs to be sorted.
     const order = table.order
-    if (firstRender) {
+    if (firstSort) {
         data.sort(sortCompare(order.property, order.direction))
     }
 

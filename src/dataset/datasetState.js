@@ -1,6 +1,6 @@
 // Dataset page state.
 
-const defaultTableOrder = { property: 'organ', direction: 'asc' }
+const defaultTableOrder = { property: 'species', direction: 'asc' }
 
 const datasetState = {
     'dataset.idSeq': (state = '6', action) => { // TODO set to 1 later

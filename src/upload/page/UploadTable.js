@@ -7,7 +7,7 @@ import TableButtonGroup from 'components/TableButtonGroup'
 import { get as rxGet, set as rxSet } from 'state/rx'
 import { sortCompare } from 'state/stateMatrix'
 
-let firstRender = true // We sort the table before the first display.
+let firstSort = true // We sort the table before the first display.
 
 // TODO put in config
 //const HUB_URL = 'http://localhost:5000'  // TODO
@@ -116,9 +116,9 @@ const getData = (state) => {
 
     // Upon the first render the data needs to be sorted.
     const order = table.order
-    if (firstRender) {
+    if (firstSort) {
         data.sort(sortCompare(order.property, order.direction))
-        firstRender = false
+        firstSort = false
     }
 
     return { data, order }

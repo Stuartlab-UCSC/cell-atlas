@@ -14,11 +14,27 @@ import appLogo from 'app/images/logo.svg'
 import 'app/App.css'
 
 class NavBar extends React.Component {
-    state = {
-        analyzeOpen: false,
+
+    constructor (props) {
+        super(props)
+
+        // The list heads.
+        this.listHeads = [
+            'analyze',
+            'explore',
+        ]
+
+        // Set the open state for each list head and initialize the anchorEls.
+        this.anchorEl = {}
+        let openState = {}
+        this.listHeads.forEach(head => {
+            openState[head] = false
+            this.anchorEl[head] = null
+        })
+        this.state = { open: openState }
+
+        this.color = 'rgba(0, 0, 0, 0.87)'
     }
-    anchorEl = null
-    color = 'rgba(0, 0, 0, 0.87)'
 
     logo = () => {
         let comp =
@@ -30,39 +46,45 @@ class NavBar extends React.Component {
                     marginLeft: '0.5rem',
                     marginRight: '0.5rem',
                 }}
-            ></img>
+            />
         return comp
     }
 
-    onAnalyzeClick = ev => {
-        this.setState(state => ({ analyzeOpen: !state.analyzeOpen }));
-    }
-    
-    onAnalyzeClose = () => {
-        this.setState({ analyzeOpen: false })
-    }
-    
-    menuItem = (text, to) => {
-        let comp =
-            <MenuItem
-                component={Link}
-                to={to}
-                onClick={this.onAnalyzeClose}
-            >
-                {text}
-            </MenuItem>
-        return comp
+     onListHeadClick = ev => {
+
+        // Handle a click on a menu option that has a list of options.
+        // Open the menu.
+        const id = ev.target.closest('.listHead').dataset.id
+        let openState = {...this.state.open}
+        openState[id] = true
+        this.setState({ open: openState })
     }
 
-    analyze = (text) => {
-        const { analyzeOpen } = this.state;
+    closeLists = (ev) => {
+
+         // Close all menu lists.
+         // It is easier to close them all than to find the one that is open.
+        let openState = {...this.state.open}
+        this.listHeads.forEach(head => {
+            openState[head] = false
+        })
+        this.setState({ open: openState })
+    }
+
+    menuList = ( id, label, list ) => {
+
+        // A list of options for a menu item.
+        const open = this.state.open[id]
+        const menuGrow = id + 'MenuGrow'
         let comp =
             <React.Fragment>
                 <ToggleButton
+                    className='listHead'
+                    data-id={id}
                     buttonRef={node => {
-                        this.anchorEl = node;
+                        this.anchorEl[id] = node;
                     }}
-                    aria-owns={analyzeOpen ? 'analyzeMenuGrow' : null}
+                    aria-owns={open ? menuGrow : null}
                     aria-haspopup="true"
                      style={{
                         textTransform: 'none',
@@ -70,13 +92,13 @@ class NavBar extends React.Component {
                         height: '40px',
                     }}
                     value=''
-                    onClick={this.onAnalyzeClick}
+                    onClick={this.onListHeadClick}
                 >
-                    Analyze
+                    {label}
                 </ToggleButton>
                 <Popper
-                    open={analyzeOpen}
-                    anchorEl={this.anchorEl}
+                    open={open}
+                    anchorEl={this.anchorEl[id]}
                     transition
                     disablePortal
                     placement='bottom-start'
@@ -84,21 +106,16 @@ class NavBar extends React.Component {
                     {({ TransitionProps, placement }) => (
                         <Grow
                             {...TransitionProps}
-                            id='analyzeMenuGrow'
+                            id={menuGrow}
+                            className={'listBody'}
+                            data-id={id}
                             style={{ transformOrigin: 'top' }}
                         >
                             <Paper style={{ backgroundColor: 'white' }}>
                                 <ClickAwayListener
-                                    onClickAway={this.onAnalyzeClose}
+                                    onClickAway={this.closeLists}
                                 >
-                                    <MenuList>
-                                        {this.menuItem('Trajectory Similarity',
-                                            '/analyze/trajSim')}
-                                        {this.menuItem('Molecular Similarity',
-                                            '/analyze/moleSim')}
-                                        {this.menuItem('Cell Type Psychic',
-                                            '/analyze/typePsych')}
-                                     </MenuList>
+                                    {list}
                                 </ClickAwayListener>
                             </Paper>
                         </Grow>
@@ -110,6 +127,8 @@ class NavBar extends React.Component {
     }
 
     barItem = (text, link) => {
+
+        // A simple option on the navigation bar.
         let comp =
             <ToggleButton
                 component={Link}
@@ -122,6 +141,58 @@ class NavBar extends React.Component {
             >
                 {text}
             </ToggleButton>
+        return comp
+    }
+
+    menuItem = (text, to) => {
+
+        // A menu item within a list.
+        let comp =
+            <MenuItem
+                component={Link}
+                to={to}
+                onClick={this.closeLists}
+            >
+                {text}
+            </MenuItem>
+        return comp
+    }
+
+    analyze = () => {
+
+        // The analyze menu.
+        const list =
+            <MenuList>
+                {this.menuItem('Trajectory Similarity',
+                    '/analyze/trajSim')}
+                {this.menuItem('Molecular Similarity',
+                    '/analyze/moleSim')}
+                {this.menuItem('Cell Type Psychic',
+                    '/analyze/typePsych')}
+            </MenuList>
+        const comp =
+            <React.Fragment>
+                {this.menuList( 'analyze', 'Analyze', list)}
+            </React.Fragment>
+
+        return comp
+    }
+
+    explore = () => {
+
+        // The explore menu.
+        const list =
+            <MenuList>
+                {this.menuItem('Trajectories',
+                    '/explore/traj')}
+                {this.menuItem('Dataset Metadata',
+                    '/explore/dataset')}
+            </MenuList>
+        const comp =
+            <React.Fragment>
+                {this.menuList( 'explore', 'Explore', list)}
+            </React.Fragment>
+
         return comp
     }
 
@@ -145,7 +216,7 @@ class NavBar extends React.Component {
                         Cell Atlas
                         {this.logo()}
                     </ToggleButton>
-                    {this.barItem('Datasets', '/dataset')}
+                    {this.explore()}
                     {this.barItem('Upload', '/upload')}
                     {this.analyze()}
                     {this.barItem('Results', '/result')}

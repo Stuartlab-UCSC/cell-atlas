@@ -8,7 +8,7 @@ import { stateMatrixMapDispatchToProps, stateMatrixGetData }
     from 'state/stateMatrix.js'
 
 const MINIMAL = false
-let firstRender = true // To sort the table before the first display.
+let firstSort = true // To sort the table before the first display.
 
 // The column IDs for the table.
 let colId
@@ -64,8 +64,12 @@ const createTableRow = (row, state) => {
 
 const getData = (state) => {
     let r = stateMatrixGetData(
-        'dataset', state, firstRender, createTableRow, receiveData)
-    firstRender = false
+        'dataset', state, firstSort, createTableRow, receiveData)
+
+    // Only do the first sort if there is data.
+    if (r.data.length > 0) {
+        firstSort = false
+    }
     return r
 }
 
@@ -88,7 +92,7 @@ const mapStateToProps = (state) => {
 }
 
 const updateOrderBy = (property, prev) => {
-
+    console.log('property, prev:', property, prev)
     // Update the order given the new column and previous order.
     let next = { property, direction: 'asc' }
 

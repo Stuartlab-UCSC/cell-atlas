@@ -17,7 +17,6 @@ import MockUp from 'app/MockUp'
 const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
     algorithm, description, name, species, tissue, onAnalyzeClick }) => {
 
-    console.log('TrajSimPres: id, cellXbranch.expand:', id, cellXbranch.expand)
     return (
         <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
             <AnalyzeHead
