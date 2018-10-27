@@ -1,8 +1,8 @@
 
-// state.js
+// sessionStore.js
 // An object to write and load state
 
-import rx from 'app/rx'
+import rx from 'state/rx'
 
 let LOGGING = false  // true means log the state and store on save and load
 let storageSupported

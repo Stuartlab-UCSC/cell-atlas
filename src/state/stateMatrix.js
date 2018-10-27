@@ -3,7 +3,7 @@
 // This depends on strict naming conventions for redux state and data server
 // routes.
 
-import { get as rxGet } from 'app/rx'
+import { get as rxGet } from 'state/rx'
 import { checkFetchStatus, parseFetchedJson, fetchError}
     from 'app/util'
 

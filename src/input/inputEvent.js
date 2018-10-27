@@ -1,7 +1,7 @@
 
 // Handle events from simple input elements.
 
-import { set as rxSet } from 'app/rx'
+import { set as rxSet } from 'state/rx'
 
 export const onChange = ev => {
     const target = ev.target

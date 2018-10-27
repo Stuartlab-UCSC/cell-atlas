@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
-import { set as rxSet } from 'app/rx'
+import { set as rxSet } from 'state/rx'
 import { stateMatrixMapDispatchToProps, stateMatrixGetData }
     from 'state/stateMatrix.js'
 

@@ -2,7 +2,7 @@
 // Upload a file with progress returned.
 
 import { connect } from 'react-redux'
-import { get as rxGet } from 'app/rx'
+import { get as rxGet } from 'state/rx'
 import UploadTransferPres from 'upload/page/UploadTransferPres'
 import { isoToday } from 'app/util'
 

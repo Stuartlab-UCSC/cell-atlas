@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 import UploadFilePres from 'upload/page/UploadFilePres'
-import { get as rxGet } from 'app/rx'
+import { get as rxGet } from 'state/rx'
 
 const mapStateToProps = (state) => {
     return {

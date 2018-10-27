@@ -3,7 +3,7 @@
 // Redux implementation.
 
 import { createStore, combineReducers } from 'redux'
-import rx from 'app/rx'
+import rx from 'state/rx'
 import { aboutState } from 'home/About'
 import datasetState from 'dataset/datasetState'
 import moleSimState from 'moleSim/moleSimState'

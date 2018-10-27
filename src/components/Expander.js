@@ -10,7 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 
-import { set as rxSet } from 'app/rx'
+import { set as rxSet } from 'state/rx'
 
 const onClick = (ev) => {
 

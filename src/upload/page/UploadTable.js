@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
-import { get as rxGet, set as rxSet } from 'app/rx'
+import { get as rxGet, set as rxSet } from 'state/rx'
 import { sortCompare } from 'state/stateMatrix'
 
 let firstRender = true // We sort the table before the first display.
