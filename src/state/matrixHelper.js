@@ -7,7 +7,7 @@ import { get as rxGet } from 'state/rx'
 import { checkFetchStatus, parseFetchedJson, fetchError}
     from 'app/util'
 
-export const stateMatrixGetData = (
+export const helperGetData = (
     id, state, firstSort, prettifyRow, receiveData) => {
 
     // Get the table data and order for a matrix instance.
@@ -43,13 +43,13 @@ export const stateMatrixGetData = (
     // Upon the first render the data needs to be sorted.
     const order = table.order
     if (firstSort) {
-        data.sort(sortCompare(order.property, order.direction))
+        data.sort(helperSortCompare(order.property, order.direction))
     }
 
     return { data, order }
 }
 
-export const sortCompare = (column, direction) => {
+export const helperSortCompare = (column, direction) => {
 
     // Compare for sorting columns in a matrix.x
     return direction === 'desc' ?
@@ -57,7 +57,7 @@ export const sortCompare = (column, direction) => {
         (a, b) => ((b[column] < a[column]) ? 1 : -1)
 }
 
-export const stateMatrixMapDispatchToProps = (id, dispatch, updateOrderBy) => {
+export const helperMapDispatchToProps = (id, dispatch, updateOrderBy) => {
 
     // Map dispatch to props for a matrix instance.
     // @param id: ID of the table instance; used as part of the state name
@@ -75,7 +75,7 @@ export const stateMatrixMapDispatchToProps = (id, dispatch, updateOrderBy) => {
                 updateOrderBy(ev.target.closest('th').dataset.id, table.order)
 
             // Sort and save the sorted data to state.
-            data.sort(sortCompare(order.property, order.direction))
+            data.sort(helperSortCompare(order.property, order.direction))
             dispatch({ type: id + '.table.sorted', data, order })
         },
     }

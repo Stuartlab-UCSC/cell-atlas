@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
 import { get as rxGet, set as rxSet } from 'state/rx'
-import { sortCompare } from 'state/stateMatrix'
+import { helperSortCompare } from 'state/matrixHelper.js'
 
 let firstSort = true // We sort the table before the first display.
 
@@ -117,7 +117,7 @@ const getData = (state) => {
     // Upon the first render the data needs to be sorted.
     const order = table.order
     if (firstSort) {
-        data.sort(sortCompare(order.property, order.direction))
+        data.sort(helperSortCompare(order.property, order.direction))
         firstSort = false
     }
 
@@ -169,7 +169,7 @@ const mapDispatchToProps = (dispatch) => {
                 updateOrderBy(ev.target.closest('th').dataset.id, table.order)
 
             // Sort and save the sorted data to state.
-            data.sort(sortCompare(order.property, order.direction))
+            data.sort(helperSortCompare(order.property, order.direction))
             dispatch({ type: 'upload.table.sorted', data, order })
         },
     }

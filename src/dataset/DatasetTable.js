@@ -4,8 +4,7 @@
 import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import { set as rxSet } from 'state/rx'
-import { stateMatrixMapDispatchToProps, stateMatrixGetData }
-    from 'state/stateMatrix.js'
+import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
 
 const MINIMAL = false
 let firstSort = true // To sort the table before the first display.
@@ -63,7 +62,7 @@ const createTableRow = (row, state) => {
 }
 
 const getData = (state) => {
-    let r = stateMatrixGetData(
+    let r = helperGetData(
         'dataset', state, firstSort, createTableRow, receiveData)
 
     // Only do the first sort if there is data.
@@ -104,7 +103,7 @@ const updateOrderBy = (property, prev) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return stateMatrixMapDispatchToProps('dataset', dispatch, updateOrderBy)
+    return helperMapDispatchToProps('dataset', dispatch, updateOrderBy)
 }
 
 const DatasetTable = connect(
