@@ -44,7 +44,6 @@ export const stateMatrixGetData = (
     const order = table.order
     if (firstRender) {
         data.sort(sortCompare(order.property, order.direction))
-        firstRender = false
     }
 
     return { data, order }

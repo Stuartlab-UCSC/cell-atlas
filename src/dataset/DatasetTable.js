@@ -10,13 +10,6 @@ import { stateMatrixMapDispatchToProps, stateMatrixGetData }
 const MINIMAL = false
 let firstRender = true // To sort the table before the first display.
 
-const createTableRow = (row, state) => {
-
-    // Create the displayable row for a row of data.
-    // This is the place to insert any components other than text display.
-    return row
-}
-
 // The column IDs for the table.
 let colId
 if (MINIMAL) {
@@ -62,9 +55,18 @@ const receiveData = (dataIn) => {
     rxSet('dataset.table.load', { data })
 }
 
+const createTableRow = (row, state) => {
+
+    // Create the displayable row for a row of data.
+    // This is the place to insert any components other than text display.
+    return row
+}
+
 const getData = (state) => {
-    return stateMatrixGetData(
+    let r = stateMatrixGetData(
         'dataset', state, firstRender, createTableRow, receiveData)
+    firstRender = false
+    return r
 }
 
 const getHead = () => {
