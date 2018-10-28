@@ -9,7 +9,7 @@ import UploadFile from 'upload/page/UploadFile'
 import UploadTransfer from 'upload/page/UploadTransfer'
 import UploadFormat from 'upload/page/UploadFormat'
 import UploadTable from 'upload/page/UploadTable'
-import MockUp from 'app/MockUp'
+import MockUp from 'components/MockUp'
 
 const Upload = ({ project }) => {
     const id = 'upload'

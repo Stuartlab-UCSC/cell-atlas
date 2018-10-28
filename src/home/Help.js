@@ -1,7 +1,7 @@
 
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
-import MockUp from 'app/MockUp'
+import MockUp from 'components/MockUp'
 import Typography from "@material-ui/core/Typography/Typography";
 
 const Help = () => {

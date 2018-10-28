@@ -185,7 +185,7 @@ class NavBar extends React.Component {
             <MenuList>
                 {this.menuItem('Trajectories',
                     '/explore/traj')}
-                {this.menuItem('Dataset Metadata',
+                {this.menuItem('Datasets',
                     '/explore/dataset')}
             </MenuList>
         const comp =

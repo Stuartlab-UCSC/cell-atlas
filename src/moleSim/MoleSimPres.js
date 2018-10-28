@@ -14,7 +14,7 @@ import FormatDetailGroup from 'format/FormatDetailGroup'
 import InputFile from 'input/InputFile'
 import InputFileMatrixZero from 'input/InputFileMatrixZero'
 import { TextFieldGrid } from 'input/inputGrid'
-import MockUp from 'app/MockUp'
+import MockUp from 'components/MockUp'
 
 const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
     

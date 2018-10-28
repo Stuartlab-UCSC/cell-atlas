@@ -17,7 +17,7 @@ const DatasetPres = ({classes}) => {
         >
             <Grid item xs={12}>
                 <Typography variant='title'>
-                    Datasets
+                    Dataset Metadata
                 </Typography>
             </Grid>
             <Grid item>

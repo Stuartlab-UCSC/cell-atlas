@@ -3,7 +3,7 @@
 
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
-import mockUp from 'app/images/mock-up.svg'
+import mockUp from 'components/images/mock-up.svg'
 
 const MockUp = () => {
     return (
