@@ -6,10 +6,10 @@ import React from 'react'
 import Matrix from 'components/Matrix'
 import ResultParms from 'result/ResultParms'
 import TableButtonGroup from 'components/TableButtonGroup'
-import { get as rxGet, set as rxSet } from 'state/rx'
-import { helperSortCompare } from 'state/matrixHelper.js'
+import { set as rxSet } from 'state/rx'
+import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
 
-let firstSort = true // We sort the table before the first display.
+const statusColumn = 5  // for coloring based on status
 
 const backgrounds = {    // bootstrap message colors
     Success: '#D8EECE',  // green
@@ -17,7 +17,14 @@ const backgrounds = {    // bootstrap message colors
     Canceled: '#F9F5D9', // yellow
 }
 
-const statusColumn = 5  // for coloring based on status
+// The column IDs for the database.
+const dataColId = [
+    'name',
+    'analysis',
+    'date',
+    'result',
+    'status',
+]
 
 const growPanelClasses = {
     icon: 'icon',
@@ -35,6 +42,44 @@ const onButtonClick = (ev) => {
     rxSet('result.table.' + data.action, { id: parseInt(data.id, 10) })
 }
 
+const createRowButtons = ({id, name, analysis, parms, date, result, status},
+    idStr) => {
+
+    // Create the buttons for a row.
+    let group = []
+
+    // Define the download or view button depending status and the analysis.
+    if (status === 'Success') {
+        group.push({ id: idStr, action: 'view', href: 'http://localhost:3333', title: 'View the results' })
+        group.push({ id: idStr, action: 'download', onClick: onButtonClick, title: 'Download the results' })
+    }
+
+    // All results get a copy button.
+    group.push({ id: idStr, action: 'copy', linkTo: 'analyze/' + analysis, title: 'Copy the parameters for a new analysis run' })
+
+    // Define the cancel/delete button depending on the result status.
+    if (status === 'Running') {
+        group.push({ id: idStr, action:'cancel', onClick: onButtonClick, title: 'Cancel this analysis run' })
+    } else {
+        group.push({ id: idStr, action:'delete', onClick: onButtonClick, title: 'Remove all results of this analysis' })
+    }
+
+    // Group all of the action buttons.
+    return TableButtonGroup({ group: group })
+}
+
+const createRowChip = ({id, name, analysis, parms, date, result, status}) => {
+
+    // Define the chip based on the status.
+    let chip = { column: statusColumn }
+    if (status === 'Error' || status === 'Canceled') {
+        chip.color = backgrounds[status]
+    } else if (status !== 'Running') {
+        chip.color = backgrounds.Success
+    }
+    return chip
+}
+
 const createTableRow = ({id, name, analysis, parms, date, result, status},
     state) => {
 
@@ -50,86 +95,30 @@ const createTableRow = ({id, name, analysis, parms, date, result, status},
             expand={expand}
         />
 
-    // Define the download or view button depending status and the analysis.
-    let group = []
-    if (status === 'Success') {
-        group.push({ id: idStr, action: 'view', href: 'http://localhost:3333', title: 'View the results' })
-        group.push({ id: idStr, action: 'download', onClick: onButtonClick, title: 'Download the results' })
-    }
+    let actions = createRowButtons(
+        {id, name, analysis, parms, date, result, status}, idStr)
+    let chip = createRowChip(
+        {id, name, analysis, parms, date, result, status})
 
-    // All results get a copy button.
-    group.push({ id: idStr, action: 'copy', linkTo: 'analyze/' + analysis, title: 'Copy the parameters for a new analysis run' })
-    
-    // Define the cancel/delete button depending on the result status.
-    if (status === 'Running') {
-        group.push({ id: idStr, action:'cancel', onClick: onButtonClick, title: 'Cancel this analysis run' })
-    } else {
-        group.push({ id: idStr, action:'delete', onClick: onButtonClick, title: 'Remove all results of this analysis' })
-    }
-
-    // Group all of the action buttons.
-    let actions = TableButtonGroup({ group: group })
-
-    // Define the chip based on the status.
-    let chip = null
-    if (status === 'Error' || status === 'Canceled') {
-        chip = {
-            column: statusColumn,
-            color: backgrounds[status]
-        }
-    } else if (status === 'Running') {
-        chip = {
-            column: statusColumn,
-        }
-    } else {
-        chip = {
-            column: statusColumn,
-            color: backgrounds.Success
-        }
-    }
-    
     return {id, name, analysis, parmObj, date, result, status, actions, chip}
-}
-
-const getData = (state) => {
-
-    // Get the table data and order.
-    const table = state['result.table']
-
-    let data = table.data.map(stateRow => {
-        return createTableRow(stateRow, state)
-    })
-    if (!data) {
-        data = [] // TODO
-        //data = fetchData(state)
-    }
-
-    // Upon the first render the data needs to be sorted.
-    const order = table.order
-    if (firstSort) {
-        data.sort(helperSortCompare(order.property, order.direction))
-        firstSort = false
-    }
-
-    return { data, order }
 }
 
 const getHead = (state) => {
     const head = [
         { id: 'name'     , numeric: false, label: 'Name' },
         { id: 'analysis' , numeric: false, label: 'Analysis' },
-        { id: 'parmObj'  , numeric: false, label: '' },
+        { id: 'parmObj'  , numeric: false, label: ' ' },
         { id: 'date'     , numeric: false, label: 'Date' },
         { id: 'result'   , numeric: true , label: 'Result' },
         { id: 'status'   , numeric: false, label: 'Status' },
-        { id: 'actions'  , numeric: true , label: '' },
+        { id: 'actions'  , numeric: true , label: ' ' },
     ]
     return head
 }
 
 const mapStateToProps = (state) => {
     return {
-        table: getData(state),
+        table: helperGetData('result', state, createTableRow, dataColId),
         head: getHead(state),
         parmShow: state['result.parm.expand'],
         width: '100%',
@@ -151,21 +140,7 @@ const updateOrderBy = (property, prev) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        onRequestSort: (ev) => {
-        
-            // Get the current data and sort order.
-            let table = rxGet('result.table')
-            let data = table.data.slice()
-
-            let order =
-                updateOrderBy(ev.target.closest('th').dataset.id, table.order)
-
-            // Sort and save the sorted data to state.
-            data.sort(helperSortCompare(order.property, order.direction))
-            dispatch({ type: 'result.table.sorted', data, order })
-        },
-    }
+    return helperMapDispatchToProps('result', dispatch, updateOrderBy)
 }
 
 const ResultTable = connect(

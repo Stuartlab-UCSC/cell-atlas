@@ -141,8 +141,8 @@ const uploadState = {
             next = {...state}
             next.data.splice(rowIndex(id, state.data), 1)
             return next
-        case 'upload.table.sorted':
-            return { data: action.data, order: action.order }
+        case 'upload.table.uiSetOrder':
+            return { ...state, order: action.order }
         case 'upload.table.load':
             return {
                 data: action.data,

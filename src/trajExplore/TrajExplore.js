@@ -12,7 +12,7 @@ const Help = () => {
         >
             <Grid item xs={12}>
                 <Typography variant='title'>
-                    CyTraceDb Explorer
+                    Trajectory Explorer
                 </Typography>
             </Grid>
             <Grid item xs={12}>

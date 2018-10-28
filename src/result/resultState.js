@@ -46,8 +46,8 @@ const resultState = {
             next = {...state}
             next.data.splice(rowIndex(id, state.data), 1)
             return next
-        case 'result.table.sorted':
-            return { data: action.data, order: action.order }
+        case 'result.table.uiSetOrder':
+            return { ...state, order: action.order }
         case 'result.table.load':
             return {
                 data: action.data,

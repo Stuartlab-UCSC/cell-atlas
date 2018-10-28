@@ -3,12 +3,37 @@
 // This depends on strict naming conventions for redux state and data server
 // routes.
 
-import { get as rxGet } from 'state/rx'
-import { checkFetchStatus, parseFetchedJson, fetchError}
-    from 'app/util'
+import { get as rxGet, set as rxSet } from 'state/rx'
+import { checkFetchStatus, parseFetchedJson, fetchError} from 'app/util'
 
-export const helperGetData = (
-    id, state, firstSort, prettifyRow, receiveData) => {
+const sortCompare = (column, direction) => {
+
+    // Compare for sorting columns in a matrix.
+    let r
+    if (direction === 'desc') {
+        r = (a, b) => (b[column] > a[column]) ? 1 :
+            ((b[column] < a[column]) ? -1 : 0)
+    } else {
+        r = (a, b) => (b[column] > a[column]) ? -1 :
+            ((b[column] < a[column]) ? 1 : 0)
+    }
+    return r
+}
+
+const receiveData = (id, dataIn, colId) => {
+
+    // Receive the data from the fetch.
+    const data = dataIn.map(rowIn => {
+        let row = {}
+        colId.forEach((id, i) => {
+            row[id] = rowIn[i+1]
+        })
+        return row
+    })
+    rxSet(id + '.table.load', { data })
+}
+
+export const helperGetData = (id, state, prettifyRow, colId) => {
 
     // Get the table data and order for a matrix instance.
     // @param id: ID of the table instance, used as:
@@ -16,8 +41,9 @@ export const helperGetData = (
     //            - the data server route
     // @param firstSort: true when data will be sorted on first render
     // @param prettifyRow: function that will transform data for rendering
-    // @param receiveData: function called when data is received from server
+    // @param colId: IDs of the database columns as an array
     let table = state[id + '.table']
+
     if (table.data.length < 1) {
 
         // With no data in state, go fetch it.
@@ -28,7 +54,7 @@ export const helperGetData = (
         fetch(url)
             .then(checkFetchStatus)
             .then(parseFetchedJson)
-            .then(receiveData)
+            .then((dataIn) => receiveData(id, dataIn, colId))
             .catch((e) => {
                 fetchError(e);
             })
@@ -40,21 +66,25 @@ export const helperGetData = (
         return prettifyRow(row, state)
     })
 
-    // Upon the first render the data needs to be sorted.
+    // Sort the data according to the order.
     const order = table.order
-    if (firstSort) {
-        data.sort(helperSortCompare(order.property, order.direction))
-    }
+    data.sort(sortCompare(order.property, order.direction))
 
     return { data, order }
 }
 
-export const helperSortCompare = (column, direction) => {
+export const helperGetHead = (colId, numericId) => {
 
-    // Compare for sorting columns in a matrix.x
-    return direction === 'desc' ?
-        (a, b) => ((b[column] > a[column]) ? 1 : -1) :
-        (a, b) => ((b[column] < a[column]) ? 1 : -1)
+    // Get the table header info for a matrix instance.
+    // @param colId: list of column IDs
+    // @param numeridId: list of column IDs to be aligned as numeric
+    return colId.map((id , i) => {
+        let info = { id }
+        if (numericId.includes(id)) {
+            info.numeric = true
+        }
+         return info
+    })
 }
 
 export const helperMapDispatchToProps = (id, dispatch, updateOrderBy) => {
@@ -68,15 +98,14 @@ export const helperMapDispatchToProps = (id, dispatch, updateOrderBy) => {
 
             // Get the current data and sort order.
             let table = rxGet(id + '.table')
-            let data = table.data
 
+            // Update the order after grabbing the column ID
+            // from the column header element.
             let order =
-                // Grab the column ID from the column header element.
                 updateOrderBy(ev.target.closest('th').dataset.id, table.order)
 
-            // Sort and save the sorted data to state.
-            data.sort(helperSortCompare(order.property, order.direction))
-            dispatch({ type: id + '.table.sorted', data, order })
+            // Save the sorted data to state.
+            dispatch({ type: id + '.table.uiSetOrder', order })
         },
     }
 }

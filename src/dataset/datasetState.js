@@ -18,8 +18,8 @@ const datasetState = {
                 data: action.data,
                 order: defaultTableOrder,
             }
-        case 'dataset.table.sorted':
-            return { data: action.data, order: action.order }
+        case 'dataset.table.uiSetOrder':
+            return { ...state, order: action.order }
         default:
             return state
         }

@@ -4,20 +4,23 @@
 import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
-import { get as rxGet, set as rxSet } from 'state/rx'
-import { helperSortCompare } from 'state/matrixHelper.js'
-
-let firstSort = true // We sort the table before the first display.
-
-// TODO put in config
-//const HUB_URL = 'http://localhost:5000'  // TODO
-//const USER = 'swat_soe.ucsc.edu'
+import { set as rxSet } from 'state/rx'
+import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
 
 const backgrounds = {    // bootstrap message colors
     Complete: '#D8EECE', // green
     Error: '#EDD4D5',    // pink
     Canceled: '#F9F5D9', // yellow
 }
+
+// The column IDs for the data.
+const dataColId = [
+    'project',
+    'name',
+    'format',
+    'size',
+    'date',
+]
 
 const onButtonClick = (ev) => {
     
@@ -29,10 +32,8 @@ const onButtonClick = (ev) => {
     rxSet('upload.table.' + data.action, { id: data.id })
 }
 
-const createTableRow = ({ id, project, name, size, format, status }) => {
+const createRowButtons = ({ id, project, name, size, format, status }) => {
 
-    // Transform the state table data into the presentational component format.
-    
     // Define the buttons depending on the status.
     let idStr = id.toString()
     const viewButton = { id: idStr, action: 'view', onClick: onButtonClick, title: 'View this file' }
@@ -49,79 +50,32 @@ const createTableRow = ({ id, project, name, size, format, status }) => {
     }
     
     // Group all of the action buttons.
-    let action = TableButtonGroup({ group })
+    return TableButtonGroup({ group })
+}
+
+const createRowChip = ({ id, project, name, size, format, status }) => {
 
     // Define the chip based on the status.
-    let chip = null
+    let chip = { column: 4 }
     if (status === 'Error' || status === 'Canceled') {
-        chip = {
-            column: 4,
-            color: backgrounds[status]
-        }
-    } else if (status === 'Uploading') {
-        chip = {
-            column: 4,
-        }
-    } else {
-        chip = {
-            column: 4,
-            color: backgrounds.Complete
-        }
+        chip.color = backgrounds[status]
+    } else if (status !== 'Uploading') {
+        chip.color = backgrounds.Complete
     }
+    return chip
+}
+
+const createTableRow = ({ id, project, name, size, format, status }) => {
+
+    // Transform the state table data into the presentational component format.
+    let action = createRowButtons({ id, project, name, size, format, status })
+    let chip = createRowChip({ id, project, name, size, format, status })
 
     return { id, project, name, size, format, status, action, chip }
 }
 
-/*
-const fetchData = (state) => {
-
-    // Fetch the table data from the server.
-    let tableRows
-    
-    const loadData = (data) => {
-    
-        // Load the received data.
-        tableRows = data.id.forEach((id, i) => {
-            return createTableRow({
-                id,
-                name: data.names[i],
-                size: data.sizes[i],
-                format: data.formats[i],
-                status: data.statuses[i]
-            })
-        })
-    }
-
-    // Request the data from the server.
-    const url = HUB_URL + '/groupUploads/groupId/' + USER
-    fetch(url)
-        .then(checkFetchStatus)
-        .then(parseFetchedJson)
-        .then(loadData)
-        .catch(fetchError)
-}
-*/
-
-const getData = (state) => {
-
-    // Get the table data and order.
-    const table = state['upload.table']
-    let data = table.data.map(stateRow => {
-        return createTableRow(stateRow)
-    })
-    if (!data) {
-        data = [] // TODO
-        //data = fetchData(state)
-    }
-
-    // Upon the first render the data needs to be sorted.
-    const order = table.order
-    if (firstSort) {
-        data.sort(helperSortCompare(order.property, order.direction))
-        firstSort = false
-    }
-
-    return { data, order }
+const receiveData = (dataIn) => {
+    // TODO
 }
 
 const getHead = () => {
@@ -131,14 +85,14 @@ const getHead = () => {
         { id: 'format' , numeric: false, label: 'Format' },
         { id: 'size'   , numeric: true , label: 'Size' },
         { id: 'status' , numeric: false, label: 'Date' },
-        { id: 'action' , numeric: true , label: '' },
+        { id: 'action' , numeric: true , label: ' ' },
     ]
     return head
 }
 
 const mapStateToProps = (state) => {
     return {
-        table: getData(state),
+        table: helperGetData('upload', state, createTableRow, dataColId),
         head: getHead(state),
         width: '100%',
         classes: { row: 'row' },
@@ -158,21 +112,7 @@ const updateOrderBy = (property, prev) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        onRequestSort: (ev) => {
-        
-            // Get the current data and sort order.
-            let table = rxGet('upload.table')
-            let data = table.data.slice()
-
-            let order =
-                updateOrderBy(ev.target.closest('th').dataset.id, table.order)
-
-            // Sort and save the sorted data to state.
-            data.sort(helperSortCompare(order.property, order.direction))
-            dispatch({ type: 'upload.table.sorted', data, order })
-        },
-    }
+    return helperMapDispatchToProps('upload', dispatch, updateOrderBy)
 }
 
 const UploadTable = connect(
