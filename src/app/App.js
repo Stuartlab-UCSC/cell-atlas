@@ -15,6 +15,7 @@ import Home from 'home/Home'
 import MoleSim from 'moleSim/MoleSim'
 import NavBar from 'app/NavBar'
 import PageNotFound from 'home/PageNotFound'
+import Search from 'search/Search'
 import Result from 'result/Result'
 import { init as rxInit } from 'state/rxInternals'
 import theme from 'app/theme'
@@ -37,8 +38,9 @@ const App = () => {
                     <div className='page' >
                         <Switch>
                             <Route exact path='/' component={Home}/>
-                            <Route path='/explore/dataset' component={Dataset}/>
                             <Route path='/explore/traj' component={TrajExplore}/>
+                            <Route path='/explore/search' component={Search}/>
+                            <Route path='/explore/dataset' component={Dataset}/>
                             <Route path='/upload' component={Upload}/>
                             <Route path='/analyze/moleSim' component={MoleSim}/>
                             <Route path='/analyze/typePsych' component={TypePsych}/>

@@ -86,10 +86,11 @@ class NavBar extends React.Component {
                     }}
                     aria-owns={open ? menuGrow : null}
                     aria-haspopup="true"
-                     style={{
+                    style={{
                         textTransform: 'none',
                         color: this.color,
                         height: '40px',
+                        fontWeight: 400,
                     }}
                     value=''
                     onClick={this.onListHeadClick}
@@ -136,6 +137,7 @@ class NavBar extends React.Component {
                 style={{
                     textTransform: 'none',
                     color: this.color,
+                    fontWeight: 400,
                 }}
                 value=''
             >
@@ -163,12 +165,9 @@ class NavBar extends React.Component {
         // The analyze menu.
         const list =
             <MenuList>
-                {this.menuItem('Trajectory Similarity',
-                    '/analyze/trajSim')}
-                {this.menuItem('Molecular Similarity',
-                    '/analyze/moleSim')}
-                {this.menuItem('Cell Type Psychic',
-                    '/analyze/typePsych')}
+                {this.menuItem('Trajectory Similarity', '/analyze/trajSim')}
+                {this.menuItem('Molecular Similarity', '/analyze/moleSim')}
+                {this.menuItem('Cell Type Psychic', '/analyze/typePsych')}
             </MenuList>
         const comp =
             <React.Fragment>
@@ -183,10 +182,9 @@ class NavBar extends React.Component {
         // The explore menu.
         const list =
             <MenuList>
-                {this.menuItem('Trajectories',
-                    '/explore/traj')}
-                {this.menuItem('Datasets',
-                    '/explore/dataset')}
+                {this.menuItem('Search', '/explore/search')}
+                {this.menuItem('Trajectories', '/explore/traj')}
+                {this.menuItem('Datasets', '/explore/dataset')}
             </MenuList>
         const comp =
             <React.Fragment>
@@ -221,6 +219,7 @@ class NavBar extends React.Component {
                     {this.analyze()}
                     {this.barItem('Results', '/result')}
                     {this.barItem('Help', '/help')}
+                    {this.barItem('NOTE: THIS APP IS UNDER DEVELOPMENT', '/')}
                 </ToggleButtonGroup>
                 <hr style={{ marginTop: '0' }} />
             </div>

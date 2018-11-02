@@ -37,21 +37,24 @@ const AboutUsDetail = () => {
     const comp =
         <Typography>
             We research genomics in the
-                <a
-                    href="https://sysbiowiki.soe.ucsc.edu/Welcome"
-                    rel="noopener noreferrer"
+            <br/>
+            <a
+                href="https://sysbiowiki.soe.ucsc.edu/Welcome"
+                rel="noopener noreferrer"
+                target='_blank'
+            >
+                {stuartLab}
+            </a>
+            <br/>
+            part of the
+            <br/>
+            <a
+                href="http://genomics.ucsc.edu"
+                rel="noopener noreferrer"
                     target='_blank'
-                >
-                    {stuartLab}
-                </a>,
-                part of the
-                <a
-                    href="http://genomics.ucsc.edu"
-                    rel="noopener noreferrer"
-                        target='_blank'
-                >
-                    {gi}
-                </a>.
+            >
+                {gi}
+            </a>
         </Typography>
     return comp
 }
@@ -67,7 +70,7 @@ const MethodDetail = () => {
 const MissionDetail = () => {
     const comp =
         <Typography>
-            We provide visualizations of single cell samples that share
+            We provide analysis and visualizations of single cell samples that share
             common molecular profiles and trajectories, allowing multiple cell
             types to be combined to view sample relationships.
             We want this tool to help you by revealing
@@ -82,14 +85,14 @@ const WhatIsDetail = () => {
             Cell Atlas is an interactive browser that allows biologists, who
             may not have computational expertise, to richly explore the
             results of high-throughput genomics and trajectory analysis
-            on hundreds of thousands of cell samples.
+            on millions of cell samples.
         </Typography>
     return comp
 }
 
 const AboutPres = ({expand }) => {
     const style = {
-        marginTop: '500px',
+        marginTop: 550,
     }
     
     return (

@@ -74,10 +74,6 @@ const createTableRow = ({ id, project, name, size, format, status }) => {
     return { id, project, name, size, format, status, action, chip }
 }
 
-const receiveData = (dataIn) => {
-    // TODO
-}
-
 const getHead = () => {
     const head = [
         { id: 'project', numeric: false, label: 'Project' },

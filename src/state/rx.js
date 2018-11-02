@@ -7,12 +7,15 @@
 // Example:  rx.get('layout.name')
 const statePieces =  [ // eslint-disable-line
     'doNotTrack', // save the user browser preference for this
+    'home.redirect', // true to redirect to search page
     'navBar', // handle navigation bar actions
     'result.order', // column & direction of result table sort
     'result.parm.expand', // show an operation's parameters on the result page
     'moleSim.featureShow', // show feature section on moleSim
     'moleSim.metadataShow', // show metadata section on moleSim
     'moleSim.name', // map name
+    'search.value', // search value
+    'search.results', // list of results of search
     'upload.fileList', // file list for uploads
     'upload.formatShow', // panel expansion state for upload formats
     'upload.idSeq', // next ID to be assigned to an upload

@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import Typography from '@material-ui/core/Typography';
 
 import { onChange } from 'input/inputEvent'
 import SmallButton from 'components/SmallButton'
@@ -65,7 +66,9 @@ const InputFile = ({ data, lastColumn }) => {
     return (
         <React.Fragment>
             <Grid item xs={1}>
-                {data.label}
+                <Typography>
+                    {data.label}
+                </Typography>
             </Grid>
             <Grid item xs={xs}>
                 <ListSelect

@@ -86,7 +86,7 @@ const tableBody = (data, head, classes) => {
                     className={classes.row}
                     tabIndex={-1}
                 >
-                    <TableCell width='50%' numeric={true}>
+                    <TableCell>
                         (no data)
                     </TableCell>
                 </TableRow>

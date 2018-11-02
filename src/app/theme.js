@@ -15,9 +15,21 @@ const themeData = createMuiTheme({
     },
     typography: {
        fontFamily: [
-            'sans-serif',
-            'Arial',
-        ].join(','), //""Roboto", "Helvetica", "Arial", sans-serif"
+           "Myriad Set Pro",
+           "Helvetica Neue",
+           "Helvetica",
+           "Arial",
+           "Verdana",
+           "sans-serif"
+           /*'Open Sans',
+           '-apple-system',
+           'BlinkMacSystemFont',
+           'Segoe UI',
+           'Roboto',
+           'Helvetica Neue',
+           'Arial',
+           'sans-serif',*/
+         ].join(','), // "Roboto", "Helvetica", "Arial", "sans-serif"
         fontSize: '16', // 14
     },
     overrides: {

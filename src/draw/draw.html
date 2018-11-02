@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lazy Brush</title>
+    <link rel="stylesheet" href="https://use.typekit.net/xal3oam.css">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="lazy-brush - smooth drawing with mouse" />
+    <meta property="og:description" content="Draw smooth curves and straight lines with your mouse, finger or any pointing device." />
+    <meta property="og:url" content="https://lazybrush.dulnan.net" />
+    <meta property="og:site_name" content="lazy-brush" />
+    <meta property="og:image" content="https://lazybrush.dulnan.net/var/og.png" />
+    <meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#fff"><meta name="application-name" content="catenary-test"><link rel="apple-touch-icon" sizes="57x57" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-icon-180x180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="catenary-test"><link rel="icon" type="image/png" sizes="32x32" href="icons-62845f46d115435622a7c209e1b9cf72/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="icons-62845f46d115435622a7c209e1b9cf72/favicon-16x16.png"><link rel="shortcut icon" href="icons-62845f46d115435622a7c209e1b9cf72/favicon.ico"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-320x460.png"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-640x920.png"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-640x1096.png"><link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-750x1294.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-1182x2208.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-1242x2148.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-748x1024.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-768x1004.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-1496x2048.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="icons-62845f46d115435622a7c209e1b9cf72/apple-touch-startup-image-1536x2008.png"><link href="styles.2c4299470a89689c1f4d.css" rel="stylesheet"></head>
+<body>
+<main id="sidebar">
+    <div class="content">
+        <div class="content__header">
+            <h1>lazy-brush</h1>
+        </div>
+        <div class="content__aside">
+            <p>
+                Draw smooth curves and straight lines with your mouse, finger or any pointing device.
+            </p>
+
+            <div class="slider">
+                <label for="lazy">Brush radius</label>
+                <input class="range" type="range" id="slider_brush" name="radius" min="2" max="50" />
+            </div>
+
+            <div class="slider">
+                <label for="lazy">Lazy radius</label>
+                <input class="range" type="range" id="slider_lazy" name="lazy" min="2" max="175" />
+            </div>
+        </div>
+
+
+        <div class="flex content__bottom">
+            <div class="flex-auto">
+                <button class="button-disable" id="button_lazy">On</button>
+            </div>
+            <div class="flex-1">
+                <button class="button-clear" id="button_clear">Clear</button>
+            </div>
+
+
+            <div class="flex-auto">
+                <a href="https://github.com/dulnan/lazy-brush" class="button button-github">
+                    <svg aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-github-icon">GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                </a>
+            </div>
+            <div class="flex-auto hidden-desktop">
+                <button class="button-menu" id="button_menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+                        <path d="M 12 3 A 2 2 0 0 0 10 5 A 2 2 0 0 0 12 7 A 2 2 0 0 0 14 5 A 2 2 0 0 0 12 3 z M 12 10 A 2 2 0 0 0 10 12 A 2 2 0 0 0 12 14 A 2 2 0 0 0 14 12 A 2 2 0 0 0 12 10 z M 12 17 A 2 2 0 0 0 10 19 A 2 2 0 0 0 12 21 A 2 2 0 0 0 14 19 A 2 2 0 0 0 12 17 z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="canvas-container" id="canvas_container">
+    <canvas class="lazy-canvas" id="canvas_interface"></canvas>
+    <canvas class="lazy-canvas" id="canvas_drawing"></canvas>
+    <canvas class="lazy-canvas" id="canvas_temp"></canvas>
+    <canvas class="lazy-canvas" id="canvas_grid"></canvas>
+</div>
+<script type="text/javascript" src="main.7d55c23957f7f29a375b.js"></script></body>
+</html>

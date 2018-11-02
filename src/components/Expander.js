@@ -70,7 +70,7 @@ Expander.propTypes = {
     detail: PropTypes.node.isRequired, // function to display expandable section
     expand: PropTypes.bool.isRequired, // true means section is to be expanded
     summary: PropTypes.string.isRequired, // text to display in top section
-    summaryVariant: PropTypes.string, // typography varient of summary text
+    summaryVariant: PropTypes.string, // typography variant of summary text
     parentStyle: PropTypes.object, // style for the outer div
     collapseStyle: PropTypes.object, // style for the collapsible section
 }

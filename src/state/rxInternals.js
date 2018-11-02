@@ -8,6 +8,7 @@ import { aboutState } from 'home/About'
 import datasetState from 'dataset/datasetState'
 import moleSimState from 'moleSim/moleSimState'
 import resultState from 'result/resultState'
+import searchState from 'search/searchState'
 import trajSimState from 'trajSim/trajSimState'
 import typePsychState from 'typePsych/typePsychState'
 import uploadState from 'upload/page/uploadState'
@@ -39,6 +40,18 @@ const reducers = {
             return state
         }
     },
+    'home.redirect': (state = false, action) => {
+        switch (action.type) {
+            case 'home.redirect.set':
+                console.log('home.redirect.set')
+                return true
+            case 'home.redirect.reset':
+                console.log('home.redirect.reset')
+                return false
+            default:
+                return state
+        }
+    },
     'user.email': (state = null, action) => {
         switch(action.type) {
         case 'user.email.login':
@@ -63,6 +76,7 @@ export const init = () => {
     Object.assign(reducers, datasetState)
     Object.assign(reducers, moleSimState)
     Object.assign(reducers, resultState)
+    Object.assign(reducers, searchState)
     Object.assign(reducers, trajSimState)
     Object.assign(reducers, typePsychState)
     Object.assign(reducers, uploadState)
