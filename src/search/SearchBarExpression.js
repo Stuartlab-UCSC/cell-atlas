@@ -1,14 +1,15 @@
-// Search bar: logic and presentational component.
+// Search bar expression:
+// logic and presentational component for the expression searchbar.
 
 import React from "react";
 import { connect } from 'react-redux'
 import SearchReactSelect from 'search/SearchReactSelect'
 import theme from 'app/theme'
 
-const SearchBarPres = ({ list, value, onSelect, theme }) => {
+const SearchBarExpressionPres = ({ list, value, onSelect, theme }) => {
     return (
         <SearchReactSelect
-            placeholder='gene, gene module or cell type'
+            placeholder='gene or gene module'
             value={value}
             list={list}
             classes={{}}
@@ -21,8 +22,8 @@ const SearchBarPres = ({ list, value, onSelect, theme }) => {
 
 const mapStateToProps = (state) => {
     return {
-        list: state['search.list'],
-        value: state['search.value'],
+        list: state['searchExpression.list'],
+        value: state['searchExpression.value'],
         theme,
     }
 }
@@ -30,23 +31,17 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onSelect: (action, value) => {
-            if (window.location.pathname === '/') {
-
-                // We are searching from the home page, so set the home redirect
-                // so the next render of home will redirect to the search page.
-                dispatch({type: 'home.redirect.set'})
-            }
             dispatch({
-                type: 'search.value.uiSet',
+                type: 'searchExpression.value.uiSet',
                 value: value.value
             })
         },
     }
 }
 
-const SearchBar = connect(
+const SearchBarExpression = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SearchBarPres)
+)(SearchBarExpressionPres)
 
-export default SearchBar
+export default SearchBarExpression

@@ -16,6 +16,7 @@ import HomeAnalyze from 'home/HomeAnalyze'
 import SearchBar from "search/SearchBar";
 
 const imageTop = 70
+const imageLeft = -50
 const CziButton = () => {
     const imgStyle = {
         height: '34px',
@@ -24,7 +25,7 @@ const CziButton = () => {
     const buttonStyle = {
         position: 'absolute',
         top: 160 + imageTop,
-        left: '130px',
+        left: 130 + imageLeft,
         backgroundColor: 'white',
     }
     const comp =
@@ -49,7 +50,7 @@ const YourData = () => {
     const style = {
         position: 'absolute',
         top: 240 + imageTop,
-        left: '90px',
+        left: 90 + imageLeft,
     }
     const comp =
         <Button
@@ -83,13 +84,13 @@ const bottomTitleStyle = {
 const datasetsStyle = {
     position: 'absolute',
     top: 135 + imageTop,
-    left: 73,
+    left: 73 + imageLeft,
     height: 115,
 }
 const bracketsStyle = {
     position: 'absolute',
     top: 60 + imageTop,
-    left: 200,
+    left: 200 + imageLeft,
     height: 300,
 }
 const pageBodyStyle = {
@@ -143,7 +144,7 @@ const HomePres = ({redirect, onSearchSelect, onRedirect }) => {
                         style={searchIconStyle}
                     />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <SearchBar />
                 </Grid>
             </Grid>

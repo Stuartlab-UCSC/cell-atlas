@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography'
 import trajSim from 'home/images/trajSim.png'
 import typePsych from 'home/images/typePsych.png'
 import moleSim from 'home/images/moleSim2.png'
-const imageTop = 70
+
+const imageTop = 40
+const imageLeft = -100
 const images = [
     {
         img: typePsych,
@@ -18,14 +20,14 @@ const images = [
         height: '165px',
         style: {
             top: 0 + imageTop,
-            left: '700px',
+            left: 700 + imageLeft,
             height: '130px',
             position: 'absolute',
             zIndex: 1,
         },
         label: 'Cell Type Psychic',
         labelStyle: {
-            top: 160 + imageTop,
+            top: 160,
             left: '0px',
             position: 'absolute',
             minWidth: '11rem',
@@ -37,14 +39,14 @@ const images = [
         linkTo: '/analyze/trajSim',
         height: '130px',
         style: {
-            top: 100 + imageTop,
-            left: '330px',
+            top: 150 + imageTop,
+            left: 330 + imageLeft,
             height: '130px',
             position: 'absolute',
         },
         label: 'Trajectory Similarity',
         labelStyle: {
-            top: 125 + imageTop,
+            top: 125,
             left: '90px',
             position: 'absolute',
         },
@@ -56,13 +58,13 @@ const images = [
         height: '200px',
         style: {
             top: 205 + imageTop,
-            left: '650px',
+            left: 650 + imageLeft,
             position: 'absolute',
             zIndex: 1,
         },
         label: 'Molecular Similarity',
         labelStyle: {
-            top: 205 + imageTop,
+            top: 205,
             left: '35px',
             position: 'absolute',
         },

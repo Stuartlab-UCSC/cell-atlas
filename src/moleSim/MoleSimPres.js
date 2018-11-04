@@ -19,9 +19,6 @@ import MockUp from 'components/MockUp'
 const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
     
     const id = 'moleSim'
-/*
-            <FormatDetail id={id} expand={metadata.expand} />
- */
     return (
         <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
             <AnalyzeHead
