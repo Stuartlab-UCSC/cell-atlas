@@ -219,7 +219,7 @@ class NavBar extends React.Component {
                     {this.analyze()}
                     {this.barItem('Results', '/result')}
                     {this.barItem('Help', '/help')}
-                    {this.barItem('NOTE: THIS APP IS UNDER DEVELOPMENT', '/')}
+                    {this.barItem('NOTE: UNDER DEVELOPMENT', '/')}
                 </ToggleButtonGroup>
                 <hr style={{ marginTop: '0' }} />
             </div>

@@ -4,7 +4,7 @@
 // routes.
 
 import { get as rxGet, set as rxSet } from 'state/rx'
-import { checkFetchStatus, parseFetchedJson, fetchError} from 'app/util'
+import { getFetchedJson, fetchError } from 'state/fetch'
 
 const sortCompare = (column, direction) => {
 
@@ -23,6 +23,9 @@ const sortCompare = (column, direction) => {
 const receiveData = (id, dataIn, colId) => {
 
     // Receive the data from the fetch.
+    if (dataIn === null) {
+        return // the fetch probably failed so just bail
+    }
     const data = dataIn.map(rowIn => {
         let row = {}
         colId.forEach((id, i) => {
@@ -47,14 +50,13 @@ export const helperGetData = (id, state, prettifyRow, colId) => {
     if (table.data.length < 1) {
 
         // With no data in state, go fetch it.
-        // Retrieve all rows of the datasbase. All is OK for now because
+        // Retrieve all rows of the database. All is OK for now because
         // there are not very many in our databases.
         const url = process.env.REACT_APP_DATA_URL + '/cell/' + id + '/getAll'
         //console.log('url:', url)
         fetch(url)
-            .then(checkFetchStatus)
-            .then(parseFetchedJson)
-            .then((dataIn) => receiveData(id, dataIn, colId))
+            .then(getFetchedJson)
+            .then((data) => receiveData(id, data, colId))
             .catch((e) => {
                 fetchError(e);
             })

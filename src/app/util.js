@@ -1,27 +1,6 @@
 
 // Common utilities.
 
-export const parseFetchedJson = response => {
-    return response.json();
-}
-
-export const checkFetchStatus = response => {
-    if (response.ok) {
-        if (response.status === 200) {
-            return response;
-        } else if (response.status === 204) {
-            throw new Error('204');
-        } else {
-            throw new Error(response.status + ': ' + response.statusText);
-        }
-    }
-    throw new Error(response.status);
-}
-
-export const fetchError = e => {
-    console.error('fetch error:', e);
-}
-
 export const isoToday = () => {
 
     // Get todays date in ISO format such as 2018-08-31.
