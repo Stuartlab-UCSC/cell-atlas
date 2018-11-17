@@ -7,7 +7,6 @@ import {
       Switch
 } from 'react-router-dom'
 
-import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import Dataset from 'dataset/Dataset'
@@ -18,21 +17,19 @@ import NavBar from 'app/NavBar'
 import PageNotFound from 'home/PageNotFound'
 import Search from 'search/Search'
 import Result from 'result/Result'
-import { init as rxInit } from 'state/rxInternals'
-import theme from 'app/theme'
 import TrajExplore from 'trajExplore/TrajExplore'
 import TrajSim from 'trajSim/TrajSim'
 import TypePsych from 'typePsych/TypePsych'
 import Upload from 'upload/page/Upload'
+import Theme from 'app/Theme'
 
 import 'app/App.css'
 
-const store = rxInit()
 
-const App = () => {
+const App = ({store}) => {
     return (
     <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
+        <Theme>
             <CssBaseline />
             <Router>
                 <div>
@@ -54,7 +51,7 @@ const App = () => {
                     </div>
                 </div>
             </Router>
-        </MuiThemeProvider>
+        </Theme>
     </Provider>
     )
 }

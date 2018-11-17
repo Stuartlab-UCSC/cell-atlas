@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
-import { background } from 'app/theme'
+import { background } from 'app/themeData'
 
 import trajSim from 'home/images/trajSim.png'
 import typePsych from 'home/images/typePsych.png'

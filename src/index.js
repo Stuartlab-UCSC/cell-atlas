@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from 'app/App'
 import registerServiceWorker from 'app/registerServiceWorker'
-import "typeface-open-sans";
+import { init as rxInit } from 'state/rxInternals'
 
 ReactDOM.render(
-        <App />,
+        <App store={rxInit()} />,
     document.getElementById('root')
 );
 registerServiceWorker();

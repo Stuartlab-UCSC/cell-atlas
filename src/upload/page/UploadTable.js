@@ -6,7 +6,7 @@ import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
 import { set as rxSet } from 'state/rx'
 import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
-import { chipBackgrounds } from 'app/theme'
+import { chipBackgrounds } from 'app/themeData'
 
 // The column IDs for the data.
 const dataColId = [

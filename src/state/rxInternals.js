@@ -32,11 +32,11 @@ const reducers = {
             return state
         }
     },
-    'navBar': (state = 'cellAtlasHome', action) => {
+    'navBar.theme': (state = 'light', action) => {
         switch(action.type) {
-        case 'navBar.select':
-            return action.selected
-        default:
+            case 'navBar.theme.toggle':
+                return (state === 'light') ? 'dark' : 'light'
+         default:
             return state
         }
     },

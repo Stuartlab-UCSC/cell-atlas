@@ -8,7 +8,7 @@ import ResultParms from 'result/ResultParms'
 import TableButtonGroup from 'components/TableButtonGroup'
 import { set as rxSet } from 'state/rx'
 import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
-import { chipBackgrounds } from 'app/theme'
+import { chipBackgrounds } from 'app/themeData'
 
 const statusColumn = 5  // for coloring based on status
 

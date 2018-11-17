@@ -5,7 +5,7 @@ import MockUp from 'components/MockUp'
 import Typography from "@material-ui/core/Typography/Typography";
 import SearchIcon from '@material-ui/icons/Search';
 import SearchReactSelect from "search/SearchReactSelect";
-import themeData from 'app/theme'
+import { themeData } from 'app/themeData'
 import drawDemo from 'draw/images/demo.png'
 import SmallButton from 'components/SmallButton'
 //import SearchIcon from "@material-ui/core/SvgIcon/SvgIcon";
@@ -25,27 +25,6 @@ const cellTypeList = [
     { label: 'cell type 2' },
     { label: 'cell type 3' },
 ]
-
-/*const oneSearch = (list, placeholder) => {
-    const searchIconStyle = { marginTop: 10 }
-    const comp =
-        <React.ReactFragment>
-            <Grid item xs={0.1}>
-                <SearchIcon
-                    style={searchIconStyle}
-                />
-            </Grid>
-            <Grid item xs={11}>
-                <SearchReactSelect
-                    placeholder={placeholder}
-                    list={list}
-                    classes={{}}
-                    theme={themeData}
-                />
-            </Grid>
-        </React.ReactFragment>
-    return comp
-}*/
 
 const Search = () => {
     const searchIconStyle = { marginTop: 10, float: 'right' }

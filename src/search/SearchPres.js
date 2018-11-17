@@ -3,13 +3,13 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
-import SearchIcon from '@material-ui/icons/Search';
 
 import MockUp from 'components/MockUp'
 import SmallButton from 'components/SmallButton'
 import SearchBar from "search/SearchBar";
 import SearchBarExpression from "search/SearchBarExpression";
-import { background } from 'app/theme'
+import { background } from 'app/themeData'
+import SearchIcon from 'search/images/search.svg';
 import drawDemo from 'draw/images/demo.png'
 import body1 from 'images/body1.png'
 import body2 from 'images/body2.png'
@@ -24,7 +24,7 @@ const Expression = () => {
             <Grid container spacing={16}>
                 <MockUp />
                 <Grid item xs={1}>
-                    <SearchIcon style={iconStyle} />
+                    <img src={SearchIcon} alt='search' style={iconStyle} />
                 </Grid>
                 <Grid item xs={11}>
                     <Typography>
@@ -75,7 +75,7 @@ const Simple = () => {
         <Paper style={paperStyle}>
             <Grid container spacing={16}>
                 <Grid item xs={1}>
-                    <SearchIcon style={iconStyle} />
+                    <img src={SearchIcon} alt='search' style={iconStyle} />
                 </Grid>
                 <Grid item xs={11}>
                     <SearchBar style={{marginRight: '-0.5rem'}}/>
@@ -103,7 +103,7 @@ const Body = () => {
         <Paper style={paperStyle}>
             <Grid container spacing={16} style={{width: '100%'}}>
                 <Grid item xs={1}>
-                    <SearchIcon style={iconStyle} />
+                    <img src={SearchIcon} alt='search' style={iconStyle} />
                 </Grid>
                 <Grid item xs={11}>
                     <Typography>

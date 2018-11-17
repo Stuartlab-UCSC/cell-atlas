@@ -5,7 +5,6 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import Grid from "@material-ui/core/Grid/Grid";
-import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography'
 
 import czi from 'home/images/czi.png'
@@ -14,7 +13,8 @@ import brackets from 'home/images/brackets.png'
 import { About } from 'home/About'
 import HomeAnalyze from 'home/HomeAnalyze'
 import SearchBar from "search/SearchBar";
-import { background } from 'app/theme'
+import { background } from 'app/themeData'
+import SearchIcon from 'search/images/search.svg'
 
 const imageTop = 70
 const imageLeft = -50
@@ -100,7 +100,7 @@ const pageBodyStyle = {
     paddingBottom: '4rem',
 }
 
-const searchIconStyle = { marginTop: 10, float: 'right', height: '2rem', width: '2rem' }
+const searchIconStyle = { marginTop: 10, float: 'right' }
 
 const HomePres = ({redirect, onSearchSelect, onRedirect }) => {
 
@@ -141,7 +141,7 @@ const HomePres = ({redirect, onSearchSelect, onRedirect }) => {
                     </Typography>
                 </Grid>
                 <Grid item xs={1}>
-                    <SearchIcon
+                    <img src={SearchIcon} alt='search'
                         style={searchIconStyle}
                     />
                 </Grid>

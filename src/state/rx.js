@@ -8,7 +8,7 @@
 const statePieces =  [ // eslint-disable-line
     'doNotTrack', // save the user browser preference for this
     'home.redirect', // true to redirect to search page
-    'navBar', // handle navigation bar actions
+    'navBar.theme', // handle navigation bar theme actions
     'result.order', // column & direction of result table sort
     'result.parm.expand', // show an operation's parameters on the result page
     'moleSim.featureShow', // show feature section on moleSim

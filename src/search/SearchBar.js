@@ -3,16 +3,14 @@
 import React from "react";
 import { connect } from 'react-redux'
 import SearchReactSelect from 'search/SearchReactSelect'
-import theme from 'app/theme'
 
-const SearchBarPres = ({ list, value, onSelect, theme }) => {
+const SearchBarPres = ({ list, value, onSelect }) => {
     return (
         <SearchReactSelect
             placeholder='gene, gene module or cell type'
             value={value}
             list={list}
             classes={{}}
-            theme={theme}
             onChange={onSelect}
             style={{display: 'inline-block'}}
         />
@@ -23,7 +21,6 @@ const mapStateToProps = (state) => {
     return {
         list: state['search.list'],
         value: state['search.value'],
-        theme,
     }
 }
 

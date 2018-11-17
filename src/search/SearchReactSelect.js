@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
-import { background } from 'app/theme'
+import { background } from 'app/themeData'
 
 const styles = theme => ({
     root: {
