@@ -3,48 +3,24 @@
 
 import React from 'react'
 import { Link }  from 'react-router-dom'
-
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
 import ToggleButton, { ToggleButtonGroup } from '@material-ui/lab/ToggleButton';
-
 import Settings from 'images/settings.svg'
 import appLogo from 'app/images/logo.svg'
-import 'app/App.css'
+import NavBarList from 'app/NavBarList'
 
 class NavBarPres extends React.Component {
 
     constructor (props) {
         super(props)
-
-        // The list heads.
         this.listHeads = [
             'analyze',
             'explore',
             'settings',
         ]
-
-        // Set the open state for each list head and initialize the anchorEls.
-        this.anchorEl = {}
-        let openState = {}
-        this.listHeads.forEach(head => {
-            openState[head] = false
-            this.anchorEl[head] = null
-        })
-        this.light = 'Light Theme'
-        this.dark = 'Dark Theme'
-        this.componentDidUpdate()
-        this.state = { open: openState }
-
+        this.state=(this.closeAllLists({}))
         this.color = 'rgba(127,127,127,1)'
-    }
-
-    componentDidUpdate = prevProps => {
-        this.theme = (this.props.theme === 'light') ? this.dark : this.light
     }
 
     logo = () => {
@@ -61,86 +37,23 @@ class NavBarPres extends React.Component {
         return comp
     }
 
-     onListHeadClick = ev => {
-
-        // Handle a click on a menu option that has a list of options.
-        // Open the menu.
-        const id = ev.target.closest('.listHead').dataset.id
-        let openState = {...this.state.open}
-        openState[id] = true
-        this.setState({ open: openState })
+    closeAllLists = (openState) => {
+        this.listHeads.forEach(head => {
+            openState[head] = false
+        })
+        return {open: openState}
     }
 
     onAnyClick = (ev) => {
 
          // Close all menu lists.
          // It is easier to close them all than to find the one that is open.
-        let openState = {...this.state.open}
-        this.listHeads.forEach(head => {
-            openState[head] = false
-        })
-        this.setState({ open: openState })
+        this.setState(this.closeAllLists({...this.state.open}))
     }
 
     onThemeClick = () => {
         this.props.onThemeClick()
         this.onAnyClick()
-    }
-
-    menuList = ( id, label, list ) => {
-
-        // A list of options for a menu item.
-        const open = this.state.open[id]
-        const menuGrow = id + 'MenuGrow'
-        let comp =
-            <React.Fragment>
-                <ToggleButton
-                    className='listHead'
-                    data-id={id}
-                    buttonRef={node => {
-                        this.anchorEl[id] = node;
-                    }}
-                    aria-owns={open ? menuGrow : null}
-                    aria-haspopup="true"
-                    style={{
-                        textTransform: 'none',
-                        color: this.color,
-                        height: '40px',
-                        fontWeight: 400,
-                    }}
-                    value=''
-                    onClick={this.onListHeadClick}
-                >
-                    {label}
-                </ToggleButton>
-                <Popper
-                    open={open}
-                    anchorEl={this.anchorEl[id]}
-                    transition
-                    disablePortal
-                    placement='bottom-start'
-                >
-                    {({ TransitionProps, placement }) => (
-                        <Grow
-                            {...TransitionProps}
-                            id={menuGrow}
-                            className={'listBody'}
-                            data-id={id}
-                            style={{ transformOrigin: 'top' }}
-                        >
-                            <Paper style={{ backgroundColor: this.color }}>
-                                <ClickAwayListener
-                                    onClickAway={this.onAnyClick}
-                                >
-                                    {list}
-                                </ClickAwayListener>
-                            </Paper>
-                        </Grow>
-                    )}
-                </Popper>
-            </React.Fragment>
-
-        return comp
     }
 
     barItem = (text, link) => {
@@ -187,7 +100,10 @@ class NavBarPres extends React.Component {
             </MenuList>
         const comp =
             <React.Fragment>
-                {this.menuList( 'analyze', 'Analyze', list)}
+                <NavBarList id='analyze' label='Analyze' list={list}
+                    open={this.state.open}
+                    onAnyClick={this.onAnyClick}
+                />
             </React.Fragment>
 
         return comp
@@ -204,7 +120,11 @@ class NavBarPres extends React.Component {
             </MenuList>
         const comp =
             <React.Fragment>
-                {this.menuList( 'explore', 'Explore', list)}
+                <NavBarList id='explore' label='Explore' list={list}
+                    open={this.state.open}
+                    onAnyClick={this.onAnyClick}
+                />
+
             </React.Fragment>
 
         return comp
@@ -213,18 +133,24 @@ class NavBarPres extends React.Component {
     settings = () => {
 
         // The settings menu.
+        const theme = (this.props.theme === 'light') ?
+            'Dark Theme' : 'Light Theme'
         const list =
             <MenuList>
                 <MenuItem
                     onClick={this.onThemeClick}
                 >
-                    {this.theme}
+                    {theme}
                 </MenuItem>
             </MenuList>
         const icon = <img src={Settings} alt='settings' />
         const comp =
             <React.Fragment>
-                {this.menuList( 'settings', icon, list)}
+                <NavBarList id='settings' label={icon} list={list}
+                    open={this.state.open}
+                    onAnyClick={this.onAnyClick}
+                />
+
             </React.Fragment>
         return comp
     }

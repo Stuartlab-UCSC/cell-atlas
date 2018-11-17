@@ -25,7 +25,6 @@ import Theme from 'app/Theme'
 
 import 'app/App.css'
 
-
 const App = ({store}) => {
     return (
     <Provider store={store}>
