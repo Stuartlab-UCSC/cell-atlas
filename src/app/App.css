@@ -20,7 +20,7 @@ html, body {
 }
 
 #homePage .analyzeButton:hover .imageTitle {
-    color: blue;
+    color: #03a9f4;
     font-weight: bold;
 }
 

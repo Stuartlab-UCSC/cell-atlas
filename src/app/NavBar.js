@@ -12,6 +12,7 @@ import ToggleButton, { ToggleButtonGroup } from '@material-ui/lab/ToggleButton';
 
 import Settings from 'images/settings.svg'
 import appLogo from 'app/images/logo.svg'
+import { setTheme } from 'app/theme.js'
 import 'app/App.css'
 
 class NavBar extends React.Component {
@@ -23,6 +24,7 @@ class NavBar extends React.Component {
         this.listHeads = [
             'analyze',
             'explore',
+            'settings',
         ]
 
         // Set the open state for each list head and initialize the anchorEls.
@@ -32,6 +34,9 @@ class NavBar extends React.Component {
             openState[head] = false
             this.anchorEl[head] = null
         })
+        this.light = 'Light Theme'
+        this.dark = 'Dark Theme'
+        this.theme = this.dark
         this.state = { open: openState }
 
         this.color = 'rgba(127,127,127,1)'
@@ -147,20 +152,6 @@ class NavBar extends React.Component {
         return comp
     }
 
-    barIcon = (icon, link) => {
-
-        // A simple option on the navigation bar.
-        let comp =
-            <ToggleButton
-                component={Link}
-                to={link}
-                value=''
-             >
-                 <img src={icon} alt='icon' />
-            </ToggleButton>
-        return comp
-    }
-
     menuItem = (text, to) => {
 
         // A menu item within a list.
@@ -209,6 +200,36 @@ class NavBar extends React.Component {
         return comp
     }
 
+    setTheme = () => {
+         if (this.theme === this.dark) {
+            this.theme = this.light
+            setTheme('light')
+        } else {
+            this.theme = this.dark
+            setTheme('dark')
+        }
+        this.closeLists()
+    }
+
+    settings = () => {
+
+        // The settings menu.
+        const list =
+            <MenuList>
+                <MenuItem
+                    onClick={this.setTheme}
+                >
+                    {this.theme}
+                </MenuItem>
+            </MenuList>
+        const icon = <img src={Settings} alt='settings' />
+        const comp =
+            <React.Fragment>
+                {this.menuList( 'settings', icon, list)}
+            </React.Fragment>
+        return comp
+    }
+
     render() {
         return (
             <div
@@ -235,7 +256,7 @@ class NavBar extends React.Component {
                     {this.barItem('Results', '/result')}
                     {this.barItem('Help', '/help')}
                     {this.barItem('NOTE: UNDER DEVELOPMENT', '/')}
-                    {this.barIcon(Settings, '/')}
+                    {this.settings()}
                 </ToggleButtonGroup>
                 <hr style={{ marginTop: '0' }} />
             </div>

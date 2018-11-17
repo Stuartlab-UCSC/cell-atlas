@@ -17,8 +17,7 @@ import body3 from 'images/body3.png'
 
 const Expression = () => {
     const iconStyle = {
-        paddingRight: '0.5rem',
-        paddingLeft: '0.5rem',
+        marginLeft: '0.5rem',
     }
     const comp = (
         <Paper>
@@ -69,9 +68,8 @@ const Simple = () => {
         marginBottom: '1rem'
     }
     const iconStyle = {
-        paddingTop: '0.5rem',
-        paddingRight: '0.5rem',
-        paddingLeft: '0.5rem',
+        marginTop: '0.5rem',
+        marginLeft: '0.5rem',
     }
     const comp =
         <Paper style={paperStyle}>
@@ -95,15 +93,11 @@ const Body = () => {
         marginBottom: '1rem'
     }
     const iconStyle = {
-        paddingRight: '0.5rem',
-        paddingLeft: '0.5rem',
+        marginLeft: '0.5rem',
     }
     const creditStyle =  {
-        position: 'absolute',
-        top: 540,
         fontSize: '0.8rem',
         backgroundColor: background,
-        marginLeft: '1rem',
     }
     const comp =
         <Paper style={paperStyle}>

@@ -3,13 +3,20 @@
 
 import { createMuiTheme } from '@material-ui/core/styles';
 
-export let background = '#222' // #222 or #ddd
-export let type = 'dark'  // dark or light
+export let type = 'light'  // dark or light
 
+export let background = (type === 'dark') ? '#222' : '#fff'
+export const primary = '#03a9f4'
 export const chipBackgrounds = {
     Success: 'rgba(0,255,0,0.3)',  // green
     Error: 'rgba(255,0,0,0.3)',    // pink
     Canceled: 'rgba(255,255,0,0.3)', // yellow
+}
+
+export const setTheme = value => {
+    type = value
+    background = (type === 'dark') ? '#222' : '#eee'
+    console.log('setTheme() to', value)
 }
 
 // Values of the material-ui default theme are in comments.
@@ -20,11 +27,11 @@ const themeData = createMuiTheme({
             default: background,
         },
         primary: {
-            main: '#03a9f4',
+            main: primary,
             contrastText: '#000',
         },
         secondary: {
-            main: '#03a9f4',
+            main: primary,
             contrastText: '#000',
         },
     },
