@@ -1,16 +1,31 @@
 
 // Theme and default theme overrides.
 
-import indigo from '@material-ui/core/colors/indigo';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const themeData = createMuiTheme({
+export let background = '#222' // #222 or #ddd
+export let type = 'dark'  // dark or light
 
-    // Values of the material-ui default theme are in comments.
+export const chipBackgrounds = {
+    Success: 'rgba(0,255,0,0.3)',  // green
+    Error: 'rgba(255,0,0,0.3)',    // pink
+    Canceled: 'rgba(255,255,0,0.3)', // yellow
+}
+
+// Values of the material-ui default theme are in comments.
+const themeData = createMuiTheme({
     palette: {
-        primary: indigo,
+        type: type,
+        background: {
+            default: background,
+        },
+        primary: {
+            main: '#03a9f4',
+            contrastText: '#000',
+        },
         secondary: {
             main: '#03a9f4',
+            contrastText: '#000',
         },
     },
     typography: {

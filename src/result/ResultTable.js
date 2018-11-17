@@ -8,14 +8,9 @@ import ResultParms from 'result/ResultParms'
 import TableButtonGroup from 'components/TableButtonGroup'
 import { set as rxSet } from 'state/rx'
 import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
+import { chipBackgrounds } from 'app/theme'
 
 const statusColumn = 5  // for coloring based on status
-
-const backgrounds = {    // bootstrap message colors
-    Success: '#D8EECE',  // green
-    Error: '#EDD4D5',    // pink
-    Canceled: '#F9F5D9', // yellow
-}
 
 // The column IDs for the database.
 const dataColId = [
@@ -73,9 +68,9 @@ const createRowChip = ({id, name, analysis, parms, date, result, status}) => {
     // Define the chip based on the status.
     let chip = { column: statusColumn }
     if (status === 'Error' || status === 'Canceled') {
-        chip.color = backgrounds[status]
+        chip.color = chipBackgrounds[status]
     } else if (status !== 'Running') {
-        chip.color = backgrounds.Success
+        chip.color = chipBackgrounds.Success
     }
     return chip
 }

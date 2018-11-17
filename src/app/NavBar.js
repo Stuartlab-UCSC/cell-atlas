@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import ToggleButton, { ToggleButtonGroup } from '@material-ui/lab/ToggleButton';
 
+import Settings from 'images/settings.svg'
 import appLogo from 'app/images/logo.svg'
 import 'app/App.css'
 
@@ -33,7 +34,7 @@ class NavBar extends React.Component {
         })
         this.state = { open: openState }
 
-        this.color = 'rgba(0, 0, 0, 0.87)'
+        this.color = 'rgba(127,127,127,1)'
     }
 
     logo = () => {
@@ -112,7 +113,7 @@ class NavBar extends React.Component {
                             data-id={id}
                             style={{ transformOrigin: 'top' }}
                         >
-                            <Paper style={{ backgroundColor: 'white' }}>
+                            <Paper style={{ backgroundColor: this.color }}>
                                 <ClickAwayListener
                                     onClickAway={this.closeLists}
                                 >
@@ -142,6 +143,20 @@ class NavBar extends React.Component {
                 value=''
             >
                 {text}
+            </ToggleButton>
+        return comp
+    }
+
+    barIcon = (icon, link) => {
+
+        // A simple option on the navigation bar.
+        let comp =
+            <ToggleButton
+                component={Link}
+                to={link}
+                value=''
+             >
+                 <img src={icon} alt='icon' />
             </ToggleButton>
         return comp
     }
@@ -220,6 +235,7 @@ class NavBar extends React.Component {
                     {this.barItem('Results', '/result')}
                     {this.barItem('Help', '/help')}
                     {this.barItem('NOTE: UNDER DEVELOPMENT', '/')}
+                    {this.barIcon(Settings, '/')}
                 </ToggleButtonGroup>
                 <hr style={{ marginTop: '0' }} />
             </div>

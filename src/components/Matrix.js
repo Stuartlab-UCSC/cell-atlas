@@ -17,7 +17,7 @@ import MatrixHead from 'components/MatrixHead'
 const styles = theme => ({
     row: {
         '&:nth-of-type(even)': {
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: 'rgba(127,127,127,0.2)',
         },
     },
 })
@@ -86,7 +86,7 @@ const tableBody = (data, head, classes) => {
                     className={classes.row}
                     tabIndex={-1}
                 >
-                    <TableCell>
+                    <TableCell colSpan={2}>
                         (no data)
                     </TableCell>
                 </TableRow>

@@ -15,6 +15,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
+import { background } from 'app/theme'
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -56,7 +58,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         left: 0,
         right: 0,
-        backgroundColor: 'white',
+        backgroundColor: background,
     },
     divider: {
         height: theme.spacing.unit * 2,

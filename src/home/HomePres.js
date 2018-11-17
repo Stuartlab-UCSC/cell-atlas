@@ -14,6 +14,7 @@ import brackets from 'home/images/brackets.png'
 import { About } from 'home/About'
 import HomeAnalyze from 'home/HomeAnalyze'
 import SearchBar from "search/SearchBar";
+import { background } from 'app/theme'
 
 const imageTop = 70
 const imageLeft = -50
@@ -26,7 +27,7 @@ const CziButton = () => {
         position: 'absolute',
         top: 160 + imageTop,
         left: 130 + imageLeft,
-        backgroundColor: 'white',
+        backgroundColor: background,
     }
     const comp =
         <Button

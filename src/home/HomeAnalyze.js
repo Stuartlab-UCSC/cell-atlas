@@ -5,6 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
+import { background } from 'app/theme'
 
 import trajSim from 'home/images/trajSim.png'
 import typePsych from 'home/images/typePsych.png'
@@ -76,7 +77,7 @@ const HomeAnalyze = () => {
         borderRadius: '20px',
         borderWidth: '20px',
         borderStyle: 'solid',
-        borderColor: 'white',
+        borderColor: background,
         zIndex: 1,
     }
     const comp =

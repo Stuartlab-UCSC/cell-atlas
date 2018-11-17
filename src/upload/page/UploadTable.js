@@ -6,12 +6,7 @@ import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
 import { set as rxSet } from 'state/rx'
 import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
-
-const backgrounds = {    // bootstrap message colors
-    Complete: '#D8EECE', // green
-    Error: '#EDD4D5',    // pink
-    Canceled: '#F9F5D9', // yellow
-}
+import { chipBackgrounds } from 'app/theme'
 
 // The column IDs for the data.
 const dataColId = [
@@ -58,9 +53,9 @@ const createRowChip = ({ id, project, name, size, format, status }) => {
     // Define the chip based on the status.
     let chip = { column: 4 }
     if (status === 'Error' || status === 'Canceled') {
-        chip.color = backgrounds[status]
+        chip.color = chipBackgrounds[status]
     } else if (status !== 'Uploading') {
-        chip.color = backgrounds.Complete
+        chip.color = chipBackgrounds.Success
     }
     return chip
 }

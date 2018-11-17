@@ -16,6 +16,7 @@ const MockUp = () => {
                     position: 'absolute',
                     top: '50px',
                     left: '300px',
+                    zIndex: -1,
                 }}
             />
         </Grid>

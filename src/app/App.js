@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 import Dataset from 'dataset/Dataset'
 import Help from 'home/Help'
@@ -32,6 +33,7 @@ const App = () => {
     return (
     <Provider store={store}>
         <MuiThemeProvider theme={theme}>
+            <CssBaseline />
             <Router>
                 <div>
                     <NavBar />

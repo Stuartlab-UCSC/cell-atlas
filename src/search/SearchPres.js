@@ -9,6 +9,7 @@ import MockUp from 'components/MockUp'
 import SmallButton from 'components/SmallButton'
 import SearchBar from "search/SearchBar";
 import SearchBarExpression from "search/SearchBarExpression";
+import { background } from 'app/theme'
 import drawDemo from 'draw/images/demo.png'
 import body1 from 'images/body1.png'
 import body2 from 'images/body2.png'
@@ -101,7 +102,7 @@ const Body = () => {
         position: 'absolute',
         top: 540,
         fontSize: '0.8rem',
-        backgroundColor: 'white',
+        backgroundColor: background,
         marginLeft: '1rem',
     }
     const comp =
