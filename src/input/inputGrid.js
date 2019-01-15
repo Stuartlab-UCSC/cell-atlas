@@ -9,7 +9,9 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import { onChange, onToggle } from 'input/inputEvent'
 
-export const TextFieldGrid = ({ id, label, defaultValue, tooltip, style }) => {
+export const TextFieldGrid = (props) => {
+    let { defaultValue, id, label, multiline, rows, style, tooltip }
+        = props
 
     if (!style) {
         style = {}
@@ -29,6 +31,8 @@ export const TextFieldGrid = ({ id, label, defaultValue, tooltip, style }) => {
         <TextField
             id={id}
             label={label}
+            multiline={multiline}
+            rows={rows}
             defaultValue={defaultValue}
             onChange={onChange}
             title={title}

@@ -9,6 +9,7 @@ import {
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+import Database from 'database/Database'
 import Dataset from 'dataset/Dataset'
 import Help from 'home/Help'
 import Home from 'home/Home'
@@ -36,6 +37,7 @@ const App = ({store}) => {
                     <div className='page' >
                         <Switch>
                             <Route exact path='/' component={Home}/>
+                            <Route path='/explore/database' component={Database}/>
                             <Route path='/explore/traj' component={TrajExplore}/>
                             <Route path='/explore/search' component={Search}/>
                             <Route path='/explore/dataset' component={Dataset}/>

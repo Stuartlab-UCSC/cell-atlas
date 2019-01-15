@@ -114,6 +114,7 @@ class NavBarPres extends React.Component {
         // The explore menu.
         const list =
             <MenuList>
+                {this.listItem('Database', '/explore/database')}
                 {this.listItem('Search', '/explore/search')}
                 {this.listItem('Trajectories', '/explore/traj')}
                 {this.listItem('Datasets', '/explore/dataset')}

@@ -5,6 +5,7 @@
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
 import { aboutState } from 'home/About'
+import databaseState from 'database/databaseState'
 import datasetState from 'dataset/datasetState'
 import moleSimState from 'moleSim/moleSimState'
 import resultState from 'result/resultState'
@@ -73,6 +74,7 @@ export const init = () => {
     
     // Combine the other reducers with these local reducers.
     Object.assign(reducers, aboutState)
+    Object.assign(reducers, databaseState)
     Object.assign(reducers, datasetState)
     Object.assign(reducers, moleSimState)
     Object.assign(reducers, resultState)
