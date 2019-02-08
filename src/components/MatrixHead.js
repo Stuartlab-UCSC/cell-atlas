@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 
 const label = (col, order, onRequestSort) => {
+    // One displayed header label, which may contain a sort indicator.
     let active = false
     let direction = 'asc'
     if (order) {
@@ -27,13 +28,15 @@ const label = (col, order, onRequestSort) => {
     return comp
 }
 
-const width = (col) => {
+const Width = (col) => {
+    // Find the width of one column
     let comp =
         <col style={{width: col.width}} key={col.id} />
     return comp
 }
 
-const cell = (col, order, onRequestSort) => {
+const Cell = ({col, order, onRequestSort}) => {
+    // One header cell of the table.
     let comp =
         <TableCell
             key={col.id}
@@ -46,19 +49,30 @@ const cell = (col, order, onRequestSort) => {
 }
 
 const MatrixHead = ({ head, order, onRequestSort }) => {
+    if (head.length < 1) {
+        return null
+    }
     return (
         <React.Fragment>
             <colgroup>
-                {
-                    head.map(col => width(col))
-                }
+            {head.map((col, i) => (
+                <Width
+                    col={col}
+                    key={i}
+                 />
+            ))}
             </colgroup>
-
             <TableHead>
                 <TableRow>
-                    {
-                        head.map(col => cell(col, order, onRequestSort))
-                    }
+                    {head.map((col, i) => (
+                        <Cell
+                            col={col}
+                            order={order}
+                            onRequestSort={onRequestSort}
+                            key={i}
+                        />
+                    )
+                )}
                 </TableRow>
             </TableHead>
         </React.Fragment>

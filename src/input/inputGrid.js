@@ -10,15 +10,20 @@ import TextField from '@material-ui/core/TextField';
 import { onChange, onToggle } from 'input/inputEvent'
 
 export const TextFieldGrid = (props) => {
-    let { defaultValue, id, label, multiline, rows, style, tooltip }
+    let { defaultValue, id, label, multiline, rows, style, tooltip,
+        onKeyPress, onTextChange }
         = props
 
+    // Use the default change handler if none was provided.
+    if (onTextChange === undefined) {
+        onTextChange = onChange
+    }
     if (!style) {
         style = {}
     }
     style.width = '100%'
     
-    // Tooltip is optional.
+    // Tooltip is optional and also shows the default value if one was provided.
     let title = defaultValue
     if (defaultValue) {
         if (tooltip) {
@@ -34,7 +39,8 @@ export const TextFieldGrid = (props) => {
             multiline={multiline}
             rows={rows}
             defaultValue={defaultValue}
-            onChange={onChange}
+            onChange={onTextChange}
+            onKeyPress={onKeyPress}
             title={title}
             style={style}
         />

@@ -2,8 +2,8 @@
 // The database page logic.
 
 import { connect } from 'react-redux'
-import { get as rxGet } from 'state/rx'
 import DatabasePres from 'database/DatabasePres'
+import { getData } from 'database/DatabaseTable'
 
 const exampleList = [
     'example1',
@@ -16,29 +16,29 @@ const mapStateToProps = (state) => {
         exampleQuery: 'some example query',
         exampleSelected: 'example2',
         query: state['database.query'],
-        result: state['database.fetch'].data,
+        queryRowCount: state['database.query.rowCount.increment'],
+        showSchema: state ['database.showSchema'],
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onQueryKeyPress: ev => {
+            if (ev.key === 'Enter') {
+                dispatch({ type:'database.query.rowCount.increment' })
+            }
+        },
         onExampleChange: ev => {
             console.log('example value:', ev.target.value)
         },
         onExecuteClick: ev => {
-            const url = process.env.REACT_APP_DATA_URL + '/api/query/' +
-                rxGet('database.query')
-            //console.log('url:', url)
-            fetch(url)
-                .then((response) => {
-                    if (response.ok) { return response.json() }
-                    dispatch({ type: 'database.fetch.failed',
-                        data: 'Data server unreachable' })
-                })
-                .then((data) => dispatch(
-                    { type: 'database.fetch.received', data }))
-                .catch((e) => dispatch(
-                    { type: 'database.fetch.failed', data: e.toString() }))
+            // Clear the existing results to trigger a new query.
+            // TODO pagination will require a different method.
+            dispatch({ type: 'database.table.clear' })
+            getData()
+        },
+        onSchemaClick: ev => {
+            dispatch({ type: 'database.showSchema.toggle' })
         },
     }
 }

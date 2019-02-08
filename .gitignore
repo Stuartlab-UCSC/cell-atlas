@@ -19,6 +19,8 @@
 .env.test.local
 .env.production.local
 notes.txt
+cell.xcworkspace
+build.tar
 
 npm-debug.log*
 yarn-debug.log*

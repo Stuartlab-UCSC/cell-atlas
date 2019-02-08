@@ -35,7 +35,7 @@ const dataVal = (val, j, numeric, chip) => {
         }
     } else if (val === undefined) {
         formattedVal = null
-     } else if (numeric) {
+    } else if (numeric) {
 
         // Insert commas.
         formattedVal = val.toLocaleString()
@@ -58,7 +58,28 @@ const dataVal = (val, j, numeric, chip) => {
     return comp
 }
 
+const dataCol = (row, head, isArray) => {
+}
+
+const arrayDataRow = (row, i, head, classes, isArray) => {
+    const comp =
+        <TableRow
+            className={classes.row}
+            hover
+            tabIndex={-1}
+            key={i}
+            data-position={i}
+            data-id={row.id}
+        >
+            {head.map((col, j) =>
+                dataVal(row[j], j)
+            )}
+        </TableRow>
+    return comp
+}
+
 const dataRow = (row, i, head, classes) => {
+    //TODO merge w/dataRow.
     const comp =
         <TableRow
             className={classes.row}
@@ -77,9 +98,8 @@ const dataRow = (row, i, head, classes) => {
 
 const tableBody = (data, head, classes) => {
     let comp
-    if (data.length < 1) {
-    
-        // With no data, give a message to that effect.
+    if (typeof(data) === 'string') {
+        // With string data, just display that string. Probably an error msg.
         comp =
             <TableBody>
                 <TableRow
@@ -87,12 +107,21 @@ const tableBody = (data, head, classes) => {
                     tabIndex={-1}
                 >
                     <TableCell colSpan={2}>
-                        (no data)
+                        {data}
                     </TableCell>
                 </TableRow>
             </TableBody>
+    } else if (Array.isArray(data[0])) {
+        // Data is an array of arrays.
+        comp =
+            <TableBody>
+                {data.map((row, i) =>
+                    arrayDataRow(row, i, head, classes)
+                )}
+            </TableBody>
 
     } else {
+        // Data must be an array of objects.
         comp =
             <TableBody>
                 {data.map((row, i) =>
@@ -105,7 +134,6 @@ const tableBody = (data, head, classes) => {
 }
 
 const Matrix = ({ table, head, width, classes, onRequestSort }) => {
-
     return (
         <Paper style={{width: width}}>
             <Table

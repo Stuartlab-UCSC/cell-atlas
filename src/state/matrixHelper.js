@@ -4,7 +4,16 @@
 // routes.
 
 import { get as rxGet, set as rxSet } from 'state/rx'
-import { getFetchedJson, fetchError } from 'state/fetch'
+
+const updateOrderBy = (property, prev) => {
+    // Update the order given the new column and previous order.
+    let next = { property, direction: 'asc' }
+    // If the column is the same, toggle direction.
+    if (prev && prev.property === property && prev.direction === 'asc') {
+        next.direction = 'desc'
+    }
+    return next
+}
 
 const sortCompare = (column, direction) => {
 
@@ -20,81 +29,103 @@ const sortCompare = (column, direction) => {
     return r
 }
 
-const receiveData = (id, dataIn, colId) => {
-
+const receiveData = (id, dataIn, colId, prettifyRow) => { // colId is unused
     // Receive the data from the fetch.
-    if (dataIn === null) {
-        return // the fetch probably failed so just bail
+    // TODO: merge this into handling objects as it was.
+    if (dataIn === null || dataIn === undefined) {
+        return
     }
-    const data = dataIn.map(rowIn => {
-        let row = {}
-        colId.forEach((id, i) => {
-            row[id] = rowIn[i+1]
-        })
-        return row
-    })
-    rxSet(id + '.table.load', { data })
+    let head = []
+    let data
+    
+    if (typeof dataIn === 'object' && dataIn.message) {
+        // Handle receiving a messge from the server rather than data.
+        data = dataIn.message
+    } else {
+        // Parse the rows, building an array of arrays.
+        const rows = dataIn.split('\n')
+        head = helperGetHead(rows[0].split('\t'))
+        const dataArray = rows.slice(1).map(row => row.split('\t'))
+
+        // Transform the data into the form needed to render.
+        data = dataArray
+        if (prettifyRow) {
+            data = dataArray.map(row => {
+                return prettifyRow(row)
+            })
+        }
+
+        // Sort the data according to the order.
+        const order = rxGet(id + '.table').order
+        data.sort(sortCompare(order.property, order.direction))
+
+    }
+    // Load the data into the state used to render the table.
+    rxSet(id + '.tableHead.load', { value: head })
+    rxSet(id + '.table.load', { data: data })
+
+    // then set status to indicate the data is ready to render.
+    rxSet(id + '.tableStatus', { value: 'readyToRender' })
 }
 
-export const helperGetData = (id, state, prettifyRow, colId) => {
+export const helperGetData = (id, prettifyRow, urlPath, colId) => {
 
     // Get the table data and order for a matrix instance.
     // @param id: ID of the table instance, used as:
     //            - part of the state name
     //            - the data server route
-    // @param firstSort: true when data will be sorted on first render
     // @param prettifyRow: function that will transform data for rendering
+    //                     optional, in which case supply null
+    // @param urlPath: url path to use in the http request
     // @param colId: IDs of the database columns as an array
-    let table = state[id + '.table']
+    //               currently unused
 
-    if (table.data.length < 1) {
-
-        // With no data in state, go fetch it.
-        // Retrieve all rows of the database. All is OK for now because
-        // there are not very many in our databases.
-        const url = process.env.REACT_APP_DATA_URL + '/cell/' + id + '/getAll'
-        //console.log('url:', url)
-        fetch(url)
-            .then(getFetchedJson)
-            .then((data) => receiveData(id, data, colId))
-            .catch((e) => {
-                fetchError(e);
-            })
-        table = state[id + '.table']
+    if (rxGet(id + '.tableStatus') === 'requesting') {
+        return  // we don't want to request again
     }
+    rxSet(id + '.tableStatus', { value: 'requesting' })
+    
+    // Retrieve all rows of the database.
+    // TODO implement pagination.
+    const url = process.env.REACT_APP_DATA_URL + urlPath
 
-    // Transform the data for rendering.
-    let data = table.data.map(row => {
-        return prettifyRow(row, state)
-    })
-
-    // Sort the data according to the order.
-    const order = table.order
-    data.sort(sortCompare(order.property, order.direction))
-
-    return { data, order }
+    fetch(url)
+        .then((response) => {
+            if (response.ok) {
+                return response.text()
+            } else {
+                return response.json()
+            }
+        })
+        .then((data) => receiveData(id, data, colId, prettifyRow))
+        .catch((e) => {
+            receiveData(id, e.toString(), colId)
+        })
 }
 
 export const helperGetHead = (colId, numericId) => {
 
-    // Get the table header info for a matrix instance.
+    // Format columns for headers to be rendered.
     // @param colId: list of column IDs
     // @param numeridId: list of column IDs to be aligned as numeric
+    //                   optional
+    // @return an array of objects, one object per column
     return colId.map((id , i) => {
         let info = { id }
-        if (numericId.includes(id)) {
+        if (numericId && numericId.includes(id)) {
             info.numeric = true
         }
          return info
     })
 }
 
-export const helperMapDispatchToProps = (id, dispatch, updateOrderBy) => {
+export const helperMapDispatchToProps = (id, dispatch) => {
 
     // Map dispatch to props for a matrix instance.
     // @param id: ID of the table instance; used as part of the state name
     // @param dispatch: passed thru from the matrix instance logic
     // @param updateOrderBy: function to call when the order parameters change
+    //                       optional and defaults to the function in this file
     return {
         onRequestSort: (ev) => {
 

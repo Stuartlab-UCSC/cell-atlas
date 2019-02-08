@@ -6,7 +6,7 @@ import Matrix from 'components/Matrix'
 import { helperGetHead, helperGetData, helperMapDispatchToProps }
     from 'state/matrixHelper.js'
 
-const MINIMAL = false
+const MINIMAL = true
 
 // The column IDs for the table.
 let tableColId
@@ -42,7 +42,7 @@ const dataColId = tableColId
 // Those column IDs that should be formatted as numeric.
 const numericId = ['sample count']
 
-const createTableRow = (row, state) => {
+const createTableRow = (row) => {
 
     // Create the displayable row for a row of data.
     // This is the place to insert any components other than text display.
@@ -51,27 +51,16 @@ const createTableRow = (row, state) => {
 
 const mapStateToProps = (state) => {
     return {
-        table: helperGetData('dataset', state, createTableRow, dataColId),
+        table: helperGetData(
+            'dataset', createTableRow, '/api/dataset', dataColId),
         head: helperGetHead(tableColId, numericId),
-        expand: state['dataset.expand'],
+        //expand: state['dataset.expand'],
         classes: { row: 'row' },
     }
 }
 
-const updateOrderBy = (property, prev) => {
-
-    // Update the order given the new column and previous order.
-    let next = { property, direction: 'asc' }
-
-    // If the column is the same, toggle direction.
-    if (prev && prev.property === property && prev.direction === 'asc') {
-        next.direction = 'desc'
-    }
-    return next
-}
-
 const mapDispatchToProps = (dispatch) => {
-    return helperMapDispatchToProps('dataset', dispatch, updateOrderBy)
+    return helperMapDispatchToProps('dataset', dispatch)
 }
 
 const DatasetTable = connect(

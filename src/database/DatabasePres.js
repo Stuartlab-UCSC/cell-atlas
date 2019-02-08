@@ -3,15 +3,18 @@
 
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import FormControl from "@material-ui/core/FormControl/FormControl";
-import Grid from '@material-ui/core/Grid';
-import Input from "@material-ui/core/Input/Input";
-import NativeSelect from '@material-ui/core/NativeSelect';
-import Typography from '@material-ui/core/Typography';
+import FormControl from "@material-ui/core/FormControl/FormControl"
+import Grid from '@material-ui/core/Grid'
+import Input from "@material-ui/core/Input/Input"
+import NativeSelect from '@material-ui/core/NativeSelect'
+import Typography from '@material-ui/core/Typography'
 
 import { TextFieldGrid } from 'input/inputGrid'
+import SmallButton from 'components/SmallButton'
+import DatabaseTable from 'database/DatabaseTable'
+import schema from 'database/schema.png'
 
-const DropDown = ({id, list, selected, onChange}) => {
+const ExampleList = ({id, list, selected, onChange}) => {
     const comp =
         <FormControl style={{ width: '100%' }}>
             <NativeSelect
@@ -34,6 +37,7 @@ const DropDown = ({id, list, selected, onChange}) => {
 }
 
 const Examples = ({id, list, listValue, query, onChange}) => {
+    return null
     const comp =
         <Grid container spacing={16} >
             <Grid item xs={12}>
@@ -42,8 +46,8 @@ const Examples = ({id, list, listValue, query, onChange}) => {
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <DropDown
-                    id={id + '.exampleDropDown'}
+                <ExampleList
+                    id={id + '.exampleList'}
                     list={list}
                     value={listValue}
                     onChange={onChange}
@@ -62,34 +66,17 @@ const Examples = ({id, list, listValue, query, onChange}) => {
     return comp
 }
 
-const Result = ({ result }) => {
-    const comp =
-        <React.Fragment>
-            <Grid item xs={12}>
-                <Typography variant='subheading'>
-                    Result
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Typography>
-                    {result}
-                </Typography>
-            </Grid>
-        </React.Fragment>
-    return comp
-}
-
-const Query = ({ id, query, result, onExecuteClick}) => {
-
+const Query = ({ id, query, queryRowCount, onKeyPress, onExecuteClick }) => {
     const comp =
         <Grid container spacing={16}>
             <Grid item xs={12}>
                 <TextFieldGrid
                     id={id + '.query'}
-                    label='SQL query *'
+                    label='SQL query'
                     defaultValue={query}
                     multiline={true}
-                    rows={10}
+                    rows={queryRowCount}
+                    onKeyPress={onKeyPress}
                 />
             </Grid>
             <Grid item xs={12}>
@@ -104,15 +91,35 @@ const Query = ({ id, query, result, onExecuteClick}) => {
                     </Button>
                 </label>
             </Grid>
-            <Result result={result} />
+            <Grid item xs={12}>
+                <DatabaseTable />
+            </Grid>
         </Grid>
     return comp
 }
 
 const DatabasePres = (props) => {
     let { exampleList, exampleQuery, exampleSelected, result, query,
-        onExampleChange, onExecuteClick } = props
+        queryRowCount, showSchema, onQueryKeyPress, onExecuteClick,
+        onExampleChange, onSchemaClick,
+    } = props
     const id = 'database'
+    let schemaDiagram = null
+    if (showSchema) {
+        schemaDiagram =
+            <Grid item xs={12}>
+                <img
+                    src={schema}
+                    alt='schema'
+                    height={300}
+                    style={{
+                        //float: 'right',
+                        //marginTop: imageTop,
+                        //marginBottom: imageBottom,
+                    }}
+                />
+            </Grid>
+    }
     return (
         <Grid container spacing={16}
               className='pageBody'
@@ -127,8 +134,22 @@ const DatabasePres = (props) => {
                     id={id}
                     query={query}
                     result={result}
+                    queryRowCount={queryRowCount}
+                    onKeyPress={onQueryKeyPress}
                     onExecuteClick={onExecuteClick}
                 />
+            </Grid>
+            <Grid item xs={6}>
+                <Grid container spacing={16}>
+                    <Grid item xs={12}>
+                        <SmallButton
+                            label='Database Schema'
+                            action='schema'
+                            onClick={onSchemaClick}
+                        />
+                    </Grid>
+                    {schemaDiagram}
+                </Grid>
             </Grid>
             <Grid item xs={6}>
                 <Examples
@@ -141,6 +162,8 @@ const DatabasePres = (props) => {
             </Grid>
         </Grid>
     )
+    /*
+    */
 }
 
 export default DatabasePres
