@@ -12,7 +12,7 @@ const Help = () => {
         >
             <Grid item xs={12}>
                 <Typography variant='title'>
-                    Trajectory Explorer
+                    Trajectory Algorithm Comparison
                 </Typography>
             </Grid>
             <Grid item xs={12}>

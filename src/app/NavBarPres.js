@@ -5,7 +5,8 @@ import React from 'react'
 import { Link }  from 'react-router-dom'
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import ToggleButton, { ToggleButtonGroup } from '@material-ui/lab/ToggleButton';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Settings from 'images/settings.svg'
 import appLogo from 'app/images/logo.svg'
 import NavBarList from 'app/NavBarList'

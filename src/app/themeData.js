@@ -31,6 +31,7 @@ export const themeData = themeType => {
             },
         },
         typography: {
+            useNextVariants: true,
             fontFamily: [
                 "Myriad Set Pro",
                 "Helvetica Neue",
