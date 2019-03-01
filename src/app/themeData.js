@@ -52,6 +52,7 @@ export const themeData = themeType => {
         overrides: {
             MuiPaper: {
                 root: {
+                    // Transparent allows change of background in one place.
                     backgroundColor: 'transparent',
                 },
             },
@@ -66,6 +67,13 @@ export const themeData = themeType => {
                     paddingBottom: '0.3rem',
                     paddingTop: '0.1rem',
                 },
+            },
+            // We don't want transparent dialogs.
+            MuiDialog: {
+                paper: {
+                    background: background,
+                    minWidth: '20rem',
+                }
             },
             MuiInput: {
                 input: {

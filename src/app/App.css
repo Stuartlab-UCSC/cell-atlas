@@ -12,11 +12,14 @@ html, body {
     height: 100%;
 }
 
-.pageBody {
+.pageBody, .pageBodyLower {
     padding-top: 1.5rem;
     padding-left: 3rem;
     padding-right: 3rem;
     padding-bottom: 4rem;
+}
+.pageBodyLower {
+    padding-top: 2rem;
 }
 
 #homePage .analyzeButton:hover .imageTitle {

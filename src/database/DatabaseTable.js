@@ -30,9 +30,9 @@ const DatabaseTable = connect(
     mapDispatchToProps
 )(Matrix)
 
-export const getData = () => {
+export const getData = (download) => {
     helperGetData('database', createTableRow,
-        encodeURI('/api/query/' + rxGet('database.query')))
+        encodeURI('/sql/' + rxGet('database.query')), null, download)
 }
 
 export default DatabaseTable

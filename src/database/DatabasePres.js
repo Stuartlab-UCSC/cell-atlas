@@ -3,167 +3,192 @@
 
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import FormControl from "@material-ui/core/FormControl/FormControl"
 import Grid from '@material-ui/core/Grid'
-import Input from "@material-ui/core/Input/Input"
-import NativeSelect from '@material-ui/core/NativeSelect'
-import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
 
-import { TextFieldGrid } from 'input/inputGrid'
-import SmallButton from 'components/SmallButton'
+import Favorite from 'database/Favorite'
 import DatabaseTable from 'database/DatabaseTable'
 import schema from 'database/schema.png'
 
-const ExampleList = ({id, list, selected, onChange}) => {
-    const comp =
-        <FormControl style={{ width: '100%' }}>
-            <NativeSelect
-                value={selected}
-                onChange={onChange}
-                name="Examples"
-                input={<Input id={id} />}
+const buttonStyle = {
+    width: '15%',
+    marginRight: '1rem',
+}
+
+const AddFavorite = ({ showDownload, onClick }) => {
+    let comp = null
+    if (showDownload) {
+        comp =
+            <Button
+                variant='contained'
+                component='span'
+                size='small'
+                onClick={onClick}
+                style={buttonStyle}
             >
-                {list.map((opt, i) => (
-                    <option
-                        value={opt}
-                        data-id={id}
-                        key={i}>
-                        {opt}
-                    </option>
-                ))}
-            </NativeSelect>
-        </FormControl>
+                Add to Favorites
+            </Button>
+
+    }
+    return comp
+}
+const Download = ({ id, showDownload, downloadUrl, onDownloadClick }) => {
+    let comp = null
+    if (showDownload) {
+        comp =
+            <Button
+                href={downloadUrl}
+                download='stuartCellAtlas.tsv'
+                variant='contained'
+                size='small'
+                component='a'
+                style={buttonStyle}
+            >
+                Download
+            </Button>
+    }
+    return comp
+}
+/*
+                <a
+                    href={downloadUrl}
+                    download='stuartCellAtlas.tsv'
+                >
+                    Download
+                </a>
+\*/
+    /*
+    TODO: download is opening in a tab rather than downloading directly.
+    This works for tumormap in :
+    link = $('<a href=' + getDataUrl('assignments') +
+        ' title="Download positions of nodes on the hexagonal grid"' +
+        ' download > Hexagon Coordinates </>');
+    */
+
+const Schema = ({ showSchema, schema }) => {
+    let comp = null
+    if (showSchema) {
+        comp =
+            <img
+                src={schema}
+                alt='schema'
+                height={300}
+            />
+    }
     return comp
 }
 
-const Examples = ({id, list, listValue, query, onChange}) => {
-    return null
+const ExecuteButton = ({ onClick }) => {
     const comp =
-        <Grid container spacing={16} >
-            <Grid item xs={12}>
-                <Typography variant='subheading'>
-                    Examples
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <ExampleList
-                    id={id + '.exampleList'}
-                    list={list}
-                    value={listValue}
-                    onChange={onChange}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextFieldGrid
-                    id={id + '.exampleQuery'}
-                    label='Query'
-                    defaultValue={query}
-                    multiline={true}
-                    rows={10}
-                />
-            </Grid>
-        </Grid>
+        <Button
+            variant='contained'
+            component='span'
+            size='small'
+            color='primary'
+            onClick={onClick}
+            style={buttonStyle}
+        >
+            Execute Query
+        </Button>
     return comp
 }
 
-const Query = ({ id, query, queryRowCount, onKeyPress, onExecuteClick }) => {
-    const comp =
-        <Grid container spacing={16}>
-            <Grid item xs={12}>
-                <TextFieldGrid
+const Query = (props) => {
+    const { id, query, favoriteSelected, rows, onChange, onKeyPress } = props
+    let comp
+    if (favoriteSelected === null) {
+        // The trigger for this render IS NOT due to a select from favorites,
+        // so set the DEFAULT value with the state.
+        comp =
+            <TextField
+                id={id}
+                label='SQL Database Query'
+                multiline={true}
+                rows={rows}
+                defaultValue={query}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                title={'SQL string to query the database'}
+                style={{ width: '100%' }}
+            />
+    } else {
+        // The trigger for this render Is due to a select from favorites,
+        // so set the CURRENT value to the selected favorite.
+        comp =
+            <TextField
+                id={id}
+            label='SQL Database Query'
+                multiline={true}
+                rows={rows}
+                value={query}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                title={'SQL string to query the database'}
+                style={{ width: '100%' }}
+            />
+    }
+    return comp
+}
+
+const DatabasePres = (props) => {
+    let { query, favoriteSelected, queryRowCount, showDownload, showSchema,
+        onQueryKeyPress, onQueryChange, onExecuteClick, onSchemaClick,
+        downloadUrl, onDownloadClick, onAddFavoriteClick, } = props
+    const id = 'database'
+    return (
+        <Grid container spacing={16}
+              className='pageBodyLower'
+        >
+            <Grid item xs={6}>
+                <Query
                     id={id + '.query'}
-                    label='SQL query'
-                    defaultValue={query}
-                    multiline={true}
+                    query={query}
+                    favoriteSelected={favoriteSelected}
                     rows={queryRowCount}
-                    onKeyPress={onKeyPress}
+                    onKeyPress={onQueryKeyPress}
+                    onChange={onQueryChange}
                 />
             </Grid>
+            <Grid item xs={6}>
+                <Favorite />
+            </Grid>
+            
             <Grid item xs={12}>
-                <label htmlFor={id}>
-                    <Button
-                        variant='contained'
-                        component='span'
-                        color='primary'
-                        onClick={onExecuteClick}
-                    >
-                        Execute Query
-                    </Button>
-                </label>
+                <ExecuteButton onClick={onExecuteClick} />
+                <Button
+                    variant='contained'
+                    component='span'
+                    size='small'
+                    onClick={onSchemaClick}
+                    style={buttonStyle}
+                >
+                    Database Schema
+                </Button>
+                <AddFavorite
+                    showDownload={showDownload}
+                    onClick={onAddFavoriteClick}
+                />
+                <Download
+                    showDownload={showDownload}
+                    downloadUrl={downloadUrl}
+                    onDownloadClick={onDownloadClick}
+                />
+            </Grid>
+            <Grid item xs={6}>
+            </Grid>
+            <Grid item xs={6}>
+            </Grid>
+            <Grid item xs={6}>
+                <Schema
+                    showSchema={showSchema}
+                    schema={schema}
+                />
             </Grid>
             <Grid item xs={12}>
                 <DatabaseTable />
             </Grid>
         </Grid>
-    return comp
-}
-
-const DatabasePres = (props) => {
-    let { exampleList, exampleQuery, exampleSelected, result, query,
-        queryRowCount, showSchema, onQueryKeyPress, onExecuteClick,
-        onExampleChange, onSchemaClick,
-    } = props
-    const id = 'database'
-    let schemaDiagram = null
-    if (showSchema) {
-        schemaDiagram =
-            <Grid item xs={12}>
-                <img
-                    src={schema}
-                    alt='schema'
-                    height={300}
-                    style={{
-                        //float: 'right',
-                        //marginTop: imageTop,
-                        //marginBottom: imageBottom,
-                    }}
-                />
-            </Grid>
-    }
-    return (
-        <Grid container spacing={16}
-              className='pageBody'
-        >
-            <Grid item xs={12}>
-                <Typography variant='title'>
-                    Database Query
-                </Typography>
-            </Grid>
-            <Grid item xs={6}>
-                <Query
-                    id={id}
-                    query={query}
-                    result={result}
-                    queryRowCount={queryRowCount}
-                    onKeyPress={onQueryKeyPress}
-                    onExecuteClick={onExecuteClick}
-                />
-            </Grid>
-            <Grid item xs={6}>
-                <Grid container spacing={16}>
-                    <Grid item xs={12}>
-                        <SmallButton
-                            label='Database Schema'
-                            action='schema'
-                            onClick={onSchemaClick}
-                        />
-                    </Grid>
-                    {schemaDiagram}
-                </Grid>
-            </Grid>
-            <Grid item xs={6}>
-                <Examples
-                    id={id}
-                    list={exampleList}
-                    listValue={exampleSelected}
-                    query={exampleQuery}
-                    onChange={onExampleChange}
-                />
-            </Grid>
-        </Grid>
     )
-    /*
-    */
 }
 
 export default DatabasePres

@@ -12,5 +12,5 @@ mv build build.old
 echo "untarring..."
 tar -xf $LOCALTAR -C $CELL
 
-echo "kill old process and issue 'start'"
+echo "kill old process and ..."
 ps -eaf | grep server.js

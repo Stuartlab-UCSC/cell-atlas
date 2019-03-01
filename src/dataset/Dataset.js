@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import DatasetTable from 'dataset/DatasetTable'
+import { getData } from 'dataset/DatasetTable'
 
 const DatasetPres = ({classes}) => {
     return (
@@ -17,7 +18,7 @@ const DatasetPres = ({classes}) => {
         >
             <Grid item xs={12}>
                 <Typography variant='title'>
-                    Dataset Metadata
+                    Datasets
                 </Typography>
             </Grid>
             <Grid item>
@@ -28,6 +29,9 @@ const DatasetPres = ({classes}) => {
 }
 
 const mapStateToProps = (state) => {
+    if (state["dataset.table"].data.length < 1) {
+        getData()
+    }
     return {
         classes: {
             title: 'title',

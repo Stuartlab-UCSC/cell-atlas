@@ -16,8 +16,8 @@ const SmallButton = ({ id, action, label, variant, linkTo, href, style, title,
     const color = (variant === 'flat') ? 'primary' : 'secondary'
     
     // Separate those with a link and those without because we cannot supply
-    // a null or undefined value to the "component" property. Note that link
-    // is more responsive than href.
+    // a null or undefined value to the "component" property. Note that Link
+    // is for routed pages while href is for general URLs.
     if (linkTo) {
         return (
             <Button

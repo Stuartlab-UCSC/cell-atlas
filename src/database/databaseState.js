@@ -3,10 +3,22 @@
 const defaultTableOrder = { property: 'id', direction: 'asc' }
 
 const databaseState = {
-    'database.showSchema': (state = false, action ) => {
-        if (action.type === 'database.showSchema.toggle') {
-            return !state
+    'database.showDownload': (state = false, action ) => {
+        if (action.type === 'database.showDownload.true') {
+            return true
+        } else if (action.type === 'database.showDownload.false') {
+            return false
         } else {
+            return state
+        }
+    },
+    'database.showSchema': (state = false, action ) => {
+        switch (action.type) {
+        case 'database.showSchema.toggle':
+            return !state
+        case 'database.showSchema.hide':
+            return false
+        default:
             return state
         }
     },
@@ -58,17 +70,23 @@ const databaseState = {
         }
     },
     */
-    'database.query': (state = 'SELECT * FROM dataset', action) => {
-        if (action.type === 'database.query.uiSet') {
+    'database.query': (state = 'SELECT * FROM cluster_solution', action) => {
+        switch (action.type) {
+        case 'database.query.uiSet':
             return action.value
-        } else {
+        case 'database.query.favoriteSelected':
+            return action.value
+        default:
             return state
         }
     },
     'database.query.rowCount': (state = 1, action) => {
-        if (action.type === 'database.query.rowCount.increment') {
+        switch (action.type) {
+        case 'database.query.rowCount.increment':
             return state + 1
-        } else {
+        case 'database.query.rowCount.favoriteSelect':
+            return action.value
+        default:
             return state
         }
     },

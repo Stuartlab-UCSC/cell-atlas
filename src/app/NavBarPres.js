@@ -114,10 +114,7 @@ class NavBarPres extends React.Component {
         // The explore menu.
         const list =
             <MenuList>
-                {this.listItem('Database', '/explore/database')}
-                {this.listItem('Search', '/explore/search')}
-                {this.listItem('Trajectories', '/explore/traj')}
-                {this.listItem('Datasets', '/explore/dataset')}
+                {this.listItem('SQL Query', '/explore/database')}
             </MenuList>
         const comp =
             <React.Fragment>
@@ -129,6 +126,11 @@ class NavBarPres extends React.Component {
             </React.Fragment>
 
         return comp
+        /*
+                {this.listItem('Datasets', '/explore/dataset')}
+                {this.listItem('Search', '/explore/search')}
+                {this.listItem('Trajectories', '/explore/traj')}
+        */
     }
 
     settings = () => {
@@ -162,7 +164,8 @@ class NavBarPres extends React.Component {
                 style={{
                     width: '100%',
                     zIndex: '3000',
-                    position: 'fixed'
+                    position: 'fixed',
+                    borderBottom: '1px solid #808080',
                 }}
             >
                 <ToggleButtonGroup exclusive
@@ -173,9 +176,17 @@ class NavBarPres extends React.Component {
                         value=''
                         style={{color: this.color}}
                     >
-                        Cell Atlas
+                        Stuart Cell Atlas
                         {this.logo()}
                     </ToggleButton>
+                    {this.barItem('Datasets', '/dataset')}
+                    {this.barItem('SQL Query', '/sql-query')}
+                    {this.barItem('Trajectory', '/traj')}
+                    {this.settings()}
+                </ToggleButtonGroup>
+            </div>
+        )
+        /*
                     {this.explore()}
                     {this.barItem('Upload', '/upload')}
                     {this.analyze()}
@@ -183,10 +194,7 @@ class NavBarPres extends React.Component {
                     {this.barItem('Help', '/help')}
                     {this.settings()}
                     {this.barItem('NOTE: UNDER DEVELOPMENT', '/')}
-                </ToggleButtonGroup>
-                <hr style={{ marginTop: '0' }} />
-            </div>
-        )
+        */
     }
 }
 

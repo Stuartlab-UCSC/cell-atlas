@@ -58,9 +58,6 @@ const dataVal = (val, j, numeric, chip) => {
     return comp
 }
 
-const dataCol = (row, head, isArray) => {
-}
-
 const arrayDataRow = (row, i, head, classes, isArray) => {
     const comp =
         <TableRow
@@ -135,7 +132,7 @@ const tableBody = (data, head, classes) => {
 
 const Matrix = ({ table, head, width, classes, onRequestSort }) => {
     return (
-        <Paper style={{width: width}}>
+        <Paper style={{width: width, overflowX: 'auto'}}>
             <Table
                 aria-labelledby="tableTitle"
             >

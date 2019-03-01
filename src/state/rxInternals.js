@@ -6,6 +6,7 @@ import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
 import { aboutState } from 'home/About'
 import databaseState from 'database/databaseState'
+import databaseFavoriteState from 'database/favoriteState'
 import datasetState from 'dataset/datasetState'
 import moleSimState from 'moleSim/moleSimState'
 import resultState from 'result/resultState'
@@ -53,6 +54,35 @@ const reducers = {
                 return state
         }
     },
+    'namerDialog.name': (state = null, action) => {
+        switch(action.type) {
+        case 'namerDialog.name.change':
+            return action.value
+        default:
+            return state
+        }
+    },
+    // The callback to handle the new name.
+    'namerDialog.onSubmit': (state = null, action) => {
+        switch(action.type) {
+        case 'namerDialog.onSubmit.uiSet':
+            return action.callback
+        case 'namerDialog.onSubmit.clear':
+            return null
+        default:
+            return state
+        }
+    },
+    'namerDialog.open': (state = false, action) => {
+        switch(action.type) {
+        case 'namerDialog.open.true':
+            return true
+        case 'namerDialog.open.false':
+            return false
+        default:
+            return state
+        }
+    },
     'user.email': (state = null, action) => {
         switch(action.type) {
         case 'user.email.login':
@@ -75,6 +105,7 @@ export const init = () => {
     // Combine the other reducers with these local reducers.
     Object.assign(reducers, aboutState)
     Object.assign(reducers, databaseState)
+    Object.assign(reducers, databaseFavoriteState)
     Object.assign(reducers, datasetState)
     Object.assign(reducers, moleSimState)
     Object.assign(reducers, resultState)
@@ -83,11 +114,14 @@ export const init = () => {
     Object.assign(reducers, typePsychState)
     Object.assign(reducers, uploadState)
 
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
+  
     // Create the store.
     /* eslint-disable no-underscore-dangle */
     const store = createStore(
         combineReducers(reducers), /* preloadedState, */
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        composeEnhancers()
     )
     rx(store)
     return store

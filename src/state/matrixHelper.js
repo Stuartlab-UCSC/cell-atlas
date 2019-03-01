@@ -16,7 +16,6 @@ const updateOrderBy = (property, prev) => {
 }
 
 const sortCompare = (column, direction) => {
-
     // Compare for sorting columns in a matrix.
     let r
     if (direction === 'desc') {
@@ -68,7 +67,7 @@ const receiveData = (id, dataIn, colId, prettifyRow) => { // colId is unused
     rxSet(id + '.tableStatus', { value: 'readyToRender' })
 }
 
-export const helperGetData = (id, prettifyRow, urlPath, colId) => {
+export const helperGetData = (id, prettifyRow, urlPath, colId, download) => {
 
     // Get the table data and order for a matrix instance.
     // @param id: ID of the table instance, used as:
@@ -85,11 +84,18 @@ export const helperGetData = (id, prettifyRow, urlPath, colId) => {
     }
     rxSet(id + '.tableStatus', { value: 'requesting' })
     
-    // Retrieve all rows of the database.
+    // Retrieve all rows of the query.
     // TODO implement pagination.
     const url = process.env.REACT_APP_DATA_URL + urlPath
+    let headers = {}
+    if (download) {
+        headers = {
+            'Content-Type': 'text/plain',
+            'Content-Disposition': 'attachment; filename="test.tsv"',
+        }
+    }
 
-    fetch(url)
+    fetch(url, { headers })
         .then((response) => {
             if (response.ok) {
                 return response.text()

@@ -3,13 +3,6 @@
 const defaultTableOrder = { property: 'species', direction: 'asc' }
 
 const datasetState = {
-    'dataset.idSeq': (state = '6', action) => { // TODO set to 1 later
-        if (action.type === 'dataset.idSeq.assign') {
-            return (parseInt(state, 10) + 1).toString()
-        } else {
-            return state
-        }
-    },
     'dataset.table': (state = { order: defaultTableOrder, data: [] },
         action) => {
         switch(action.type) {
@@ -24,15 +17,19 @@ const datasetState = {
             return state
         }
     },
-    'dataset.expand': (state = {}, action) => {
-        let id = parseInt(action.id, 10)
-        let column = parseInt(action.column, 10)
-        switch(action.type) {
-        case 'dataset.expand.toggle':
-            let next = {...state}
-            next[id][column] = (state[id][column] === undefined) ? true : !state[id][column]
-            return next
-        default:
+    'dataset.tableHead': (state = [], action) => {
+        if (action.type === 'dataset.tableHead.load') {
+            return action.value
+        } else {
+            return state
+        }
+    },
+    // Fetch status for the table.
+    // Valid stati: quiet, requesting, renderReady
+    'dataset.tableStatus': (state = 'quiet', action) => {
+        if (action.type === 'database.tableStatus.set') {
+            return action.value
+        } else {
             return state
         }
     },
