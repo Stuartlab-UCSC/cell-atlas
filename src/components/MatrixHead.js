@@ -13,7 +13,7 @@ const label = (col, order, onRequestSort) => {
     let active = false
     let direction = 'asc'
     if (order) {
-        active = (order.property === col.id)
+        active = (order.columnPosition === col.position)
         direction = order.direction
     }
 
@@ -23,7 +23,7 @@ const label = (col, order, onRequestSort) => {
             direction={direction}
             onClick={onRequestSort}
         >
-            {col.label ? col.label : col.id}
+            {col.label}
         </TableSortLabel>
     return comp
 }
@@ -31,7 +31,7 @@ const label = (col, order, onRequestSort) => {
 const Width = (col) => {
     // Find the width of one column
     let comp =
-        <col style={{width: col.width}} key={col.id} />
+        <col style={{width: col.width}} />
     return comp
 }
 
@@ -39,9 +39,8 @@ const Cell = ({col, order, onRequestSort}) => {
     // One header cell of the table.
     let comp =
         <TableCell
-            key={col.id}
-            data-id={col.id}
-            numeric={col.numeric}
+            data-column_position={col.position}
+            data-label={col.label}
         >
             {label(col, order, onRequestSort)}
         </TableCell>
@@ -55,21 +54,21 @@ const MatrixHead = ({ head, order, onRequestSort }) => {
     return (
         <React.Fragment>
             <colgroup>
-            {head.map((col, i) => (
+            {head.map((col) => (
                 <Width
                     col={col}
-                    key={i}
+                    key={col.position}
                  />
             ))}
             </colgroup>
             <TableHead>
                 <TableRow>
-                    {head.map((col, i) => (
+                    {head.map((col) => (
                         <Cell
                             col={col}
                             order={order}
                             onRequestSort={onRequestSort}
-                            key={i}
+                            key={col.position}
                         />
                     )
                 )}

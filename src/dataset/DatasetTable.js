@@ -32,7 +32,6 @@ const DatasetTable = connect(
 )(Matrix)
 
 export const getData = (download) => {
-    console.log('getData:download:', download)
     helperGetData('dataset', createTableRow,
         encodeURI('/sql/select * from dataset'), null, download)
 }

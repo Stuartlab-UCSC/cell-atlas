@@ -1,6 +1,6 @@
 // Dataset page state.
 
-const defaultTableOrder = { property: 'species', direction: 'asc' }
+const defaultTableOrder = { columnPosition: 1, direction: 'asc' }
 
 const datasetState = {
     'dataset.table': (state = { order: defaultTableOrder, data: [] },
@@ -12,7 +12,7 @@ const datasetState = {
                 order: defaultTableOrder,
             }
         case 'dataset.table.uiSetOrder':
-            return { ...state, order: action.order }
+            return { order: action.order, data: action.data }
         default:
             return state
         }

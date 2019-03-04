@@ -1,10 +1,12 @@
 // Database favorite state.
 
 const listStub = [
+    { name: 'mouse datasets', value: 'SELECT * FROM dataset where species="mouse: Tabula Muris"' },
     { name: 'all cluster solutions', value: 'SELECT * FROM cluster_solution' },
     { name: 'all gene sets', value: 'SELECT * FROM gene_set' },
 ]
-const defaultSelected = listStub[0].value
+
+export const defaultSelected = listStub[0].value
 
 const databaseFavoriteState = {
     'database.favorite.list': (state = listStub, action) => {

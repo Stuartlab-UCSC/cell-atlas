@@ -28,16 +28,17 @@ const AddFavorite = ({ showDownload, onClick }) => {
             >
                 Add to Favorites
             </Button>
-
     }
     return comp
 }
+
 const Download = ({ id, showDownload, downloadUrl, onDownloadClick }) => {
     let comp = null
     if (showDownload) {
         comp =
             <Button
                 href={downloadUrl}
+                target='_blank'
                 download='stuartCellAtlas.tsv'
                 variant='contained'
                 size='small'
@@ -50,6 +51,15 @@ const Download = ({ id, showDownload, downloadUrl, onDownloadClick }) => {
     return comp
 }
 /*
+            <Typography>
+                <Link
+                    href={downloadUrl}
+                    target='_blank'
+                    download='stuartCellAtlas.tsv'
+                >
+                    Download
+                </Link>
+            </Typography>
                 <a
                     href={downloadUrl}
                     download='stuartCellAtlas.tsv'

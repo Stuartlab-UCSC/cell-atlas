@@ -17,7 +17,7 @@ const DatasetPres = ({classes}) => {
             className='pageBody'
         >
             <Grid item xs={12}>
-                <Typography variant='title'>
+                <Typography variant='h6'>
                     Datasets
                 </Typography>
             </Grid>

@@ -1,6 +1,9 @@
 // Database page state.
 
-const defaultTableOrder = { property: 'id', direction: 'asc' }
+import { defaultSelected as defaultFavoriteSelected  }
+    from 'database/favoriteState'
+
+const defaultTableOrder = { columnPosition: 1, direction: 'asc' }
 
 const databaseState = {
     'database.showDownload': (state = false, action ) => {
@@ -70,7 +73,7 @@ const databaseState = {
         }
     },
     */
-    'database.query': (state = 'SELECT * FROM cluster_solution', action) => {
+    'database.query': (state = defaultFavoriteSelected, action) => {
         switch (action.type) {
         case 'database.query.uiSet':
             return action.value

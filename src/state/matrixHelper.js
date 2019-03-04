@@ -5,17 +5,18 @@
 
 import { get as rxGet, set as rxSet } from 'state/rx'
 
-const updateOrderBy = (property, prev) => {
+const updateOrderBy = (columnPosition, prev) => {
     // Update the order given the new column and previous order.
-    let next = { property, direction: 'asc' }
+    let next = { columnPosition, direction: 'asc' }
     // If the column is the same, toggle direction.
-    if (prev && prev.property === property && prev.direction === 'asc') {
+    if (prev && prev.columnPosition === columnPosition
+        && prev.direction === 'asc') {
         next.direction = 'desc'
     }
     return next
 }
 
-const sortCompare = (column, direction) => {
+const getSortCompareFunction = (column, direction) => {
     // Compare for sorting columns in a matrix.
     let r
     if (direction === 'desc') {
@@ -28,7 +29,7 @@ const sortCompare = (column, direction) => {
     return r
 }
 
-const receiveData = (id, dataIn, colId, prettifyRow) => { // colId is unused
+const receiveData = (id, dataIn, prettifyRow) => {
     // Receive the data from the fetch.
     // TODO: merge this into handling objects as it was.
     if (dataIn === null || dataIn === undefined) {
@@ -56,8 +57,7 @@ const receiveData = (id, dataIn, colId, prettifyRow) => { // colId is unused
 
         // Sort the data according to the order.
         const order = rxGet(id + '.table').order
-        data.sort(sortCompare(order.property, order.direction))
-
+        data.sort(getSortCompareFunction(order.columnPosition, order.direction))
     }
     // Load the data into the state used to render the table.
     rxSet(id + '.tableHead.load', { value: head })
@@ -103,22 +103,22 @@ export const helperGetData = (id, prettifyRow, urlPath, colId, download) => {
                 return response.json()
             }
         })
-        .then((data) => receiveData(id, data, colId, prettifyRow))
+        .then((data) => receiveData(id, data, prettifyRow))
         .catch((e) => {
-            receiveData(id, e.toString(), colId)
+            receiveData(id, e.toString())
         })
 }
 
-export const helperGetHead = (colId, numericId) => {
+export const helperGetHead = (columnLabels, numericPositions) => {
 
     // Format columns for headers to be rendered.
-    // @param colId: list of column IDs
-    // @param numeridId: list of column IDs to be aligned as numeric
-    //                   optional
+    // @param columnLabels: list of column labels
+    // @param numericPositions: list of column positions to be aligned as
+    //                          numeric, optional
     // @return an array of objects, one object per column
-    return colId.map((id , i) => {
-        let info = { id }
-        if (numericId && numericId.includes(id)) {
+    return columnLabels.map((label, position) => {
+        let info = { label, position }
+        if (numericPositions && numericPositions.includes(position)) {
             info.numeric = true
         }
          return info
@@ -137,14 +137,23 @@ export const helperMapDispatchToProps = (id, dispatch) => {
 
             // Get the current data and sort order.
             let table = rxGet(id + '.table')
-
-            // Update the order after grabbing the column ID
+            
+            // Update the order to sort by, after grabbing the column ID
             // from the column header element.
-            let order =
-                updateOrderBy(ev.target.closest('th').dataset.id, table.order)
+            const elData = ev.target.closest('th').dataset
+            let order = updateOrderBy(
+                Number(elData.column_position), table.order)
 
-            // Save the sorted data to state.
-            dispatch({ type: id + '.table.uiSetOrder', order })
+            // Sort the table.
+            table.data.sort(getSortCompareFunction(
+                order.columnPosition, order.direction))
+            
+            // Save the order and the sorted data to state.
+            dispatch({
+                type: id + '.table.uiSetOrder',
+                order,
+                data: table.data,
+            })
         },
     }
 }
