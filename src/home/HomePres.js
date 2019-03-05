@@ -35,7 +35,7 @@ const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
                     <Typography variant='caption' align='right' style={{paddingTop: '1.5rem'}}>
                         the UC Santa Cruz, Genomics Institute, Stuart Lab
                     </Typography>
-                    <Typography variant='display1' align='right'>
+                    <Typography variant='h4' align='right'>
                         Cell Atlas
                     </Typography>
                 </Grid>

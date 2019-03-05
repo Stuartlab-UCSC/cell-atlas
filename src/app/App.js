@@ -9,6 +9,7 @@ import {
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+import sessionStoreInit from 'state/sessionStore'
 import NavBar from 'app/NavBar'
 import NamerDialog from 'components/NamerDialog'
 import Home from 'home/Home'
@@ -30,6 +31,9 @@ import Theme from 'app/Theme'
 import 'app/App.css'
 
 const App = ({store}) => {
+    // Load any persistent state.
+    sessionStoreInit(store)
+
     return (
     <Provider store={store}>
         <Theme>

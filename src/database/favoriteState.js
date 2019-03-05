@@ -1,31 +1,35 @@
 // Database favorite state.
 
-const listStub = [
+export const defaultList = [
     { name: 'mouse datasets', value: 'SELECT * FROM dataset where species="mouse: Tabula Muris"' },
     { name: 'all cluster solutions', value: 'SELECT * FROM cluster_solution' },
     { name: 'all gene sets', value: 'SELECT * FROM gene_set' },
 ]
 
-export const defaultSelected = listStub[0].value
+export const defaultSelected = defaultList[0].value
 
 const databaseFavoriteState = {
-    'database.favorite.list': (state = listStub, action) => {
+    'databaseFavorite.list': (state = defaultList, action) => {
+        let newState
         switch (action.type) {
-        case 'database.favorite.list.uiAdd':
-            let newState = state.slice()
+        case 'databaseFavorite.list.uiAdd':
+            newState = state.slice()
             newState.unshift({
                 name: action.name,
                 value: action.value,
             })
             return newState
+        case 'databaseFavorite.list.loadPersist':
+            return action.value
         default:
             return state
         }
     },
-    'database.favorite.selected': (state = defaultSelected, action) => {
+    'databaseFavorite.selected': (state = defaultSelected, action) => {
         switch (action.type) {
-        case 'database.favorite.selected.uiSelect':
-        case 'database.favorite.selected.uiAdd':
+        case 'databaseFavorite.selected.uiSelect':
+        case 'databaseFavorite.selected.uiAdd':
+        case 'databaseFavorite.selected.loadPersist':
             return action.value
         default:
             return state

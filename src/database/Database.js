@@ -9,13 +9,14 @@ import { get as rxGet } from 'state/rx'
 let prevFavorite = null
 
 const mapStateToProps = (state) => {
-    // If the favorite selected has changed, the value of the query is set
-    // to that.
-    let favoriteSelected = false
-    if (state['database.favorite.selected'] !== prevFavorite) {
-        prevFavorite = state['database.favorite.selected']
-        favoriteSelected = true
+    // Handle a change in the favorite selected.
+    let favoriteSelected = state['databaseFavorite.selected']
+    if (favoriteSelected !== prevFavorite) {
+        prevFavorite = favoriteSelected
+    } else {
+        favoriteSelected = null
     }
+    //console.log('mapStateToProps: favoriteSelected:', favoriteSelected)
     return {
         downloadUrl: process.env.REACT_APP_DATA_URL +
             encodeURI('/sql/' + state['database.query']),
@@ -31,12 +32,12 @@ const addFavoriteWithName = (name, dispatch) => {
     // Add the new favorite and the select it.
     const value = rxGet('database.query')
     dispatch({
-        type: 'database.favorite.list.uiAdd',
+        type: 'databaseFavorite.list.uiAdd',
         name,
         value,
     })
     dispatch({
-        type: 'database.favorite.selected.uiAdd',
+        type: 'databaseFavorite.selected.uiAdd',
         value,
     })
 }

@@ -105,8 +105,27 @@ const ExecuteButton = ({ onClick }) => {
 
 const Query = (props) => {
     const { id, query, favoriteSelected, rows, onChange, onKeyPress } = props
+    //console.log('Query render: favoriteSelected:', favoriteSelected)
+    //console.log('Query render: query:', query)
     let comp
-    if (favoriteSelected === null) {
+    if (favoriteSelected) {
+        //console.log('Query render: HAS favorite')
+        // The trigger for this render Is due to a select from favorites,
+        // so set the CURRENT value to the selected favorite.
+        comp =
+            <TextField
+                id={id}
+                label='SQL Database Query'
+                multiline={true}
+                rows={rows}
+                value={query}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                title={'SQL string to query the database'}
+                style={{ width: '100%' }}
+            />
+    } else {
+        //console.log('Query render: NO favorite')
         // The trigger for this render IS NOT due to a select from favorites,
         // so set the DEFAULT value with the state.
         comp =
@@ -116,21 +135,6 @@ const Query = (props) => {
                 multiline={true}
                 rows={rows}
                 defaultValue={query}
-                onChange={onChange}
-                onKeyPress={onKeyPress}
-                title={'SQL string to query the database'}
-                style={{ width: '100%' }}
-            />
-    } else {
-        // The trigger for this render Is due to a select from favorites,
-        // so set the CURRENT value to the selected favorite.
-        comp =
-            <TextField
-                id={id}
-            label='SQL Database Query'
-                multiline={true}
-                rows={rows}
-                value={query}
                 onChange={onChange}
                 onKeyPress={onKeyPress}
                 title={'SQL string to query the database'}

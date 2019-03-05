@@ -1,29 +1,45 @@
 
 // sessionStore.js
-// An object to write and load state
+// An object to write and load state.
+// in this context 'store' refers to the persistent session store,
+// while 'state' refers to the redux state
+// This saves state upon the beforeunload event.
+// Alternatively, persistent pieces could be saved every time they change.
+// Don't know which is less code at this point.
 
-import rx from 'state/rx'
+import { get as rxGet, set as rxSet } from 'state/rx'
+import databaseState from 'database/databaseState'
+import databaseFavoriteState from 'database/favoriteState'
 
 let LOGGING = false  // true means log the state and store on save and load
 let storageSupported
 let storeName
 
-function isDefault (key, val) {
-    
-    return false
-    //return (val === varInfo[key].defalt)
+// The state pieces to save to session store, with their defaults.
+// We don't save defaults to session store.
+const stateKeys = {
+    'database.query': databaseState.defaultQuery,
+    'databaseFavorite.list': databaseFavoriteState.defaultList,
+    'databaseFavorite.selected': databaseFavoriteState.defaultSelected,
 }
 
-function logState (label) {
+function isDefault (key, val) {
+    return (rxGet(key) === stateKeys[key])
+}
 
-    // Log values as they are in state. Don't show defalut values.
+function logState (label, state) {
+
+    // Log values as they are in state. Don't show default values.
     if (!LOGGING) {
         return
     }
     console.log(label, 'state...')
 
-    if (!isDefault(key, val)) {
-        console.log(key, ':', val)
+    for (const key of Object.keys(stateKeys)) {
+        const val = rxGet(key)
+        if (!isDefault(key, val)) {
+            console.log(key, ':', val)
+        }
     }
 }
 
@@ -34,11 +50,11 @@ function logStore (label, store) {
         return
     }
     console.log(label, 'store...')
-    _.each(store, function (val, key) {
+    for (const [key, val] of Object.entries(store)) {
         //if (key === 'activeMetadatas' || key === 'dynamicMetadatas') {
-        console.log(key, ':', store[key])
+        console.log(key, ':', val)
         //}
-    })
+    }
 }
 
 function setDefaults () {
@@ -65,49 +81,30 @@ function jsonStringify (store) {
     return JSON.stringify(store)
 }
 
-function save () {
-
-    // Save state by writing it to local browser store.
-    localStore('remove')
-    localStore('set', exports.saveEach())
-}
-
-function load (storeIn, page) {
+function load (store, state) {
     
     if (!storageSupported) {
         return
     }
-    
-    let store = storeIn || localStore('get')
 
     logStore('\nLoad', store)
 
-    // Walk through the saved state loading anything we recognize
-    _.each(store, function (val, keyIn) {
-        let key = keyIn
-        
-        // TODO there is a better redux way to do this.
-        rx.set(key + '.loadPersist', { loadPersist: val })
-    })
-    rx.set('inited.state')
+    // Walk through the saved session store loading anything we recognize.
+    for (const [key, val] of Object.entries(store)) {
+        rxSet(key + '.loadPersist', { value: val })
+    }
+    
+    // If the database query string is empty, fill it with the favorite selected
+    if (rxGet('database.query') === '') {
+        rxSet('database.query.uiSelected',
+            { value: rxGet('databaseFavorite.selected') })
+    }
     
     // Log all persistent store state values.
     logState('Load')
 }
 
-function checkLocalStore () {
-
-    // Check to see if browser supports HTML5 Store
-    // Any modern browser should pass.
-    try {
-        ("localStorage" in window && window.localStorage !== null)
-    } catch (e) {
-        return false
-    }
-    return true
-}
-
-exports.saveEach = function () {
+const saveEach = function () {
 
     // Log all persistent store state values.
     logState('\nSave')
@@ -116,32 +113,50 @@ exports.saveEach = function () {
     let store = {}
 
     // Walk though our list of keys and save those that are not the default.
-    _.each(varInfo, function (info, key) {
-        val = rx.get(key)
+    for (const key in stateKeys) {
+        const val = rxGet(key)
 
         // Only save non-defaults.
         if (!isDefault(key, val)) {
             store[key] = val
         }
-    })
+    }
     
     logStore('Save', store)
 
     return jsonStringify(store)
 }
 
-exports.hasLocalStore = function () {
-    return storageSupported
+function save () {
+
+    // Save state by writing it to local browser store.
+    localStore('remove')
+    localStore('set', saveEach())
 }
 
-exports.init = function () {
+function checkLocalStore () {
+
+    // Check to see if browser supports HTML5 Store
+    // Any modern browser should pass.
+    let hasIt = false
+    try {
+        hasIt = ("localStorage" in window && window.localStorage !== null)
+    } catch (e) {
+        return false
+    }
+    return hasIt
+}
+
+const sessionStoreInit = function (state) {
     storageSupported = checkLocalStore()
     setDefaults()
 
     // Give different servers different store names.
-    storeName = location.host + '-hexMapState'
+    storeName = 'stuartCellAtlasState'
     
     if (storageSupported) {
+        let store = localStore('get') || {}
+        load(store, state)
 
         // Create a listener to know when to save state
         // This event happens with:
@@ -155,3 +170,5 @@ exports.init = function () {
         })
     }
 }
+
+export default sessionStoreInit

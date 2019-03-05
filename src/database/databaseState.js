@@ -1,9 +1,7 @@
 // Database page state.
-
-import { defaultSelected as defaultFavoriteSelected  }
-    from 'database/favoriteState'
-
 const defaultTableOrder = { columnPosition: 1, direction: 'asc' }
+
+export const defaultQuery = ''
 
 const databaseState = {
     'database.showDownload': (state = false, action ) => {
@@ -73,11 +71,11 @@ const databaseState = {
         }
     },
     */
-    'database.query': (state = defaultFavoriteSelected, action) => {
+    'database.query': (state = defaultQuery, action) => {
         switch (action.type) {
         case 'database.query.uiSet':
-            return action.value
         case 'database.query.favoriteSelected':
+        case 'database.query.loadPersist':
             return action.value
         default:
             return state
