@@ -114,18 +114,22 @@ export const init = () => {
     Object.assign(reducers, typePsychState)
     Object.assign(reducers, uploadState)
 
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
-  
     // Create the store.
-    /* eslint-disable no-underscore-dangle */
-    const store = createStore(
-        combineReducers(reducers), /* preloadedState, */
-        composeEnhancers()
-    )
+    let store
+    if (process.env.CELLDEV) {
+        const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
+        store = createStore(
+            combineReducers(reducers), /* preloadedState, */
+            composeEnhancers()
+        )
+    } else {
+        store = createStore(
+            combineReducers(reducers), /* preloadedState, */
+            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        )
+    }
     rx(store)
     return store
     /* eslint-enable */
 }
-
-//export default init
