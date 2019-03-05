@@ -118,7 +118,7 @@ const Query = (props) => {
                 label='SQL Database Query'
                 multiline={true}
                 rows={rows}
-                value={query}
+                value={favoriteSelected}
                 onChange={onChange}
                 onKeyPress={onKeyPress}
                 title={'SQL string to query the database'}

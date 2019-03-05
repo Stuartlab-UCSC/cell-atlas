@@ -81,6 +81,15 @@ function jsonStringify (store) {
     return JSON.stringify(store)
 }
 
+function specialState () {
+    // If the database query string is empty, fill it with the favorite selected
+    if (rxGet('database.query') === '') {
+        const selected = rxGet('databaseFavorite.selected')
+        rxSet('database.query.uiSelected', { value: selected })
+    }
+    
+}
+
 function load (store, state) {
     
     if (!storageSupported) {
@@ -94,11 +103,8 @@ function load (store, state) {
         rxSet(key + '.loadPersist', { value: val })
     }
     
-    // If the database query string is empty, fill it with the favorite selected
-    if (rxGet('database.query') === '') {
-        rxSet('database.query.uiSelected',
-            { value: rxGet('databaseFavorite.selected') })
-    }
+    // Handle some special cases.
+    specialState()
     
     // Log all persistent store state values.
     logState('Load')
