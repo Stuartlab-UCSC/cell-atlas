@@ -57,6 +57,24 @@ class NavBarPres extends React.Component {
         this.onAnyClick()
     }
 
+    externalLinkBarItem = (text, url) => {
+
+        // A simple option with an external link on the navigation bar.
+        let comp =
+            <ToggleButton
+                href={url}
+                style={{
+                    textTransform: 'none',
+                    color: this.color,
+                    fontWeight: 400,
+                }}
+                value=''
+            >
+                {text}
+            </ToggleButton>
+        return comp
+    }
+
     barItem = (text, link) => {
 
         // A simple option on the navigation bar.
@@ -183,6 +201,7 @@ class NavBarPres extends React.Component {
                     {this.barItem('Datasets', '/dataset')}
                     {this.barItem('SQL Query', '/sql-query')}
                     {this.barItem('Trajectory', '/traj')}
+                    {this.externalLinkBarItem('API', this.props.apiUrl)}
                     {this.settings()}
                 </ToggleButtonGroup>
             </div>

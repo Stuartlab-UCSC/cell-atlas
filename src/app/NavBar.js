@@ -6,7 +6,8 @@ import NavBarPres from 'app/NavBarPres'
 
 const mapStateToProps = state => {
     return {
-        theme: state['navBar.theme']
+        theme: state['navBar.theme'],
+        apiUrl: process.env.REACT_APP_DATA_URL,
     }
 }
 
