@@ -82,14 +82,14 @@ function jsonStringify (store) {
 }
 
 function specialState () {
-    // If the database query string is empty, fill it with the favorite selected
-    if (rxGet('database.query') === '') {
-        const selected = rxGet('databaseFavorite.selected')
-        rxSet('database.query.loadPersistOverride', { value: selected })
-        rxSet('database.query.rowCount.loadPersistOverride',
-            { queryString: selected })
+    let query = rxGet('database.query')
+    if (query === '') {
+        // Fill the empty query with the favorite selected.
+        query = rxGet('databaseFavorite.selected')
+        rxSet('database.query.loadPersistOverride', { value: query })
     }
-    
+    // Set the query row count.
+    rxSet('database.query.rowCount.loadPersistOverride', { queryString: query })
 }
 
 function load (store, state) {

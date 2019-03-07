@@ -137,7 +137,7 @@ const DatabasePres = (props) => {
     let progress = null
     let table = null
     if (tableStatus === 'requesting') {
-        progress = <Progress message='awaiting requested data...' />
+        progress = <Progress message='waiting for requested data...' />
     } else {
         table = <DatabaseTable />
     }
