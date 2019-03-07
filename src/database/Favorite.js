@@ -16,12 +16,12 @@ const mapDispatchToProps = (dispatch) => {
         onChange: ev => {
             const value = ev.target.value
             dispatch({
-                type: 'database.query.favoriteSelected',
+                type: 'database.query.favoriteSelect',
                 value,
             })
             dispatch({
                 type: 'database.query.rowCount.favoriteSelect',
-                value: value.split('\n').length,
+                queryString: value,
             })
             dispatch({
                 type: 'databaseFavorite.selected.uiSelect',

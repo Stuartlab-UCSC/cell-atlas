@@ -6,23 +6,14 @@ import DatabasePres from 'database/DatabasePres'
 import { getData } from 'database/DatabaseTable'
 import { get as rxGet } from 'state/rx'
 
-let prevFavorite = null
-
 const mapStateToProps = (state) => {
     // Handle a change in the favorite selected.
-    let favoriteSelected = state['databaseFavorite.selected']
-    if (favoriteSelected !== prevFavorite) {
-        prevFavorite = favoriteSelected
-    } else {
-        favoriteSelected = null
-    }
-    //console.log('mapStateToProps: favoriteSelected:', favoriteSelected)
     return {
         downloadUrl: process.env.REACT_APP_DATA_URL +
             encodeURI('/sql/' + state['database.query']),
         query: state['database.query'],
-        favoriteSelected: favoriteSelected,
-        queryRowCount: state['database.query.rowCount.increment'],
+        queryRowCount: state['database.query.rowCount'],
+        tableStatus: state['database.tableStatus'],
         showSchema: state['database.showSchema'],
         showDownload: state['database.showDownload'],
     }
@@ -53,7 +44,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({ type: 'database.query.uiSet', value: ev.target.value })
         },
         onExecuteClick: ev => {
-            // Clear the existing results to trigger a new query.
             // TODO pagination will require a different method.
             dispatch({ type: 'database.table.clear' })
             dispatch({ type: 'database.showDownload.false' })

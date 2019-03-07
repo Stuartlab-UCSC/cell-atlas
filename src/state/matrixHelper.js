@@ -39,7 +39,7 @@ const receiveData = (id, dataIn, prettifyRow) => {
     let data
     
     if (typeof dataIn === 'object' && dataIn.message) {
-        // Handle receiving a messge from the server rather than data.
+        // Handle receiving a message from the server rather than data.
         data = dataIn.message
     } else {
         // Parse the rows, building an array of arrays.
@@ -64,7 +64,7 @@ const receiveData = (id, dataIn, prettifyRow) => {
     rxSet(id + '.table.load', { data: data })
 
     // then set status to indicate the data is ready to render.
-    rxSet(id + '.tableStatus', { value: 'readyToRender' })
+    rxSet(id + '.tableStatus.quiet')
 }
 
 export const helperGetData = (id, prettifyRow, urlPath, colId, download) => {
@@ -82,7 +82,7 @@ export const helperGetData = (id, prettifyRow, urlPath, colId, download) => {
     if (rxGet(id + '.tableStatus') === 'requesting') {
         return  // we don't want to request again
     }
-    rxSet(id + '.tableStatus', { value: 'requesting' })
+    rxSet(id + '.tableStatus.requesting')
     
     // Retrieve all rows of the query.
     // TODO implement pagination.

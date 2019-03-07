@@ -34,6 +34,8 @@ const databaseState = {
             }
         case 'database.table.uiSetOrder':
             return { ...state, order: action.order }
+        case 'database.table.clear':
+            return { ...state, data: ['retrieving...'] }
         default:
             return state
         }
@@ -45,11 +47,15 @@ const databaseState = {
             return state
         }
     },
+    // Fetch status for the table.
     // Valid stati: quiet, requesting, renderReady
     'database.tableStatus': (state = 'quiet', action) => {
-        if (action.type === 'database.tableStatus.set') {
-            return action.value
-        } else {
+        switch (action.type) {
+        case 'database.tableStatus.requesting':
+            return 'requesting'
+        case 'database.tableStatus.quiet':
+            return 'quiet'
+        default:
             return state
         }
     },
@@ -74,8 +80,9 @@ const databaseState = {
     'database.query': (state = defaultQuery, action) => {
         switch (action.type) {
         case 'database.query.uiSet':
-        case 'database.query.favoriteSelected':
+        case 'database.query.favoriteSelect':
         case 'database.query.loadPersist':
+        case 'database.query.loadPersistOverride':
             return action.value
         default:
             return state
@@ -86,7 +93,14 @@ const databaseState = {
         case 'database.query.rowCount.increment':
             return state + 1
         case 'database.query.rowCount.favoriteSelect':
-            return action.value
+        case 'database.query.rowCount.loadPersistOverride':
+            const query = action.queryString
+            // Adjust the row count to include the last row.
+            let rowCount = query.split('\n').length
+            if (query.substr(-1) !== '\n' && rowCount > 1) {
+                rowCount += 1
+            }
+            return rowCount
         default:
             return state
         }

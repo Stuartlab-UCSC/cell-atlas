@@ -27,9 +27,12 @@ const datasetState = {
     // Fetch status for the table.
     // Valid stati: quiet, requesting, renderReady
     'dataset.tableStatus': (state = 'quiet', action) => {
-        if (action.type === 'database.tableStatus.set') {
-            return action.value
-        } else {
+        switch (action.type) {
+        case 'dataset.tableStatus.requesting':
+            return 'requesting'
+        case 'dataset.tableStatus.quiet':
+            return 'quiet'
+        default:
             return state
         }
     },

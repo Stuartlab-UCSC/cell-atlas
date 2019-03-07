@@ -85,7 +85,9 @@ function specialState () {
     // If the database query string is empty, fill it with the favorite selected
     if (rxGet('database.query') === '') {
         const selected = rxGet('databaseFavorite.selected')
-        rxSet('database.query.uiSelected', { value: selected })
+        rxSet('database.query.loadPersistOverride', { value: selected })
+        rxSet('database.query.rowCount.loadPersistOverride',
+            { queryString: selected })
     }
     
 }
