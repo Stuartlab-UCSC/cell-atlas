@@ -109,7 +109,7 @@ const Query = (props) => {
     let comp =
         <TextField
             id={id}
-            label='SQL Database Query'
+            label='Query'
             multiline={true}
             rows={rows}
             value={query}
@@ -145,6 +145,11 @@ const DatabasePres = (props) => {
         <Grid container spacing={16}
               className='pageBodyLower'
         >
+            <Grid item xs={12}>
+                <Typography variant='h6'>
+                    SQL Query
+                </Typography>
+            </Grid>
             <Grid item xs={6}>
                 <Query
                     id={id + '.query'}

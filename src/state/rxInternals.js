@@ -62,6 +62,15 @@ const reducers = {
             return state
         }
     },
+    'namerDialog.message': (state = 'Name this', action) => {
+        switch(action.type) {
+        case 'namerDialog.message.uiSet':
+            return action.value
+        default:
+            return state
+        }
+    },
+    
     // The callback to handle the new name.
     'namerDialog.onSubmit': (state = null, action) => {
         switch(action.type) {

@@ -65,6 +65,10 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'namerDialog.onSubmit.uiSet',
                 callback: addFavoriteWithName,
             })
+            dispatch({
+                type: 'namerDialog.message.uiSet',
+                value: 'Name this favorite query',
+            })
             dispatch({ type: 'namerDialog.open.true' })
         },
     }

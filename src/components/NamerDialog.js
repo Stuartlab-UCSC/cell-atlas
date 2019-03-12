@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { get as rxGet } from 'state/rx'
 
-const NamerDialogPres = ({ open, onTextChange, onClose, onSubmit }) => {
+const NamerDialogPres = ({ open, message, onTextChange, onClose, onSubmit }) => {
     return (
         <div>
             <Dialog
@@ -18,7 +18,7 @@ const NamerDialogPres = ({ open, onTextChange, onClose, onSubmit }) => {
                 onClose={onClose}
             >
                 <DialogTitle id="form-dialog-title">
-                    Name this item
+                    {message}
                 </DialogTitle>
                 <DialogContent>
                     <TextField
@@ -45,6 +45,7 @@ const NamerDialogPres = ({ open, onTextChange, onClose, onSubmit }) => {
 const mapStateToProps = (state) => {
     return {
         open: state['namerDialog.open'],
+        message: state['namerDialog.message'],
     }
 }
 
