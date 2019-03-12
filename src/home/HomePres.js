@@ -25,7 +25,7 @@ const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
     //let loginUrl = 'http://localhost:5555/user/sign-in'
     //loginUrl += '?next=/cell-help'
     return (
-        <div id='homePage' className='pageBody' style={pageBodyStyle}>
+        <div id='homePage' style={pageBodyStyle}>
             <Grid container
                 spacing={16}
             >

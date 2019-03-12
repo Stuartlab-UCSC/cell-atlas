@@ -6,9 +6,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 
 const Help = () => {
     return (
-        <Grid container spacing={16}
-              className='pageBody'
-        >
+        <Grid container spacing={16}>
             <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>

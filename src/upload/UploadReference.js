@@ -13,10 +13,7 @@ import UploadTable from 'upload/page/UploadTable'
 const UploadAnalysisInput = ({ project }) => {
     const id = 'upload'
     return (
-        <Grid container spacing={24}
-              className='pageBody'
-              style={{ maxWidth: '70rem'}}
-        >
+        <Grid container spacing={24} style={{ maxWidth: '70rem'}} >
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Upload Analysis Input Files

@@ -142,9 +142,7 @@ const DatabasePres = (props) => {
         table = <DatabaseTable />
     }
     return (
-        <Grid container spacing={16}
-              className='pageBodyLower'
-        >
+        <Grid container spacing={16} >
             <Grid item xs={12}>
                 <Typography variant='h6'>
                     SQL Query

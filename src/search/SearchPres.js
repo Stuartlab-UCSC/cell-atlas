@@ -133,7 +133,7 @@ const Body = () => {
 //            <MockUp />
 const SearchPres = ({ results }) => {
     return (
-        <Grid container spacing={16} className='pageBody'>
+        <Grid container spacing={16} >
             <Grid item xs={12}>
                 <Typography variant='title'>
                     Search Trajectory Branches

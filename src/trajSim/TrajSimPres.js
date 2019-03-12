@@ -18,7 +18,7 @@ const TrajSimPres = ({ id, cellXbranch, geneMatrixTransposed, featureMatrix,
     algorithm, description, name, species, tissue, onAnalyzeClick }) => {
 
     return (
-        <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
+        <Grid container spacing={32} style={{marginTop: '-2.5rem'}}>
             <AnalyzeHead
                 id={id}
                 title='Trajectory Similarity'

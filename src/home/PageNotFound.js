@@ -4,7 +4,7 @@
 import React from 'react'
 
 const PageNotFound = ({ location }) => (
-  <div className='pageBody'>
+  <div>
     Sorry, the page you requested does not exist: {location.pathname}
   </div>
 );

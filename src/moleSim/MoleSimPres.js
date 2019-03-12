@@ -20,7 +20,7 @@ const MoleSimPres = ({ feature, metadata, name, onAnalyzeClick }) => {
     
     const id = 'moleSim'
     return (
-        <Grid container className='pageBody' spacing={32} style={{marginTop: '-2.5rem'}}>
+        <Grid container spacing={32} style={{marginTop: '-2.5rem'}}>
             <AnalyzeHead
                 id={id}
                 title='Map Molecular Similarity'

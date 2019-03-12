@@ -14,10 +14,7 @@ import MockUp from 'components/MockUp'
 const Upload = ({ project }) => {
     const id = 'upload'
     return (
-        <Grid container spacing={24}
-            className='pageBody'
-            style={{ maxWidth: '70rem'}}
-        >
+        <Grid container spacing={24} >
             <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>

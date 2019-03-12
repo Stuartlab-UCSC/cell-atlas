@@ -13,9 +13,7 @@ import MockUp from 'components/MockUp'
 
 const ResultPres = ({classes}) => {
     return (
-        <Grid container spacing={16}
-            className='pageBody'
-        >
+        <Grid container spacing={16} >
             <MockUp />
             <Grid item xs={12}>
                 <Typography variant='title'>
