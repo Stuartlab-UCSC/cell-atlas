@@ -244,6 +244,7 @@ class TableFilter extends React.Component {
   }
 
   renderMultiselect(columns) {
+    // eslint-disable-next-line
     const { classes, filterData, filterList, options } = this.props;
 
     return (

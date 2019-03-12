@@ -133,6 +133,7 @@ class TableToolbar extends React.Component {
       searchTextUpdate,
       toggleViewColumn,
       title,
+      // eslint-disable-next-line
       tableRef,
     } = this.props;
 

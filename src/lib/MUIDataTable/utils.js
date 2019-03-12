@@ -28,6 +28,7 @@ function sortCompare(order) {
 
 function createCSVDownload(columns, data, options) {
   const replaceDoubleQuoteInString = columnData =>
+    // eslint-disable-next-line
     typeof columnData === 'string' ? columnData.replace(/\"/g, '""') : columnData;
 
   const CSVHead =

@@ -44,6 +44,7 @@ class TablePagination extends React.Component {
   };
 
   handlePageChange = (_, page) => {
+    // eslint-disable-next-line
     const { options } = this.props;
     this.props.changePage(page);
   };

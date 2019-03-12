@@ -9,6 +9,7 @@ import TableBody from './components/TableBody';
 import TableResize from './components/TableResize';
 import TableHead from './components/TableHead';
 import TableFooter from './components/TableFooter';
+// eslint-disable-next-line
 import TablePagination from './components/TablePagination';
 import cloneDeep from 'lodash.clonedeep';
 import merge from 'lodash.merge';
@@ -870,6 +871,7 @@ class MUIDataTable extends React.Component {
     } else if (type === 'cell') {
       this.setState(
         prevState => {
+          // eslint-disable-next-line
           const { index, dataIndex } = value;
           let selectedRows = [...prevState.selectedRows.data];
           let rowPos = -1;
@@ -1021,7 +1023,6 @@ class MUIDataTable extends React.Component {
           <MuiTable ref={el => (this.tableRef = el)} tabIndex={'0'} role={'grid'} className={classes.tableRoot}>
             <caption className={classes.caption}>{title}</caption>
             <TableHead
-              columns={columns}
               activeColumn={activeColumn}
               data={displayData}
               count={rowCount}

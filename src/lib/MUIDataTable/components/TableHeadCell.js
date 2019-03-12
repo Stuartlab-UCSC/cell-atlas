@@ -87,9 +87,6 @@ class TableHeadCell extends React.Component {
           <Tooltip
             title={options.textLabels.body.toolTip}
             placement={'bottom-end'}
-            classes={{
-              tooltip: classes.tooltip,
-            }}
             enterDelay={300}
             classes={{ popper: classes.mypopper }}>
             <span
@@ -117,9 +114,6 @@ class TableHeadCell extends React.Component {
           <Tooltip
             title={hint}
             placement={'bottom-end'}
-            classes={{
-              tooltip: classes.tooltip,
-            }}
             enterDelay={300}
             classes={{ popper: classes.mypopper }}>
             <HelpIcon fontSize="small" />

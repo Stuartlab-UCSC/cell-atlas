@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// eslint-disable-next-line
 import classNames from 'classnames';
 import { findDOMNode } from 'react-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -69,7 +70,8 @@ class TableResize extends React.Component {
       const elStyle = window.getComputedStyle(item, null);
 
       resizeCoords[key] = {
-        left: elRect.left + item.offsetWidth - parseInt(elStyle.paddingLeft) / 2,
+      // eslint-disable-next-line
+      left: elRect.left + item.offsetWidth - parseInt(elStyle.paddingLeft) / 2,
       };
     });
 
@@ -78,6 +80,7 @@ class TableResize extends React.Component {
 
   updateWidths = () => {
     let lastPosition = 0;
+    // eslint-disable-next-line
     const { resizeCoords, tableWidth, tableHeight } = this.state;
 
     Object.entries(resizeCoords).forEach(([key, item]) => {
@@ -112,6 +115,7 @@ class TableResize extends React.Component {
   };
 
   render() {
+    // eslint-disable-next-line
     const { classes, options, rowSelected } = this.props;
     const { id, isResize, resizeCoords, tableWidth, tableHeight } = this.state;
 
@@ -125,6 +129,7 @@ class TableResize extends React.Component {
               onMouseMove={this.onResizeMove.bind(null, key)}
               onMouseUp={this.onResizeEnd.bind(null, key)}
               style={{
+                // eslint-disable-next-line
                 width: isResize && id == key ? tableWidth : 'auto',
                 position: 'absolute',
                 height: tableHeight,
