@@ -34,7 +34,7 @@ const Search = () => {
         <Grid container spacing={16} >
             <MockUp />
             <Grid item xs={12}>
-                <Typography variant='title'>
+                <Typography variant='h6'>
                     Search A
                 </Typography>
             </Grid>

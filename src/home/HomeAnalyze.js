@@ -100,7 +100,7 @@ const HomeAnalyze = () => {
                             />
                             <Typography
                                 component='div'
-                                variant='subheading'
+                                variant='subtitle1'
                                 className='imageTitle'
                                 style={img.labelStyle}
                             >

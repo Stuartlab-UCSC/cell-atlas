@@ -133,7 +133,7 @@ const HomePres = ({redirect, onSearchSelect, onRedirect }) => {
                     <Typography variant='caption' style={topTitleStyle}>
                         the UC Santa Cruz, Genomics Institute, Stuart Lab
                     </Typography>
-                    <Typography variant='display1' style={bigTitleStyle}>
+                    <Typography variant='h4' style={bigTitleStyle}>
                         CELL ATLAS
                     </Typography>
                     <Typography variant='caption' style={bottomTitleStyle}>

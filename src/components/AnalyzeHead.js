@@ -22,7 +22,7 @@ const AnalyzeHead = ({ id, title, xs, height, imageTop, imageBottom }) => {
         <React.Fragment>
             <Grid item xs={5}>
                 <Typography
-                    variant='title'
+                    variant='h6'
                     style={{ marginTop: '1.5rem', }}
                 >
                     {'Analyze: ' + title}

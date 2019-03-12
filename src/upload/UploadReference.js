@@ -15,7 +15,7 @@ const UploadAnalysisInput = ({ project }) => {
     return (
         <Grid container spacing={24} style={{ maxWidth: '70rem'}} >
             <Grid item xs={12}>
-                <Typography variant='title'>
+                <Typography variant='h6'>
                     Upload Analysis Input Files
                 </Typography>
             </Grid>

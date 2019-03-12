@@ -16,7 +16,7 @@ const ResultPres = ({classes}) => {
         <Grid container spacing={16} >
             <MockUp />
             <Grid item xs={12}>
-                <Typography variant='title'>
+                <Typography variant='h6'>
                     Analysis Results
                 </Typography>
             </Grid>
