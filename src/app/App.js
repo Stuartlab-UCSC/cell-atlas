@@ -9,12 +9,13 @@ import {
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import sessionStoreInit from 'state/sessionStore'
-import NavBar from 'app/NavBar'
-import NamerDialog from 'components/NamerDialog'
-import Home from 'home/Home'
-import Dataset from 'dataset/Dataset'
 import Database from 'database/Database'
+import DataModel from 'dataModel/DataModel'
+import Dataset from 'dataset/Dataset'
+import Home from 'home/Home'
+import NamerDialog from 'components/NamerDialog'
+import NavBar from 'app/NavBar'
+import sessionStoreInit from 'state/sessionStore'
 import TrajExplore from 'trajExplore/TrajExplore'
 /*
 import MoleSim from 'moleSim/MoleSim'
@@ -44,6 +45,7 @@ const App = ({store}) => {
                     <div className='page' >
                         <Switch>
                             <Route exact path='/' component={Home}/>
+                            <Route path='/data-model' component={DataModel}/>
                             <Route path='/dataset' component={Dataset}/>
                             <Route path='/sql-query' component={Database}/>
                             <Route path='/traj' component={TrajExplore}/>

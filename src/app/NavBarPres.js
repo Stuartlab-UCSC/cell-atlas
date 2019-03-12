@@ -57,9 +57,9 @@ class NavBarPres extends React.Component {
         this.onAnyClick()
     }
 
-    externalLinkBarItem = (text, url) => {
+    externalLinkItem = (text, url) => {
 
-        // A simple option with an external link on the navigation bar.
+        // An option pointing to an external link on the navigation bar.
         let comp =
             <ToggleButton
                 href={url}
@@ -75,9 +75,9 @@ class NavBarPres extends React.Component {
         return comp
     }
 
-    barItem = (text, link) => {
+    linkItem = (text, link) => {
 
-        // A simple option on the navigation bar.
+        // An option pointing to an internal link on the navigation bar.
         let comp =
             <ToggleButton
                 component={Link}
@@ -198,22 +198,23 @@ class NavBarPres extends React.Component {
                         Stuart Cell Atlas
                         {this.logo()}
                     </ToggleButton>
-                    {this.barItem('Datasets', '/dataset')}
-                    {this.barItem('SQL Query', '/sql-query')}
-                    {this.barItem('Trajectory', '/traj')}
-                    {this.externalLinkBarItem('API', this.props.apiUrl)}
+                    {this.linkItem('Datasets', '/dataset')}
+                    {this.linkItem('Trajectory', '/traj')}
+                    {this.linkItem('SQL Query', '/sql-query')}
+                    {this.externalLinkItem('API', this.props.apiUrl)}
+                    {this.linkItem('Data Model', '/data-model')}
                     {this.settings()}
                 </ToggleButtonGroup>
             </div>
         )
         /*
                     {this.explore()}
-                    {this.barItem('Upload', '/upload')}
+                    {this.linkItem('Upload', '/upload')}
                     {this.analyze()}
-                    {this.barItem('Results', '/result')}
-                    {this.barItem('Help', '/help')}
+                    {this.linkItem('Results', '/result')}
+                    {this.linkItem('Help', '/help')}
                     {this.settings()}
-                    {this.barItem('NOTE: UNDER DEVELOPMENT', '/')}
+                    {this.linkItem('NOTE: UNDER DEVELOPMENT', '/')}
         */
     }
 }

@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 
 import Favorite from 'database/Favorite'
 import DatabaseTable from 'database/DatabaseTable'
-import schema from 'database/schema.png'
+import schema from 'images/schema.png'
 
 const buttonStyle = {
     width: '15%',
