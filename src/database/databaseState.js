@@ -1,13 +1,11 @@
 // Database page state.
-const defaultTableOrder = { columnPosition: 1, direction: 'asc' }
-
 export const defaultQuery = ''
 
 const databaseState = {
-    'database.showDownload': (state = false, action ) => {
-        if (action.type === 'database.showDownload.true') {
+    'database.showAddToFavorite': (state = false, action ) => {
+        if (action.type === 'database.showAddToFavorite.true') {
             return true
-        } else if (action.type === 'database.showDownload.false') {
+        } else if (action.type === 'database.showAddToFavorite.false') {
             return false
         } else {
             return state
@@ -23,60 +21,35 @@ const databaseState = {
             return state
         }
     },
-    'database.table': (state = { order: defaultTableOrder, data: [] },
-        action) => {
+    'database.tableData': (state = [], action) => {
         switch(action.type) {
-        case 'database.table.load':
-            //console.log('databaseState:database.table.load:', rxGet(id + '.table'))
-            return {
-                data: action.data,
-                order: defaultTableOrder,
-            }
-        case 'database.table.uiSetOrder':
-            return { ...state, order: action.order }
-        case 'database.table.clear':
-            return { ...state, data: ['retrieving...'] }
+        case 'database.tableData.load':
+            return action.data
         default:
             return state
         }
     },
-    'database.tableHead': (state = [], action) => {
-        if (action.type === 'database.tableHead.load') {
+    'database.tableColumn': (state = [], action) => {
+        if (action.type === 'database.tableColumn.load') {
             return action.value
         } else {
             return state
         }
     },
     // Fetch status for the table.
-    // Valid stati: quiet, requesting, renderReady
+    // Valid stati: quiet, requesting,
     'database.tableStatus': (state = 'quiet', action) => {
         switch (action.type) {
         case 'database.tableStatus.requesting':
             return 'requesting'
         case 'database.tableStatus.quiet':
             return 'quiet'
+        case 'database.tableStatus.message':
+            return action.value
         default:
             return state
         }
     },
-
-    /*
-    'database.fetch': (state = {status: 'quiet', data: ''}, action) => {
-        switch (action.type) {
-        case 'database.fetch.requested':
-            return {status: 'requested', data: ''}
-        case 'database.fetch.received':
-            console.log('!!! action.data:', action.data)
-            return {status: 'received', data: action.data}
-        case 'database.fetch.failed':
-            return {status: 'failed', data: action.data}
-        case 'database.fetch.quiet': // TODO needed?
-            return {status: 'quiet', data: state.data}
-        default:
-            return state
-        }
-    },
-    */
     'database.query': (state = defaultQuery, action) => {
         switch (action.type) {
         case 'database.query.uiSet':

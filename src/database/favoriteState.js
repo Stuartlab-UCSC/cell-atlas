@@ -1,7 +1,7 @@
 // Database favorite state.
 
 export const defaultList = [
-    { name: 'mouse datasets', value: 'SELECT * FROM dataset where species="Tabula Muris"' },
+    { name: 'mouse datasets', value: 'SELECT * FROM dataset where species="Mus musculus"' },
     { name: 'all cluster solutions', value: 'SELECT * FROM cluster_solution' },
     { name: 'all gene sets', value: 'SELECT * FROM gene_set' },
     { name: 'cluster solutions by name', value:

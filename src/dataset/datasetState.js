@@ -1,37 +1,31 @@
 // Dataset page state.
 
-const defaultTableOrder = { columnPosition: 1, direction: 'asc' }
-
 const datasetState = {
-    'dataset.table': (state = { order: defaultTableOrder, data: [] },
-        action) => {
+    'dataset.tableData': (state = [], action) => {
         switch(action.type) {
-        case 'dataset.table.load':
-            return {
-                data: action.data,
-                order: defaultTableOrder,
-            }
-        case 'dataset.table.uiSetOrder':
-            return { order: action.order, data: action.data }
+        case 'dataset.tableData.load':
+            return action.data
         default:
             return state
         }
     },
-    'dataset.tableHead': (state = [], action) => {
-        if (action.type === 'dataset.tableHead.load') {
+    'dataset.tableColumn': (state = [], action) => {
+        if (action.type === 'dataset.tableColumn.load') {
             return action.value
         } else {
             return state
         }
     },
     // Fetch status for the table.
-    // Valid stati: quiet, requesting, renderReady
+    // Valid stati: quiet, requesting,
     'dataset.tableStatus': (state = 'quiet', action) => {
         switch (action.type) {
         case 'dataset.tableStatus.requesting':
             return 'requesting'
         case 'dataset.tableStatus.quiet':
             return 'quiet'
+        case 'dataset.tableStatus.message':
+            return action.value
         default:
             return state
         }

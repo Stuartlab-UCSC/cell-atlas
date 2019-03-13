@@ -112,7 +112,7 @@ const HomePres = ({redirect, onSearchSelect, onRedirect }) => {
         )
     }
     return (
-        <div id='homePage' className='pageBody' style={pageBodyStyle}>
+        <div id='homePage' style={pageBodyStyle}>
            <div style={{ position: 'relative' }}>
                 <img
                     src={datasets}

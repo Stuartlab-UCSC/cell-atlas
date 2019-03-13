@@ -1,39 +1,62 @@
 
-// The dataset page table logic.
+// The dataset page table.
 
+import React from 'react'
 import { connect } from 'react-redux'
-import Matrix from 'components/Matrix'
+import MUIDataTable from 'lib/MUIDataTable/MUIDataTable'
 
-import { helperGetData, helperMapDispatchToProps }
-    from 'state/matrixHelper'
+import { helperGetData } from 'state/matrixHelper'
 
-const createTableRow = (row) => {
+const noFilterColumns = [
+    'id',
+    'uuid',
+    'name',
+    'cell_count',
+    'description',
+    'data_source_url',
+    'publication_url',
+]
 
-    // Create the displayable row for a row of data.
-    // This is the place to insert any components other than text display.
-    return row
+const DatasetTablePres = ({columns, data, options}) => {
+    return (
+        <MUIDataTable
+            title='Datasets'
+            data={data}
+            columns={columns}
+            options={{
+                downloadOptions: {
+                    filename: 'stuartCellAtlas.tsv',
+                    separator: '\t',
+                    quotes: false,
+                },
+                filterType: 'checkbox',
+                print: false,
+                responsive: 'scroll',
+                selectableRows: false,
+                textLabels: {
+                    toolbar: {
+                        downloadCsv: 'Download TSV',
+                    },
+                },
+            }}
+        />
+    )
 }
 
 const mapStateToProps = (state) => {
     return {
-        table: state['dataset.table'],
-        head: state['dataset.tableHead'],
-        classes: { row: 'row' },
+        columns: state['dataset.tableColumn'],
+        data: state['dataset.tableData'],
     }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return helperMapDispatchToProps('dataset', dispatch)
 }
 
 const DatasetTable = connect(
     mapStateToProps,
-    mapDispatchToProps
-)(Matrix)
+)(DatasetTablePres)
 
 export const getData = (download) => {
-    helperGetData('dataset', createTableRow,
-        encodeURI('/sql/select * from dataset'), null, download)
+    helperGetData('dataset', encodeURI('/sql/select * from dataset'),
+        noFilterColumns)
 }
 
 export default DatasetTable

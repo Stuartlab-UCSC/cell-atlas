@@ -13,9 +13,8 @@ const mapStateToProps = (state) => {
             encodeURI('/sql/' + state['database.query']),
         query: state['database.query'],
         queryRowCount: state['database.query.rowCount'],
-        tableStatus: state['database.tableStatus'],
         showSchema: state['database.showSchema'],
-        showDownload: state['database.showDownload'],
+        showAddToFavorite: state['database.showAddToFavorite'],
     }
 }
 
@@ -46,17 +45,13 @@ const mapDispatchToProps = (dispatch) => {
         onExecuteClick: ev => {
             // TODO pagination will require a different method.
             dispatch({ type: 'database.table.clear' })
-            dispatch({ type: 'database.showDownload.false' })
+            dispatch({ type: 'database.showAddToFavorite.true' })
             getData()
-            dispatch({ type: 'database.showDownload.true' })
             dispatch({ type: 'database.showSchema.hide' })
         },
 
         onSchemaClick: ev => {
             dispatch({ type: 'database.showSchema.toggle' })
-        },
-        onDownloadClick: ev => {
-            getData(true) // true to download
         },
         onAddFavoriteClick: ev => {
             // Save the callback to handle the new favorite name

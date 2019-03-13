@@ -16,9 +16,9 @@ const buttonStyle = {
     marginRight: '1rem',
 }
 
-const AddFavorite = ({ showDownload, onClick }) => {
+const AddFavorite = ({ showAddToFavorite, onClick }) => {
     let comp = null
-    if (showDownload) {
+    if (showAddToFavorite) {
         comp =
             <Button
                 variant='contained'
@@ -33,58 +33,17 @@ const AddFavorite = ({ showDownload, onClick }) => {
     return comp
 }
 
-const Download = ({ id, showDownload, downloadUrl, onDownloadClick }) => {
-    let comp = null
-    if (showDownload) {
-        comp =
-            <Button
-                href={downloadUrl}
-                target='_blank'
-                download='stuartCellAtlas.tsv'
-                variant='contained'
-                size='small'
-                component='a'
-                style={buttonStyle}
-            >
-                Download
-            </Button>
-    }
-    return comp
-}
-/*
-            <Typography>
-                <Link
-                    href={downloadUrl}
-                    target='_blank'
-                    download='stuartCellAtlas.tsv'
-                >
-                    Download
-                </Link>
-            </Typography>
-                <a
-                    href={downloadUrl}
-                    download='stuartCellAtlas.tsv'
-                >
-                    Download
-                </a>
-\*/
-    /*
-    TODO: download is opening in a tab rather than downloading directly.
-    This works for tumormap in :
-    link = $('<a href=' + getDataUrl('assignments') +
-        ' title="Download positions of nodes on the hexagonal grid"' +
-        ' download > Hexagon Coordinates </>');
-    */
-
 const Schema = ({ showSchema, schema }) => {
     let comp = null
     if (showSchema) {
         comp =
-            <img
-                src={schema}
-                alt='schema'
-                height={300}
-            />
+            <Grid item xs={12}>
+                <img
+                    src={schema}
+                    alt='schema'
+                    height={300}
+                />
+            </Grid>
     }
     return comp
 }
@@ -121,26 +80,11 @@ const Query = (props) => {
     return comp
 }
 
-const Progress = ({ message }) => {
-    const comp =
-        <Typography>
-            {message}
-        </Typography>
-    return comp
-}
-
 const DatabasePres = (props) => {
-    let { query, queryRowCount, showDownload, showSchema, tableStatus,
+    let { query, queryRowCount, showAddToFavorite, showSchema,
         onQueryKeyPress, onQueryChange, onExecuteClick, onSchemaClick,
-        downloadUrl, onDownloadClick, onAddFavoriteClick, } = props
+        onAddFavoriteClick, } = props
     const id = 'database'
-    let progress = null
-    let table = null
-    if (tableStatus === 'requesting') {
-        progress = <Progress message='waiting for requested data...' />
-    } else {
-        table = <DatabaseTable />
-    }
     return (
         <Grid container spacing={16} >
             <Grid item xs={12}>
@@ -173,28 +117,16 @@ const DatabasePres = (props) => {
                     Database Schema
                 </Button>
                 <AddFavorite
-                    showDownload={showDownload}
+                    showAddToFavorite={showAddToFavorite}
                     onClick={onAddFavoriteClick}
                 />
-                <Download
-                    showDownload={showDownload}
-                    downloadUrl={downloadUrl}
-                    onDownloadClick={onDownloadClick}
-                />
             </Grid>
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={6}>
-                <Schema
-                    showSchema={showSchema}
-                    schema={schema}
-                />
-            </Grid>
+            <Schema
+                showSchema={showSchema}
+                schema={schema}
+            />
             <Grid item xs={12}>
-                {progress}
-                {table}
+                <DatabaseTable />
             </Grid>
         </Grid>
     )

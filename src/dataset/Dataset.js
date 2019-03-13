@@ -1,42 +1,31 @@
 
-
 // The dataset page.
 
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-
 import DatasetTable from 'dataset/DatasetTable'
 import { getData } from 'dataset/DatasetTable'
 
+const pageBodyStyle = {
+    marginTop: '-0.75rem',
+    marginLeft: '-1.5rem',
+    marginRight: '-1.5rem',
+    marginBottom: '-0.75rem',
+}
 const DatasetPres = ({classes}) => {
     return (
-        <Grid container spacing={16}
-            className='pageBody'
-        >
-            <Grid item xs={12}>
-                <Typography variant='h6'>
-                    Datasets
-                </Typography>
-            </Grid>
-            <Grid item>
-                <DatasetTable />
-            </Grid>
-        </Grid>
+        <div style={pageBodyStyle} >
+            <DatasetTable/>
+        </div>
     )
 }
 
 const mapStateToProps = (state) => {
-    if (state["dataset.table"].data.length < 1) {
+    if (state["dataset.tableData"].length < 1) {
         getData()
     }
-    return {
-        classes: {
-            title: 'title',
-        },
-    }
+    return {}
 }
 
 const Dataset = connect(

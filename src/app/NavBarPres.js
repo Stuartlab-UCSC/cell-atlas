@@ -201,8 +201,8 @@ class NavBarPres extends React.Component {
                     {this.linkItem('Datasets', '/dataset')}
                     {this.linkItem('Trajectory', '/traj')}
                     {this.linkItem('SQL Query', '/sql-query')}
-                    {this.externalLinkItem('API', this.props.apiUrl)}
                     {this.linkItem('Data Model', '/data-model')}
+                    {this.externalLinkItem('API', this.props.apiUrl)}
                     {this.settings()}
                 </ToggleButtonGroup>
             </div>
