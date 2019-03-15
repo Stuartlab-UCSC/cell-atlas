@@ -20,7 +20,7 @@ const DataModel = () => {
                 <img
                     src={schema}
                     alt='schema'
-                    height={300}
+                    height={400}
                 />
             </Grid>
         </Grid>

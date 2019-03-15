@@ -57,19 +57,29 @@ const databaseState = {
         case 'database.query.loadPersist':
         case 'database.query.loadPersistOverride':
             return action.value
+        case 'database.query.executeClick':
+            // Remove any empty lines from the query
+            // to allow the maximum height for the table.
+            let querySplit = state.split('\n')
+            const lines = querySplit.filter(line => {
+                return (line.length > 0)
+            })
+            return lines.join('\n')
         default:
             return state
         }
     },
     'database.query.rowCount': (state = 1, action) => {
+        let query, rowCount
         switch (action.type) {
         case 'database.query.rowCount.increment':
             return state + 1
+        case 'database.query.rowCount.executeClick':
         case 'database.query.rowCount.favoriteSelect':
         case 'database.query.rowCount.loadPersistOverride':
-            const query = action.queryString
-            // Adjust the row count to include the last row.
-            let rowCount = query.split('\n').length
+            query = action.queryString
+            // Find the row count, adjusting for the last row.
+            rowCount = query.split('\n').length
             if (query.substr(-1) !== '\n' && rowCount > 1) {
                 rowCount += 1
             }

@@ -33,7 +33,7 @@ const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
                 </Grid>
                 <Grid item xs={5}>
                     <Typography variant='caption' align='right' style={{paddingTop: '1.5rem'}}>
-                        the UC Santa Cruz, Genomics Institute, Stuart Lab
+                        UC Santa Cruz Genomics Institute, Stuart Lab
                     </Typography>
                     <Typography variant='h4' align='right'>
                         Cell Atlas

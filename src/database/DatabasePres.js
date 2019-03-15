@@ -7,8 +7,8 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 
+import DataTable from 'components/DataTable'
 import Favorite from 'database/Favorite'
-import DatabaseTable from 'database/DatabaseTable'
 import schema from 'images/schema.png'
 
 const buttonStyle = {
@@ -27,7 +27,7 @@ const AddFavorite = ({ showAddToFavorite, onClick }) => {
                 onClick={onClick}
                 style={buttonStyle}
             >
-                Add to Favorites
+                Add Favorite
             </Button>
     }
     return comp
@@ -41,7 +41,7 @@ const Schema = ({ showSchema, schema }) => {
                 <img
                     src={schema}
                     alt='schema'
-                    height={300}
+                    height={350}
                 />
             </Grid>
     }
@@ -58,7 +58,7 @@ const ExecuteButton = ({ onClick }) => {
             onClick={onClick}
             style={buttonStyle}
         >
-            Execute Query
+            Run Query
         </Button>
     return comp
 }
@@ -81,7 +81,7 @@ const Query = (props) => {
 }
 
 const DatabasePres = (props) => {
-    let { query, queryRowCount, showAddToFavorite, showSchema,
+    let { query, queryRowCount, showAddToFavorite, showSchema, table,
         onQueryKeyPress, onQueryChange, onExecuteClick, onSchemaClick,
         onAddFavoriteClick, } = props
     const id = 'database'
@@ -114,7 +114,7 @@ const DatabasePres = (props) => {
                     onClick={onSchemaClick}
                     style={buttonStyle}
                 >
-                    Database Schema
+                    Schema
                 </Button>
                 <AddFavorite
                     showAddToFavorite={showAddToFavorite}
@@ -126,7 +126,12 @@ const DatabasePres = (props) => {
                 schema={schema}
             />
             <Grid item xs={12}>
-                <DatabaseTable />
+                <DataTable
+                    header={table.header}
+                    data={table.data}
+                    columns={table.columns}
+                    status={table.status}
+                />
             </Grid>
         </Grid>
     )

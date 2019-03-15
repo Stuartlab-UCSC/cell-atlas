@@ -1,6 +1,5 @@
 
 # eslintAll: run eslint on all js files
-# except legacy files that are still full of lint
 
 DONT_LINT_FILES=(
     viewport.js

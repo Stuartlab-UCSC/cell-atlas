@@ -7,7 +7,7 @@ import Matrix from 'components/Matrix'
 import ResultParms from 'result/ResultParms'
 import TableButtonGroup from 'components/TableButtonGroup'
 import { set as rxSet } from 'state/rx'
-import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
+import { helperMapDispatchToProps, dataTableFetch } from 'fetch/dataTableFetch.js'
 import { chipBackgrounds } from 'app/themeData'
 
 const statusColumn = 5  // for coloring based on status
@@ -113,7 +113,7 @@ const getHead = (state) => {
 
 const mapStateToProps = (state) => {
     return {
-        table: helperGetData('result', state, createTableRow, dataColId),
+        table: dataTableFetch('result', state, createTableRow, dataColId),
         head: getHead(state),
         parmShow: state['result.parm.expand'],
         width: '100%',

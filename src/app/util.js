@@ -11,3 +11,8 @@ export const isoToday = () => {
     day = (day < 10) ? '0' + day : day.toString()
     return date.getFullYear() + '-' + month + '-' + day
 }
+
+export const integerToCommaInteger = x => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+

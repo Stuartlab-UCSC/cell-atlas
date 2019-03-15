@@ -96,6 +96,11 @@ export const themeData = themeType => {
                     paddingRight: '0.5rem',
                 },
             },
+            MuiPopover: {
+                paper: {
+                    background,
+                },
+            },
             MuiTableRow: {
                 root: {
                     height: '3rem', // 56px

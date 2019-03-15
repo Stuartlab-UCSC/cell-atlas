@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Matrix from 'components/Matrix'
 import TableButtonGroup from 'components/TableButtonGroup'
 import { set as rxSet } from 'state/rx'
-import { helperMapDispatchToProps, helperGetData } from 'state/matrixHelper.js'
+import { helperMapDispatchToProps, dataTableFetch } from 'fetch/dataTableFetch.js'
 import { chipBackgrounds } from 'app/themeData'
 
 // The column IDs for the data.
@@ -83,7 +83,7 @@ const getHead = () => {
 
 const mapStateToProps = (state) => {
     return {
-        table: helperGetData('upload', state, createTableRow, dataColId),
+        table: dataTableFetch('upload', state, createTableRow, dataColId),
         head: getHead(state),
         width: '100%',
         classes: { row: 'row' },

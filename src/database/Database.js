@@ -2,12 +2,17 @@
 // The database page logic.
 
 import { connect } from 'react-redux'
+
 import DatabasePres from 'database/DatabasePres'
-import { getData } from 'database/DatabaseTable'
+import dataTableFetch from 'fetch/dataTableFetch'
 import { get as rxGet } from 'state/rx'
 
+export const getData = (download) => {
+    dataTableFetch('database', encodeURI('/sql/' + rxGet('database.query')))
+}
 const mapStateToProps = (state) => {
     // Handle a change in the favorite selected.
+    const tableData = state['database.tableData']
     return {
         downloadUrl: process.env.REACT_APP_DATA_URL +
             encodeURI('/sql/' + state['database.query']),
@@ -15,6 +20,11 @@ const mapStateToProps = (state) => {
         queryRowCount: state['database.query.rowCount'],
         showSchema: state['database.showSchema'],
         showAddToFavorite: state['database.showAddToFavorite'],
+        table: {
+            columns: state['database.tableColumn'],
+            data: tableData,
+            status: state['database.tableStatus'],
+        }
     }
 }
 
@@ -43,13 +53,17 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({ type: 'database.query.uiSet', value: ev.target.value })
         },
         onExecuteClick: ev => {
-            // TODO pagination will require a different method.
+            dispatch({ type: 'database.query.executeClick' })
             dispatch({ type: 'database.table.clear' })
-            dispatch({ type: 'database.showAddToFavorite.true' })
             getData()
+            // Minimize the query string and schema to make room for the table.
+            dispatch({
+                type: 'database.query.rowCount.executeClick',
+                queryString: rxGet('database.query'),
+            })
+            dispatch({ type: 'database.showAddToFavorite.true' })
             dispatch({ type: 'database.showSchema.hide' })
         },
-
         onSchemaClick: ev => {
             dispatch({ type: 'database.showSchema.toggle' })
         },
