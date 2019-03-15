@@ -29,7 +29,11 @@ const setCellPropsFx = (value) => {
     if (value.slice(0,4).toLowerCase() === 'http') {
         return { style: {
             textDecoration: 'underline',
-            color: 'blue',
+            cursor: 'pointer',
+            wordBreak: 'break-all',
+            '&:hover': {
+                color: 'blue'
+            }
         }}
     }
     return {}
@@ -75,7 +79,7 @@ const receiveData = (id, dataIn) => {
         
     // If dataIn is empty, let the user know there is no data.
     } else if (dataIn === null || dataIn === undefined || dataIn.length < 1) {
-        rxSet(id + '.tableStatus.message', { value: 'no data' })
+        rxSet(id + '.tableStatus.message', { value: 'No data found' })
 
     } else {
         // Parse the rows, building an array of arrays.

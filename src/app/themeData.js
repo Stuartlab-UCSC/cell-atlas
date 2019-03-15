@@ -8,13 +8,22 @@ export const chipBackgrounds = {
 }
 
 export let background
-
-const buttonColor = '#03a9f4'
+export let altBackground
+export let altForeground
+export const accentColor = '#03a9f4'
 const buttonTextColor = '#000'
 
 // Values of the material-ui default theme are in comments.
 export const themeData = themeType => {
-    background = (themeType === 'light') ? '#fff' : '#222'
+    if (themeType === 'light') {
+        background = '#fff'
+        altBackground = '#ddd'
+        altForeground = '#222'
+    } else {
+        background = '#000'
+        altBackground = '#333'
+        altForeground = '#ddd'
+    }
     let data = {
         palette: {
             type: themeType,
@@ -22,11 +31,11 @@ export const themeData = themeType => {
                 default: background,
             },
             primary: {
-                main: buttonColor,
+                main: accentColor,
                 contrastText: buttonTextColor
             },
             secondary: {
-                main: buttonColor,
+                main: accentColor,
                 contrastText: buttonTextColor,
             },
         },

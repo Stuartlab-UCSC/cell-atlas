@@ -50,7 +50,8 @@ const DatasetTable = ({ title, header, columns, data, status }) => {
     } else if (data.length > 0) {
  
         // Default the header to 'rows found' if a header wasn't provided.
-        header = header || (integerToCommaInteger(data.length) + ' rows found')
+        const headerOut = header ||
+            (integerToCommaInteger(data.length) + ' rows found')
 
         return (
             <div style={{position: 'relative'}}>
@@ -61,7 +62,7 @@ const DatasetTable = ({ title, header, columns, data, status }) => {
                     options={{
                         customToolbar: () => {
                             return (
-                                <Header header={header}/>
+                                <Header header={headerOut}/>
                             );
                         },
                         downloadOptions: {
@@ -76,6 +77,8 @@ const DatasetTable = ({ title, header, columns, data, status }) => {
                         textLabels: {
                             toolbar: {
                                 downloadCsv: 'Download TSV',
+                                filterTable: 'Filters',
+                                viewColumns: 'Columns',
                             },
                         },
                         onCellClick: onCellClick,

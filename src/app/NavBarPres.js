@@ -10,6 +10,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Settings from 'images/settings.svg'
 import appLogo from 'app/images/logo.svg'
 import NavBarList from 'app/NavBarList'
+import { background, altBackground, altForeground } from 'app/themeData'
 
 class NavBarPres extends React.Component {
 
@@ -21,7 +22,14 @@ class NavBarPres extends React.Component {
             'settings',
         ]
         this.state=(this.closeAllLists({}))
+        this.state.active = window.location.pathname
         this.color = 'rgba(127,127,127,1)'
+        this.height = '2.5rem'
+        this.itemStyle = {
+            textTransform: 'none',
+            fontWeight: 400,
+            height: this.height,
+        }
     }
 
     logo = () => {
@@ -56,19 +64,20 @@ class NavBarPres extends React.Component {
         this.props.onThemeClick()
         this.onAnyClick()
     }
+    
+    onToggleGroupChange = (ev, value) => {
+        this.setState({ active: value })
+    }
 
-    externalLinkItem = (text, url) => {
-
-        // An option pointing to an external link on the navigation bar.
+    externalLinkItem = (text, link) => {
+        // An external link on the navigation bar.
+        let style = (this.state.active === link)
+            ? this.barItemActiveStyle : this.barItemStyle
         let comp =
             <ToggleButton
-                href={url}
-                style={{
-                    textTransform: 'none',
-                    color: this.color,
-                    fontWeight: 400,
-                }}
-                value=''
+                href={link}
+                style={style}
+                value={link}
             >
                 {text}
             </ToggleButton>
@@ -77,17 +86,15 @@ class NavBarPres extends React.Component {
 
     linkItem = (text, link) => {
 
-        // An option pointing to an internal link on the navigation bar.
+        // An internal link on the navigation bar.
+        let style = (this.state.active === link)
+            ? this.barItemActiveStyle : this.barItemStyle
         let comp =
             <ToggleButton
                 component={Link}
                 to={link}
-                style={{
-                    textTransform: 'none',
-                    color: this.color,
-                    fontWeight: 400,
-                }}
-                value=''
+                style={style}
+                value={link}
             >
                 {text}
             </ToggleButton>
@@ -178,22 +185,35 @@ class NavBarPres extends React.Component {
     }
 
     render() {
+        this.barItemStyle = {
+            ...this.itemStyle,
+            color: altForeground,
+            //background: altBackground,
+        }
+        this.barItemActiveStyle = {
+            ...this.itemStyle,
+            color: altForeground,
+            background: background,
+        }
         return (
             <div
                 style={{
                     width: '100%',
+                    height: this.height,
                     zIndex: '3000',
                     position: 'fixed',
-                    borderBottom: '1px solid #808080',
+                    background: altBackground,
+                    color: altForeground,
                 }}
             >
                 <ToggleButtonGroup exclusive
+                    onChange={this.onToggleGroupChange}
                 >
                     <ToggleButton
                         component={Link}
                         to='/'
-                        value=''
-                        style={{color: this.color}}
+                        value='/'
+                        style={{height: this.height, color: altForeground}}
                     >
                         Stuart Cell Atlas
                         {this.logo()}

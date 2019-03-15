@@ -5,7 +5,6 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
 
 import DataTable from 'components/DataTable'
 import Favorite from 'database/Favorite'
@@ -80,18 +79,40 @@ const Query = (props) => {
     return comp
 }
 
+const Buttons = (props) => {
+    const {
+        showAddToFavorite,
+        onExecuteClick,
+        onSchemaClick,
+        onAddFavoriteClick,
+    } = props
+    let comp =
+        <React.Fragment>
+            <ExecuteButton onClick={onExecuteClick} />
+            <Button
+                variant='contained'
+                component='span'
+                size='small'
+                onClick={onSchemaClick}
+                style={buttonStyle}
+            >
+                Schema
+            </Button>
+            <AddFavorite
+                showAddToFavorite={showAddToFavorite}
+                onClick={onAddFavoriteClick}
+            />
+        </React.Fragment>
+    return comp
+}
+
 const DatabasePres = (props) => {
-    let { query, queryRowCount, showAddToFavorite, showSchema, table,
+    let { query, queryRowCount, showSchema, table,
         onQueryKeyPress, onQueryChange, onExecuteClick, onSchemaClick,
         onAddFavoriteClick, } = props
     const id = 'database'
     return (
         <Grid container spacing={16} >
-            <Grid item xs={12}>
-                <Typography variant='h6'>
-                    SQL Query
-                </Typography>
-            </Grid>
             <Grid item xs={6}>
                 <Query
                     id={id + '.query'}
@@ -104,21 +125,11 @@ const DatabasePres = (props) => {
             <Grid item xs={6}>
                 <Favorite />
             </Grid>
-            
             <Grid item xs={12}>
-                <ExecuteButton onClick={onExecuteClick} />
-                <Button
-                    variant='contained'
-                    component='span'
-                    size='small'
-                    onClick={onSchemaClick}
-                    style={buttonStyle}
-                >
-                    Schema
-                </Button>
-                <AddFavorite
-                    showAddToFavorite={showAddToFavorite}
-                    onClick={onAddFavoriteClick}
+                <Buttons
+                    onExecuteClick={onExecuteClick}
+                    onSchemaClick={onSchemaClick}
+                    onAddFavoriteClick={onAddFavoriteClick}
                 />
             </Grid>
             <Schema
