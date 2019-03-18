@@ -16,6 +16,7 @@ const tableStyle = {
     marginTop: '-0.9rem',
     marginLeft: '-1.5rem',
     marginRight: '-1.5rem',
+    marginBottom: '3rem',
 }
 
 const DatasetPres = ({ title, header, columns, data, message }) => {
@@ -57,7 +58,7 @@ const mapStateToProps = (state) => {
         header: cellCount(data) + ' Cells in ' + data.length + ' Datasets',
         columns: state['dataset.tableColumn'],
         data: state['dataset.tableData'],
-        status: state['dataset.tableStatus'] ,
+        status: state['dataset.fetchStatus'] ,
     }
 }
 

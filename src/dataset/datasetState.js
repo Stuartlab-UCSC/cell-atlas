@@ -18,13 +18,13 @@ const datasetState = {
     },
     // Fetch status for the table.
     // Valid stati: quiet, requesting,
-    'dataset.tableStatus': (state = 'quiet', action) => {
+    'dataset.fetchStatus': (state = 'quiet', action) => {
         switch (action.type) {
-        case 'dataset.tableStatus.requesting':
+        case 'dataset.fetchStatus.requesting':
             return 'requesting'
-        case 'dataset.tableStatus.quiet':
+        case 'dataset.fetchStatus.quiet':
             return 'quiet'
-        case 'dataset.tableStatus.message':
+        case 'dataset.fetchStatus.message':
             return action.value
         default:
             return state

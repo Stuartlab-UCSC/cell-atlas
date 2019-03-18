@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         table: {
             columns: state['database.tableColumn'],
             data: tableData,
-            status: state['database.tableStatus'],
+            status: state['database.fetchStatus'],
         }
     }
 }

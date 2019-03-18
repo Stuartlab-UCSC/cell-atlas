@@ -75,11 +75,11 @@ const receiveData = (id, dataIn) => {
             // Handle receiving a message from the server rather than data.
             message = dataIn.message
         }
-        rxSet(id + '.tableStatus.message', { value: message })
+        rxSet(id + '.fetchStatus.message', { value: message })
         
     // If dataIn is empty, let the user know there is no data.
     } else if (dataIn === null || dataIn === undefined || dataIn.length < 1) {
-        rxSet(id + '.tableStatus.message', { value: 'No data found' })
+        rxSet(id + '.fetchStatus.message', { value: 'No data found' })
 
     } else {
         // Parse the rows, building an array of arrays.
@@ -102,7 +102,7 @@ const receiveData = (id, dataIn) => {
         rxSet(id + '.tableData.load', { data: cleanData })
 
         // then set status to indicate the data is ready to render.
-        rxSet(id + '.tableStatus.quiet')
+        rxSet(id + '.fetchStatus.quiet')
     }
 }
 
@@ -113,10 +113,10 @@ const dataTableFetch = (id, urlPath) => {
     //            - part of the state name
     //            - the data server route
     // @param urlPath: url path to use in the http request
-    if (rxGet(id + '.tableStatus') === 'requesting') {
+    if (rxGet(id + '.fetchStatus') === 'requesting') {
         return  // we don't want to request again
     }
-    rxSet(id + '.tableStatus.requesting')
+    rxSet(id + '.fetchStatus.requesting')
     
     // Retrieve all rows of the query.
     // TODO implement pagination.

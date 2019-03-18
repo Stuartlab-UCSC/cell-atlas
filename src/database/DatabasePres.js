@@ -136,7 +136,7 @@ const DatabasePres = (props) => {
                 showSchema={showSchema}
                 schema={schema}
             />
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{marginBottom: '2.5rem'}}>
                 <DataTable
                     header={table.header}
                     data={table.data}
