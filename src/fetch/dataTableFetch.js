@@ -62,28 +62,26 @@ const buildColumns = (names) => {
 
 const receiveData = (id, dataIn) => {
     // Receive the data from the fetch & put it into global or state variables.
-    if (dataIn === null || dataIn === undefined) {
-        return
-    }
-    let columns = []
-    let data = []
-    
-    // If dataIn is an object, it is not the usual data array, maybe a message.
+    // If dataIn is an object, it is not the usual data string of TSV,
+    // so handle it like a message.
     if (typeof dataIn === 'object') {
         let message = 'unknown error'
         if (dataIn.message) {
             // Handle receiving a message from the server rather than data.
             message = dataIn.message
         }
-        rxSet(id + '.fetchStatus.message', { value: message })
+        rxSet(id + '.fetchStatus.message', { value: { message }})
         
     // If dataIn is empty, let the user know there is no data.
     } else if (dataIn === null || dataIn === undefined || dataIn.length < 1) {
-        rxSet(id + '.fetchStatus.message', { value: 'No data found' })
+        rxSet(id + '.fetchStatus.message',
+            { value: { message: 'No data found' }})
 
     } else {
         // Parse the rows, building an array of arrays.
         // First build the column information array.
+        let columns = []
+        let data = []
         const rows = dataIn.split('\n')
         columns = buildColumns(rows[0].split('\t'))
         

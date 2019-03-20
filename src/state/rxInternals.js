@@ -8,6 +8,7 @@ import { aboutState } from 'home/About'
 import databaseState from 'database/databaseState'
 import databaseFavoriteState from 'database/favoriteState'
 import datasetState from 'dataset/datasetState'
+import geneState from 'gene/state'
 import moleSimState from 'moleSim/moleSimState'
 import resultState from 'result/resultState'
 import searchState from 'search/searchState'
@@ -116,6 +117,7 @@ export const init = () => {
     Object.assign(reducers, databaseState)
     Object.assign(reducers, databaseFavoriteState)
     Object.assign(reducers, datasetState)
+    Object.assign(reducers, geneState)
     Object.assign(reducers, moleSimState)
     Object.assign(reducers, resultState)
     Object.assign(reducers, searchState)

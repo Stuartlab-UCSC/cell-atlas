@@ -218,6 +218,7 @@ class NavBarPres extends React.Component {
                         Stuart Cell Atlas
                         {this.logo()}
                     </ToggleButton>
+                    {this.linkItem('Gene', '/Gene')}
                     {this.linkItem('Datasets', '/dataset')}
                     {this.linkItem('Trajectory', '/traj')}
                     {this.linkItem('SQL Query', '/sql-query')}

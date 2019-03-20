@@ -26,11 +26,10 @@ const onCellClick = (link) => {
 const getMessage = (status) => {
     // Build a message depending on the table query status.
     let text = null
-    if (status === 'requesting') {
+    if (typeof status === 'object' && status.message) {
+        text = status.message
+    } else if (status === 'requesting') {
         text = 'waiting for data...'
-    } else if (status !== 'quiet') {
-        // We'll assume there is a message to display.
-        text = status
     }
     return text
 }
