@@ -3,6 +3,14 @@
 
 const state = {
     // Fetch status.
+    'gene.color_by': (state = 'z_stat', action) => {
+        switch(action.type) {
+        case 'gene.color_by.uiSet':
+            return action.value
+        default:
+            return state
+        }
+    },
     'gene.fetchStatus': (state = 'quiet', action) => {
         switch (action.type) {
         case 'gene.fetchStatus.request':
@@ -17,20 +25,28 @@ const state = {
             return state
         }
     },
-    'geneName.value': (state = '', action) => {
+    'gene.name.errorMessage': (state = null, action) => {
         switch(action.type) {
-        case 'geneName.value.uiSet':
+        case 'gene.name.errorMessage.set':
+            return action.value
+        case 'gene.name.errorMessage.clear':
+            return null
+        default:
+            return state
+        }
+    },
+    'gene.name.value': (state = '', action) => {
+        switch(action.type) {
+        case 'gene.name.value.uiSet':
             return action.value
         default:
             return state
         }
     },
-    'geneName.errorMessage': (state = null, action) => {
+    'gene.size_by': (state = 'sensitivity', action) => {
         switch(action.type) {
-        case 'geneName.errorMessage.set':
+        case 'gene.size_by.uiSet':
             return action.value
-        case 'geneName.errorMessage.clear':
-            return null
         default:
             return state
         }

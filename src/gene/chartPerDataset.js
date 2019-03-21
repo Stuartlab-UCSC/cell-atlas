@@ -9,7 +9,8 @@ import HC_more from 'highcharts/highcharts-more' //module
 
 import colorMix from 'gene/colorMix'
 import { background } from 'app/themeData'
-import ref from 'gene/reference'
+import { colorRef, sizeRef } from 'gene/reference'
+import 'gene/chart.css'
 
 HC_more(Highcharts) //init module
 
@@ -18,6 +19,10 @@ const HIGH_NEG_COLOR = '#00ff00'
 
 const legend = (data, sequence) => {
     // Only show the legend on the first chart.
+    return {
+        enabled: false,
+    }
+    /*
     if (sequence > 0) {
         return {
             enabled: false,
@@ -38,6 +43,7 @@ const legend = (data, sequence) => {
             }
         }
     }
+    */
 }
 
 const normalizeColorVal = (val) => {
@@ -82,7 +88,6 @@ const transform = (dataIn) => {
             clusterName: cluster.name,
         }
     })
-    //cData.series = [{ data: clusterData }]
     cData.series = [{}]
     cData.series[0].data = clusterData
 
@@ -91,7 +96,7 @@ const transform = (dataIn) => {
 }
 
 const options = (props) => {
-    const { data, size_var, color_var, dataset_name, cluster_solution_name,
+    const { data, size_by, color_by, dataset_name, cluster_solution_name,
         sequence } = props
     //console.log('options:data:', data)
     const cData = transform(data)
@@ -115,7 +120,7 @@ const options = (props) => {
         },
         series: [{
             data: cData.series[0].data,
-            sizeBy: 'width',
+            size_by: 'width',
             zMax: 1,
             zMin: 0,
         }],
@@ -128,8 +133,8 @@ const options = (props) => {
             headerFormat: '',
             pointFormat:
                 'cluster: {point.clusterName} <br>' +
-                 ref[size_var].label + ': {point.z} <br>' +
-                 ref[color_var].label + ': {point.clusterColor}',
+                 sizeRef[size_by].label + ': {point.z} <br>' +
+                 colorRef[color_by].label + ': {point.clusterColor}',
         },
         xAxis: {
             categories: cData.xAxis.categories,
@@ -137,8 +142,8 @@ const options = (props) => {
             height: 100,
             lineWidth: 0,
             title: {
-                text: 'Dataset: <b>' + dataset_name + '</b>, ' +
-                    'Cluster Solution: <b>' + cluster_solution_name + '</b>'
+                text: '<b>' + dataset_name + '</b> dataset, <b>' +
+                    cluster_solution_name + '</b> cluster solution'
             },
         },
         

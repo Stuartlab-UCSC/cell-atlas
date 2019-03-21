@@ -30,6 +30,7 @@ const ChartArea = ({ data, message }) => {
         const marginBottom = -35 // 400 235
         const marginTop0 = -15
         const marginTop = -30
+        const geneLabel = 'gene: ' + data.gene
         comp =
             <React.Fragment>
                 <Grid item xs={12}>
@@ -37,14 +38,19 @@ const ChartArea = ({ data, message }) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography>
-                        Chart option 1: cluster Names on hover
+                        {geneLabel}
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography>
+                        Collapsed chart: cluster Names only on hover
                     </Typography>
                 </Grid>
                 <Grid item xs={12} >
                     <Chart
                         data={data.cluster_solutions}
-                        size_var={data.size_var}
-                        color_var={data.color_var}
+                        size_by={data.size_by}
+                        color_by={data.color_by}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -52,10 +58,10 @@ const ChartArea = ({ data, message }) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography>
-                        Chart option 2: cluster Names always displaying
+                        Expanded chart: cluster Names always show
                     </Typography>
                 </Grid>
-                {data.cluster_solutions.map((dataset, i) =>
+                {data.cluster_solutions.map((cluster_solution, i) =>
                     <Grid item xs={12}
                         key={i}
                         style={{
@@ -64,23 +70,27 @@ const ChartArea = ({ data, message }) => {
                         }}
                     >
                         <ChartPerDataset
-                            data={dataset.clusters}
-                            size_var={data.size_var}
-                            color_var={data.color_var}
-                            dataset_name={dataset.dataset_name}
+                            data={cluster_solution.clusters}
+                            size_by={data.size_by}
+                            color_by={data.color_by}
+                            dataset_name={cluster_solution.dataset_name}
                             cluster_solution_name=
-                                {dataset.cluster_solution_name}
+                                {cluster_solution.cluster_solution_name}
                             sequence={i.toString()}
                         />
                     </Grid>
                 )}
+                <Grid item xs={12}>
+                    <hr />
+                </Grid>
+
             </React.Fragment>
     }
     return comp
 }
 const Presentation = ({ data, message }) => {
     return (
-        <Grid container spacing={16} alignItems='center' >
+        <Grid container spacing={16}>
             <GeneName />
             <ChartArea
                 data={data}
@@ -98,8 +108,14 @@ const receiveData = (data) => {
 
 const getData = () => {
     receiveData(data)
-    //let url = 'TODO/' + rxGet('geneName.value')
+    /*
+    let url =
+        'gene/' + rxGet('gene.name.value') +
+        '/size-by/' + rxGet('gene.size_by') +
+        '/color-by/' + rxGet('gene.color_by') +
+  
     //fetchData('gene', url, receiveData)
+    */
 }
 
 const mapStateToProps = (state) => {

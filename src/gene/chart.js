@@ -9,7 +9,7 @@ import HC_more from 'highcharts/highcharts-more' //module
 
 import colorMix from 'gene/colorMix'
 import { background } from 'app/themeData'
-import ref from 'gene/reference'
+import { colorRef, sizeRef } from 'gene/reference'
 
 HC_more(Highcharts) //init module
 
@@ -19,6 +19,10 @@ const height = 80
 
 const legend = (cData) => {
     // Only show the legend on the first chart.
+    return {
+        enabled: false,
+    }
+    /*
     return {
         align: 'right',
         //labelFormat: ' ',
@@ -34,6 +38,7 @@ const legend = (cData) => {
             ranges: [{}, {}, { color: '#e4d354' }]
         }
     }
+    */
 }
 
 const normalizeColorVal = (val) => {
@@ -116,7 +121,7 @@ const transform = (dataIn) => {
     return cData
 }
 
-const options = ({ data, size_var, color_var }) => {
+const options = ({ data, size_by, color_by }) => {
     //console.log('options:data:', data)
     const cData = transform(data)
     //console.log('options:cData:', cData)
@@ -142,7 +147,7 @@ const options = ({ data, size_var, color_var }) => {
         series: [{
             data: cData.series[0].data,
             //pointPlacement: 1,
-            sizeBy: 'width',
+            size_by: 'width',
             zMax: 1,
             zMin: 0,
         }],
@@ -153,8 +158,8 @@ const options = ({ data, size_var, color_var }) => {
             headerFormat: '',
             pointFormat:
                 'cluster: {point.clusterName} <br>' +
-                 ref[size_var].label + ': {point.z} <br>' +
-                 ref[color_var].label + ': {point.clusterColor}',
+                 sizeRef[size_by].label + ': {point.z} <br>' +
+                 colorRef[color_by].label + ': {point.clusterColor}',
         },
         xAxis: {
             gridLineWidth: 0,
@@ -185,6 +190,9 @@ const options = ({ data, size_var, color_var }) => {
         zAxis: {
             ceiling: 1,
             floor: 0,
+            labels: {
+                enabled: true,
+            },
             lineWidth: 0,
             max: 1,
             min: 0,

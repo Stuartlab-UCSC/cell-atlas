@@ -1,8 +1,9 @@
 
 // Gene page data stub.
 let data = {
-    size_var: 'precision',
-    color_var: 'z_stat',
+    gene: 'ALK',
+    size_by: 'precision',
+    color_by: 'z_stat',
     cluster_solutions: [
         {
             dataset_name: '10xGenomics_pbmc8k',

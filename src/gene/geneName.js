@@ -1,61 +1,35 @@
 
-// Search for a gene.
+// Logic to search for a gene.
 
-import React from 'react'
 import { connect } from 'react-redux'
 
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid/Grid'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-
 import { get as rxGet } from 'state/rx'
+import Presentation from 'gene/geneNamePres'
+import { colorRef, sizeRef } from 'gene/reference'
 
-const Presentation = (props) => {
-    const { value, errorMessage, onNameChange, onButtonClick } = props
-    let error = false
-    let label = 'Gene'
-    if (errorMessage) {
-        error = true
-        label = errorMessage
-    }
-    return (
-        <React.Fragment>
-            <Grid item xs={5}>
-                <Typography variant='subtitle1' align='right'>
-                    Compare gene expression across datasets
-                </Typography>
-            </Grid>
-            <Grid item xs={5}>
-                <TextField
-                    label={label}
-                    value={value}
-                    error={error}
-                    helperText='HUGO, Ensembl or Entrez'
-                    onChange={onNameChange}
-                    autoFocus={true}
-                    style={{ width: '100%' }}
-                />
-            </Grid>
-            <Grid item xs={2}>
-                <Button
-                    variant='contained'
-                    component='span'
-                    size='small'
-                    color='primary'
-                    onClick={onButtonClick}
-                >
-                    Compare
-                </Button>
-            </Grid>
-        </React.Fragment>
-    )
-}
+let colorList = null
+let sizeList = null
 
 const mapStateToProps = (state) => {
+    colorList = colorList || Object.keys(colorRef).map(color_by => {
+        return { ...colorRef[color_by], value: color_by }
+    })
+    sizeList = sizeList || Object.keys(sizeRef).map(size_by => {
+        return { ...sizeRef[size_by], value: size_by }
+    })
+
+    let selectors = (window.location.pathname === '/')
+        ? null
+        : {
+            colorList: colorList,
+            colorValue: state['gene.color_by'],
+            sizeList: sizeList,
+            sizeValue: state['gene.size_by'],
+        }
     return {
-        value: state['geneName.value'],
-        errorMessage: state['geneName.errorMessage'],
+        errorMessage: state['gene.name.errorMessage'],
+        selectors,
+        value: state['gene.name.value'],
     }
 }
 
@@ -63,20 +37,34 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onNameChange: ev => {
             dispatch({
-                type: 'geneName.value.uiSet',
+                type: 'gene.name.value.uiSet',
                 value: ev.target.value,
             })
         },
         onButtonClick: ev => {
-            if (rxGet('geneName.value').length < 1) {
+            if (rxGet('gene.name.value').length < 1) {
                 dispatch({
-                    type: 'geneName.errorMessage.set',
+                    type: 'gene.name.errorMessage.set',
                     value: 'a gene must be entered',
                 })
             } else {
                 dispatch({ type: 'gene.fetchStatus.request' })
-                dispatch({ type: 'geneName.errorMessage.clear' })
+                dispatch({ type: 'gene.name.errorMessage.clear' })
             }
+        },
+        onColorChange: ev => {
+            console.log('onColorChange')
+            dispatch({
+                type: 'gene.color_by.uiSet',
+                value: ev.target.value,
+            })
+        },
+        onSizeChange: ev => {
+            console.log('onSizeChange: value:', ev.target.value)
+            dispatch({
+                type: 'gene.size_by.uiSet',
+                value: ev.target.value,
+            })
         },
     }
 }

@@ -24,8 +24,7 @@ const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
     return (
         <div id='homePage'>
             <Grid container spacing={16} alignItems='center' >
-                <Grid item xs={1}>
-                </Grid>
+                <Grid item xs={1} />
                 <Grid item xs={5} style={{paddingBottom: '4rem'}}>
                     <Typography variant='caption' align='right'
                         style={{paddingTop: '1.5rem'}}>
@@ -42,6 +41,7 @@ const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
                         alt='logo'
                     />
                 </Grid>
+                <Grid item xs={3} />
                 <GeneName/>
             </Grid>
         </div>
