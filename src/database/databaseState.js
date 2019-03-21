@@ -37,11 +37,10 @@ const databaseState = {
         }
     },
     // Fetch status for the table.
-    // Valid stati: quiet, requesting,
     'database.fetchStatus': (state = 'quiet', action) => {
         switch (action.type) {
-        case 'database.fetchStatus.requesting':
-            return 'requesting'
+        case 'database.fetchStatus.waiting':
+            return 'waiting'
         case 'database.fetchStatus.quiet':
             return 'quiet'
         case 'database.fetchStatus.message':

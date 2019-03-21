@@ -28,7 +28,7 @@ const getMessage = (status) => {
     let text = null
     if (typeof status === 'object' && status.message) {
         text = status.message
-    } else if (status === 'requesting') {
+    } else if (status === 'waiting') {
         text = 'waiting for data...'
     }
     return text

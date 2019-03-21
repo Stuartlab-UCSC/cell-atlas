@@ -111,10 +111,10 @@ const dataTableFetch = (id, urlPath) => {
     //            - part of the state name
     //            - the data server route
     // @param urlPath: url path to use in the http request
-    if (rxGet(id + '.fetchStatus') === 'requesting') {
+    if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
     }
-    rxSet(id + '.fetchStatus.requesting')
+    rxSet(id + '.fetchStatus.waiting')
     
     // Retrieve all rows of the query.
     // TODO implement pagination.

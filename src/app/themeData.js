@@ -16,13 +16,13 @@ const buttonTextColor = '#000'
 // Values of the material-ui default theme are in comments.
 export const themeData = themeType => {
     if (themeType === 'light') {
-        background = '#fff'
-        altBackground = '#ddd'
-        altForeground = '#222'
+        background = '#ffffff'
+        altBackground = '#dddddd'
+        altForeground = '#222222'
     } else {
-        background = '#000'
-        altBackground = '#333'
-        altForeground = '#ddd'
+        background = '#000000'
+        altBackground = '#333333'
+        altForeground = '#dddddd'
     }
     let data = {
         palette: {

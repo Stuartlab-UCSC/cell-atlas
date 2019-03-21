@@ -14,7 +14,7 @@ import { get as rxGet } from 'state/rx'
 const Presentation = (props) => {
     const { value, errorMessage, onNameChange, onButtonClick } = props
     let error = false
-    let label = 'Gene (Ensembl, Entrez or HUGO)'
+    let label = 'Gene'
     if (errorMessage) {
         error = true
         label = errorMessage
@@ -31,6 +31,7 @@ const Presentation = (props) => {
                     label={label}
                     value={value}
                     error={error}
+                    helperText='HUGO, Ensembl or Entrez'
                     onChange={onNameChange}
                     autoFocus={true}
                     style={{ width: '100%' }}
@@ -44,7 +45,7 @@ const Presentation = (props) => {
                     color='primary'
                     onClick={onButtonClick}
                 >
-                    Find Datasets
+                    Compare
                 </Button>
             </Grid>
         </React.Fragment>
@@ -67,14 +68,13 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         onButtonClick: ev => {
-            console.log('onButtonClick')
             if (rxGet('geneName.value').length < 1) {
                 dispatch({
                     type: 'geneName.errorMessage.set',
                     value: 'a gene must be entered',
                 })
             } else {
-                dispatch({ type: 'gene.fetchStatus.preRequest' })
+                dispatch({ type: 'gene.fetchStatus.request' })
                 dispatch({ type: 'geneName.errorMessage.clear' })
             }
         },

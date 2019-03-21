@@ -30,10 +30,10 @@ const fetchData = (id, urlPath, callback) => {
     //            - the data server route
     // @param urlPath: url path to use in the http request
     // @param callback: function to call after receiving the data
-    if (rxGet(id + '.fetchStatus') === 'requesting') {
+    if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
     }
-    rxSet(id + '.fetchStatus.requesting')
+    rxSet(id + '.fetchStatus.waiting')
     
     const url = process.env.REACT_APP_DATA_URL + urlPath
     let headers = {}

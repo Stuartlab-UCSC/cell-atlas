@@ -3,13 +3,12 @@
 
 const state = {
     // Fetch status.
-    // Valid stati: quiet, requesting, message with no data
     'gene.fetchStatus': (state = 'quiet', action) => {
         switch (action.type) {
-        case 'gene.fetchStatus.preRequest':
-            return 'preRequest'
-        case 'gene.fetchStatus.requesting':
-            return 'requesting'
+        case 'gene.fetchStatus.request':
+            return 'request'
+        case 'gene.fetchStatus.waiting':
+            return 'waiting'
         case 'gene.fetchStatus.quiet':
             return 'quiet'
         case 'gene.fetchStatus.message':

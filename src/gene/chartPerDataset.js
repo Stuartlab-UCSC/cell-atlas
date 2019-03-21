@@ -15,23 +15,27 @@ HC_more(Highcharts) //init module
 
 const HIGH_POS_COLOR = '#ff0000'
 const HIGH_NEG_COLOR = '#00ff00'
-const height = 80
 
-const legend = (cData) => {
+const legend = (data, sequence) => {
     // Only show the legend on the first chart.
-    return {
-        align: 'right',
-        //labelFormat: ' ',
-        layout: 'vertical',
-        verticalAlign: 'top',
-        itemMarginTop: 10,
-        bubbleLegend: {
+    if (sequence > 0) {
+        return {
+            enabled: false,
+        }
+    } else {
+        return {
             enabled: true,
-            borderWidth: 1,
-            connectorDistance: 40,
-            maxSize: 70,
-            //ranges: [{}, {}, {}]
-            ranges: [{}, {}, { color: '#e4d354' }]
+            align: 'left',
+            layout: 'vertical',
+            verticalAlign: 'top',
+            itemMarginTop: 10,
+            bubbleLegend: {
+                enabled: true,
+                borderWidth: 1,
+                connectorDistance: 40,
+                maxSize: 70,
+                ranges: [{}, {}, { color: '#e4d354' }]
+            }
         }
     }
 }
@@ -52,96 +56,65 @@ const getColor = (val) => {
     }
 }
 
-const sortClustersBySize = (dataIn) => {
+const sortBySize = (dataIn) => {
     let data = dataIn.slice()
     data.sort(((a, b) => { return b.size - a.size }))
     return data
 }
-/*
-const sortSolutionsBySize = (dataIn) => {
-    const compare = (a, b) => {
-        for (var i = 0; i < data.solutions.length; i++) {
-            if (b.clusters[i].size !== a.clusters[i].size) {
-                return b.clusters[i].size - a.clusters[i].size
-            }
-        }
-    }
-    
-    let data = dataIn.slice()
-    data.cluster_solutions.sort(compare)
-    return data
-}
 
-const sortBySize = (dataIn) => {
-    let data = dataIn.slice()
-    dataIn.forEach((solution, i) => {
-        data.solution.clusters = sortClustersBySize(solution.clusters)
-    })
-    data.solutions = sortSolutionsBySize(data.solutions)
-    return data
-}
-*/
 const transform = (dataIn) => {
     // Transform the data received from the server
     // into the structure wanted by this chart library.
     // Sort the cluster data by the size value.
-    const data = dataIn
-    //const data = sortBySize(dataIn)
-    let yLabels = []
-    const clusterData = []
-    let cData = {
-        series: [{ data: [] }]
-    }
-    data.forEach((solution, i) => {
-        yLabels.push(
-            '<b>' + solution.dataset_name + '</b> dataset<br>' +
-            '<b>' + solution.cluster_solution_name + '</b> cluster solution')
-        const clusters = sortClustersBySize(solution.clusters)
-        clusters.forEach((cluster, j) => {
-        //solution.clusters.forEach((cluster, j) => {
-            clusterData.push({
-                x: j, // cluster position on x axis
-                y: i, // dataset/cluster_solution position on y axis
-                z: cluster.size,
-                color: getColor(cluster.color),
-                clusterColor: cluster.color,
-                clusterName: cluster.name,
-            })
-        })
-        
-        cData.series[0].data = clusterData
-        cData.yAxis = { ceiling: i }
+    const data = sortBySize(dataIn)
+    let clusters = []
+    let cData = {}
+    const clusterData = data.map((cluster, seq) => {
+        // Save the cluster name to label the axis.
+        clusters.push(cluster.name)
+        // Save the sequence number and size as (x,y=0,z)
+        return {
+            x: seq,
+            y: 0,
+            z: cluster.size,
+            color: getColor(cluster.color),
+            clusterColor: cluster.color,
+            clusterName: cluster.name,
+        }
     })
-    cData.yAxis.categories = yLabels
+    //cData.series = [{ data: clusterData }]
+    cData.series = [{}]
+    cData.series[0].data = clusterData
+
+    cData.xAxis = { categories: clusters }
     return cData
 }
 
-const options = ({ data, size_var, color_var }) => {
+const options = (props) => {
+    const { data, size_var, color_var, dataset_name, cluster_solution_name,
+        sequence } = props
     //console.log('options:data:', data)
     const cData = transform(data)
     //console.log('options:cData:', cData)
     let options = {
         chart: {
             backgroundColor: 'transparent',
-            height: 130, // TODO dynamic depending on # of solutions
+            height: 200,
             type: 'bubble',
         },
         credits: {
             enabled: false,
         },
-        legend: legend(cData),
+        legend: legend(cData, sequence),
         plotOptions: {
             bubble: {
                 marker: {
                     fillOpacity: 1,
-                    //lineColor: 'black',
-                    //lineWidth: 1,
                 },
             },
         },
         series: [{
             data: cData.series[0].data,
-            //pointPlacement: 1,
             sizeBy: 'width',
             zMax: 1,
             zMin: 0,
@@ -149,6 +122,8 @@ const options = ({ data, size_var, color_var }) => {
         title: {
             text: ''
         },
+        zMax: 100,
+        zMin: 0,
         tooltip: {
             headerFormat: '',
             pointFormat:
@@ -157,37 +132,30 @@ const options = ({ data, size_var, color_var }) => {
                  ref[color_var].label + ': {point.clusterColor}',
         },
         xAxis: {
+            categories: cData.xAxis.categories,
             gridLineWidth: 0,
-            height: 0,
+            height: 100,
             lineWidth: 0,
-            labels: {
-                format: ' '
+            title: {
+                text: 'Dataset: <b>' + dataset_name + '</b>, ' +
+                    'Cluster Solution: <b>' + cluster_solution_name + '</b>'
             },
-            tickWidth: 0,
-            /*title: {
-                text: ''
-            },*/
         },
         
         yAxis: {
-            categories: cData.yAxis.categories,
-            ceiling: cData.yAxis.ceiling,
-            floor: 0,
             gridLineWidth: 0,
-            height: height, // TODO dynamic depending on # of solutions
+            height: 100,
+            labels: {
+                format: ' '
+            },
             lineWidth: 0,
-            //showFirstLabel: false,
-            //showLastLabel: false,
+            maxPadding: 0.2,
             title: {
                 text: ''
             },
         },
         zAxis: {
-            ceiling: 1,
-            floor: 0,
             lineWidth: 0,
-            max: 1,
-            min: 0,
             title: {
                 text: ''
             },

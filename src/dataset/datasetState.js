@@ -17,11 +17,10 @@ const datasetState = {
         }
     },
     // Fetch status for the table.
-    // Valid stati: quiet, requesting,
     'dataset.fetchStatus': (state = 'quiet', action) => {
         switch (action.type) {
-        case 'dataset.fetchStatus.requesting':
-            return 'requesting'
+        case 'dataset.fetchStatus.waiting':
+            return 'waiting'
         case 'dataset.fetchStatus.quiet':
             return 'quiet'
         case 'dataset.fetchStatus.message':
