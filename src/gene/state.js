@@ -3,6 +3,14 @@
 
 const state = {
     // Fetch status.
+    'gene.expanded': (state = false, action) => {
+        switch(action.type) {
+        case 'gene.expanded.toggle':
+            return !state
+        default:
+            return state
+        }
+    },
     'gene.color_by': (state = 'z_stat', action) => {
         switch(action.type) {
         case 'gene.color_by.uiSet':

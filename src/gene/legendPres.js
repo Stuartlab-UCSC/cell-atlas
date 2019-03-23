@@ -27,18 +27,17 @@ const Circle = ({ diameters, i }) => {
 }
 
 const Rectangle = ({ labels, values, i }) => {
-    const width = '25'
-    const height = '25'
+    const width = '20'
     const strokeWidth = (values[i] === background) ? '1' : '0'
     let comp =
         <svg
             width={width}
-            height={height}
+            height={width}
             style={{display: 'inline-block', marginBottom: '-5'}}
         >
             <rect
                 width={width}
-                height={height}
+                height={width}
                 style={{
                     fill: values[i],
                     strokeWidth: strokeWidth,
@@ -110,7 +109,7 @@ const Head = ({ label }) => {
     const comp =
         <Grid item xs={6} >
             <Typography
-                variant='caption'
+                variant='subtitle2'
                 align='center'
                 style={{
                     paddingBottom: '0.2rem',

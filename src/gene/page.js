@@ -79,14 +79,24 @@ const mapStateToProps = (state) => {
     setData(sortBySize(data)) // TODO until server is going
 
     return {
+        data,
+        expandedChart: state['gene.expanded'],
         message,
         dataReady,
-        data,
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onExpandClick: ev => {
+            dispatch({ type: 'gene.expanded.toggle' })
+        },
+    }
+}
+
+
 const GeneCharts = connect(
-    mapStateToProps
+    mapStateToProps, mapDispatchToProps
 )(Presentation)
 
 export default GeneCharts
