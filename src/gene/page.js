@@ -1,108 +1,49 @@
 
 // The gene page.
 
-import React from 'react'
 import { connect } from 'react-redux'
 
-import Grid from "@material-ui/core/Grid/Grid";
-import Typography from '@material-ui/core/Typography'
 
 import { set as rxSet } from 'state/rx'
 //import fetchData from 'fetch/fetch'
-import Chart from 'gene/chart'
-import ChartPerDataset from 'gene/chartPerDataset'
-import GeneName from 'gene/geneName'
 import data from 'gene/data'
-
-const ChartArea = ({ data, message }) => {
-    let comp = null
-    // If there is a fetch status message, render it rather than the chart.
-    if (message) {
-        comp = (
-            <Typography>
-                {message}
-            </Typography>
-        )
-        
-    // Render the chart.
-    } else {
-        // height of 200
-        const marginBottom = -35 // 400 235
-        const marginTop0 = -15
-        const marginTop = -30
-        const geneLabel = 'gene: ' + data.gene
-        comp =
-            <React.Fragment>
-                <Grid item xs={12}>
-                    <hr />
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography>
-                        {geneLabel}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography>
-                        Collapsed chart: cluster Names only on hover
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} >
-                    <Chart
-                        data={data.cluster_solutions}
-                        size_by={data.size_by}
-                        color_by={data.color_by}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <hr />
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography>
-                        Expanded chart: cluster Names always show
-                    </Typography>
-                </Grid>
-                {data.cluster_solutions.map((cluster_solution, i) =>
-                    <Grid item xs={12}
-                        key={i}
-                        style={{
-                            marginTop: (i>0 ? marginTop : marginTop0),
-                            marginBottom: marginBottom,
-                        }}
-                    >
-                        <ChartPerDataset
-                            data={cluster_solution.clusters}
-                            size_by={data.size_by}
-                            color_by={data.color_by}
-                            dataset_name={cluster_solution.dataset_name}
-                            cluster_solution_name=
-                                {cluster_solution.cluster_solution_name}
-                            sequence={i.toString()}
-                        />
-                    </Grid>
-                )}
-                <Grid item xs={12}>
-                    <hr />
-                </Grid>
-
-            </React.Fragment>
-    }
-    return comp
-}
-const Presentation = ({ data, message }) => {
-    return (
-        <Grid container spacing={16}>
-            <GeneName />
-            <ChartArea
-                data={data}
-                message={message}
-            />
-        </Grid>
-    )
-}
+import { setData } from 'gene/data'
+import Presentation from 'gene/pagePres'
 
 let prevFetchStatus = 'quiet'
 
-const receiveData = (data) => {
+const sortClustersBySize = (dataIn) => {
+    let data = dataIn.slice()
+    data.sort(((a, b) => { return b.size - a.size }))
+    return data
+}
+/*
+const sortSolutionsBySize = (dataIn) => {
+    const compare = (a, b) => {
+        for (var i = 0; i < data.solutions.length; i++) {
+            if (b.clusters[i].size !== a.clusters[i].size) {
+                return b.clusters[i].size - a.clusters[i].size
+            }
+        }
+    }
+ 
+    let data = dataIn.slice()
+    data.cluster_solutions.sort(compare)
+    return data
+}
+*/
+const sortBySize = (dataIn) => {
+    let solutions = dataIn.cluster_solutions.slice()
+    solutions.forEach((solution, i) => {
+        data.cluster_solutions.clusters = sortClustersBySize(solution.clusters)
+    })
+    //data.solutions = sortSolutionsBySize(data.solutions)
+    return data
+}
+
+const receiveData = (dataIn) => {
+    const newData = sortClustersBySize(dataIn)
+    setData(newData)
     rxSet('gene.fetchStatus.quiet')
 }
 
@@ -110,7 +51,7 @@ const getData = () => {
     receiveData(data)
     /*
     let url =
-        'gene/' + rxGet('gene.name.value') +
+        'gene/' + rxGet('gene.name') +
         '/size-by/' + rxGet('gene.size_by') +
         '/color-by/' + rxGet('gene.color_by') +
   
@@ -135,6 +76,7 @@ const mapStateToProps = (state) => {
         }
         prevFetchStatus = status
     }
+    setData(sortBySize(data)) // TODO until server is going
 
     return {
         message,

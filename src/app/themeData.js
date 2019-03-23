@@ -57,7 +57,7 @@ export const themeData = themeType => {
                 'Arial',
                 'sans-serif',*/
             ].join(','), // "Roboto", "Helvetica", "Arial", "sans-serif"
-            fontSize: '16', // 14
+            fontSize: '14', // 14
         },
         overrides: {
             MuiPaper: {

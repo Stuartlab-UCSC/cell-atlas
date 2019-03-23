@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
     return {
         errorMessage: state['gene.name.errorMessage'],
         selectors,
-        value: state['gene.name.value'],
+        value: state['gene.name'],
     }
 }
 
@@ -37,15 +37,15 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onNameChange: ev => {
             dispatch({
-                type: 'gene.name.value.uiSet',
+                type: 'gene.name.uiSet',
                 value: ev.target.value,
             })
         },
         onButtonClick: ev => {
-            if (rxGet('gene.name.value').length < 1) {
+            if (rxGet('gene.name').length < 1) {
                 dispatch({
                     type: 'gene.name.errorMessage.set',
-                    value: 'a gene must be entered',
+                    value: 'a gene name is required',
                 })
             } else {
                 dispatch({ type: 'gene.fetchStatus.request' })

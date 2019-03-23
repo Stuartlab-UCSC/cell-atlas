@@ -1,6 +1,9 @@
 
 // The name to label, tooltip translations.
 
+import { background } from 'app/themeData'
+import colorMix from 'gene/colorMix'
+
 const colorRef = {
     z_stat: {
         label: 'z-stat',
@@ -24,6 +27,11 @@ const colorRef = {
         //rangeUnit: '>= 0',
     },
 }
+
+const highNegColor = '#0000ff'
+const highPosColor = '#ff0000'
+const maxRadius = 30
+
 const sizeRef = {
     sensitivity: {
         label: 'sensitivity',
@@ -42,4 +50,20 @@ const sizeRef = {
     },
 }
 
-export { colorRef, sizeRef }
+const normalizeColorVal = (val) => {
+    // The algorithm assumes a range of -1 to 1 and interpolates between two
+    // colors. We want to use three colors with positives between two colors
+    // and negatives between two other colors. So normalize the value given as
+    // 0 to 1 to be between -1 and 1.
+    return 2 * val - 1;
+}
+
+const getColor = (val) => {
+    if (val < 0) {
+        return colorMix(normalizeColorVal(-val), background, highNegColor)
+    } else {
+        return colorMix(normalizeColorVal(val), background, highPosColor)
+    }
+}
+
+export { colorRef, getColor, maxRadius, sizeRef }

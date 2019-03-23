@@ -35,9 +35,9 @@ const state = {
             return state
         }
     },
-    'gene.name.value': (state = '', action) => {
+    'gene.name': (state = '', action) => {
         switch(action.type) {
-        case 'gene.name.value.uiSet':
+        case 'gene.name.uiSet':
             return action.value
         default:
             return state

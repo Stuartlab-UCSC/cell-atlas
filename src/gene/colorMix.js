@@ -29,8 +29,13 @@ function parseColorPortions(hexStr){
     };
 }
 
+function hex(val) {
+    let r = Math.round(val)
+    return ((r < 16) ? '0' + r.toString(16) : r.toString(16)).toString(16)
+}
+
 function colorify(red, green, blue){
-    var color = "rgb(" + red + "," + green + "," + blue + ")";
+    var color = "#" + hex(red) + hex(green) + hex(blue);
     return color;
 }
 
@@ -39,8 +44,6 @@ function colorMix(val, lowColor, highColor) {
     // @param
     var ignoreValue = -1;
     var ignoreColor = 0;
-    //var highColor = '#ff0000'
-    //var lowColor = '#eeeeee';
     var highColorParsed = parseColorPortions(highColor);
     var lowColorParsed = parseColorPortions(lowColor);
 
@@ -49,21 +52,21 @@ function colorMix(val, lowColor, highColor) {
         highColorParsed["red"],
         ignoreColor, ignoreColor,
         -val, -ignoreValue
-    ).toFixed(0);
+    );
 
     var green = mix2(
         lowColorParsed["green"],
         highColorParsed["green"],
         ignoreColor, ignoreColor,
         -val, -ignoreValue
-    ).toFixed(0);
+    );
 
     var blue = mix2(
         lowColorParsed["blue"],
         highColorParsed["blue"],
         ignoreColor, ignoreColor,
         -val, -ignoreValue
-    ).toFixed(0);
+    );
 
     var color = colorify(red, green, blue);
 

@@ -36,8 +36,8 @@ let data = {
                 },
                 {
                     name: '6',
-                    size: 0,
-                    color: 0,
+                    size: 0.05,
+                    color: 0.05,
                 },
                 {
                     name: '7',
@@ -91,8 +91,8 @@ let data = {
                 },
                 {
                     name: '6',
-                    size: 0,
-                    color: 0,
+                    size: 0.1,
+                    color: 0.1,
                 },
                 {
                     name: '7',
@@ -144,5 +144,11 @@ let data = {
         },
     ]
 }
+
+const setData = (dataIn) => {
+    data = dataIn
+}
+
+export { setData }
 
 export default data
