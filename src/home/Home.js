@@ -13,9 +13,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onRedirect: () => {
 
-            // We've been redirected to the search page, so reset the home
+            // We've been redirected to the gene chart page, so reset the home
             // redirect so the home page will display on the next request for
-            // it. Set a timeout so the search page gets a chance to display.
+            // it. Set a timeout so the gene chart page gets a chance to
+            // display.
             setTimeout(() => {
                 dispatch({type: 'home.redirect.reset'})
             },100)

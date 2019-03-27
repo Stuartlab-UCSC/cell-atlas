@@ -12,11 +12,11 @@ import appLogo from 'app/images/logo.svg'
 
 const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
 
-    // If we are to be redirected to the search page, do that.
+    // If we are to be redirected to the gene chart page, do that.
     if (redirect) {
         onRedirect()
         return (
-            <Redirect to='/explore/search' />
+            <Redirect to='/gene' />
         )
     }
     //let loginUrl = 'http://localhost:5555/user/sign-in'

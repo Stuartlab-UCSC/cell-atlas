@@ -17,8 +17,11 @@ const mapStateToProps = (state) => {
     sizeList = sizeList || Object.keys(sizeRef).map(size_by => {
         return { ...sizeRef[size_by], value: size_by }
     })
-
-    let selectors = (window.location.pathname === '/')
+    // Don't show variable selectors if on the home page or if there is
+    // a fetch message to display. A null fetch message means an initial
+    // valid fetch has been received.
+    let selectors = (window.location.pathname === '/' ||
+        state['gene.fetchMessage'] !== null)
         ? null
         : {
             colorList: colorList,
@@ -63,6 +66,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         onButtonClick: ev => {
             serverRequest(dispatch)
+            if (window.location.pathname === '/') {
+                // We are querying from the home page, so set the home redirect
+                // so the next render of home will redirect to the gene chart
+                // page.
+                dispatch({type: 'home.redirect.set'})
+            }
         },
         onColorChange: ev => {
             console.log('onColorChange')
