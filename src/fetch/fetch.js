@@ -11,16 +11,17 @@ const receiveData = (id, data, callback) => {
     console.log('data:', data)
     if (typeof data === 'object' && data.message) {
         // Handle receiving a message from the server rather than data.
-        rxSet(id + '.fetchStatus.message', { value: data.message })
+        rxSet(id + '.fetchMessage', { value: data.message })
         
     // If data is empty, let the user know there is no data.
     } else if (data === null || data === undefined || data.length < 1) {
-        rxSet(id + '.fetchStatus.message', { value: 'No data found' })
+        rxSet(id + '.fetchMessage', { value: 'No data found' })
 
     } else {
         callback(data)
-        rxSet(id + '.fetchStatus.quiet')
+        rxSet(id + '.fetchMessage.clear')
     }
+    rxSet(id + '.fetchStatus.quiet')
 }
 
 const fetchData = (id, urlPath, callback) => {

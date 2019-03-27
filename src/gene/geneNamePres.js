@@ -68,8 +68,8 @@ const Selectors = (props) => {
 }
 
 const Presentation = (props) => {
-    const { errorMessage, selectors, value, onNameChange, onButtonClick,
-        onColorChange, onSizeChange } = props
+    const { errorMessage, selectors, value, onNameBlur, onNameChange,
+        onNameKeyPress, onButtonClick, onColorChange, onSizeChange } = props
     let error = false
     let label = 'Gene'
     if (errorMessage) {
@@ -84,7 +84,9 @@ const Presentation = (props) => {
                     value={value}
                     error={error}
                     helperText='HUGO, Ensembl or Entrez'
+                    onBlur={onNameBlur}
                     onChange={onNameChange}
+                    onKeyPress={onNameKeyPress}
                     autoFocus={true}
                     style={{ width: '100%' }}
                 />

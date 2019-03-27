@@ -18,6 +18,14 @@ import uploadState from 'upload/page/uploadState'
 
 const reducers = {
 
+    'background': (state = '#ffffff', action) => {
+        if (action.type === 'background.toggle') {
+            return (state === '#ffffff') ? '#000000' : '#ffffff'
+        } else {
+            return state
+        }
+
+    },
     'input.file': (state = null, action) => {
         if (action.type === 'input.file.update') {
             return action

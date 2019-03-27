@@ -16,6 +16,7 @@ const transform = (data) => {
             y: 0,
                 z: cluster.size,
                 color: getColor(cluster.color),
+                cell_count: cluster.cell_count,
                 clusterColor: cluster.color,
                 clusterName: cluster.name,
         }
@@ -41,9 +42,7 @@ const chartExpanded = (props, commonOptions) => {
     options.xAxis.offset = -40
     options.xAxis.opposite = true
     options.xAxis.title = {
-        text:
-            '<b>' + dataset_name + '</b> dataset, ' +
-            '<b>' + cluster_solution_name + '</b> cluster solution'
+        text: dataset_name + ', ' + cluster_solution_name
     }
 
     options.yAxis.height = 100

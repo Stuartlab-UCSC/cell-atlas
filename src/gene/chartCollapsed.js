@@ -1,46 +1,49 @@
 
 // The collapsed gene chart information.
 
-import { getColor } from 'gene/reference'
+import { getColor, colorNegMag, colorPosMag } from 'gene/reference'
+
+const solutionHeight = 120
 
 const transform = (data) => {
     // Transform the data received from the server
     // into the structure wanted by this chart library.
-    let yLabels = []
-    const clusterData = []
     let cData = {
-        series: [{ data: [] }]
+        series: [{ data: [] }],
+        yAxis: { categories: [] },
     }
-    data.forEach((solution, i) => {
-        yLabels.push(
-            '<b>' + solution.dataset_name + '</b> dataset<br>' +
-            '<b>' + solution.cluster_solution_name + '</b> cluster solution')
-        solution.clusters.forEach((cluster, j) => {
-            clusterData.push({
-                x: j, // cluster position on x axis
-                y: i, // dataset/cluster_solution position on y axis
-                z: cluster.size,
-                color: getColor(cluster.color),
-                clusterColor: cluster.color,
-                clusterName: cluster.name,
+    // Outer loop handles each cluster solution and
+    // finds the y-axis labels for each solution.
+    cData.yAxis.categories = data.map((solution, i) => {
+        // Inner loop puts the chart body variables into one list for all
+        // solutions with objects of {label, size, color}
+        cData.series[0].data = cData.series[0].data.concat(
+            solution.clusters.map((cluster, j) => {
+                return {
+                    x: j, // cluster position on x axis
+                    y: i, // dataset/cluster_solution position on y axis
+                    z: cluster.size,
+                    color: getColor(cluster.color, colorNegMag, colorPosMag),
+                    cell_count: cluster.cell_count,
+                    clusterColor: cluster.color,
+                    clusterName: cluster.name,
+                }
             })
-        })
-        
-        cData.series[0].data = clusterData
-        cData.yAxis = { ceiling: i }
+        )
+        cData.yAxis.ceiling = i
+        return (
+            solution.dataset_name + '<br>' +
+            solution.cluster_solution_name)
     })
-    cData.yAxis.categories = yLabels
     return cData
 }
 
 const chartCollapsed = (props, commonOptions) => {
     const { data, size_by, color_by } = props
-    const height = 80 // TODO: dynamic
     let cData = transform(data)
 
     let options = commonOptions( cData, size_by, color_by)
-    options.chart.height = height + 50 // TODO dynamic depending on # of solutions
-
+    options.chart.height = solutionHeight * cData.yAxis.ceiling
     options.xAxis.height = 0
     options.xAxis.tickWidth = 0
     options.xAxis.labels = {
@@ -50,8 +53,8 @@ const chartCollapsed = (props, commonOptions) => {
     options.yAxis.categories = cData.yAxis.categories
     options.yAxis.ceiling = cData.yAxis.ceiling
     options.yAxis.floor = 0
-        options.yAxis.height = height // TODO dynamic depending on # of solutions
-
+    options.yAxis.height = solutionHeight
+    options.yAxis.reversed = true
     return options
 }
 

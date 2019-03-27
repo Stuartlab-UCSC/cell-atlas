@@ -68,9 +68,7 @@ function colorMix(val, lowColor, highColor) {
         -val, -ignoreValue
     );
 
-    var color = colorify(red, green, blue);
-
-    return color;
+    return colorify(red, green, blue);
 }
 
 export default colorMix

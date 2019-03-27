@@ -3,31 +3,29 @@
 
 import { connect } from 'react-redux'
 
-import data from 'gene/data'
 import Presentation from 'gene/legendPres'
-import { colorRef, getColor, maxRadius, sizeRef } from 'gene/reference'
+import { colorRef, colorNegMag, colorPosMag, getColor, maxBubbleSize, sizeMag,
+    sizeRef, stringToPrecision } from 'gene/reference'
 
-let sizes = null
-let colorLabels = null
+let sizes
 
-const findNegatives = (data) => {
-    return data.cluster_solutions.some((solution) => {
-        return solution.clusters.some((cluster) => {
-            return cluster.color < 0
-        })
-    })
-}
-
-const findColorLabels = (hasNegatives) => {
-    return (hasNegatives)
-        ? ['1', '0.5', '0', '-0.5', '-1']
-        : ['1', '0.75', '0.5', '0.25', '0']
-}
-
-const findSizes = (labels) => {
-    return labels.map(label => {
-        return parseFloat(label) * maxRadius
-    })
+const findColorLabels = () => {
+    if (colorNegMag < 0) {
+        return [
+            stringToPrecision(colorPosMag),
+            stringToPrecision(colorPosMag / 2),
+            '0',
+            stringToPrecision(colorNegMag / 2),
+            stringToPrecision(colorNegMag),
+        ]
+    } else {
+        return [
+            stringToPrecision(colorPosMag),
+            stringToPrecision(colorPosMag * 3 / 4),
+            stringToPrecision(colorPosMag / 2),
+            '0',
+        ]
+    }
 }
 
 const findColors = (labels) => {
@@ -36,20 +34,38 @@ const findColors = (labels) => {
     })
 }
 
+const findSizeLabels = () => {
+    return [
+        stringToPrecision(sizeMag, 2),
+        stringToPrecision(sizeMag / 2, 2),
+        stringToPrecision(sizeMag / 4, 2),
+        '0',
+    ]
+}
+
+const findSizes = () => {
+    // Find the width of the bubbles.
+    // Adjust for highcharts not respecting the max bubble size we provide.
+    let sizes
+    if (maxBubbleSize === 30) {
+        sizes =  [24, 19, 15, 5]
+    } else {
+        sizes =  [24, 19, 15, 5]
+        console.log('valid maxBubbleSizes are [30]')
+    }
+    return sizes
+}
+
 const mapStateToProps = (state) => {
-    const sizeLabels = ['1', '0.75', '0.5', '0.25']
-    sizes = sizes || findSizes(sizeLabels)
-    const hasNegatives = findNegatives(data)
-    colorLabels = colorLabels || findColorLabels(hasNegatives)
-    
+    sizes = sizes || findSizes()
+    const colorLabels = findColorLabels()    
     return {
         colorBy: colorRef[state['gene.color_by']].label,
         colorLabels,
         colors: findColors(colorLabels),
-        geneLabel: 'ALK', // TODO state['gene.name'],
-        hasNegatives,
+        geneLabel: state['gene.name'],
         sizeBy: sizeRef[state['gene.size_by']].label,
-        sizeLabels,
+        sizeLabels: findSizeLabels(),
         sizes,
     }
 }

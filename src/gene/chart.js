@@ -7,7 +7,8 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import HC_more from 'highcharts/highcharts-more' //module
 
-import { colorRef, maxRadius, sizeRef } from 'gene/reference'
+import { colorRef, maxBubbleSize, minBubbleSize, sizeRef, sizeUnit }
+    from 'gene/reference'
 import chartCollapsed from 'gene/chartCollapsed'
 import chartExpanded from 'gene/chartExpanded'
 
@@ -29,14 +30,17 @@ const commonOptions = (cData, size_by, color_by) => {
             bubble: {
                 marker: {
                     fillOpacity: 1,
+                    lineWidth: 1,
+                    lineColor: '#888888',
                 },
-                maxSize: maxRadius,
-                minSize: 0,
+                // highcharts actually draws smaller than this maxSize.
+                maxSize: maxBubbleSize,
+                minSize: minBubbleSize,
             },
         },
         series: [{
             data: cData.series[0].data,
-            size_by: 'width',
+            size_by: sizeUnit,
             zMax: 1,
             zMin: 0,
         }],
@@ -47,8 +51,9 @@ const commonOptions = (cData, size_by, color_by) => {
             headerFormat: '',
             pointFormat:
                 'cluster: {point.clusterName} <br>' +
-                 sizeRef[size_by].label + ': {point.z}<br>' +
-                 colorRef[color_by].label + ': {point.clusterColor}',
+                'cell count: {point.cell_count} <br>' +
+                sizeRef[size_by].label + ': {point.z}<br>' +
+                colorRef[color_by].label + ': {point.clusterColor}',
         },
         xAxis: {
             gridLineWidth: 0,

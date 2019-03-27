@@ -33,24 +33,36 @@ const mapStateToProps = (state) => {
     }
 }
 
+const serverRequest = (dispatch) => {
+    if (rxGet('gene.name').length < 1) {
+        dispatch({
+            type: 'gene.name.errorMessage.set',
+            value: 'a gene name is required',
+        })
+    } else {
+        //console.log('server request made')
+        dispatch({ type: 'gene.fetchStatus.request' })
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
+        onNameBlur: ev => {
+            serverRequest(dispatch)
+        },
         onNameChange: ev => {
             dispatch({
                 type: 'gene.name.uiSet',
                 value: ev.target.value,
             })
         },
-        onButtonClick: ev => {
-            if (rxGet('gene.name').length < 1) {
-                dispatch({
-                    type: 'gene.name.errorMessage.set',
-                    value: 'a gene name is required',
-                })
-            } else {
-                dispatch({ type: 'gene.fetchStatus.request' })
-                dispatch({ type: 'gene.name.errorMessage.clear' })
+        onNameKeyPress: ev => {
+            if (ev.key === 'Enter') {
+                ev.target.blur()
             }
+        },
+        onButtonClick: ev => {
+            serverRequest(dispatch)
         },
         onColorChange: ev => {
             console.log('onColorChange')
@@ -58,6 +70,7 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'gene.color_by.uiSet',
                 value: ev.target.value,
             })
+            serverRequest(dispatch)
         },
         onSizeChange: ev => {
             console.log('onSizeChange: value:', ev.target.value)
@@ -65,6 +78,7 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'gene.size_by.uiSet',
                 value: ev.target.value,
             })
+            serverRequest(dispatch)
         },
     }
 }

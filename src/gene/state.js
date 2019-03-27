@@ -11,10 +11,22 @@ const state = {
             return state
         }
     },
-    'gene.color_by': (state = 'z_stat', action) => {
+    'gene.color_by': (state = 'log2_change_vs_next', action) => {
         switch(action.type) {
         case 'gene.color_by.uiSet':
             return action.value
+        default:
+            return state
+        }
+    },
+    'gene.fetchMessage': (state = ' ', action) => {
+        switch(action.type) {
+        case 'gene.fetchMessage.set':
+            //console.trace('### set to ' + action.value)
+            return action.value
+        case 'gene.fetchMessage.clear':
+            //console.trace('### cleared')
+            return null
         default:
             return state
         }
@@ -27,8 +39,6 @@ const state = {
             return 'waiting'
         case 'gene.fetchStatus.quiet':
             return 'quiet'
-        case 'gene.fetchStatus.message':
-            return action.value
         default:
             return state
         }
@@ -43,7 +53,7 @@ const state = {
             return state
         }
     },
-    'gene.name': (state = '', action) => {
+    'gene.name': (state = 'Tlr11', action) => {
         switch(action.type) {
         case 'gene.name.uiSet':
             return action.value
