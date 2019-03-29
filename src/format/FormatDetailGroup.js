@@ -10,8 +10,6 @@ import Expander from 'components/Expander'
 
 const AllFormats = ({ id, expand }) => {
 
-    //console.log('AllFormats: id, expand:', id, expand)
-// FormatDetail = ({ id, expand, padXs, contentXs,
     // Render all of the formats in the group.
     const comp =
         <React.Fragment>
@@ -29,9 +27,6 @@ const AllFormats = ({ id, expand }) => {
 }
 
 const FormatDetailGroup = ({ id, expand } ) => {
-
-    //console.log('FormatDetailGroup: id, expand:', id, expand)
-    //console.log('FormatDetailGroup: expand[0]:',  expand[0])
     const padGrid = <Grid item xs={1} />
     return (
         <Expander

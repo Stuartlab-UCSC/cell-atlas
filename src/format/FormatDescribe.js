@@ -117,7 +117,6 @@ const FormatDescribe = ({ id, expand } ) => {
     
     // Find the optional group for this instance by looking for a state variable
     // with the name: id + '.format.expand'.
-    //console.log('FormatDescribe: expand:', expand)
     const group = expand.find(state => {
         return getFormatId(id, state.id) === 'format'
     })

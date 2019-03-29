@@ -30,7 +30,6 @@ const OptGroup = ({ label, list }) => {
 const ListSelect = ({ id, value, list }) => {
    
     // Define a two-tiered select list for user files and public files.
-    //console.log('ListSelect: id, value, list:', id, value, list)
     const comp =
         <FormControl style={{ width: '100%' }}>
             <InputLabel htmlFor="name-native">Files</InputLabel>

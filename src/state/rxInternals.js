@@ -54,10 +54,8 @@ const reducers = {
     'home.redirect': (state = false, action) => {
         switch (action.type) {
             case 'home.redirect.set':
-                console.log('home.redirect.set')
                 return true
             case 'home.redirect.reset':
-                console.log('home.redirect.reset')
                 return false
             default:
                 return state

@@ -73,7 +73,6 @@ const getFormatId = (id, stateId) => {
 
 const FormatDetail = ({ id, expand, padXs, contentXs, notLast }) => {
 
-    //console.log('FormatDetail: id, expand:', id, expand)
     // Renders one format description section.
     // Note that the summary property of expand is not required and defaults
     // to the summary provided in the format data file
@@ -84,10 +83,6 @@ const FormatDetail = ({ id, expand, padXs, contentXs, notLast }) => {
     }
     const detail = <Detail data={data[dataId]} last={!notLast} />
     const parentStyle = { marginTop: '-1rem', marginBottom: '-0.5rem' }
-
-    //console.log('FormatDetail: expand.id, summary, expand.value:',
-    //    expand.id, summary, expand.value)
-    //console.log('FormatDetail: detail:', detail)
 
     // Find the number of cells in the grid the padding and content should take.
     // Default to 1 cell of padding and 11 cells of content.

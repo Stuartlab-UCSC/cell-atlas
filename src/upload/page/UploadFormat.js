@@ -9,7 +9,6 @@ import FormatDetailGroup from 'format/FormatDetailGroup'
 import FormatSelect from 'format/FormatSelect'
 
 const UploadFormatPres = ({ id, select, formatGroup, expand }) => {
-    //console.log('UploadFormatPres: expand:', expand)
     return (
         <React.Fragment>
             <Grid item xs={4}>
