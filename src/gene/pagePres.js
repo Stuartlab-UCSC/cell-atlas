@@ -1,5 +1,5 @@
 
-// The gene page.
+// The gene page presentational component.
 
 import React from 'react'
 
@@ -8,8 +8,11 @@ import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import Chart from 'gene/chart'
-import GeneName from 'gene/geneName'
-import Legend from 'gene/legend'
+import InputHeader from 'gene/inputHeader'
+import LegendColor from 'gene/legendColor'
+import LegendSize from 'gene/legendSize'
+import MockUp from 'components/MockUp'
+
 
 const ExpandedChart = ({ data }) => {
     let comp =
@@ -18,7 +21,7 @@ const ExpandedChart = ({ data }) => {
                 <Grid item xs={12}
                     key={i}
                     style={{
-                        marginTop: (i>0 ? -100 : -5),
+                        marginTop: (i > 0 ? '-8rem' : '1.5rem'),
                         marginBottom: -35 ,
                     }}
                 >
@@ -38,7 +41,7 @@ const ExpandedChart = ({ data }) => {
     return comp
 }
 
-const WhichChart= ({ data, expanded }) => {
+const AChart = ({ data, expanded }) => {
     let comp = null
     if (expanded) {
         comp =
@@ -60,105 +63,116 @@ const WhichChart= ({ data, expanded }) => {
     return comp
 }
 
-const SolutionLabel = ({ expanded }) => {
-    let comp
-    if (expanded) {
+const SubmitButton = ({ onClick }) => {
+    let comp =
+        <Button
+            variant='contained'
+            component='span'
+            size='small'
+            color='primary'
+            style={{width: '5rem'}}
+            onClick={onClick}
+        >
+            Find
+        </Button>
+    return comp
+}
+
+const ExpandButton = ({ expanded, show, onClick }) => {
+    let comp = null
+    if (show) {
         comp =
-            <React.Fragment>
-                <Grid item xs={6} />
-                <Grid item xs={6} style={{marginTop: 50, marginBottom: -30}}>
-                    <Typography>
-                        Dataset, Cluster Solution
-                    </Typography>
-                </Grid>
-            </React.Fragment>
-    } else {
-        comp =
-            <React.Fragment>
-                <Grid item xs={2} style={{marginTop: 50}}>
-                    <Typography>
-                        Dataset<br />Cluster Solution
-                    </Typography>
-                </Grid>
-                <Grid item xs={10} />
-            </React.Fragment>
+            <Button
+                variant='contained'
+                component='span'
+                size='small'
+                style={{width: '5rem', marginLeft: '1rem'}}
+                onClick={onClick}
+            >
+                {expanded ? 'Collapse' : 'Expand'}
+            </Button>
     }
     return comp
 }
 
-const ChartHead = (props) => {
-    const { data, expanded, onExpandClick } = props.props
+const SubHeader = (props) => {
+    const { expanded, showChart, onExpandClick, onSubmitClick}
+        = props.props
     let comp =
-        <Grid container spacing={0}>
-            <Grid item xs={5} >
-                <Button
-                    variant='contained'
-                    component='span'
-                    size='small'
+        <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
+            <Grid item xs={4} style={{marginTop: '2rem'}} >
+                <SubmitButton
+                    onClick={onSubmitClick}
+                />
+                <ExpandButton
+                    expanded={expanded}
                     onClick={onExpandClick}
-                >
-                    {expanded ? 'Collapse' : 'Expand'}
-                </Button>
+                    show={showChart}
+                />
             </Grid>
-            <Grid item xs={7}>
-                <Typography variant='h6'>
-                    {data.gene}
-                </Typography>
+            <Grid item xs={4} >
+                <LegendSize />
             </Grid>
-            <SolutionLabel expanded={expanded} />
+            <Grid item xs={4} >
+                <LegendColor />
+            </Grid>
         </Grid>
     return comp
 }
 
-const ChartArea = (props) => {
-    const { data, message, expanded } = props
-    //console.log('ChartArea:message:', message)
+const SolutionLabel = ({ expanded, show }) => {
     let comp = null
+    if (show) {
+        if (expanded) {
+            comp =
+               <Typography
+                    align='center'
+                    style={{width: '100%'}}
+                >
+                    Dataset, Cluster Solution
+                </Typography>
+        } else {
+            comp =
+                <Typography>
+                    Dataset <br /> Cluster Solution
+                </Typography>
+        }
+    }
+    return comp
+}
+
+const Body = (props) => {
     // If there is a fetch status message, render it rather than the chart.
+    const { data, expanded, message } = props.props
+    let comp
     if (message) {
-        comp = (
-            <Typography variant='subtitle2'>
+        comp =
+            <Typography variant='subtitle2' style={{marginTop: '1rem'}}>
                 {message}
             </Typography>
-        )
-        
-    // Render the chart.
     } else {
         comp =
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
-                    <hr />
-                </Grid>
-        
-                <Grid item xs={10}>
-                    <ChartHead props={props} />
-                </Grid>
-                <Grid item xs={2} >
-                    <Legend />
-                </Grid>
-        
-                <WhichChart
-                    data={data}
-                    expanded={expanded}
-                />
-            </Grid>
+            <AChart
+                data={data}
+                expanded={expanded}
+            />
     }
     return comp
 }
-const Presentation = ({ data, expandedChart, message, onExpandClick }) => {
-    //console.log('Presentation:message:', message)
+
+const Presentation = (props) => {
+    const { expanded, showChart } = props
     return (
-        <Grid container spacing={16}>
-            <GeneName />
-            <Grid item xs={12}>
-                <ChartArea
-                    data={data}
-                    expanded={expandedChart}
-                    message={message}
-                    onExpandClick={onExpandClick}
-                />
-            </Grid>
-        </Grid>
+        <div>
+            <div style={{marginTop: '0.5rem'}}>
+                <InputHeader />
+                <SubHeader props={props} />
+                <SolutionLabel expanded={expanded} show={showChart}/>
+                <Body props={props} />
+            </div>
+            <MockUp />
+        </div>
     )
 }
+
 export default Presentation

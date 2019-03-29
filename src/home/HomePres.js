@@ -3,6 +3,8 @@
 
 import React from 'react';
 import { Redirect } from 'react-router-dom'
+
+import Button from '@material-ui/core/Button'
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from '@material-ui/core/Typography'
 
@@ -10,7 +12,7 @@ import GeneName from 'gene/geneName'
 
 import appLogo from 'app/images/logo.svg'
 
-const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
+const HomePres = ({redirect, onFindGeneClick, onRedirect }) => {
 
     // If we are to be redirected to the gene chart page, do that.
     if (redirect) {
@@ -41,8 +43,29 @@ const HomePres = ({username, redirect, onSearchSelect, onRedirect }) => {
                         alt='logo'
                     />
                 </Grid>
-                <Grid item xs={3} />
-                <GeneName/>
+            
+                <Grid item xs={4} />
+                <Grid item xs={4}>
+                    <GeneName/>
+                </Grid>
+                <Grid item xs={4} />
+
+                <Grid item xs={4} />
+                <Grid item xs={4}>
+                    <Button
+                        variant='contained'
+                        component='span'
+                        size='small'
+                        color='primary'
+                        style={{width: '5rem'}}
+                        onClick={onFindGeneClick}
+                    >
+                        Find
+                    </Button>
+
+                </Grid>
+                <Grid item xs={4} />
+
             </Grid>
         </div>
     )

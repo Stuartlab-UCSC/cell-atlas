@@ -1,5 +1,5 @@
 
-// A gene chart.
+// The gene page chart logic.
 
 import React from 'react'
 
@@ -7,8 +7,8 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import HC_more from 'highcharts/highcharts-more' //module
 
-import { colorRef, maxBubbleSize, minBubbleSize, sizeRef, sizeUnit }
-    from 'gene/reference'
+import { colorRef, maxBubbleSize, minBubbleSize, sizeRef, sizeUnit,
+    stringToPrecision } from 'gene/util'
 import chartCollapsed from 'gene/chartCollapsed'
 import chartExpanded from 'gene/chartExpanded'
 
@@ -49,11 +49,12 @@ const commonOptions = (cData, size_by, color_by) => {
         },
         tooltip: {
             headerFormat: '',
-            pointFormat:
-                'cluster: {point.clusterName} <br>' +
-                'cell count: {point.cell_count} <br>' +
-                sizeRef[size_by].label + ': {point.z}<br>' +
-                colorRef[color_by].label + ': {point.clusterColor}',
+            pointFormatter: function () {
+                return 'cluster: ' + this.clusterName + '<br>' +
+                    'cell count: ' + this.cell_count + '<br>' +
+                    sizeRef[size_by].label + ': ' + stringToPrecision(this.z) + '<br>' +
+                    colorRef[color_by].label + ': ' + stringToPrecision(this.clusterColor)
+            },
         },
         xAxis: {
             gridLineWidth: 0,

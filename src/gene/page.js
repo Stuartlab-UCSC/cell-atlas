@@ -1,5 +1,5 @@
 
-// The gene page.
+// The gene page component logic.
 
 import { connect } from 'react-redux'
 
@@ -8,27 +8,27 @@ import { set as rxSet } from 'state/rx'
 //import fetchData from 'fetch/fetch'
 import testData from 'gene/data'
 import Presentation from 'gene/pagePres'
-import { findColorVarMagnitudes } from 'gene/reference'
+import { serverRequest } from 'gene/inputHeader'
 
 let data = testData // TODO until server is going 
 let prevFetchStatus = 'quiet'
 
-const sortClustersBySize = (dataIn) => {
+const sortClustersByColor = (dataIn) => {
     // Sort the clusters within this solution by size.
     let data = dataIn.slice()
     data.sort(((a, b) => { return b.size - a.size }))
     return data
 }
 
-const sortSolutionsBySize = (solutions) => {
-    // Sort the solutions by cluster sizes within the solution.
+const sortSolutionsByColor = (solutions) => {
+    // Sort the solutions by cluster colors within the solution.
     const compare = (a, b) => {
         for (var i = 0; i < a.clusters.length; i++) {
-            if (b === undefined || b === null) {
+            if (i > b.clusters.length - 1) {
                 break;
             }
-            if (a.clusters[i].size !== b.clusters[i].size) {
-                return b.clusters[i].size - a.clusters[i].size
+            if (a.clusters[i].color !== b.clusters[i].color) {
+                return b.clusters[i].color - a.clusters[i].color
             }
         }
         return 0
@@ -37,22 +37,43 @@ const sortSolutionsBySize = (solutions) => {
     return solutions
 }
 
-const sortBySize = (solutions) => {
+const sortByColor = (solutions) => {
     solutions.forEach((solution, i) => {
-        // Sort the clusters within this solution by size.
+        // Sort the clusters within this solution by color.
         solutions[i].clusters =
-            sortClustersBySize(solution.clusters)
+            sortClustersByColor(solution.clusters)
     })
-    // Sort the solutions by cluster sizes within the solution.
-    sortSolutionsBySize(solutions)
+    // Sort the solutions by cluster colors within the solution.
+    sortSolutionsByColor(solutions)
+}
+
+const findVarMagnitudes = (solutions) => {
+    // Find the magnitudes of sizes and colors.
+    let colorNegMag = 0
+    let colorPosMag = 0
+    let sizeMag = 0
+        solutions.forEach((solution, i) => {
+        solutions[i].clusters.forEach((cluster) => {
+            colorPosMag = Math.max(cluster.color, colorPosMag)
+            colorNegMag = Math.min(cluster.color, colorNegMag)
+            sizeMag = Math.max(cluster.size, sizeMag)
+        })
+    })
+    // Adjust the endpoints to be the same distance from zero.
+    const mag = Math.max(colorPosMag, -colorNegMag)
+    const negMag = -mag
+    rxSet('gene.colorNegMag.set', { value: negMag })
+    rxSet('gene.colorPosMag.set', { value: mag })
+    rxSet('gene.sizeMag.set', { value: sizeMag })
 }
 
 const receiveData = (data) => {
     // Handle the data received from the server.
-    sortClustersBySize(data.cluster_solutions)
-    findColorVarMagnitudes(data.cluster_solutions)
+    sortClustersByColor(data.cluster_solutions)
+    findVarMagnitudes(data.cluster_solutions)
     rxSet('gene.fetchMessage.clear')
     rxSet('gene.fetchStatus.quiet')
+    rxSet('gene.firstChartDisplayed.set')
 }
 
 const getData = () => {
@@ -76,22 +97,32 @@ const mapStateToProps = (state) => {
     const status = state['gene.fetchStatus']
      if (status !== prevFetchStatus) {
         if (status === 'request') {
-            //console.log('mapStateToProps:status:', status)
             getData()
         } else if (status === 'quiet') {
-            //console.log('mapStateToProps:status:', status)
             dataReady = true
         }
         prevFetchStatus = status
     }
     //console.trace('mapStateToProps:message:', state['gene.fetchMessage'])
-    sortBySize(data.cluster_solutions)
-
+    sortByColor(data.cluster_solutions)
+    const message = state['gene.fetchMessage']
     return {
         data,
-        expandedChart: state['gene.expanded'],
-        message: state['gene.fetchMessage'],
-        dataReady,
+        expanded: state['gene.expanded'],
+        message,
+        dataReady, // TODO unused?
+        legendVariable: state['gene.legendVariable'],
+        showChart: (message === null),
+    }
+}
+
+const onSubmitClick = (dispatch) => {
+    serverRequest(dispatch)
+    if (window.location.pathname === '/') {
+        // We are querying from the home page, so set the home redirect
+        // so the next render of home will redirect to the gene chart
+        // page.
+        dispatch({type: 'home.redirect.set'})
     }
 }
 
@@ -100,6 +131,9 @@ const mapDispatchToProps = (dispatch) => {
         onExpandClick: ev => {
             dispatch({ type: 'gene.expanded.toggle' })
         },
+        onSubmitClick: ev => {
+            onSubmitClick(dispatch)
+        },
     }
 }
 
@@ -107,5 +141,7 @@ const mapDispatchToProps = (dispatch) => {
 const GeneCharts = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
+
+export { onSubmitClick, serverRequest }
 
 export default GeneCharts

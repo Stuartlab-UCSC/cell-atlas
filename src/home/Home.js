@@ -3,6 +3,8 @@
 import { connect } from 'react-redux'
 import HomePres from 'home/HomePres'
 
+import { onSubmitClick as onFindGeneClick } from 'gene/page'
+
 const mapStateToProps = (state) => {
     return {
         redirect: state['home.redirect'],
@@ -11,6 +13,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onFindGeneClick: () =>{
+            onFindGeneClick(dispatch)
+        },
         onRedirect: () => {
 
             // We've been redirected to the gene chart page, so reset the home

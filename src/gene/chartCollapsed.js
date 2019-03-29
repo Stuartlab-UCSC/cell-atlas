@@ -1,9 +1,10 @@
 
-// The collapsed gene chart information.
+// The gene page chart logic.
 
-import { getColor, colorNegMag, colorPosMag } from 'gene/reference'
+import { get as rxGet } from 'state/rx'
+import { getColor } from 'gene/util'
 
-const solutionHeight = 120
+const solutionHeight = 27
 
 const transform = (data) => {
     // Transform the data received from the server
@@ -12,6 +13,8 @@ const transform = (data) => {
         series: [{ data: [] }],
         yAxis: { categories: [] },
     }
+    const colorNegMag = rxGet('gene.colorNegMag')
+    const colorPosMag = rxGet('gene.colorPosMag')
     // Outer loop handles each cluster solution and
     // finds the y-axis labels for each solution.
     cData.yAxis.categories = data.map((solution, i) => {
@@ -43,7 +46,10 @@ const chartCollapsed = (props, commonOptions) => {
     let cData = transform(data)
 
     let options = commonOptions( cData, size_by, color_by)
+
     options.chart.height = solutionHeight * cData.yAxis.ceiling
+    options.plotOptions.bubble.clip = false
+    
     options.xAxis.height = 0
     options.xAxis.tickWidth = 0
     options.xAxis.labels = {
@@ -53,8 +59,8 @@ const chartCollapsed = (props, commonOptions) => {
     options.yAxis.categories = cData.yAxis.categories
     options.yAxis.ceiling = cData.yAxis.ceiling
     options.yAxis.floor = 0
-    options.yAxis.height = solutionHeight
     options.yAxis.reversed = true
+    
     return options
 }
 

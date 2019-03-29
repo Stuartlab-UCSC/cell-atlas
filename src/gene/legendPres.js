@@ -48,8 +48,8 @@ const Rectangle = ({ labels, values, i }) => {
     return comp
 }
 
-const Shape = ({ isColor, labels, values, i }) => {
-    return (isColor)
+const Shape = ({ variable, labels, values, i }) => {
+    return (variable === 'color')
         ? <Rectangle
             values={values}
             labels={labels}
@@ -62,35 +62,29 @@ const Shape = ({ isColor, labels, values, i }) => {
         />
 }
 
-const Column = ({ colorBy, labels, sizeBy, values }) => {
-    let isColor = false
-    if (colorBy) {
-        isColor = true
+const Presentation = ({ by, labels, values, showVars, variable }) => {
+    if (!showVars) {
+        return null
     }
-    const comp =
-        <Grid container
-            spacing={0}
-            justify='center'
-            alignItems='center'
-            alignContent='center'
-        >
+    return (
+        <Grid container spacing={0}>
             {labels.map((portion, i) =>
                 <React.Fragment key={i}>
-                    <Grid item xs={6}
+                    <Grid item xs={2}
                         style={{
-                            textAlign: 'right',
                             paddingRight: '0.5rem',
                             marginBottom: -1,
+                            textAlign: 'center',
                         }}
                     >
                         <Shape
-                            isColor={isColor}
+                            variable={variable}
                             labels={labels}
                             values={values}
                             i={i}
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={2}>
                         <Typography
                             variant='caption'
                             align='left'
@@ -99,50 +93,9 @@ const Column = ({ colorBy, labels, sizeBy, values }) => {
                             {portion}
                         </Typography>
                     </Grid>
+                    <Grid item xs={8} />
                 </React.Fragment>
             )}
-        </Grid>
-    return comp
-}
-
-const Head = ({ label }) => {
-    const comp =
-        <Grid item xs={6} >
-            <Typography
-                variant='subtitle2'
-                align='center'
-                style={{
-                    paddingBottom: '0.2rem',
-                    display: 'table-cell',
-                    verticalAlign: 'bottom'
-                }}
-            >
-                {label}
-            </Typography>
-        </Grid>
-    return comp
-}
-
-const Presentation = (props) => {
-    const { colorBy, colorLabels, colors, sizeBy, sizeLabels, sizes } = props
-    return (
-        <Grid container spacing={0} >
-            <Head label={sizeBy} />
-            <Head label={colorBy} />
-            <Grid item xs={6}>
-                <Column
-                    sizeBy={sizeBy}
-                    labels={sizeLabels}
-                    values={sizes}
-                />
-            </Grid>
-            <Grid item xs={6}>
-                <Column
-                    colorBy={colorBy}
-                    labels={colorLabels}
-                    values={colors}
-                />
-            </Grid>
         </Grid>
     )
 }

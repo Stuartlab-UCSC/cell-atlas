@@ -1,7 +1,7 @@
 
-// The expanded gene chart information.
+// The expanded gene page chart logic.
 
-import { getColor } from 'gene/reference'
+import { getColor } from 'gene/util'
 
 const transform = (data) => {
     // Transform the data received from the server
