@@ -12,13 +12,13 @@ import Select from '@material-ui/core/Select'
 
 import GeneName from 'gene/geneName'
 
-const VarSelect = ({list, name, show, value, variable, onChange }) => {
+const VarSelect = ({list, name, show, tooltip, value, variable, onChange }) => {
     let comp = null
     if (show) {
         const helperId = 'gene-page-helper-var-helper-' + variable
         comp =
             <FormControl style={{width: '100%', marginTop: -19}}>
-                <InputLabel htmlFor={helperId}>
+                <InputLabel htmlFor={helperId} >
                     {(variable === 'size') ? 'Size by' : 'Color by'}
                 </InputLabel>
                 <Select
@@ -28,6 +28,7 @@ const VarSelect = ({list, name, show, value, variable, onChange }) => {
                         name={'gene-page-name-var-' + variable}
                         id={helperId}
                     />}
+                    title={tooltip}
                 >
                     {list.map((opt, i) =>
                         <MenuItem
@@ -45,8 +46,8 @@ const VarSelect = ({list, name, show, value, variable, onChange }) => {
 }
 
 const Presentation = (props) => {
-    const { colorList, colorValue, showVars, sizeList, sizeValue,
-        onColorChange, onSizeChange } = props
+    const { colorList, colorValue, colorTooltip, showVars, sizeList, sizeValue,
+        sizeTooltip, onColorChange, onSizeChange } = props
     return (
         <Grid container spacing={16}
             alignItems='center'
@@ -59,6 +60,7 @@ const Presentation = (props) => {
                 <VarSelect
                     show={showVars}
                     list={sizeList}
+                    tooltip={sizeTooltip}
                     value={sizeValue}
                     variable='size'
                     onChange={onSizeChange}
@@ -68,6 +70,7 @@ const Presentation = (props) => {
                 <VarSelect
                     show={showVars}
                     list={colorList}
+                    tooltip={colorTooltip}
                     value={colorValue}
                     variable='color'
                     onChange={onColorChange}

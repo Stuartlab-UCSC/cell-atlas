@@ -14,6 +14,8 @@ import LegendSize from 'gene/legendSize'
 import MockUp from 'components/MockUp'
 
 
+/*
+// TODO we don't think we want this view.
 const ExpandedChart = ({ data }) => {
     let comp =
         <React.Fragment>
@@ -40,9 +42,10 @@ const ExpandedChart = ({ data }) => {
         </React.Fragment>
     return comp
 }
-
+*/
 const AChart = ({ data, expanded }) => {
     let comp = null
+    /*
     if (expanded) {
         comp =
             <Grid item xs={12} style={{marginTop: -40}}>
@@ -51,6 +54,7 @@ const AChart = ({ data, expanded }) => {
                 />
             </Grid>
     } else {
+    */
         comp =
             <Grid item xs={12} style={{marginTop: -10}}>
                 <Chart
@@ -59,7 +63,7 @@ const AChart = ({ data, expanded }) => {
                     color_by={data.color_by}
                 />
             </Grid>
-    }
+    //}
     return comp
 }
 
@@ -96,7 +100,7 @@ const ExpandButton = ({ expanded, show, onClick }) => {
 }
 
 const SubHeader = (props) => {
-    const { expanded, showChart, onExpandClick, onSubmitClick}
+    const { expanded, /*showChart,*/ onExpandClick, onSubmitClick}
         = props.props
     let comp =
         <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
@@ -107,7 +111,7 @@ const SubHeader = (props) => {
                 <ExpandButton
                     expanded={expanded}
                     onClick={onExpandClick}
-                    show={showChart}
+                    show={false}
                 />
             </Grid>
             <Grid item xs={4} >

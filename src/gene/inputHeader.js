@@ -32,13 +32,16 @@ const mapStateToProps = (state) => {
     let sizeList = Object.keys(sizeRef).map(size_by => {
         return { ...sizeRef[size_by], value: size_by }
     })
-
+    const colorValue = state['gene.color_by']
+    const sizeValue = state['gene.size_by']
     return {
         showVars: showVars(state),
         colorList,
-        colorValue: state['gene.color_by'],
+        colorValue,
+        colorTooltip: colorRef[colorValue].tooltip,
         sizeList,
-        sizeValue: state['gene.size_by'],
+        sizeValue,
+        sizeTooltip: sizeRef[sizeValue].tooltip,
     }
 }
 
