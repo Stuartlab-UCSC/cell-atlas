@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
         query: state['database.query'],
         queryRowCount: state['database.query.rowCount'],
         showSchema: state['database.showSchema'],
-        showAddToFavorite: state['database.showAddToFavorite'],
+        showAddToFavorite: state['database.firstTableDisplayed'],
         table: {
             columns: state['database.tableColumn'],
             data: tableData,
@@ -61,7 +61,6 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'database.query.rowCount.executeClick',
                 queryString: rxGet('database.query'),
             })
-            dispatch({ type: 'database.showAddToFavorite.true' })
             dispatch({ type: 'database.showSchema.hide' })
         },
         onSchemaClick: ev => {

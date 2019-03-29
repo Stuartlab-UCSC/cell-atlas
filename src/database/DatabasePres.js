@@ -107,7 +107,7 @@ const Buttons = (props) => {
 }
 
 const DatabasePres = (props) => {
-    let { query, queryRowCount, showSchema, table,
+    let { query, queryRowCount, showAddToFavorite, showSchema, table,
         onQueryKeyPress, onQueryChange, onExecuteClick, onSchemaClick,
         onAddFavoriteClick, } = props
     const id = 'database'
@@ -127,6 +127,7 @@ const DatabasePres = (props) => {
             </Grid>
             <Grid item xs={12}>
                 <Buttons
+                    showAddToFavorite={showAddToFavorite}
                     onExecuteClick={onExecuteClick}
                     onSchemaClick={onSchemaClick}
                     onAddFavoriteClick={onAddFavoriteClick}

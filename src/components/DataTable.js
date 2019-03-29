@@ -48,9 +48,9 @@ const DatasetTable = ({ title, header, columns, data, status }) => {
     // If there is data, render the table.
     } else if (data.length > 0) {
  
-        // Default the header to 'rows found' if a header wasn't provided.
+        // Default the header if one was not provided.
         const headerOut = header ||
-            (integerToCommaInteger(data.length) + ' rows found')
+            (integerToCommaInteger(data.length) + ' matches found')
 
         return (
             <div style={{position: 'relative'}}>

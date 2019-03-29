@@ -2,15 +2,6 @@
 export const defaultQuery = ''
 
 const databaseState = {
-    'database.showAddToFavorite': (state = false, action ) => {
-        if (action.type === 'database.showAddToFavorite.true') {
-            return true
-        } else if (action.type === 'database.showAddToFavorite.false') {
-            return false
-        } else {
-            return state
-        }
-    },
     'database.showSchema': (state = false, action ) => {
         switch (action.type) {
         case 'database.showSchema.toggle':
@@ -49,6 +40,15 @@ const databaseState = {
             return state
         }
     },
+    'database.firstTableDisplayed': (state = false, action) => {
+        switch(action.type) {
+        case 'database.firstTableDisplayed.set':
+            return true
+        default:
+            return state
+        }
+    },
+
     'database.query': (state = defaultQuery, action) => {
         switch (action.type) {
         case 'database.query.uiSet':

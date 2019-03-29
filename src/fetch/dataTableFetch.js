@@ -99,8 +99,12 @@ const receiveData = (id, dataIn) => {
         rxSet(id + '.tableColumn.load', { value: columns })
         rxSet(id + '.tableData.load', { data: cleanData })
 
-        // then set status to indicate the data is ready to render.
+        // Set status to indicate the data is ready to render.
         rxSet(id + '.fetchStatus.quiet')
+        
+        // Indicate the first table has displayed so some UI elements will now
+        // be visible.
+        rxSet(id + '.firstTableDisplayed.set')
     }
 }
 
