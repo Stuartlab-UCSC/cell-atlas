@@ -2,15 +2,6 @@
 // Gene page state.
 
 const state = {
-    // Fetch status.
-    'gene.expanded': (state = false, action) => {
-        switch(action.type) {
-        case 'gene.expanded.toggle':
-            return !state
-        default:
-            return state
-        }
-    },
     'gene.color_by': (state = 'log2_fold_change_vs_next', action) => {
         switch(action.type) {
         case 'gene.color_by.uiSet':
@@ -63,18 +54,6 @@ const state = {
         switch(action.type) {
         case 'gene.firstChartDisplayed.set':
             return true
-        default:
-            return state
-        }
-    },
-    'gene.input.show': (state = true, action) => {
-        switch(action.type) {
-        case 'gene.input.show.noChart':
-            return true
-        case 'gene.input.show.hover':
-            return true
-        case 'gene.input.show.false':
-            return false
         default:
             return state
         }

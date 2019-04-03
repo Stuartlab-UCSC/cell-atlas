@@ -24,36 +24,15 @@ const noFilters = [
     'value',
 ]
 
-const setCellPropsFx = (value) => {
-    // Make anything starting with 'http' look like a link.
-    if (value.slice(0,4).toLowerCase() === 'http') {
-        return { style: {
-            textDecoration: 'underline',
-            cursor: 'pointer',
-            wordBreak: 'break-all',
-            '&:hover': {
-                color: 'blue'
-            }
-        }}
-    }
-    return {}
-}
-
-const buildColumns = (names) => {
-    // Create column options.
+const addColumnOptions = (names) => {
+    // Add column options given a list of column names.
     // @param names: list of column names
-    // @param noFilters: optional list of names to be excluded from filtering
     // @return an array of objects, one object per column
 
     const cols = names.map(name => {
-        let col = {
-            name,
-            options: {
-                setCellProps: setCellPropsFx,
-            },
-        }
-        if (noFilters && noFilters.includes(name)) {
-            col.options.filter = false
+        let col = { name }
+        if (noFilters.includes(name)) {
+            col.options = { filter: false}
         }
         return col
     })
@@ -83,7 +62,7 @@ const receiveData = (id, dataIn) => {
         let columns = []
         let data = []
         const rows = dataIn.split('\n')
-        columns = buildColumns(rows[0].split('\t'))
+        columns = addColumnOptions(rows[0].split('\t'))
         
         // Find the data arrays.
         data = rows.slice(1).map(row => row.split('\t'))

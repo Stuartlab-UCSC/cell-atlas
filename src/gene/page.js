@@ -80,10 +80,11 @@ const getData = () => {
     // Request the data from the server.
     rxSet('gene.fetchStatus.waiting')
     rxSet('gene.fetchMessage.set', { value: 'waiting for data...' })
+    // TODO set a timeout to try to get the wait message to display.
     setTimeout(() => { receiveData(testData) }, 1000)
     /*
     let url =
-        'gene/' + rxGet('gene.name') +
+        'marker/' + rxGet('gene.name') +
         '/size-by/' + rxGet('gene.size_by') +
         '/color-by/' + rxGet('gene.color_by') +
   
@@ -103,14 +104,12 @@ const mapStateToProps = (state) => {
         }
         prevFetchStatus = status
     }
-    //console.trace('mapStateToProps:message:', state['gene.fetchMessage'])
     sortByColor(data.cluster_solutions)
     const message = state['gene.fetchMessage']
     return {
         data,
-        expanded: state['gene.expanded'],
         message,
-        dataReady, // TODO unused?
+        dataReady, // used to trigger state change to display new data
         legendVariable: state['gene.legendVariable'],
         showChart: (message === null),
     }
@@ -128,9 +127,6 @@ const onSubmitClick = (dispatch) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onExpandClick: ev => {
-            dispatch({ type: 'gene.expanded.toggle' })
-        },
         onSubmitClick: ev => {
             onSubmitClick(dispatch)
         },

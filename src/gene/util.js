@@ -5,11 +5,10 @@ import colorMix from 'gene/colorMix'
 import { background } from 'app/themeData'
 import { get as rxGet } from 'state/rx'
 
-const maxBubbleSize = 24 // pixel width
-const minBubbleSize = 5  // pixel width
+const maxBubbleDiameter = 24 // pixel width
+const minBubbleDiameter = 5  // pixel width
 const negMagColor = '#0000ff'
 const posMagColor = '#ff0000'
-const sizeUnit = 'area' // or 'width' this does not make a difference
 
 const colorRef = {
     log2_fold_change_vs_next: {
@@ -101,8 +100,7 @@ const getColor = (val) => {
         return colorMix(normalizeColorVal(val, colorNegMag, colorPosMag),
             zeroColor, negMagColor)
     } else {
-        return colorMix(
-            normalizeColorVal(val, colorNegMag, colorPosMag),
+        return colorMix(normalizeColorVal(val, colorNegMag, colorPosMag),
                 zeroColor, posMagColor)
     }
 }
@@ -114,5 +112,22 @@ const stringToPrecision = (x, p) => {
     return parseFloat(x).toPrecision(p)
 }
 
-export { colorRef, getColor, maxBubbleSize, minBubbleSize, sizeRef, sizeUnit,
-    stringToPrecision }
+const area = (radius) => {
+    // Return area given a radius.
+    return Math.PI * radius**2
+}
+
+const radius = (area) => {
+    // Return the radius given an area.
+    return Math.sqrt(area / Math.PI)
+}
+
+const sizeToRadius = (size) => {
+    const minArea = area(minBubbleDiameter / 2)
+    return radius(
+        (area(maxBubbleDiameter / 2) - minArea) * size
+            / rxGet('gene.sizeMag') + minArea)
+}
+
+export { colorRef, getColor, maxBubbleDiameter, minBubbleDiameter, sizeRef,
+    sizeToRadius, stringToPrecision }

@@ -7,65 +7,12 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
-import Chart from 'gene/chart'
+import { integerToCommaInteger } from 'app/util'
+import Table from 'gene/table'
 import InputHeader from 'gene/inputHeader'
 import LegendColor from 'gene/legendColor'
 import LegendSize from 'gene/legendSize'
 import MockUp from 'components/MockUp'
-
-
-/*
-// TODO we don't think we want this view.
-const ExpandedChart = ({ data }) => {
-    let comp =
-        <React.Fragment>
-            {data.cluster_solutions.map((solution, i) =>
-                <Grid item xs={12}
-                    key={i}
-                    style={{
-                        marginTop: (i > 0 ? '-8rem' : '1.5rem'),
-                        marginBottom: -35 ,
-                    }}
-                >
-                    <Chart
-                        expanded={true}
-                        data={data.cluster_solutions}
-                        size_by={data.size_by}
-                        color_by={data.color_by}
-                        dataset_name={solution.dataset_name}
-                        cluster_solution_name=
-                            {solution.cluster_solution_name}
-                        i={i}
-                    />
-                </Grid>
-            )}
-        </React.Fragment>
-    return comp
-}
-*/
-const AChart = ({ data, expanded }) => {
-    let comp = null
-    /*
-    if (expanded) {
-        comp =
-            <Grid item xs={12} style={{marginTop: -40}}>
-                <ExpandedChart
-                    data={data}
-                />
-            </Grid>
-    } else {
-    */
-        comp =
-            <Grid item xs={12} style={{marginTop: -10}}>
-                <Chart
-                    data={data.cluster_solutions}
-                    size_by={data.size_by}
-                    color_by={data.color_by}
-                />
-            </Grid>
-    //}
-    return comp
-}
 
 const SubmitButton = ({ onClick }) => {
     let comp =
@@ -82,96 +29,65 @@ const SubmitButton = ({ onClick }) => {
     return comp
 }
 
-const ExpandButton = ({ expanded, show, onClick }) => {
+const MatchesFound = ({ data, showChart }) => {
     let comp = null
-    if (show) {
+    if (showChart) {
+        const style = { marginLeft: '1rem' }
         comp =
-            <Button
-                variant='contained'
-                component='span'
-                size='small'
-                style={{width: '5rem', marginLeft: '1rem'}}
-                onClick={onClick}
-            >
-                {expanded ? 'Collapse' : 'Expand'}
-            </Button>
+            <Typography variant='body2' inline={true} style={style}>
+                {integerToCommaInteger(data.cluster_solutions.length)
+                    + ' matches found'}
+            </Typography>
     }
     return comp
 }
 
 const SubHeader = (props) => {
-    const { expanded, /*showChart,*/ onExpandClick, onSubmitClick}
-        = props.props
+    const { data, showChart, onSubmitClick} = props.props
+    console.log('showChart:', showChart)
     let comp =
         <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
-            <Grid item xs={4} style={{marginTop: '2rem'}} >
+            <Grid item xs={4} style={{marginTop: '2rem', zIndex: 100}} >
                 <SubmitButton
                     onClick={onSubmitClick}
                 />
-                <ExpandButton
-                    expanded={expanded}
-                    onClick={onExpandClick}
-                    show={false}
-                />
+                <MatchesFound data={data} showChart={showChart} />
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={2} >
                 <LegendSize />
             </Grid>
-            <Grid item xs={4} >
+            <Grid item xs={2} >
                 <LegendColor />
             </Grid>
+            <Grid item xs={4} />
         </Grid>
     return comp
 }
 
-const SolutionLabel = ({ expanded, show }) => {
-    let comp = null
-    if (show) {
-        if (expanded) {
-            comp =
-               <Typography
-                    align='center'
-                    style={{width: '100%'}}
-                >
-                    Dataset, Cluster Solution
-                </Typography>
-        } else {
-            comp =
-                <Typography>
-                    Dataset <br /> Cluster Solution
-                </Typography>
-        }
-    }
-    return comp
-}
-
 const Body = (props) => {
-    // If there is a fetch status message, render it rather than the chart.
-    const { data, expanded, message } = props.props
+    // Render a message, or render the chart.
+    const { message, showChart } = props.props
     let comp
-    if (message) {
+    if (showChart) {
+        comp =
+            <div style={{marginTop: '-4rem'}} >
+                <Table />
+            </div>
+    } else {
         comp =
             <Typography variant='subtitle2' style={{marginTop: '1rem'}}>
                 {message}
             </Typography>
-    } else {
-        comp =
-            <AChart
-                data={data}
-                expanded={expanded}
-            />
     }
     return comp
 }
 
 const Presentation = (props) => {
-    const { expanded, showChart } = props
     return (
         <div>
             <div style={{marginTop: '0.5rem'}}>
                 <InputHeader />
                 <SubHeader props={props} />
-                <SolutionLabel expanded={expanded} show={showChart}/>
                 <Body props={props} />
             </div>
             <MockUp />
