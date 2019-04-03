@@ -56,16 +56,6 @@ const Presentation = (props) => {
             <Grid item xs={4}>
                 <GeneName />
             </Grid>
-            <Grid item xs={2}>
-                <VarSelect
-                    show={showVars}
-                    list={sizeList}
-                    tooltip={sizeTooltip}
-                    value={sizeValue}
-                    variable='size'
-                    onChange={onSizeChange}
-                />
-           </Grid>
            <Grid item xs={3}>
                 <VarSelect
                     show={showVars}
@@ -76,6 +66,16 @@ const Presentation = (props) => {
                     onChange={onColorChange}
                 />
             </Grid>
+            <Grid item xs={2}>
+                <VarSelect
+                    show={showVars}
+                    list={sizeList}
+                    tooltip={sizeTooltip}
+                    value={sizeValue}
+                    variable='size'
+                    onChange={onSizeChange}
+                />
+           </Grid>
            <Grid item xs={3} />
         </Grid>
     )

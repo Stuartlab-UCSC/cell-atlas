@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import { integerToCommaInteger } from 'app/util'
+import { BubbleTooltip } from 'gene/bubble'
 import Table from 'gene/table'
 import InputHeader from 'gene/inputHeader'
 import LegendColor from 'gene/legendColor'
@@ -53,13 +54,13 @@ const SubHeader = (props) => {
                 />
                 <MatchesFound data={data} showChart={showChart} />
             </Grid>
+            <Grid item xs={3} >
+                <LegendColor />
+            </Grid>
             <Grid item xs={2} >
                 <LegendSize />
             </Grid>
-            <Grid item xs={2} >
-                <LegendColor />
-            </Grid>
-            <Grid item xs={4} />
+            <Grid item xs={3} />
         </Grid>
     return comp
 }
@@ -89,6 +90,7 @@ const Presentation = (props) => {
                 <InputHeader />
                 <SubHeader props={props} />
                 <Body props={props} />
+                <BubbleTooltip data={props.bubbleTooltip}/>
             </div>
             <MockUp />
         </div>

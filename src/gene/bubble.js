@@ -2,87 +2,141 @@
 // A bubble component.
 
 import React from 'react'
-import Tooltip from '@material-ui/core/Tooltip'
+
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 
-import { colorRef, maxBubbleDiameter, sizeRef } from 'gene/util'
+import { set as rxSet } from 'state/rx'
+import { colorRef, maxBubbleDiameter, sizeRef, stringToPrecision }
+    from 'gene/util'
 
-const Label = ({ label }) => {
+const Row = ({ label, value }) => {
+    const comp =
+        <tr>
+            <td style={{textAlign: 'right'}} >
+                {label + ':'}
+            </td>
+            <td>
+                {value}
+            </td>
+        </tr>
+    return comp
+}
+
+const Label = ({ value }) => {
     let comp = null
-    if (label !== undefined) {
+    if (value !== undefined) {
         comp =
-            <Typography color='inherit' variant='caption'>
-                {'label: ' + label}
-            </Typography>
+            <Row
+                label='label'
+                value={value}
+            />
     }
     return comp
 }
 
-const Description = ({ description }) => {
+const Description = ({ value }) => {
     let comp = null
-    if (description !== undefined) {
+    if (value !== undefined) {
         comp =
-            <Typography color='inherit' variant='caption'>
-                {'description: ' + description}
-            </Typography>
+            <Row
+                label='description'
+                value={value}
+            />
     }
     return comp
 }
 
-const Title = (props) => {
-    // TODO this would be better created on dynamically on hover
-    // rather than one for each bubble.
-    const { cell_count, color, color_by, description, label, name, size,
-        size_by } = props.props
-    let comp =
-        <React.Fragment>
-            <Typography color='inherit'>
-                {'cluster: ' + name}
-            </Typography>
-            <Label label={label} />
-            <Description description={description} />
-            <Typography color='inherit' variant='caption'>
-                {'cell count: ' + cell_count}
-            </Typography>
-            <Typography color='inherit' variant='caption'>
-                {colorRef[color_by].label + ': ' + color}
-            </Typography>
-            <Typography color='inherit' variant='caption'>
-                {sizeRef[size_by].label + ': ' + size}
-            </Typography>
-        </React.Fragment>
+const BubbleTooltip = ({data}) => {
+    let comp = null
+    if (data) {
+        const style = {
+            position: 'fixed',
+            top: data.y + 10,
+            left: data.x - 80,
+            background: '#888888',
+        }
+        comp =
+            <Card style={style} >
+                <CardContent style={{padding: '0.3rem'}} >
+                    <Typography
+                        color='inherit'
+                        variant='caption'
+                        style={{lineHeight: '0.8rem'}}
+                    >
+                        <table>
+                            <tbody>
+                                <Row
+                                    label='cluster'
+                                    value={data.name}
+                                />
+                                <Label value={data.label} />
+                                <Description value={data.description} />
+                                <Row
+                                    label='cell count'
+                                    value={data.cell_count}
+                                />
+                                <Row
+                                    label={colorRef[data.color_by].label}
+                                    value={stringToPrecision(data.color)}
+                                />
+                                <Row
+                                    label={sizeRef[data.size_by].label}
+                                    value={stringToPrecision(data.size)}
+                                />
+                            </tbody>
+                        </table>
+                    </Typography>
+                </CardContent>
+            </Card>
+    }
     return comp
+}
+
+const onMouseOut = (ev) => {
+    rxSet('gene.bubbleTooltip.mouseOut')
+}
+
+const onMouseOver = (ev) => {
+    rxSet('gene.bubbleTooltip.mouseOver',
+        { value: {...ev.target.dataset, x: ev.pageX, y: ev.pageY }})
 }
 
 const Bubble = (props) => {
     // Create a bubble react component given a cluster's data.
-    const { colorRgb, radius } = props
+    const { cell_count, color, color_by, colorRgb, description, label, name,
+        radius, size, size_by } = props
     const radiusStr = radius.toString()
     const center = (maxBubbleDiameter / 2 + 0.5).toString()
     const width = (maxBubbleDiameter + 1).toString()
     return (
-        <Tooltip
-            title={
-                <Title props={props} />
-            }
+        <svg
+            height={width}
+            width={width}
+            style={{display: 'inline-block'}}
         >
-            <svg
-                id='myBubble'
-                height={width}
-                width={width}
-                style={{display: 'inline-block'}}
-            >
-                <circle
-                    cx={center}
-                    cy={center}
-                    r={radiusStr}
-                    stroke='grey'
-                    strokeWidth={1}
-                    fill={colorRgb}
-                />
-            </svg>
-        </Tooltip>
+            <circle
+                cx={center}
+                cy={center}
+                r={radiusStr}
+                stroke='grey'
+                strokeWidth={1}
+                fill={colorRgb}
+
+                data-cell_count={cell_count}
+                data-color={color}
+                data-color_by={color_by}
+                data-description={description}
+                data-label={label}
+                data-name={name}
+                data-size={size}
+                data-size_by={size_by}
+                onMouseOver={onMouseOver}
+                onMouseOut={onMouseOut}
+            />
+        </svg>
     )
 }
 
-export default Bubble
+export { Bubble, BubbleTooltip }

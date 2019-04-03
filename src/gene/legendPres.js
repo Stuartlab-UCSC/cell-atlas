@@ -42,6 +42,7 @@ const Rectangle = ({ labels, values, i }) => {
                     fill: values[i],
                     strokeWidth: strokeWidth,
                     stroke: 'grey',
+                    textAlign: 'right',
                 }}
             />
         </svg>
@@ -62,21 +63,25 @@ const Shape = ({ variable, labels, values, i }) => {
         />
 }
 
-const Presentation = ({ by, labels, values, showVars, variable }) => {
+const Presentation = ({ labels, values, showVars, variable }) => {
     if (!showVars) {
         return null
     }
+    const shapeStyle = (variable === 'size')
+        ? {
+            marginBottom: -1,
+            textAlign: 'center',
+        }
+        : {
+            marginBottom: -1,
+            textAlign: 'right',
+            paddingRight: '0.5rem',
+        }
     return (
         <Grid container spacing={0}>
             {labels.map((portion, i) =>
                 <React.Fragment key={i}>
-                    <Grid item xs={2}
-                        style={{
-                            paddingRight: '0.5rem',
-                            marginBottom: -1,
-                            textAlign: 'center',
-                        }}
-                    >
+                    <Grid item xs={3} style={shapeStyle} >
                         <Shape
                             variable={variable}
                             labels={labels}
@@ -84,7 +89,7 @@ const Presentation = ({ by, labels, values, showVars, variable }) => {
                             i={i}
                         />
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <Typography
                             variant='caption'
                             align='left'
@@ -93,7 +98,7 @@ const Presentation = ({ by, labels, values, showVars, variable }) => {
                             {portion}
                         </Typography>
                     </Grid>
-                    <Grid item xs={8} />
+                    <Grid item xs={6} />
                 </React.Fragment>
             )}
         </Grid>

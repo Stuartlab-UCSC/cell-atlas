@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 
 import Presentation from 'gene/legendPres'
-import { sizeRef, sizeToRadius, stringToPrecision }
+import { sizeToRadius, stringToPrecision }
     from 'gene/util'
 import { showVars } from 'gene/inputHeader'
 
@@ -29,7 +29,6 @@ const findSizes = (labels) => {
 const mapStateToProps = (state) => {
     const labels = findLabels(state)
     return {
-        by: sizeRef[state['gene.size_by']].label,
         labels: labels,
         showVars: showVars(state),
         values: findSizes(labels),

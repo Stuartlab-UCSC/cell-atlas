@@ -107,6 +107,7 @@ const mapStateToProps = (state) => {
     sortByColor(data.cluster_solutions)
     const message = state['gene.fetchMessage']
     return {
+        bubbleTooltip: state['gene.bubbleTooltip'],
         data,
         message,
         dataReady, // used to trigger state change to display new data

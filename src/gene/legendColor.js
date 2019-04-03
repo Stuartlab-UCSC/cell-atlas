@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { get as rxGet} from 'state/rx'
 import Presentation from 'gene/legendPres'
-import { colorRef, getColor, stringToPrecision } from 'gene/util'
+import { getColor, stringToPrecision } from 'gene/util'
 import { showVars } from 'gene/inputHeader';
 
 const findLabels = () => {
@@ -39,7 +39,6 @@ const findColors = (labels) => {
 const mapStateToProps = (state) => {
     const labels = findLabels()
     return {
-        by: colorRef[state['gene.color_by']].label,
         labels,
         showVars: showVars(state),
         values: findColors(labels),

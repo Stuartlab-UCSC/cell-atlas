@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 import React from 'react'
 
-import Bubble from 'gene/bubble'
+import { Bubble } from 'gene/bubble'
 import DataTable from 'components/DataTable'
 import data from 'gene/data'
 import { colorRef, getColor, maxBubbleDiameter, sizeRef, sizeToRadius }

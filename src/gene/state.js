@@ -2,6 +2,16 @@
 // Gene page state.
 
 const state = {
+    'gene.bubbleTooltip': (state = false, action) => {
+        switch(action.type) {
+        case 'gene.bubbleTooltip.mouseOut':
+            return null
+        case 'gene.bubbleTooltip.mouseOver':
+            return action.value
+        default:
+            return state
+        }
+    },
     'gene.color_by': (state = 'log2_fold_change_vs_next', action) => {
         switch(action.type) {
         case 'gene.color_by.uiSet':
