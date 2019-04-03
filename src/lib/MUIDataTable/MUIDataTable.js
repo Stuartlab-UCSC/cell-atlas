@@ -9,8 +9,7 @@ import TableBody from './components/TableBody';
 import TableResize from './components/TableResize';
 import TableHead from './components/TableHead';
 import TableFooter from './components/TableFooter';
-// eslint-disable-next-line
-import TablePagination from './components/TablePagination';
+import classnames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import merge from 'lodash.merge';
 import isEqual from 'lodash.isequal';
@@ -401,7 +400,7 @@ class MUIDataTable extends React.Component {
 
       if (column.sortDirection !== null) {
         sortIndex = colIndex;
-        sortDirection = column.sortDirection === 'asc' ? 'desc' : 'asc';
+        sortDirection = column.sortDirection;
       }
     });
 
@@ -419,7 +418,7 @@ class MUIDataTable extends React.Component {
       }
     }
 
-    if (sortIndex !== null) {
+    if (!options.serverSide && sortIndex !== null) {
       const sortedData = this.sortTable(tableData, sortIndex, sortDirection);
       tableData = sortedData.data;
     }
@@ -466,7 +465,7 @@ class MUIDataTable extends React.Component {
 
         /* drill down to get the value of a cell */
         columnValue =
-          typeof funcResult === 'string'
+          typeof funcResult === 'string' || !funcResult
             ? funcResult
             : funcResult.props && funcResult.props.value
             ? funcResult.props.value
@@ -508,7 +507,15 @@ class MUIDataTable extends React.Component {
       }
     }
 
-    if (isFiltered || (!this.options.serverSide && searchText && !isSearchFound)) return null;
+    if (this.options.serverSide) {
+      if (customSearch) {
+        console.warn('Server-side filtering is enabled, hence custom search will be ignored.');
+      }
+
+      return displayRow;
+    }
+
+    if (isFiltered || (searchText && !isSearchFound)) return null;
     else return displayRow;
   }
 
@@ -616,13 +623,13 @@ class MUIDataTable extends React.Component {
       prevState => {
         let columns = cloneDeep(prevState.columns);
         let data = prevState.data;
-        const order = prevState.columns[index].sortDirection;
+        const newOrder = columns[index].sortDirection === 'desc' ? 'asc' : 'desc';
 
         for (let pos = 0; pos < columns.length; pos++) {
           if (index !== pos) {
             columns[pos].sortDirection = null;
           } else {
-            columns[pos].sortDirection = columns[pos].sortDirection === 'asc' ? 'desc' : 'asc';
+            columns[pos].sortDirection = newOrder;
           }
         }
 
@@ -643,7 +650,7 @@ class MUIDataTable extends React.Component {
             selectedRows: prevState.selectedRows,
           };
         } else {
-          const sortedData = this.sortTable(data, index, order);
+          const sortedData = this.sortTable(data, index, newOrder);
 
           newState = {
             ...newState,
@@ -965,7 +972,7 @@ class MUIDataTable extends React.Component {
   };
 
   render() {
-    const { classes, title } = this.props;
+    const { classes, className, title } = this.props;
     const {
       announceText,
       activeColumn,
@@ -984,7 +991,10 @@ class MUIDataTable extends React.Component {
     const rowsPerPage = this.options.pagination ? this.state.rowsPerPage : displayData.length;
 
     return (
-      <Paper elevation={this.options.elevation} ref={this.tableContent} className={classes.paper}>
+      <Paper
+        elevation={this.options.elevation}
+        ref={this.tableContent}
+        className={classnames(classes.paper, className)}>
         {selectedRows.data.length ? (
           <TableToolbarSelect
             options={this.options}
@@ -1024,9 +1034,11 @@ class MUIDataTable extends React.Component {
           <MuiTable ref={el => (this.tableRef = el)} tabIndex={'0'} role={'grid'} className={classes.tableRoot}>
             <caption className={classes.caption}>{title}</caption>
             <TableHead
+              columns={columns}
               activeColumn={activeColumn}
               data={displayData}
               count={rowCount}
+              // eslint-disable-next-line
               columns={columns}
               page={page}
               rowsPerPage={rowsPerPage}

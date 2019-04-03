@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import MuiTable from '@material-ui/core/Table';
 // eslint-disable-next-line
 import TableHead from './TableHead';
-// eslint-disable-next-line
 import TablePagination from './TablePagination';
 // eslint-disable-next-line
 import { withStyles } from '@material-ui/core/styles';

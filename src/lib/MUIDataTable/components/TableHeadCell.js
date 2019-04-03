@@ -87,7 +87,11 @@ class TableHeadCell extends React.Component {
           <Tooltip
             title={options.textLabels.body.toolTip}
             placement={'bottom-end'}
+            classes={{
+              tooltip: classes.tooltip,
+            }}
             enterDelay={300}
+            // eslint-disable-next-line
             classes={{ popper: classes.mypopper }}>
             <span
               role="button"
@@ -114,7 +118,11 @@ class TableHeadCell extends React.Component {
           <Tooltip
             title={hint}
             placement={'bottom-end'}
+            classes={{
+              tooltip: classes.tooltip,
+            }}
             enterDelay={300}
+            // eslint-disable-next-line
             classes={{ popper: classes.mypopper }}>
             <HelpIcon fontSize="small" />
           </Tooltip>
