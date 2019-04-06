@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
-import { serverRequest } from 'gene/inputHeader'
+//import { serverRequest } from 'gene/inputHeader'
 
 const Presentation = (props) => {
     const { errorMessage, value, onNameBlur, onNameChange, onNameKeyPress }
@@ -40,7 +40,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onNameBlur: ev => {
-            serverRequest(dispatch)
+            // Only fetch upon button press for now.
+            //serverRequest(dispatch)
         },
         onNameChange: ev => {
             dispatch({
@@ -49,9 +50,10 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         onNameKeyPress: ev => {
-            if (ev.key === 'Enter') {
-                ev.target.blur()
-            }
+            // Only fetch upon button press for now.
+            //if (ev.key === 'Enter') {
+            //    ev.target.blur()
+            //}
         },
     }
 }
