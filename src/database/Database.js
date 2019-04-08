@@ -23,7 +23,8 @@ const mapStateToProps = (state) => {
         table: {
             columns: state['database.tableColumn'],
             data: tableData,
-            status: state['database.fetchStatus'],
+            header: tableData.length + ' matches found',
+            message: state['database.fetchMessage'],
         }
     }
 }

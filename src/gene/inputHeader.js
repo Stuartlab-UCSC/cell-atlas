@@ -14,6 +14,7 @@ const serverRequest = (dispatch) => {
             value: 'a gene name is required',
         })
     } else {
+        dispatch({ type: 'gene.showChart.toRequestStatus' })
         dispatch({ type: 'gene.fetchStatus.request' })
     }
 }

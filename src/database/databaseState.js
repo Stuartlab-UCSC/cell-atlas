@@ -27,6 +27,16 @@ const databaseState = {
             return state
         }
     },
+    'database.fetchMessage': (state = ' ', action) => {
+        switch(action.type) {
+        case 'database.fetchMessage.set':
+            return action.value
+        case 'database.fetchMessage.clear':
+            return null
+        default:
+            return state
+        }
+    },
     // Fetch status for the table.
     'database.fetchStatus': (state = 'quiet', action) => {
         switch (action.type) {
@@ -34,8 +44,6 @@ const databaseState = {
             return 'waiting'
         case 'database.fetchStatus.quiet':
             return 'quiet'
-        case 'database.fetchStatus.message':
-            return action.value
         default:
             return state
         }

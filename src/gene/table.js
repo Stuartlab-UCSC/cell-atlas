@@ -83,10 +83,56 @@ const transform = (data, state) => {
     return { data: cData, columns: header }
 }
 
+const themeOverrides = () => {
+    const style = {
+        cell: {
+            paddingTop: 0,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingBottom: 0,
+        },
+        row: {
+            height: maxBubbleDiameter,
+        },
+    }
+    return {
+        overrides: {
+            MUIDataTableBodyCell: {
+                root: {...style.cell, borderBottom: 0 },
+            },
+            MUIDataTableBodyRow: {
+                root: style.row,
+            },
+            MUIDataTableHeadCell: {
+                root: style.cell,
+                //fixedHeader: style.cell,
+            },
+            MUIDataTableHeadRow: {
+                root: style.row,
+            },
+            MUIDataTableToolbar: {
+                left: {
+                    position: 'absolute',
+                    right: '-4rem',
+                    top: '3rem',
+                    width: '30rem',
+                    zIndex: 200,
+                },
+            },
+            MUIDataTable: {
+                responsiveScroll: {
+                    maxHeight: 'none',
+                },
+            },
+        }
+    }
+}
+
 const optionOverrideFx = (options, matchesFound) => {
     // Override some standard DataTable options.
-    //options.customToolbar = null
     options.elevation = 0
+    options.download = false
+    options.responsive = 'scroll'
     return options
 }
 
@@ -96,24 +142,9 @@ const mapStateToProps = (state) => {
     return {
         columns,
         data: transformed.data,
-        header: ' ',  // to force enough vertical space in the header
         optionOverrideFx,
-        style: {
-            cell: {
-                borderBottom: 0,
-                height: maxBubbleDiameter,
-                paddingTop: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingBottom: 0,
-                verticalAlign: 'middle',
-            },
-            row: {
-                height: maxBubbleDiameter,
-                verticalAlign: 'middle',
-            },
-        },
-        status: state['gene.fetchStatus'],
+        show: true, //state['gene.showChart'],
+        themeOverrides: themeOverrides(),
     }
 }
 

@@ -39,10 +39,8 @@ const state = {
     'gene.fetchMessage': (state = ' ', action) => {
         switch(action.type) {
         case 'gene.fetchMessage.set':
-            //console.trace('### set to ' + action.value)
             return action.value
         case 'gene.fetchMessage.clear':
-            //console.trace('### cleared')
             return null
         default:
             return state
@@ -90,6 +88,16 @@ const state = {
         switch(action.type) {
         case 'gene.size_by.uiSet':
             return action.value
+        default:
+            return state
+        }
+    },
+    'gene.showChart': (state = false, action) => {
+        switch(action.type) {
+        case 'gene.showChart.toQuietStatus':
+            return true
+        case 'gene.showChart.toRequestStatus':
+            return false
         default:
             return state
         }

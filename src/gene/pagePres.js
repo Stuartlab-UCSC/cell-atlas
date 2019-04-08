@@ -45,7 +45,6 @@ const MatchesFound = ({ data, showChart }) => {
 
 const SubHeader = (props) => {
     const { data, showChart, onSubmitClick} = props.props
-    console.log('showChart:', showChart)
     let comp =
         <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
             <Grid item xs={4} style={{marginTop: '2rem', zIndex: 100}} >
@@ -66,15 +65,15 @@ const SubHeader = (props) => {
 }
 
 const Body = (props) => {
-    // Render a message, or render the chart.
+    // Render a message, or render the chart, or render nothing.
     const { message, showChart } = props.props
-    let comp
+    let comp = null
     if (showChart) {
         comp =
             <div style={{marginTop: '-4rem'}} >
                 <Table />
             </div>
-    } else {
+    } else if (message){
         comp =
             <Typography variant='subtitle2' style={{marginTop: '1rem'}}>
                 {message}
@@ -86,7 +85,7 @@ const Body = (props) => {
 const Presentation = (props) => {
     return (
         <div>
-            <div style={{marginTop: '0.5rem'}}>
+            <div style={{marginTop: '-1.5rem'}}>
                 <InputHeader />
                 <SubHeader props={props} />
                 <Body props={props} />

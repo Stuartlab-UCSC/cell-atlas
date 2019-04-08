@@ -56,9 +56,9 @@ const mapStateToProps = (state) => {
     return {
         title: 'Datasets',
         header: cellCount(data) + ' Cells in ' + data.length + ' Datasets',
+        message: state['dataset.fetchMessage'],
         columns: state['dataset.tableColumn'],
         data: state['dataset.tableData'],
-        status: state['dataset.fetchStatus'] ,
     }
 }
 

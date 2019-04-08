@@ -49,16 +49,16 @@ const receiveData = (id, dataIn) => {
             // Handle receiving a message from the server rather than data.
             message = dataIn.message
         }
-        rxSet(id + '.fetchStatus.message', { value: { message }})
+        rxSet(id + '.fetchMessage.set', { value: message })
         
     // If dataIn is empty, let the user know there is no data.
     } else if (dataIn === null || dataIn === undefined || dataIn.length < 1) {
-        rxSet(id + '.fetchStatus.message',
-            { value: { message: 'No data found' }})
+        rxSet(id + '.fetchMessage.set', { value: 'No data found' })
 
     } else {
         // Parse the rows, building an array of arrays.
         // First build the column information array.
+        rxSet(id + '.fetchMessage.clear')
         let columns = []
         let data = []
         const rows = dataIn.split('\n')
@@ -97,7 +97,7 @@ const dataTableFetch = (id, urlPath) => {
     if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
     }
-    rxSet(id + '.fetchStatus.waiting')
+    rxSet(id + '.fetchMessage.set', { value: 'waiting for data...' })
     
     // Retrieve all rows of the query.
     // TODO implement pagination.

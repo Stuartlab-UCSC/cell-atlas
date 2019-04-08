@@ -10,8 +10,7 @@ import testData from 'gene/data'
 import Presentation from 'gene/pagePres'
 import { serverRequest } from 'gene/inputHeader'
 
-let data = testData // TODO until server is going 
-let prevFetchStatus = 'quiet'
+let data // the store for data outside of redux state
 
 const sortClustersByColor = (dataIn) => {
     // Sort the clusters within this solution by size.
@@ -52,7 +51,7 @@ const findVarMagnitudes = (solutions) => {
     let colorNegMag = 0
     let colorPosMag = 0
     let sizeMag = 0
-        solutions.forEach((solution, i) => {
+    solutions.forEach((solution, i) => {
         solutions[i].clusters.forEach((cluster) => {
             colorPosMag = Math.max(cluster.color, colorPosMag)
             colorNegMag = Math.min(cluster.color, colorNegMag)
@@ -67,10 +66,12 @@ const findVarMagnitudes = (solutions) => {
     rxSet('gene.sizeMag.set', { value: sizeMag })
 }
 
-const receiveData = (data) => {
+const receiveData = (dataIn) => {
     // Handle the data received from the server.
-    sortClustersByColor(data.cluster_solutions)
+    data = dataIn
+    sortByColor(data.cluster_solutions)
     findVarMagnitudes(data.cluster_solutions)
+    rxSet('gene.showChart.toQuietStatus')
     rxSet('gene.fetchMessage.clear')
     rxSet('gene.fetchStatus.quiet')
     rxSet('gene.firstChartDisplayed.set')
@@ -80,7 +81,7 @@ const getData = () => {
     // Request the data from the server.
     rxSet('gene.fetchStatus.waiting')
     rxSet('gene.fetchMessage.set', { value: 'waiting for data...' })
-    // TODO set a timeout to try to get the wait message to display.
+    // TODO set a timeout to simulate waiting for server.
     setTimeout(() => { receiveData(testData) }, 1000)
     /*
     let url =
@@ -94,25 +95,15 @@ const getData = () => {
 
 const mapStateToProps = (state) => {
     // Handle any changes to the fetch status.
-    let dataReady = false
-    const status = state['gene.fetchStatus']
-     if (status !== prevFetchStatus) {
-        if (status === 'request') {
-            getData()
-        } else if (status === 'quiet') {
-            dataReady = true
-        }
-        prevFetchStatus = status
+    if (state['gene.fetchStatus'] === 'request') {
+        getData()
     }
-    sortByColor(data.cluster_solutions)
-    const message = state['gene.fetchMessage']
     return {
         bubbleTooltip: state['gene.bubbleTooltip'],
         data,
-        message,
-        dataReady, // used to trigger state change to display new data
+        message: state['gene.fetchMessage'],
         legendVariable: state['gene.legendVariable'],
-        showChart: (message === null),
+        showChart: state['gene.showChart'],
     }
 }
 
@@ -133,7 +124,6 @@ const mapDispatchToProps = (dispatch) => {
         },
     }
 }
-
 
 const GeneCharts = connect(
     mapStateToProps, mapDispatchToProps

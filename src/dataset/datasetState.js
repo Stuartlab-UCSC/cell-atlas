@@ -16,6 +16,16 @@ const datasetState = {
             return state
         }
     },
+    'dataset.fetchMessage': (state = ' ', action) => {
+        switch(action.type) {
+        case 'dataset.fetchMessage.set':
+            return action.value
+        case 'dataset.fetchMessage.clear':
+            return null
+        default:
+            return state
+        }
+    },
     // Fetch status for the table.
     'dataset.fetchStatus': (state = 'quiet', action) => {
         switch (action.type) {
@@ -23,8 +33,6 @@ const datasetState = {
             return 'waiting'
         case 'dataset.fetchStatus.quiet':
             return 'quiet'
-        case 'dataset.fetchStatus.message':
-            return action.value
         default:
             return state
         }
