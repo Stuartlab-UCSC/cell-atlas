@@ -110,7 +110,6 @@ const Table = ({ header, props }) => {
 }
 
 const WithTheme = ({ header, props }) => {
-    // TODO this may be better with setRowProps, setBodyProps & .
     const { themeOverrides } = props
     const getMuiTheme = () => createMuiTheme(themeOverrides)
     
@@ -172,7 +171,7 @@ DataTable.propTypes = {
     columns: PropTypes.array.isRequired, // column information
     data: PropTypes.array.isRequired, // the data
 
-    header: PropTypes.string, // displays in middle of header'
+    header: PropTypes.string, // displays in middle of header
     message: PropTypes.string, // message to display rather than table
     optionOverrideFx: PropTypes.func, // function to override standard options
     show: PropTypes.bool, // show or don't show the table

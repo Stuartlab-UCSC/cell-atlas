@@ -6,7 +6,7 @@ import React from 'react'
 
 import { Bubble } from 'gene/bubble'
 import DataTable from 'components/DataTable'
-import data from 'gene/data'
+import { data } from 'gene/page'
 import { colorRef, getColor, maxBubbleDiameter, sizeRef, sizeToRadius }
     from 'gene/util'
 

@@ -4,8 +4,8 @@
 import { connect } from 'react-redux'
 
 
-import { set as rxSet } from 'state/rx'
-//import fetchData from 'fetch/fetch'
+import { get as rxGet, set as rxSet } from 'state/rx'
+//import fetchData from 'fetch/fetchData'
 import testData from 'gene/data'
 import Presentation from 'gene/pagePres'
 import { serverRequest } from 'gene/inputHeader'
@@ -66,31 +66,34 @@ const findVarMagnitudes = (solutions) => {
     rxSet('gene.sizeMag.set', { value: sizeMag })
 }
 
-const receiveData = (dataIn) => {
+const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
-    data = dataIn
+    //console.log('receiveDataFromServer:dataIn:', dataIn)
+    data = dataIn.resource  // save to our data area
     sortByColor(data.cluster_solutions)
     findVarMagnitudes(data.cluster_solutions)
     rxSet('gene.showChart.toQuietStatus')
-    rxSet('gene.fetchMessage.clear')
-    rxSet('gene.fetchStatus.quiet')
     rxSet('gene.firstChartDisplayed.set')
+}
+
+// A stub until we have real data on the server.
+const fetchData = (gene, url, receiveFx) => {
+    rxSet('gene.fetchStatus.waiting')
+    rxSet('gene.fetchMessage.set', { value: 'waiting for data...' })
+    setTimeout(() => {
+        receiveFx(testData)
+        rxSet('gene.fetchMessage.clear')
+        rxSet('gene.fetchStatus.quiet')
+    }, 1000)
 }
 
 const getData = () => {
     // Request the data from the server.
-    rxSet('gene.fetchStatus.waiting')
-    rxSet('gene.fetchMessage.set', { value: 'waiting for data...' })
-    // TODO set a timeout to simulate waiting for server.
-    setTimeout(() => { receiveData(testData) }, 1000)
-    /*
     let url =
-        'marker/' + rxGet('gene.name') +
-        '/size-by/' + rxGet('gene.size_by') +
-        '/color-by/' + rxGet('gene.color_by') +
-  
-    //fetchData('gene', url, receiveData)
-    */
+        '/marker/' + rxGet('gene.name') +
+        '/dotplot/' + rxGet('gene.size_by') +
+        '/' + rxGet('gene.color_by')
+    fetchData('gene', url, receiveDataFromServer)
 }
 
 const mapStateToProps = (state) => {
@@ -129,6 +132,6 @@ const GeneCharts = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export { onSubmitClick, serverRequest }
+export { onSubmitClick, data, serverRequest }
 
 export default GeneCharts

@@ -7,15 +7,13 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 
 const receiveData = (id, data, callback) => {
     // Receive the data from the fetch & put it into global or state variables.
-    console.log('typeof data:', typeof data)
-    console.log('data:', data)
     if (typeof data === 'object' && data.message) {
         // Handle receiving a message from the server rather than data.
-        rxSet(id + '.fetchMessage', { value: data.message })
+        rxSet(id + '.fetchMessage.set', { value: data.message })
         
     // If data is empty, let the user know there is no data.
     } else if (data === null || data === undefined || data.length < 1) {
-        rxSet(id + '.fetchMessage', { value: 'No data found' })
+        rxSet(id + '.fetchMessage.set', { value: 'No data found' })
 
     } else {
         callback(data)
@@ -35,7 +33,8 @@ const fetchData = (id, urlPath, callback) => {
         return  // we don't want to request again
     }
     rxSet(id + '.fetchStatus.waiting')
-    
+    rxSet(id + '.fetchMessage.set', { value: 'waiting for data...' })
+
     const url = process.env.REACT_APP_DATA_URL + urlPath
     let headers = {}
 

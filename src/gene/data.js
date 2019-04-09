@@ -1,7 +1,7 @@
 
 // Gene page data stub.
 
-let testData = {
+let testData = { resource: {
     "gene": "CCL4",
     "size_by": "sensitivity",
     "color_by": "log2_fold_change_vs_next",
@@ -3563,9 +3563,9 @@ let testData = {
       }
     ]
   }
-
+}
 /*
-let testData = {
+let testData = { resource: {
     gene: 'ALK',
     size_by: 'sensitivity',
     color_by: 'log2_fold_change_vs_next',
@@ -3763,10 +3763,10 @@ let testData = {
             ],
         },
     ]
-}
+}}
 */
 /*
-let testData = {
+let testData = { resource: {
  gene: "Tlr11", size_by: "sensitivity", color_by : "log2_fold_change_vs_next",
  cluster_solutions: [
    {
@@ -3819,7 +3819,7 @@ let testData = {
      ]
    }
  ]
-}
+}}
 */
 
 export default testData
