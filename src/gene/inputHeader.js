@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { get as rxGet } from 'state/rx'
 import Presentation from 'gene/inputHeaderPres'
 import { colorRef, sizeRef } from 'gene/util'
+import { getData } from 'gene/page'
 
 const serverRequest = (dispatch) => {
     if (rxGet('gene.name').length < 1) {
@@ -15,7 +16,7 @@ const serverRequest = (dispatch) => {
         })
     } else {
         dispatch({ type: 'gene.showChart.toRequestStatus' })
-        dispatch({ type: 'gene.fetchStatus.request' })
+        getData()
     }
 }
 

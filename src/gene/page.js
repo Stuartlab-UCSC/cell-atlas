@@ -3,14 +3,14 @@
 
 import { connect } from 'react-redux'
 
-
 import { get as rxGet, set as rxSet } from 'state/rx'
-//import fetchData from 'fetch/fetchData'
+import fetchData from 'fetch/fetchData'
 import testData from 'gene/data'
 import Presentation from 'gene/pagePres'
 import { serverRequest } from 'gene/inputHeader'
 import { sortBy } from 'gene/sort'
 
+const USE_TEST_DATA = true
 let data // the store for data outside of redux state
 
 const findVarMagnitudes = (solutions) => {
@@ -35,7 +35,6 @@ const findVarMagnitudes = (solutions) => {
 
 const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
-    //console.log('receiveDataFromServer:dataIn:', dataIn)
     data = dataIn.resource  // save to our data area
     sortBy(data.cluster_solutions, 'color', 'descending')
     findVarMagnitudes(data.cluster_solutions)
@@ -43,8 +42,9 @@ const receiveDataFromServer = (dataIn) => {
     rxSet('gene.firstChartDisplayed.set')
 }
 
-// A stub until we have real data on the server.
-const fetchData = (gene, url, receiveFx) => {
+
+// A test stub in place of server query.
+const fetchTestData = (gene, url, receiveFx) => {
     rxSet('gene.fetchStatus.waiting')
     rxSet('gene.fetchMessage.set', { value: 'waiting for data...' })
     setTimeout(() => {
@@ -60,14 +60,14 @@ const getData = () => {
         '/marker/' + rxGet('gene.name') +
         '/dotplot/' + rxGet('gene.size_by') +
         '/' + rxGet('gene.color_by')
-    fetchData('gene', url, receiveDataFromServer)
+    if (USE_TEST_DATA) {
+        fetchTestData('gene', url, receiveDataFromServer)
+    } else {
+        fetchData('gene', url, receiveDataFromServer)
+    }
 }
 
 const mapStateToProps = (state) => {
-    // Handle any changes to the fetch status.
-    if (state['gene.fetchStatus'] === 'request') {
-        getData()
-    }
     return {
         bubbleTooltip: state['gene.bubbleTooltip'],
         data,
@@ -99,6 +99,6 @@ const GeneCharts = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export { onSubmitClick, data, serverRequest }
+export { getData, data, onSubmitClick, serverRequest }
 
 export default GeneCharts

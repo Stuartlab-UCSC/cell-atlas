@@ -6,7 +6,7 @@
 import { get as rxGet, set as rxSet } from 'state/rx'
 
 const receiveData = (id, data, callback) => {
-    // Receive the data from the fetch & put it into global or state variables.
+    // Receive the data from the fetch.
     if (typeof data === 'object' && data.message) {
         // Handle receiving a message from the server rather than data.
         rxSet(id + '.fetchMessage.set', { value: data.message })
@@ -34,21 +34,20 @@ const fetchData = (id, urlPath, callback) => {
     }
     rxSet(id + '.fetchStatus.waiting')
     rxSet(id + '.fetchMessage.set', { value: 'waiting for data...' })
+    
+    // Allow the state to be recorded.
+    setTimeout(() => {
+        const url = process.env.REACT_APP_DATA_URL + urlPath
+        let headers = {}
 
-    const url = process.env.REACT_APP_DATA_URL + urlPath
-    let headers = {}
-
-    fetch(url, { headers })
-        .then((response) => {
-            if (response.ok) {
-                return response.text()
-            } else {
+        fetch(url, { headers })
+            .then((response) => {
                 return response.json()
-            }
         })
         .then((data) => receiveData(id, data, callback))
         .catch((e) => {
             receiveData(id, e.toString())
         })
+    }, 0)
 }
 export default fetchData

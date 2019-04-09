@@ -50,8 +50,6 @@ const state = {
     },
     'gene.fetchStatus': (state = 'initial', action) => {
         switch (action.type) {
-        case 'gene.fetchStatus.request':
-            return 'request'
         case 'gene.fetchStatus.waiting':
             return 'waiting'
         case 'gene.fetchStatus.quiet':

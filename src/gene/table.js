@@ -14,21 +14,26 @@ const addColumnOptions = (names) => {
     // Create column options returning a list of column objects.
     const cols = names.map(name => {
         let col = { name }
-        if (name === 'color') {
+        switch (name) {
+        case 'color':
             // The color column is not filterable nor searchable.
             // Show initial sort arrow.
+            col.label = 'expr'
             col.options = {
                 filter: false,
                 searchable: false,
                 sortDirection: 'desc',
             }
-        } else if (name === 'size') {
+            break
+        case 'size':
             // The size column is not filterable nor searchable.
+            col.label = 'quality'
             col.options = {
                 filter: false,
                 searchable: false,
             }
-        } else if (name === ' ') {
+            break
+        case ' ':
             // Columns without a header label are not filterable, searchable
             // nor sortable.
             col.options = {
@@ -37,6 +42,8 @@ const addColumnOptions = (names) => {
                 searchable: false,
                 sort: false,
             }
+            break
+        default:
         }
         return col
     })
@@ -76,8 +83,9 @@ const transform = (data, state) => {
         'Dataset',
         'Cluster Solution',
         'color',
-        'size',
-    ].concat(new Array(maxClusterCount - 4).fill(' '))
+        'size'
+    ]
+    header = header.concat(new Array(maxClusterCount - header.length).fill(' '))
     
     return { data: cData, columns: header }
 }
