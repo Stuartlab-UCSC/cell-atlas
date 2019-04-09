@@ -7,29 +7,28 @@ import React from 'react'
 import { Bubble } from 'gene/bubble'
 import DataTable from 'components/DataTable'
 import { data } from 'gene/page'
-import { colorRef, getColor, maxBubbleDiameter, sizeRef, sizeToRadius }
-    from 'gene/util'
+import { getColor, maxBubbleDiameter, sizeToRadius } from 'gene/util'
+import { onColumnSortChange } from 'gene/sort'
 
 const addColumnOptions = (names) => {
     // Create column options returning a list of column objects.
     const cols = names.map(name => {
         let col = { name }
-        if (Object.keys(colorRef).includes(name)) {
-            // The color_by column is not filterable nor searchable.
-            col.name = colorRef[name].label
-            col.options = {
-                //display: 'excluded',
-                filter: false,
-                searchable: false,
-            }
-        } else if (Object.keys(sizeRef).includes(name)) {
-            // The size_by column is not filterable nor searchable.
-            col.name = sizeRef[name].label
+        if (name === 'color') {
+            // The color column is not filterable nor searchable.
+            // Show initial sort arrow.
             col.options = {
                 filter: false,
                 searchable: false,
+                sortDirection: 'desc',
             }
-        } else if (name === '') {
+        } else if (name === 'size') {
+            // The size column is not filterable nor searchable.
+            col.options = {
+                filter: false,
+                searchable: false,
+            }
+        } else if (name === ' ') {
             // Columns without a header label are not filterable, searchable
             // nor sortable.
             col.options = {
@@ -76,9 +75,9 @@ const transform = (data, state) => {
     let header = [
         'Dataset',
         'Cluster Solution',
-        //data.color_by,
-        //data.size_by,
-    ].concat(new Array(maxClusterCount).fill(''))
+        'color',
+        'size',
+    ].concat(new Array(maxClusterCount - 4).fill(' '))
     
     return { data: cData, columns: header }
 }
@@ -104,7 +103,16 @@ const themeOverrides = () => {
                 root: style.row,
             },
             MUIDataTableHeadCell: {
-                root: style.cell,
+                // Set the width of header for size and color.
+                root: {
+                    ...style.cell,
+                    '&:nth-child(3)': {
+                        width: '3rem',
+                    },
+                    '&:nth-child(4)': {
+                        width: '3rem',
+                    },
+                },
                 //fixedHeader: style.cell,
             },
             MUIDataTableHeadRow: {
@@ -133,6 +141,7 @@ const optionOverrideFx = (options, matchesFound) => {
     options.elevation = 0
     options.download = false
     options.responsive = 'scroll'
+    options.onColumnSortChange = onColumnSortChange
     return options
 }
 
@@ -145,6 +154,7 @@ const mapStateToProps = (state) => {
         optionOverrideFx,
         show: true, //state['gene.showChart'],
         themeOverrides: themeOverrides(),
+        sort: state['gene.sort'],
     }
 }
 

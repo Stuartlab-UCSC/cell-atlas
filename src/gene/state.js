@@ -1,6 +1,8 @@
 
 // Gene page state.
 
+const defaultSort = { column: 'color', direction: 'descending' }
+
 const state = {
     'gene.bubbleTooltip': (state = false, action) => {
         switch(action.type) {
@@ -66,16 +68,6 @@ const state = {
             return state
         }
     },
-    'gene.name.errorMessage': (state = null, action) => {
-        switch(action.type) {
-        case 'gene.name.errorMessage.set':
-            return action.value
-        case 'gene.name.errorMessage.clear':
-            return null
-        default:
-            return state
-        }
-    },
     'gene.name': (state = 'CCL4', action) => {
         switch(action.type) {
         case 'gene.name.uiSet':
@@ -84,10 +76,12 @@ const state = {
             return state
         }
     },
-    'gene.size_by': (state = 'sensitivity', action) => {
+    'gene.name.errorMessage': (state = null, action) => {
         switch(action.type) {
-        case 'gene.size_by.uiSet':
+        case 'gene.name.errorMessage.set':
             return action.value
+        case 'gene.name.errorMessage.clear':
+            return null
         default:
             return state
         }
@@ -102,6 +96,14 @@ const state = {
             return state
         }
     },
+    'gene.size_by': (state = 'sensitivity', action) => {
+        switch(action.type) {
+        case 'gene.size_by.uiSet':
+            return action.value
+        default:
+            return state
+        }
+    },
     'gene.sizeMag': (state = 0, action) => {
         switch(action.type) {
         case 'gene.sizeMag.set':
@@ -110,6 +112,14 @@ const state = {
             return state
         }
     },
-};
+    'gene.sort': (state = defaultSort, action) => {
+        switch(action.type) {
+        case 'gene.sort.uiSet':
+            return { column: action.column, direction: action.direction }
+        default:
+            return state
+        }
+    },
+}
 
 export default state

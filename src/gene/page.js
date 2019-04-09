@@ -9,42 +9,9 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import testData from 'gene/data'
 import Presentation from 'gene/pagePres'
 import { serverRequest } from 'gene/inputHeader'
+import { sortBy } from 'gene/sort'
 
 let data // the store for data outside of redux state
-
-const sortClustersByColor = (dataIn) => {
-    // Sort the clusters within this solution by size.
-    let data = dataIn.slice()
-    data.sort(((a, b) => { return b.size - a.size }))
-    return data
-}
-
-const sortSolutionsByColor = (solutions) => {
-    // Sort the solutions by cluster colors within the solution.
-    const compare = (a, b) => {
-        for (var i = 0; i < a.clusters.length; i++) {
-            if (i > b.clusters.length - 1) {
-                break;
-            }
-            if (a.clusters[i].color !== b.clusters[i].color) {
-                return b.clusters[i].color - a.clusters[i].color
-            }
-        }
-        return 0
-    }
-    solutions.sort(compare)
-    return solutions
-}
-
-const sortByColor = (solutions) => {
-    solutions.forEach((solution, i) => {
-        // Sort the clusters within this solution by color.
-        solutions[i].clusters =
-            sortClustersByColor(solution.clusters)
-    })
-    // Sort the solutions by cluster colors within the solution.
-    sortSolutionsByColor(solutions)
-}
 
 const findVarMagnitudes = (solutions) => {
     // Find the magnitudes of sizes and colors.
@@ -70,7 +37,7 @@ const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
     //console.log('receiveDataFromServer:dataIn:', dataIn)
     data = dataIn.resource  // save to our data area
-    sortByColor(data.cluster_solutions)
+    sortBy(data.cluster_solutions, 'color', 'descending')
     findVarMagnitudes(data.cluster_solutions)
     rxSet('gene.showChart.toQuietStatus')
     rxSet('gene.firstChartDisplayed.set')
