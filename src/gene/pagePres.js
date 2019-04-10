@@ -13,7 +13,6 @@ import Table from 'gene/table'
 import InputHeader from 'gene/inputHeader'
 import LegendColor from 'gene/legendColor'
 import LegendSize from 'gene/legendSize'
-import MockUp from 'components/MockUp'
 
 const SubmitButton = ({ onClick }) => {
     let comp =
@@ -144,14 +143,11 @@ const PageTitle = () => {
 const Presentation = (props) => {
     return (
         <div>
-            <div>
-                <PageTitle />
-                <InputHeader />
-                <SubHeader props={props} />
-                <Body props={props} />
-                <BubbleTooltip data={props.bubbleTooltip}/>
-            </div>
-            <MockUp />
+            <PageTitle />
+            <InputHeader />
+            <SubHeader props={props} />
+            <Body props={props} />
+            <BubbleTooltip data={props.bubbleTooltip}/>
         </div>
     )
 }
