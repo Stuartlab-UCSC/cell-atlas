@@ -43,8 +43,58 @@ const MatchesFound = ({ data, showChart }) => {
     return comp
 }
 
-const SubHeader = (props) => {
-    const { data, showChart, onSubmitClick} = props.props
+const SameValueMessage = ({ name, same }) => {
+    let comp = null
+    // If this name is in the sameValueColumn list
+    if (same[name]) {
+        const labels = {
+            species: 'species',
+            organ: 'organs',
+            study: 'studies',
+        }
+        // Columns that should be in italics.
+        const italics = ['study']
+        
+        if (italics.includes(name)) {
+            comp =
+                <Typography inline={true}>
+                    &nbsp;All {labels[name]}: <b><i>{same[name]}</i></b>
+                </Typography>
+        } else {
+            comp =
+                <Typography inline={true}>
+                    &nbsp;All {labels[name]}: <b>{same[name]}</b>
+                </Typography>
+        }
+    }
+    return comp
+}
+
+const SameValueMessages = ({ props }) => {
+    let comp = null
+    const { coloredAttrs, sameValueColumns, showChart } = props
+    if (showChart && Object.keys(sameValueColumns).length > 0) {
+        // Build a message for each column.
+        let items = []
+        coloredAttrs.forEach((attr, i) => {
+            items.push(
+                <SameValueMessage
+                    name={attr}
+                    same={sameValueColumns}
+                    key={i}
+                />
+            )
+        })
+        comp =
+            <div style={{ marginTop: '1rem' }} >
+                {items}
+            </div>
+    }
+    return comp
+}
+
+const SubHeader = ({ props }) => {
+    const { data, onSubmitClick, showChart } = props
     let comp =
         <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
             <Grid item xs={4} style={{marginTop: '2rem', zIndex: 100}} >
@@ -52,6 +102,7 @@ const SubHeader = (props) => {
                     onClick={onSubmitClick}
                 />
                 <MatchesFound data={data} showChart={showChart} />
+                <SameValueMessages props={props} />
             </Grid>
             <Grid item xs={3} >
                 <LegendColor />
@@ -82,10 +133,19 @@ const Body = (props) => {
     return comp
 }
 
+const PageTitle = () => {
+    const comp =
+        <Typography variant='h6' >
+            Gene search in EBI dataset clusters
+        </Typography>
+    return comp
+}
+
 const Presentation = (props) => {
     return (
         <div>
-            <div style={{marginTop: '-1.5rem'}}>
+            <div>
+                <PageTitle />
                 <InputHeader />
                 <SubHeader props={props} />
                 <Body props={props} />

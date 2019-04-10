@@ -74,6 +74,7 @@ const state = {
             return state
         }
     },
+    // An error message to be displayed in the gene input.
     'gene.name.errorMessage': (state = null, action) => {
         switch(action.type) {
         case 'gene.name.errorMessage.set':
@@ -90,6 +91,15 @@ const state = {
             return true
         case 'gene.showChart.toRequestStatus':
             return false
+        default:
+            return state
+        }
+    },
+    // Those columns containing a single value.
+    'gene.sameValueColumns': (state = {}, action) => {
+        switch(action.type) {
+        case 'gene.sameValueColumns.found':
+            return action.value
         default:
             return state
         }

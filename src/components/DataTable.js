@@ -25,7 +25,7 @@ const Header = ({ header }) => {
 
 const onCellClick = (link) => {
     // Open any link in a new tab.
-    if (link.slice(0,4).toLowerCase() === 'http') {
+    if (typeof link === 'string' && link.slice(0,4).toLowerCase() === 'http') {
         window.open(link)
     }
 }

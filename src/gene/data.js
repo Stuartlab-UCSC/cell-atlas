@@ -1,6 +1,6 @@
 
 // Gene page data stub.
-
+/*
 let testData = { resource: {
     "gene": "CCL4",
     "size_by": "sensitivity",
@@ -3564,14 +3564,19 @@ let testData = { resource: {
     ]
   }
 }
-/*
+*/
 let testData = { resource: {
     gene: 'ALK',
     size_by: 'sensitivity',
     color_by: 'log2_fold_change_vs_next',
     cluster_solutions: [
         {
-            dataset_name: '10xGenomics_pbmc8k',
+            dataset: {
+                name: 'E-GEOD-666',
+                species: 'mouse',
+                organ: 'heart',
+                study: 'its alive',
+            },
             cluster_solution_name: 'louvain100pcs',
             clusters: [
                 {
@@ -3709,7 +3714,12 @@ let testData = { resource: {
             ],
         },
         {
-            dataset_name: 'E-GEOD-666',
+            dataset: {
+                name: 'E-GEOD-666',
+                species: 'mouse',
+                organ: 'heart',
+                study: 'in vitro',
+            },
             cluster_solution_name: 'sc3-666',
             clusters: [
                 {
@@ -3733,7 +3743,12 @@ let testData = { resource: {
             ],
         },
         {
-            dataset_name: 'E-GEOD-111727',
+            dataset: {
+                name: 'dataset name 2',
+                species: 'Homo sapiens',
+                organ: 'heart',
+                study: 'in vivo',
+            },
             cluster_solution_name: 'sc3-K-10',
             clusters: [
                 {
@@ -3764,7 +3779,7 @@ let testData = { resource: {
         },
     ]
 }}
-*/
+
 /*
 let testData = { resource: {
  gene: "Tlr11", size_by: "sensitivity", color_by : "log2_fold_change_vs_next",

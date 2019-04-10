@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData from 'fetch/fetchData'
 import testData from 'gene/data'
+import { assignCatColors, clearColorCats, coloredAttrs, gatherUniqueCats }
+    from 'gene/colorCat'
 import Presentation from 'gene/pagePres'
 import { serverRequest } from 'gene/inputHeader'
 import { sortBy } from 'gene/sort'
@@ -13,21 +15,40 @@ import { sortBy } from 'gene/sort'
 const USE_TEST_DATA = true
 let data // the store for data outside of redux state
 
-const findVarMagnitudes = (solutions) => {
-    // Find the magnitudes of sizes and colors.
+const findDerivedData = (solutions) => {
+    // Find the values that are derived from the data.
+    clearColorCats()
     let colorNegMag = 0
     let colorPosMag = 0
     let sizeMag = 0
-    solutions.forEach((solution, i) => {
+    solutions.forEach((soln, i) => {
+        
+        // Find the unique categorical values.
+        gatherUniqueCats(soln.dataset)
+
+        // Find the color and size magnitudes.
         solutions[i].clusters.forEach((cluster) => {
             colorPosMag = Math.max(cluster.color, colorPosMag)
             colorNegMag = Math.min(cluster.color, colorNegMag)
             sizeMag = Math.max(cluster.size, sizeMag)
         })
     })
-    // Adjust the endpoints to be the same distance from zero.
-    const mag = Math.max(colorPosMag, -colorNegMag)
-    const negMag = -mag
+    
+    // Assign colors to the categories & get a list of attrs with single values.
+    rxSet('gene.sameValueColumns.found', { value: assignCatColors() })
+    
+    // Save the magnitudes found.
+    let mag
+    let negMag
+    if (colorNegMag < 0) {
+        // Adjust the endpoints to be the same distance from zero.
+        mag = Math.max(colorPosMag, -colorNegMag)
+        negMag = -mag
+    } else {
+        // All values are positive.
+        mag = colorPosMag
+        negMag = 0
+    }
     rxSet('gene.colorNegMag.set', { value: negMag })
     rxSet('gene.colorPosMag.set', { value: mag })
     rxSet('gene.sizeMag.set', { value: sizeMag })
@@ -37,7 +58,7 @@ const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
     data = dataIn.resource  // save to our data area
     sortBy(data.cluster_solutions, 'color', 'descending')
-    findVarMagnitudes(data.cluster_solutions)
+    findDerivedData(data.cluster_solutions)
     rxSet('gene.showChart.toQuietStatus')
     rxSet('gene.firstChartDisplayed.set')
 }
@@ -70,9 +91,10 @@ const getData = () => {
 const mapStateToProps = (state) => {
     return {
         bubbleTooltip: state['gene.bubbleTooltip'],
+        coloredAttrs,
         data,
         message: state['gene.fetchMessage'],
-        legendVariable: state['gene.legendVariable'],
+        sameValueColumns: state['gene.sameValueColumns'],
         showChart: state['gene.showChart'],
     }
 }

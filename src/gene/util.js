@@ -5,7 +5,7 @@ import colorMix from 'gene/colorMix'
 import { background } from 'app/themeData'
 import { get as rxGet } from 'state/rx'
 
-const maxBubbleDiameter = 24 // pixel width
+const maxBubbleDiameter = 16 // pixel width
 const minBubbleDiameter = 5  // pixel width
 const negMagColor = '#0000ff'
 const posMagColor = '#ff0000'
