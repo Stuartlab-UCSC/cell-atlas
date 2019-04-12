@@ -91,6 +91,7 @@ const getData = () => {
 const mapStateToProps = (state) => {
     return {
         bubbleTooltip: state['gene.bubbleTooltip'],
+        colorColumnTooltip: state['gene.colorColumnTooltip'],
         coloredAttrs,
         data,
         message: state['gene.fetchMessage'],

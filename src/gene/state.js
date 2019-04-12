@@ -4,7 +4,7 @@
 const defaultSort = { column: 'color', direction: 'descending' }
 
 const state = {
-    'gene.bubbleTooltip': (state = false, action) => {
+    'gene.bubbleTooltip': (state = null, action) => {
         switch(action.type) {
         case 'gene.bubbleTooltip.mouseOut':
             return null
@@ -17,6 +17,16 @@ const state = {
     'gene.color_by': (state = 'log2_fold_change_vs_next', action) => {
         switch(action.type) {
         case 'gene.color_by.uiSet':
+            return action.value
+        default:
+            return state
+        }
+    },
+    'gene.colorColumnTooltip': (state = null, action) => {
+        switch(action.type) {
+        case 'gene.colorColumnTooltip.mouseOut':
+            return null
+        case 'gene.colorColumnTooltip.mouseOver':
             return action.value
         default:
             return state

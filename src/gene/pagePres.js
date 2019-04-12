@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import { integerToCommaInteger } from 'app/util'
+import { ColorColumnTooltip } from 'gene/colorColumn'
 import { BubbleTooltip } from 'gene/bubble'
 import Table from 'gene/table'
 import InputHeader from 'gene/inputHeader'
@@ -147,6 +148,7 @@ const Presentation = (props) => {
             <InputHeader />
             <SubHeader props={props} />
             <Body props={props} />
+            <ColorColumnTooltip data={props.colorColumnTooltip}/>
             <BubbleTooltip data={props.bubbleTooltip}/>
         </div>
     )

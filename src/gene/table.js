@@ -9,8 +9,8 @@ import DataTable from 'components/DataTable'
 import { data } from 'gene/page'
 import { getColor, sizeToRadius } from 'gene/util'
 import { optionOverrideFx, themeOverrides } from 'gene/tableOverrides'
-import colorCat from 'gene/colorCat'
 import { coloredAttrs } from 'gene/colorCat'
+import ColorColumn from 'gene/colorColumn'
 
 const DATASET_NAME_ONLY = false  // false: data includes only dataset_name
 
@@ -37,22 +37,6 @@ const columnHeads = (maxClusterCount, state) => {
     return heads.concat(new Array(maxClusterCount - 2).fill(' '))
 }
 
-const customBodyRender = (value, tableMeta) => {
-    const attr = tableMeta.columnData.name
-    let comp = null
-    if (attr) {
-        comp =
-            <div
-                style={{
-                    backgroundColor: colorCat[attr][value],
-                    width: '1rem',
-                    height: 28,
-                }}
-            />
-    }
-    return comp
-}
-
 const categoryOptions = (name, state) => {
     // Category columns' values display as colors rather than text.
     // Columns containing all the same value are not displayed.
@@ -61,7 +45,7 @@ const categoryOptions = (name, state) => {
     if (Object.keys(sameValueColumns).includes(name)) {
         col.options.display = 'excluded'
     } else {
-        col.options.customBodyRender = customBodyRender
+        col.options.customBodyRender = ColorColumn
     }
     return col
 }
