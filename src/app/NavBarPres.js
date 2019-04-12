@@ -219,6 +219,7 @@ class NavBarPres extends React.Component {
                         {this.logo()}
                     </ToggleButton>
                     {this.linkItem('Gene', '/gene')}
+                    {this.linkItem('Cell Type', '/cell-type')}
                     {this.linkItem('Datasets', '/dataset')}
                     {this.linkItem('Trajectory', '/traj')}
                     {this.linkItem('SQL Query', '/sql-query')}

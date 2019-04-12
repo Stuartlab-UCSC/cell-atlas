@@ -22,6 +22,10 @@ const receiveData = (id, data, callback) => {
     rxSet(id + '.fetchStatus.quiet')
 }
 
+const error = (message) => {
+    console.log('fetch error:', message)
+}
+
 const fetchData = (id, urlPath, callback) => {
     // Get data from the data server.
     // @param id: ID of the table instance, used as:
@@ -41,12 +45,16 @@ const fetchData = (id, urlPath, callback) => {
         let headers = {}
 
         fetch(url, { headers })
-            .then((response) => {
+        .then((response) => {
+            if (response.ok) {
                 return response.json()
+            } else {
+                error(response.statusText)
+            }
         })
         .then((data) => receiveData(id, data, callback))
         .catch((e) => {
-            receiveData(id, e.toString())
+            error(e.toString())
         })
     }, 0)
 }
