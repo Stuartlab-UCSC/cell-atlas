@@ -4,17 +4,10 @@
 
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
-import { aboutState } from 'home/About'
 import databaseState from 'database/databaseState'
 import databaseFavoriteState from 'database/favoriteState'
 import datasetState from 'dataset/datasetState'
 import geneState from 'gene/state'
-import moleSimState from 'moleSim/moleSimState'
-import resultState from 'result/resultState'
-import searchState from 'search/searchState'
-import trajSimState from 'trajSim/trajSimState'
-import typePsychState from 'typePsych/typePsychState'
-import uploadState from 'upload/page/uploadState'
 
 const reducers = {
 
@@ -119,17 +112,10 @@ export const init = () => {
     // Create the redux actions.
     
     // Combine the other reducers with these local reducers.
-    Object.assign(reducers, aboutState)
     Object.assign(reducers, databaseState)
     Object.assign(reducers, databaseFavoriteState)
     Object.assign(reducers, datasetState)
     Object.assign(reducers, geneState)
-    Object.assign(reducers, moleSimState)
-    Object.assign(reducers, resultState)
-    Object.assign(reducers, searchState)
-    Object.assign(reducers, trajSimState)
-    Object.assign(reducers, typePsychState)
-    Object.assign(reducers, uploadState)
 
     // Create the store.
     let store

@@ -18,15 +18,6 @@ import NamerDialog from 'components/NamerDialog'
 import NavBar from 'app/NavBar'
 import sessionStoreInit from 'state/sessionStore'
 import TrajExplore from 'trajExplore/TrajExplore'
-/*
-import MoleSim from 'moleSim/MoleSim'
-import Search from 'search/Search'
-import Result from 'result/Result'
-import TrajSim from 'trajSim/TrajSim'
-import TypePsych from 'typePsych/TypePsych'
-import Upload from 'upload/page/Upload'
-import Help from 'home/Help'
-*/
 import PageNotFound from 'home/PageNotFound'
 import Theme from 'app/Theme'
 

@@ -7,10 +7,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-import Settings from 'images/settings.svg'
+
 import appLogo from 'app/images/logo.svg'
 import NavBarList from 'app/NavBarList'
-import { background, altBackground, altForeground } from 'app/themeData'
+import { altBackground, altForeground } from 'app/themeData'
 
 class NavBarPres extends React.Component {
 
@@ -159,41 +159,15 @@ class NavBarPres extends React.Component {
         */
     }
 
-    settings = () => {
-
-        // The settings menu.
-        const theme = (this.props.theme === 'light') ?
-            'Dark Theme' : 'Light Theme'
-        const list =
-            <MenuList>
-                <MenuItem
-                    onClick={this.onThemeClick}
-                >
-                    {theme}
-                </MenuItem>
-            </MenuList>
-        const icon = <img src={Settings} alt='settings' />
-        const comp =
-            <React.Fragment>
-                <NavBarList id='settings' label={icon} list={list}
-                    open={this.state.open}
-                    onAnyClick={this.onAnyClick}
-                />
-
-            </React.Fragment>
-        return comp
-    }
-
     render() {
         this.barItemStyle = {
             ...this.itemStyle,
             color: altForeground,
-            //background: altBackground,
         }
         this.barItemActiveStyle = {
             ...this.itemStyle,
             color: altForeground,
-            background: background,
+
         }
         return (
             <div
@@ -224,19 +198,9 @@ class NavBarPres extends React.Component {
                     {this.linkItem('SQL Query', '/sql-query')}
                     {this.linkItem('Data Model', '/data-model')}
                     {this.externalLinkItem('API', this.props.apiUrl)}
-                    {this.settings()}
                 </ToggleButtonGroup>
             </div>
         )
-        /*
-                    {this.explore()}
-                    {this.linkItem('Upload', '/upload')}
-                    {this.analyze()}
-                    {this.linkItem('Results', '/result')}
-                    {this.linkItem('Help', '/help')}
-                    {this.settings()}
-                    {this.linkItem('NOTE: UNDER DEVELOPMENT', '/')}
-        */
     }
 }
 
