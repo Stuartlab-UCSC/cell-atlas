@@ -4,6 +4,7 @@
 
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
+import cellTypeState from 'cellType/state'
 import databaseState from 'database/databaseState'
 import databaseFavoriteState from 'database/favoriteState'
 import datasetState from 'dataset/datasetState'
@@ -112,6 +113,7 @@ export const init = () => {
     // Create the redux actions.
     
     // Combine the other reducers with these local reducers.
+    Object.assign(reducers, cellTypeState)
     Object.assign(reducers, databaseState)
     Object.assign(reducers, databaseFavoriteState)
     Object.assign(reducers, datasetState)
