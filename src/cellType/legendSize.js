@@ -11,9 +11,9 @@ import { showVars } from 'cellType/inputHeader'
 const findLabels = (state) => {
     const mag = state['cellType.sizeMag']
     return [
-        stringToPrecision(mag, 2),
-        stringToPrecision(mag / 2, 2),
-        stringToPrecision(mag / 4, 2),
+        stringToPrecision(mag, 1),
+        stringToPrecision(mag / 2, 1),
+        stringToPrecision(mag / 4, 1),
         '0',
     ]
 }

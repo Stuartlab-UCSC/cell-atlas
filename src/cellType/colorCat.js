@@ -69,4 +69,4 @@ const clearCats = () => {
 
 export default colorCat
 
-export { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
+export { summarizeCats, clearCats, catAttrs, coloredAttrs, gatherUniqueCats }

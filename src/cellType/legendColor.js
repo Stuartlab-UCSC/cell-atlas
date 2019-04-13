@@ -14,17 +14,17 @@ const findLabels = () => {
 
     if (colorNegMag < 0) {
         return [
-            stringToPrecision(colorPosMag),
-            stringToPrecision(colorPosMag / 2),
+            stringToPrecision(colorPosMag, 2),
+            stringToPrecision(colorPosMag / 2, 2),
             '0',
-            stringToPrecision(colorNegMag / 2),
-            stringToPrecision(colorNegMag),
+            stringToPrecision(colorNegMag / 2, 2),
+            stringToPrecision(colorNegMag, 2),
         ]
     } else {
         return [
-            stringToPrecision(colorPosMag),
-            stringToPrecision(colorPosMag * 3 / 4),
-            stringToPrecision(colorPosMag / 2),
+            stringToPrecision(colorPosMag, 2),
+            stringToPrecision(colorPosMag * 3 / 4, 2),
+            stringToPrecision(colorPosMag / 2, 2),
             '0',
         ]
     }

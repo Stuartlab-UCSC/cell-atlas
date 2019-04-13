@@ -10,13 +10,13 @@ import { data } from 'cellType/page'
 import { getColor, sizeToRadius } from 'cellType/util'
 import { optionOverrideFx, themeOverrides } from 'cellType/tableOverrides'
 import colorCat from 'cellType/colorCat'
-import { catAttrs } from 'cellType/colorCat'
+import { coloredAttrs } from 'cellType/colorCat'
 
 const columnHeads = (maxClusterCount, state) => {
     // Find the column headers.
     let heads = [
         'datasetName',
-        'compared to cluster',
+        'compared_to_cluster',
         'cluster_solution_name',
         'species',
         'organ',
@@ -44,55 +44,74 @@ const customBodyRender = (value, tableMeta) => {
     return comp
 }
 
-const categoryOptions = (name, state) => {
-    // Category columns' values display as colors rather than text.
-    // Columns containing all the same value are not displayed.
-    const sameValueColumns = state['cellType.sameValueColumns']
-    let col = { name, options: {} }
-    if (Object.keys(sameValueColumns).includes(name)) {
-        col.options.display = 'excluded'
-    } else {
-        col.options.customBodyRender = customBodyRender
+const setCellProps = (value) => {
+    return {
+        style: {
+            maxWidth: '10rem',
+            paddingRight: '0.5rem',
+        }
     }
-    return col
+}
+
+let columnInfo = {
+    datasetName: {
+        name: 'dataset',
+        options: {},
+    },
+    cluster_solution_name: {
+        name: 'cluster solution',
+        options: {},
+    },
+    compared_to_cluster: {
+        name: 'compared to cluster',
+        options: {
+            setCellProps: setCellProps,
+        }
+    },
+    color: {
+        name: 'color',
+        options: {
+            filter: false,
+            searchable: false,
+        },
+    },
+    size: {
+        name: 'size',
+        options: {
+            filter: false,
+            searchable: false,
+            sortDirection: 'desc',
+        },
+    },
+    ' ': {
+        name: ' ',
+        options: {
+            filter: false,
+            searchable: false,
+            sort: false,
+        },
+    }
+
 }
 
 const columnOptions = (maxClusterCount, state) => {
-    // Create column options returning a list of column objects.
+    // Create column options as a list of objects.
     const heads = columnHeads(maxClusterCount, state)
+    const sameValueColumns = state['cellType.sameValueColumns']
     return heads.map(name => {
-        let col = { name }
-        switch (name) {
-        case 'color':
-            // The color column is not filterable nor searchable.
-            // Show initial sort arrow.
-            col.options = {
-                filter: false,
-                searchable: false,
-            }
-            break
-        case 'size':
-            // The size column is not filterable nor searchable.
-            col.options = {
-                filter: false,
-                searchable: false,
-                sortDirection: 'desc',
-            }
-            break
-        case ' ':
-            // Columns without a header label are not filterable, searchable
-            // nor sortable.
-            col.options = {
-                //column: false,
-                filter: false,
-                searchable: false,
-                sort: false,
-            }
-            break
-        default:
-            if (catAttrs.includes(name)) {
-                col = categoryOptions(name, state)
-            }
+        let col = { name, options: {} }
+        
+        // Some columns have custom info.
+        if (columnInfo[name]) {
+            col = columnInfo[name]
+        }
+        // Don't show columns with all the same value.
+        if (Object.keys(sameValueColumns).includes(name)) {
+            col.options.display = 'excluded'
+        }
+        // Colored columns get custom rendering.
+        if (coloredAttrs.includes(name)) {
+            col.options.customBodyRender = customBodyRender
         }
         return col
     })

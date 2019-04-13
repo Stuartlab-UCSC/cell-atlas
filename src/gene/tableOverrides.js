@@ -4,20 +4,26 @@
 import { onColumnSortChange } from 'gene/sort'
 import { maxBubbleDiameter } from 'gene/util'
 
+const wideCell = {
+    minWidth: '5rem',
+    paddingRight: '0.5rem',
+}
+const narrowCell = {
+    paddingRight: '0.5rem',
+    //maxWidth: '30px',
+}
 const themeOverrides = () => {
     const style = {
         cell: {
-            width: '0.5rem',
-            '&:nth-child(0)': {
-                minWidth: '0.5rem',
-            },
-            '&:nth-child(1)': {
-                minWidth: '5rem',
-            },
             paddingTop: 0,
             paddingLeft: 0,
             paddingRight: 0,
             paddingBottom: 0,
+            width: '0.5rem',
+            '&:nth-child(2)': wideCell,
+            '&:nth-child(4)': wideCell,
+            '&:nth-child(6)': narrowCell,
+            '&:nth-child(8)': narrowCell,
         },
         row: {
             height: maxBubbleDiameter,

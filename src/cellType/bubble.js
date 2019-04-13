@@ -6,6 +6,7 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
+import { altBackground, altForeground } from 'app/themeData'
 
 import { set as rxSet } from 'state/rx'
 import { maxBubbleDiameter, sizeRef, stringToPrecision }
@@ -55,7 +56,8 @@ const BubbleTooltip = ({data}) => {
             position: 'fixed',
             top: data.y + 10,
             left: data.x - 80,
-            background: '#888888',
+            background: altBackground,
+            color: altForeground,
         }
         comp =
             <Card style={style} >

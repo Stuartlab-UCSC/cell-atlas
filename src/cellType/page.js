@@ -13,7 +13,7 @@ import { serverRequest } from 'cellType/inputHeader'
 import { sortBy } from 'cellType/sort'
 import { isValidGeneName } from 'cellType/geneName'
 
-const USE_TEST_DATA = false
+const USE_TEST_DATA = true
 let data // the store for data outside of redux state
 
 const findDerivedData = (solutions) => {
@@ -43,7 +43,6 @@ const findDerivedData = (solutions) => {
     
     // Assign colors to the categories & get a list of attrs with single values.
     const sameValueColumns = summarizeCats()
-
     rxSet('cellType.sameValueColumns.found', { value: sameValueColumns })
     
     // Save the magnitudes found.
@@ -89,7 +88,6 @@ const getData = () => {
     let url =
         '/dotplot/cluster_solution/someUserClusterSolution' + // TODO
         '/color/' + rxGet('cellType.geneName')
-        // /dotplot/cluster_solution/<cluster_solution_name>/color/<gene-name>
     if (USE_TEST_DATA) {
         fetchTestData('cellType', url, receiveDataFromServer)
     } else {
