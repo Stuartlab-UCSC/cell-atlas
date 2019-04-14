@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 
 import heatmap from 'trajExplore/images/heatmap.png'
 
-const Help = () => {
+const TrajExplore = () => {
     return (
         <Grid container spacing={16} >
             <Grid item xs={12}>
@@ -26,4 +26,4 @@ const Help = () => {
     )
 }
 
-export default Help
+export default TrajExplore

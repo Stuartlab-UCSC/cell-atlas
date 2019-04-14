@@ -17,15 +17,15 @@ const showVars = (state) => {
     // Show the variable selectors if not on the home page and
     // a fetch has occurred at least once.
     return (window.location.pathname !== '/' &&
-         state['cellType.firstChartDisplayed'])
+         state.cellType.firstChartDisplayed)
 }
 
 const mapStateToProps = (state) => {
     let sizeList = Object.keys(sizeRef).map(size_by => {
         return { ...sizeRef[size_by], value: size_by }
     })
-    const colorValue = state['cellType.color_by']
-    const sizeValue = state['cellType.size_by']
+    const colorValue = state.cellType.color_by
+    const sizeValue = state.cellType.size_by
     rxSet('geneName.helperInLabel.true')
     return {
         showVars: showVars(state),
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
         sizeList,
         sizeValue,
         sizeTooltip: sizeRef[sizeValue].tooltip,
-        showGene: state['cellType.showGene'],
+        showGene: state.cellType.showGene,
     }
 }
 

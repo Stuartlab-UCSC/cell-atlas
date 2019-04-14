@@ -6,8 +6,8 @@ import FavoritePres from 'database/FavoritePres'
 
 const mapStateToProps = (state) => {
     return {
-        list: state['databaseFavorite.list'],
-        selected: state['databaseFavorite.selected'],
+        list: state.database.favoriteList,
+        selected: state.database.favoriteSelected,
     }
 }
 
@@ -20,11 +20,11 @@ const mapDispatchToProps = (dispatch) => {
                 value,
             })
             dispatch({
-                type: 'database.query.rowCount.favoriteSelect',
+                type: 'database.queryRowCount.favoriteSelect',
                 queryString: value,
             })
             dispatch({
-                type: 'databaseFavorite.selected.uiSelect',
+                type: 'database.favoriteSelected.uiSelect',
                 value,
             })
         },

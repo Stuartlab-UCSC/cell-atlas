@@ -49,16 +49,16 @@ const cellCount = (rows) => {
 }
 
 const mapStateToProps = (state) => {
-    if (state["dataset.tableData"].length < 1) {
+    if (state.dataset.tableData.length < 1) {
         getData()
     }
-    const data = state['dataset.tableData']
+    const data = state.dataset.tableData
     return {
         title: 'Datasets',
         header: cellCount(data) + ' Cells in ' + data.length + ' Datasets',
-        message: state['dataset.fetchMessage'],
-        columns: state['dataset.tableColumn'],
-        data: state['dataset.tableData'],
+        message: state.dataset.fetchMessage,
+        columns: state.dataset.tableColumn,
+        data: state.dataset.tableData,
     }
 }
 

@@ -4,120 +4,60 @@
 
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
-import cellTypeState from 'cellType/state'
-import databaseState from 'database/databaseState'
-import databaseFavoriteState from 'database/favoriteState'
-import datasetState from 'dataset/datasetState'
-import geneState from 'gene/state'
+import cellType from 'cellType/state'
+import database from 'database/databaseState'
+import dataset from 'dataset/datasetState'
+import gene from 'gene/state'
+import { namerDialogState as namerDialog } from 'components/NamerDialog'
 
-const reducers = {
-
-    'background': (state = '#ffffff', action) => {
-        if (action.type === 'background.toggle') {
-            return (state === '#ffffff') ? '#000000' : '#ffffff'
-        } else {
-            return state
-        }
-
-    },
-    'input.file': (state = null, action) => {
-        if (action.type === 'input.file.update') {
-            return action
-        } else {
-            return state
-        }
-    },
-    'doNotTrack': (state = null, action) => {
+// Global application state.
+const app = (
+    state = {
+        homeRedirect: false,
+        navBarTheme: 'light',
+        userEmail: null,
+    }, action) => {
         switch(action.type) {
-        case 'doNotTrack.displayed':
-            return 'displayed'
-        case 'doNotTrack.loadPersist':
-            return action.loadPersist
-        default:
-            return state
-        }
-    },
-    'navBar.theme': (state = 'light', action) => {
-        switch(action.type) {
-            case 'navBar.theme.toggle':
-                return (state === 'light') ? 'dark' : 'light'
-         default:
-            return state
-        }
-    },
-    'home.redirect': (state = false, action) => {
-        switch (action.type) {
-            case 'home.redirect.set':
-                return true
-            case 'home.redirect.reset':
-                return false
-            default:
-                return state
-        }
-    },
-    'namerDialog.name': (state = null, action) => {
-        switch(action.type) {
-        case 'namerDialog.name.change':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'namerDialog.message': (state = 'Name this', action) => {
-        switch(action.type) {
-        case 'namerDialog.message.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    
-    // The callback to handle the new name.
-    'namerDialog.onSubmit': (state = null, action) => {
-        switch(action.type) {
-        case 'namerDialog.onSubmit.uiSet':
-            return action.callback
-        case 'namerDialog.onSubmit.clear':
-            return null
-        default:
-            return state
-        }
-    },
-    'namerDialog.open': (state = false, action) => {
-        switch(action.type) {
-        case 'namerDialog.open.true':
-            return true
-        case 'namerDialog.open.false':
-            return false
-        default:
-            return state
-        }
-    },
-    'user.email': (state = null, action) => {
-        switch(action.type) {
-        case 'user.email.login':
-            if (action.user) {
-                return action.user
+        case 'homeRedirect.set':
+            return {
+                ...state,
+                homeRedirect: true
             }
-            return null
-        case 'user.email.logout':
-            return null
+        case 'homeRedirect.reset':
+            return {
+                ...state,
+                homeRedirect: false
+            }
+        case 'userEmail.login':
+            if (action.user) {
+                return {
+                    ...state,
+                    userEmail: action.user
+                }
+            }
+            return {
+                ...state,
+                userEmail: null
+            }
+        case 'userEmail.logout':
+            return {
+                ...state,
+                userEmail: null
+            }
         default:
             return state
         }
-    },
-};
+    }
 
 export const init = () => {
-    
-    // Create the redux actions.
-    
-    // Combine the other reducers with these local reducers.
-    Object.assign(reducers, cellTypeState)
-    Object.assign(reducers, databaseState)
-    Object.assign(reducers, databaseFavoriteState)
-    Object.assign(reducers, datasetState)
-    Object.assign(reducers, geneState)
+    const Reducers = combineReducers({
+        app,
+        cellType,
+        database,
+        dataset,
+        gene,
+        namerDialog,
+    })
 
     // Create the store.
     let store
@@ -125,12 +65,12 @@ export const init = () => {
         const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
         store = createStore(
-            combineReducers(reducers), /* preloadedState, */
+            Reducers, /* preloadedState, */
             composeEnhancers()
         )
     } else {
         store = createStore(
-            combineReducers(reducers), /* preloadedState, */
+            Reducers, /* preloadedState, */
             window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
         )
     }

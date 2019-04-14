@@ -87,6 +87,10 @@ const receiveData = (id, dataIn) => {
     }
 }
 
+const error = (message) => {
+    console.log('fetch error:', message)
+}
+
 const dataTableFetch = (id, urlPath) => {
 
     // Get the table data for a matrix instance.
@@ -109,12 +113,12 @@ const dataTableFetch = (id, urlPath) => {
             if (response.ok) {
                 return response.text()
             } else {
-                return response.json()
+                error(response.statusText)
             }
         })
         .then((data) => receiveData(id, data))
         .catch((e) => {
-            receiveData(id, e.toString())
+            error(e.toString())
         })
 }
 

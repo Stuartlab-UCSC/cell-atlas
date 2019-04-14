@@ -97,7 +97,7 @@ let columnInfo = {
 const columnOptions = (maxClusterCount, state) => {
     // Create column options as a list of objects.
     const heads = columnHeads(maxClusterCount, state)
-    const sameValueColumns = state['cellType.sameValueColumns']
+    const sameValueColumns = state.cellType.sameValueColumns
     return heads.map(name => {
         let col = { name, options: {} }
         
@@ -120,8 +120,8 @@ const columnOptions = (maxClusterCount, state) => {
 const transform = (data, state) => {
     // Transform the data received from the server
     // into the structure needed for a dataTable.
-    const colorNegMag = state['cellType.colorNegMag']
-    const colorPosMag = state['cellType.colorPosMag']
+    const colorNegMag = state.cellType.colorNegMag
+    const colorPosMag = state.cellType.colorPosMag
     let maxClusterCount = 0
     // Outer loop handles each cluster solution.
     let cData = data.cluster_similarities.map((soln, i) => {
@@ -161,9 +161,9 @@ const mapStateToProps = (state) => {
         columns,
         data: transformed.data,
         optionOverrideFx,
-        show: true, // TODO state['cellType.showChart'],
+        show: true, // TODO state.cellType.showChart,
         themeOverrides: themeOverrides(),
-        sort: state['cellType.sort'],
+        sort: state.cellType.sort,
     }
 }
 

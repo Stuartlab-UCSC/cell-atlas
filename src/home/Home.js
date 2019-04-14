@@ -7,7 +7,7 @@ import { onSubmitClick as onFindGeneClick } from 'gene/page'
 
 const mapStateToProps = (state) => {
     return {
-        redirect: state['home.redirect'],
+        redirect: state.app.homeRedirect,
     }
 }
 
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
             // it. Set a timeout so the gene chart page gets a chance to
             // display.
             setTimeout(() => {
-                dispatch({type: 'home.redirect.reset'})
+                dispatch({type: 'app.homeRedirect.reset'})
             },100)
         },
     }

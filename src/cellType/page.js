@@ -97,12 +97,12 @@ const getData = () => {
 
 const mapStateToProps = (state) => {
     return {
-        bubbleTooltip: state['cellType.bubbleTooltip'],
+        bubbleTooltip: state.cellType.bubbleTooltip,
         catAttrs,
         data,
-        message: state['cellType.fetchMessage'],
-        sameValueColumns: state['cellType.sameValueColumns'],
-        showChart: state['cellType.showChart'],
+        message: state.cellType.fetchMessage,
+        sameValueColumns: state.cellType.sameValueColumns,
+        showChart: state.cellType.showChart,
     }
 }
 

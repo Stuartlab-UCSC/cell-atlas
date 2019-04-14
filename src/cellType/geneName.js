@@ -39,7 +39,7 @@ const Presentation = (props) => {
 const isValidGeneName = (dispatch) => {
     if (rxGet('cellType.geneName').length < 1) {
         dispatch({
-            type: 'cellType.geneName.errorMessage.set',
+            type: 'cellType.geneNameErrorMessage.set',
             value: 'a gene name is required',
         })
         return false
@@ -49,9 +49,9 @@ const isValidGeneName = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        helperInLabel: state['geneName.helperInLabel'],
-        errorMessage: state['cellType.geneName.errorMessage'],
-        value: state['cellType.geneName'],
+        helperInLabel: state.cellType.geneNameHelperInLabel,
+        errorMessage: state.cellType.geneNameErrorMessage,
+        value: state.cellType.geneName,
     }
 }
 
@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch) => {
             // Clicking on Enter will trigger a server request.
             if (ev.key === 'Enter') {
                 dispatch({
-                    type: 'cellType.geneName.errorMessage.clear',
+                    type: 'cellType.geneNameErrorMessage.clear',
                 })
                 onSubmitClick(dispatch)
             }

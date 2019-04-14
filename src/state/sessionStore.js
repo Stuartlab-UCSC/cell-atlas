@@ -8,8 +8,7 @@
 // Don't know which is less code at this point.
 
 import { get as rxGet, set as rxSet } from 'state/rx'
-import databaseState from 'database/databaseState'
-import databaseFavoriteState from 'database/favoriteState'
+import database from 'database/databaseState'
 
 let LOGGING = false  // true means log the state and store on save and load
 let storageSupported
@@ -18,9 +17,9 @@ let storeName
 // The state pieces to save to session store, with their defaults.
 // We don't save defaults to session store.
 const stateKeys = {
-    'database.query': databaseState.defaultQuery,
-    'databaseFavorite.list': databaseFavoriteState.defaultList,
-    'databaseFavorite.selected': databaseFavoriteState.defaultSelected,
+    'database.query': database.defaultQuery,
+    'database.favoriteList': database.defaultFavoriteList,
+    'database.favoriteSelected': database.defaultFavoriteSelected,
 }
 
 function isDefault (key, val) {
@@ -85,11 +84,11 @@ function specialState () {
     let query = rxGet('database.query')
     if (query === '') {
         // Fill the empty query with the favorite selected.
-        query = rxGet('databaseFavorite.selected')
+        query = rxGet('database.favoriteSelected')
         rxSet('database.query.loadPersistOverride', { value: query })
     }
     // Set the query row count.
-    rxSet('database.query.rowCount.loadPersistOverride', { queryString: query })
+    rxSet('database.queryRowCount.loadPersistOverride', { queryString: query })
 }
 
 function load (store, state) {

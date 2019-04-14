@@ -6,7 +6,7 @@ import NavBarPres from 'app/NavBarPres'
 
 const mapStateToProps = state => {
     return {
-        theme: state['navBar.theme'],
+        theme: state.app.navBarTheme,
         apiUrl: process.env.REACT_APP_DATA_URL,
     }
 }
@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onThemeClick: ev => {
-            dispatch({ type: 'navBar.theme.toggle' })
+            dispatch({ type: 'app.navBarTheme.toggle' })
          },
     }
 }

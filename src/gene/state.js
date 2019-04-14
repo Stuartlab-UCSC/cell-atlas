@@ -3,141 +3,134 @@
 
 const defaultSort = { column: 'color', direction: 'descending' }
 
-const state = {
-    'gene.bubbleTooltip': (state = null, action) => {
+const State = (
+    state = {
+        bubbleTooltip: null,
+        color_by: 'log2_fold_change_vs_next',
+        colorColumnTooltip: null,
+        colorNegMag: 0,
+        colorPosMag: 0,
+        fetchMessage: ' ',
+        fetchStatus: 'initial',
+        firstChartDisplayed: false,
+        sort: defaultSort,
+        name: '',
+        nameErrorMessage: null, // error message displayed in gene input
+        showChart: false,
+        sameValueColumns: {}, // columns containing a single value
+        size_by: 'sensitivity',
+        sizeMag: 0,
+
+    }, action) => {
         switch(action.type) {
         case 'gene.bubbleTooltip.mouseOut':
-            return null
+            return {
+                ...state,
+                bubbleTooltip: null
+            }
         case 'gene.bubbleTooltip.mouseOver':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.color_by': (state = 'log2_fold_change_vs_next', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                bubbleTooltip: action.value
+            }
         case 'gene.color_by.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.colorColumnTooltip': (state = null, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                color_by: action.value
+            }
         case 'gene.colorColumnTooltip.mouseOut':
-            return null
+            return {
+                ...state,
+                colorColumnTooltip: null
+            }
         case 'gene.colorColumnTooltip.mouseOver':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.colorNegMag': (state = 0, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                colorColumnTooltip: action.value
+            }
         case 'gene.colorNegMag.set':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.colorPosMag': (state = 0, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                colorNegMag: action.value
+            }
         case 'gene.colorPosMag.set':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.fetchMessage': (state = ' ', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                colorPosMag: action.value
+            }
         case 'gene.fetchMessage.set':
-            return action.value
+            return {
+                ...state,
+                fetchMessage: action.value
+            }
         case 'gene.fetchMessage.clear':
-            return null
-        default:
-            return state
-        }
-    },
-    'gene.fetchStatus': (state = 'initial', action) => {
-        switch (action.type) {
+            return {
+                ...state,
+                fetchMessage: null
+            }
         case 'gene.fetchStatus.waiting':
-            return 'waiting'
+            return {
+                ...state,
+                fetchMessage: 'waiting'
+            }
         case 'gene.fetchStatus.quiet':
-            return 'quiet'
-        default:
-            return state
-        }
-    },
-    'gene.firstChartDisplayed': (state = false, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                fetchMessage: 'quiet'
+            }
         case 'gene.firstChartDisplayed.set':
-            return true
-        default:
-            return state
-        }
-    },
-    'gene.name': (state = 'CCL4', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                firstChartDisplayed: true
+            }
         case 'gene.name.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    // An error message to be displayed in the gene input.
-    'gene.name.errorMessage': (state = null, action) => {
-        switch(action.type) {
-        case 'gene.name.errorMessage.set':
-            return action.value
-        case 'gene.name.errorMessage.clear':
-            return null
-        default:
-            return state
-        }
-    },
-    'gene.showChart': (state = false, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                name: action.value
+            }
+        case 'gene.nameErrorMessage.set':
+            return {
+                ...state,
+                errorMessage: action.value
+            }
+        case 'gene.nameErrorMessage.clear':
+            return {
+                ...state,
+                errorMessage: null
+            }
         case 'gene.showChart.toQuietStatus':
-            return true
+            return {
+                ...state,
+                showChart: true
+            }
         case 'gene.showChart.toRequestStatus':
-            return false
-        default:
-            return state
-        }
-    },
-    // Those columns containing a single value.
-    'gene.sameValueColumns': (state = {}, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                showChart: false
+            }
         case 'gene.sameValueColumns.found':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.size_by': (state = 'sensitivity', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                sameValueColumns: action.value
+            }
         case 'gene.size_by.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.sizeMag': (state = 0, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                size_by: action.value
+            }
         case 'gene.sizeMag.set':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'gene.sort': (state = defaultSort, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                sizeMag: action.value
+            }
         case 'gene.sort.uiSet':
-            return { column: action.column, direction: action.direction }
+            return {
+                ...state,
+                sort: { column: action.column, direction: action.direction }
+            }
         default:
             return state
         }
-    },
-}
+    }
 
-export default state
+export default State

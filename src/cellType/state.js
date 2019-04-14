@@ -1,155 +1,151 @@
 
 // Gene page state.
 
-const defaultSort = { column: 'size', direction: 'descending' }
-
-const state = {
-    'cellType.bubbleTooltip': (state = false, action) => {
+const State = (
+    state = {
+        bubbleTooltip: false,
+        color_by: '',  // TODO null instead?
+        colorNegMag: 0,
+        colorPosMag: 0,
+        fetchMessage: ' ',
+        fetchStatus: 'initial',
+        firstChartDisplayed: false,
+        geneName: '',
+        geneNameErrorMessage: null,
+        sameValueColumns: {}, // columns containing a single value
+        showChart: false,
+        showGene: false,
+        size_by: 'similarity',
+        sizeMag: 0,
+        sort: { column: 'size', direction: 'descending' },
+    }, action) => {
         switch(action.type) {
         case 'cellType.bubbleTooltip.mouseOut':
-            return null
+            return {
+                ...state,
+                bubbleTooltip: null
+            }
         case 'cellType.bubbleTooltip.mouseOver':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'cellType.color_by': (state = 'MYL7', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                bubbleTooltip: action.value
+            }
         case 'cellType.color_by.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'cellType.colorNegMag': (state = 0, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                color_by: action.value
+            }
         case 'cellType.colorNegMag.set':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'cellType.colorPosMag': (state = 0, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                colorNegMag: action.value
+            }
         case 'cellType.colorPosMag.set':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'cellType.fetchMessage': (state = ' ', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                colorPosMag: action.value
+            }
         case 'cellType.fetchMessage.set':
-            return action.value
+            return {
+                ...state,
+                fetchMessage: action.value
+            }
         case 'cellType.fetchMessage.clear':
-            return null
-        default:
-            return state
-        }
-    },
-    'cellType.fetchStatus': (state = 'initial', action) => {
-        switch (action.type) {
-        case 'cellType.fetchStatus.request':
-            return 'request'
-        case 'cellType.fetchStatus.waiting':
-            return 'waiting'
+            return {
+                ...state,
+                fetchMessage: null
+            }
         case 'cellType.fetchStatus.quiet':
-            return 'quiet'
-        default:
-            return state
-        }
-    },
-    'cellType.firstChartDisplayed': (state = false, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                fetchStatus: 'quiet'
+            }
+        case 'cellType.fetchStatus.request':
+            return {
+                ...state,
+                fetchStatus: 'request'
+            }
+        case 'cellType.fetchStatus.waiting':
+            return {
+                ...state,
+                fetchStatus: 'waiting'
+            }
         case 'cellType.firstChartDisplayed.set':
-            return true
-        default:
-            return state
-        }
-    },
-    'geneName.helperInLabel': (state = false, action) => {
-        switch(action.type) {
-        case 'geneName.helperInLabel.true':
-            return true
-        case 'geneName.helperInLabel.false':
-            return false
-        default:
-            return state
-        }
-    },
-    'cellType.geneName': (state = '', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                firstChartDisplayed: true
+            }
         case 'cellType.geneName.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    // An error message to be displayed in the gene input.
-    'cellType.geneName.errorMessage': (state = null, action) => {
-        switch(action.type) {
-        case 'cellType.geneName.errorMessage.set':
-            return action.value
-        case 'cellType.geneName.errorMessage.clear':
-            return null
-        default:
-            return state
-        }
-    },
-    // Those columns containing a single value.
-    'cellType.sameValueColumns': (state = {}, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                geneName: action.value
+            }
+        case 'cellType.geneNameErrorMessage.set':
+            return {
+                ...state,
+                geneNameErrorMessage: action.value
+            }
+        case 'cellType.geneNameErrorMessage.clear':
+            return {
+                ...state,
+                geneNameErrorMessage: null
+            }
+        case 'cellType.geneNameHelperInLabel.true':
+            return {
+                ...state,
+                geneNameHelperInLabel: true
+            }
+        case 'cellType.geneNameHelperInLabel.false':
+            return {
+                ...state,
+                geneNameHelperInLabel: false
+            }
         case 'cellType.sameValueColumns.found':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'cellType.showChart': (state = false, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                sameValueColumns: action.value
+            }
         case 'cellType.showChart.toQuietStatus':
-            return true
+            return {
+                ...state,
+                showChart: true
+            }
         case 'cellType.showChart.toRequestStatus':
-            return false
-        default:
-            return state
-        }
-    },
-    'cellType.showGene': (state = false, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                showChart: false
+            }
         case 'cellType.showGene.uploadComplete':
-            return true
+            return {
+                ...state,
+                showGene: true
+            }
         case 'cellType.showGene.toRequestStatus':
-            return false
-        default:
-            return state
-        }
-    },
-    'cellType.size_by': (state = 'similarity', action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                showGene: false
+            }
         case 'cellType.size_by.uiSet':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'cellType.sizeMag': (state = 0, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                size_by: action.value
+            }
         case 'cellType.sizeMag.set':
-            return action.value
-        default:
-            return state
-        }
-    },
-    'cellType.sort': (state = defaultSort, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                sizeMag: action.value
+            }
         case 'cellType.sort.uiSet':
-            return { column: action.column, direction: action.direction }
+            return {
+                ...state,
+                sort: {
+                    column: action.column,
+                    direction: action.direction
+                }
+            }
         default:
             return state
         }
-    },
-}
+    }
 
-export default state
+export default State

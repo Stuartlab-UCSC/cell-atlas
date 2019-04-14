@@ -54,18 +54,5 @@ const App = ({store}) => {
     </Provider>
     )
 }
-/*
-
-                            <Route path='/explore/traj' component={TrajExplore}/>
-                            <Route path='/explore/search' component={Search}/>
-                            <Route path='/explore/dataset' component={Dataset}/>
-                            <Route path='/explore/database' component={Database}/>
-                            <Route path='/upload' component={Upload}/>
-                            <Route path='/analyze/moleSim' component={MoleSim}/>
-                            <Route path='/analyze/typePsych' component={TypePsych}/>
-                            <Route path='/analyze/trajSim' component={TrajSim}/>
-                            <Route path='/result' component={Result}/>
-                            <Route path='/help' component={Help}/>
-*/
 
 export default App

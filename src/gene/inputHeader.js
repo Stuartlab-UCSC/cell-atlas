@@ -11,7 +11,7 @@ import { getData } from 'gene/page'
 const serverRequest = (dispatch) => {
     if (rxGet('gene.name').length < 1) {
         dispatch({
-            type: 'gene.name.errorMessage.set',
+            type: 'gene.nameErrorMessage.set',
             value: 'a gene name is required',
         })
     } else {
@@ -24,7 +24,7 @@ const showVars = (state) => {
     // Show the variable selectors if not on the home page and
     // a fetch has occurred at least once.
     return (window.location.pathname !== '/' &&
-         state['gene.firstChartDisplayed'])
+         state.gene.firstChartDisplayed)
 }
 
 const mapStateToProps = (state) => {
@@ -34,8 +34,8 @@ const mapStateToProps = (state) => {
     let sizeList = Object.keys(sizeRef).map(size_by => {
         return { ...sizeRef[size_by], value: size_by }
     })
-    const colorValue = state['gene.color_by']
-    const sizeValue = state['gene.size_by']
+    const colorValue = state.gene.color_by
+    const sizeValue = state.gene.size_by
     return {
         showVars: showVars(state),
         colorList,

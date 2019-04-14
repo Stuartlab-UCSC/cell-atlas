@@ -1,100 +1,152 @@
 // Database page state.
-export const defaultQuery = ''
 
-const databaseState = {
-    'database.showSchema': (state = false, action ) => {
-        switch (action.type) {
-        case 'database.showSchema.toggle':
-            return !state
-        case 'database.showSchema.hide':
-            return false
-        default:
-            return state
-        }
-    },
-    'database.tableData': (state = [], action) => {
+export const defaultFavoriteList = [
+    { name: 'mouse datasets', value: 'SELECT * FROM dataset where species="Mus musculus"' },
+    { name: 'all cluster solutions', value: 'SELECT * FROM cluster_solution' },
+    { name: 'all gene sets', value: 'SELECT * FROM gene_set' },
+    { name: 'cluster solutions by name', value:
+`SELECT cluster_solution.id as cluster_solution_id,
+cluster_solution.name as solution_name,
+dataset.id as dataset_id,
+dataset.name as dataset_name
+FROM cluster_solution
+INNER JOIN dataset on dataset.id = cluster_solution.dataset_id
+WHERE cluster_solution.name = 'louvain100pcs'` },
+    { name: 'cell assignments for a cluster solution', value:
+`SELECT cluster.name as cluster_name,
+cell_of_cluster.name as cell_name,
+cluster_solution.name as solution_name,
+dataset.name as dataset_name
+FROM cell_of_cluster
+INNER JOIN cluster on cluster.id = cell_of_cluster.cluster_id
+INNER JOIN cluster_solution on cluster_solution.id = cluster.cluster_solution_id
+INNER JOIN dataset on dataset.id = cluster_solution.dataset_id
+WHERE dataset.name = '10xGenomics_pbmc8k'
+and cluster_solution.name = 'louvain100pcs'` },
+]
+const defaultFavoriteSelected = defaultFavoriteList[0].value
+const State = (
+    state = {
+        favoriteList: defaultFavoriteList,
+        favoriteSelected: defaultFavoriteSelected,
+        fetchMessage: ' ',
+        fetchStatus: 'quiet',
+        firstTableDisplayed: false,
+        query: defaultFavoriteSelected,
+        queryRowCount: 1,
+        showSchema: false,
+        tableColumn: [],
+        tableData: [],
+    }, action) => {
         switch(action.type) {
-        case 'database.tableData.load':
-            return action.data
-        default:
-            return state
-        }
-    },
-    'database.tableColumn': (state = [], action) => {
-        if (action.type === 'database.tableColumn.load') {
-            return action.value
-        } else {
-            return state
-        }
-    },
-    'database.fetchMessage': (state = ' ', action) => {
-        switch(action.type) {
-        case 'database.fetchMessage.set':
-            return action.value
+        case 'database.favoriteList.uiAdd':
+            let newList = state.favoriteList.slice()
+            newList.unshift({
+                name: action.name,
+                value: action.value,
+            })
+            return {
+                ...state,
+                favoriteList: newList
+            }
+        case 'database.favoriteList.loadPersist':
+            return {
+                ...state,
+                favoriteList: action.value
+            }
+        case 'database.favoriteSelected.uiSelect':
+        case 'database.favoriteSelected.uiAdd':
+        case 'database.favoriteSelected.loadPersist':
+            return {
+                ...state,
+                favoriteSelected: action.value
+            }
         case 'database.fetchMessage.clear':
-            return null
-        default:
-            return state
-        }
-    },
-    // Fetch status for the table.
-    'database.fetchStatus': (state = 'quiet', action) => {
-        switch (action.type) {
-        case 'database.fetchStatus.waiting':
-            return 'waiting'
+            return {
+                ...state,
+                fetchMessage: null
+            }
+        case 'database.fetchMessage.set':
+            console.log('database.fetchMessage.set: action.value:', action.value)
+            return {
+                ...state,
+                fetchMessage: action.value
+            }
         case 'database.fetchStatus.quiet':
-            return 'quiet'
-        default:
-            return state
-        }
-    },
-    'database.firstTableDisplayed': (state = false, action) => {
-        switch(action.type) {
+            return {
+                ...state,
+                fetchStatus: 'quiet'
+            }
+        case 'database.fetchStatus.waiting':
+            return {
+                ...state,
+                fetchStatus: 'waiting'
+            }
         case 'database.firstTableDisplayed.set':
-            return true
-        default:
-            return state
-        }
-    },
-
-    'database.query': (state = defaultQuery, action) => {
-        switch (action.type) {
-        case 'database.query.uiSet':
-        case 'database.query.favoriteSelect':
-        case 'database.query.loadPersist':
-        case 'database.query.loadPersistOverride':
-            return action.value
+            return {
+                ...state,
+                firstTableDisplayed: true
+            }
         case 'database.query.executeClick':
             // Remove any empty lines from the query
             // to allow the maximum height for the table.
-            let querySplit = state.split('\n')
+            let querySplit = state.query.split('\n')
             const lines = querySplit.filter(line => {
                 return (line.length > 0)
             })
-            return lines.join('\n')
-        default:
-            return state
-        }
-    },
-    'database.query.rowCount': (state = 1, action) => {
-        let query, rowCount
-        switch (action.type) {
-        case 'database.query.rowCount.increment':
-            return state + 1
-        case 'database.query.rowCount.executeClick':
-        case 'database.query.rowCount.favoriteSelect':
-        case 'database.query.rowCount.loadPersistOverride':
-            query = action.queryString
+            return {
+                ...state,
+                query: lines.join('\n')
+            }
+        case 'database.query.favoriteSelect':
+        case 'database.query.loadPersist':
+        case 'database.query.loadPersistOverride':
+        case 'database.query.uiSet':
+            return {
+                ...state,
+                query: action.value
+            }
+        case 'database.queryRowCount.executeClick':
+        case 'database.queryRowCount.favoriteSelect':
+        case 'database.queryRowCount.loadPersistOverride':
+            let query = action.queryString
             // Find the row count, adjusting for the last row.
-            rowCount = query.split('\n').length
+            let rowCount = query.split('\n').length
             if (query.substr(-1) !== '\n' && rowCount > 1) {
                 rowCount += 1
             }
-            return rowCount
+            return {
+                ...state,
+                queryRowCount: rowCount
+            }
+        case 'database.queryRowCount.increment':
+            return {
+                ...state,
+                queryRowCount: state.query + 1
+            }
+        case 'database.showSchema.hide':
+            return {
+                ...state,
+                showSchema: false
+            }
+        case 'database.showSchema.toggle':
+            return {
+                ...state,
+                showSchema: !state.showSchema
+            }
+        case 'database.tableColumn.load':
+            return {
+                ...state,
+                tableColumn: action.value
+            }
+        case 'database.tableData.load':
+            return {
+                ...state,
+                tableData: action.data
+            }
         default:
             return state
         }
-    },
-};
+    }
 
-export default databaseState
+export default State

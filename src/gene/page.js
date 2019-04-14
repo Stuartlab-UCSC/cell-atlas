@@ -90,13 +90,13 @@ const getData = () => {
 
 const mapStateToProps = (state) => {
     return {
-        bubbleTooltip: state['gene.bubbleTooltip'],
-        colorColumnTooltip: state['gene.colorColumnTooltip'],
+        bubbleTooltip: state.gene.bubbleTooltip,
+        colorColumnTooltip: state.gene.colorColumnTooltip,
         coloredAttrs,
         data,
-        message: state['gene.fetchMessage'],
-        sameValueColumns: state['gene.sameValueColumns'],
-        showChart: state['gene.showChart'],
+        message: state.gene.fetchMessage,
+        sameValueColumns: state.gene.sameValueColumns,
+        showChart: state.gene.showChart,
     }
 }
 
@@ -106,7 +106,7 @@ const onSubmitClick = (dispatch) => {
         // We are querying from the home page, so set the home redirect
         // so the next render of home will redirect to the gene chart
         // page.
-        dispatch({type: 'home.redirect.set'})
+        dispatch({type: 'app.homeRedirect.set'})
     }
 }
 

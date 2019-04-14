@@ -9,7 +9,7 @@ import { sizeToRadius, stringToPrecision }
 import { showVars } from 'cellType/inputHeader'
 
 const findLabels = (state) => {
-    const mag = state['cellType.sizeMag']
+    const mag = state.cellType.sizeMag
     return [
         stringToPrecision(mag, 1),
         stringToPrecision(mag / 2, 1),

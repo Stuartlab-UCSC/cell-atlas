@@ -7,7 +7,7 @@ import { get as rxGet } from 'state/rx'
 class ThemePres extends Component {
 
     render() {
-        let theme = rxGet('navBar.theme')
+        let theme = rxGet('app.navBarTheme')
         return (
             <MuiThemeProvider theme={createMuiTheme(themeData(theme))}>
                 <div>
@@ -20,7 +20,7 @@ class ThemePres extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        theme: state['navBar.theme'],
+        theme: state.app.navBarTheme,
     }
 }
 

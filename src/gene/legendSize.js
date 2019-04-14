@@ -9,7 +9,7 @@ import { sizeToRadius, stringToPrecision }
 import { showVars } from 'gene/inputHeader'
 
 const findLabels = (state) => {
-    const mag = state['gene.sizeMag']
+    const mag = state.gene.sizeMag
     return [
         stringToPrecision(mag, 2),
         stringToPrecision(mag / 2, 2),

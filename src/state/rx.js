@@ -1,28 +1,6 @@
 
 // Public API for the redux store.
 
-// Pieces of state to retrieve, used with rx.get().
-// Usage:  rx.get(<state-bit>)
-// Where <state-bit> is one of the below.
-// Example:  rx.get('layout.name')
-const statePieces =  [ // eslint-disable-line
-    'doNotTrack', // save the user browser preference for this
-    'home.redirect', // true to redirect to search page
-    'navBar.theme', // handle navigation bar theme actions
-    'result.order', // column & direction of result table sort
-    'result.parm.expand', // show an operation's parameters on the result page
-    'moleSim.featureShow', // show feature section on moleSim
-    'moleSim.metadataShow', // show metadata section on moleSim
-    'moleSim.name', // map name
-    'search.value', // search value
-    'search.results', // list of results of search
-    'upload.fileList', // file list for uploads
-    'upload.formatShow', // panel expansion state for upload formats
-    'upload.idSeq', // next ID to be assigned to an upload
-    'upload.table', // table on the upload page
-    'user', // user email
-]
-
 // The global redux state.
 let reduxStore = null
 
@@ -30,10 +8,11 @@ let reduxStore = null
 export const get = (statePiece) => {
 
     // Retrieve the state of one piece of state.
-    // @param statePiece: one of the items tracked in redux state
+    // @param statePiece: one of the state items with two-level dot-separated ID
     // @returns: the current state of the piece of state
-    // usage example:  rx.get('layout.name')
-    return reduxStore.getState()[statePiece]
+    // usage example:  rx.get('app.homeRedirect')
+    const seg = statePiece.split('.')
+    return reduxStore.getState()[seg[0]][seg[1]]
 }
 
 export const getState = () => {

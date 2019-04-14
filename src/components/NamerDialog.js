@@ -44,8 +44,8 @@ const NamerDialogPres = ({ open, message, onTextChange, onClose, onSubmit }) => 
 
 const mapStateToProps = (state) => {
     return {
-        open: state['namerDialog.open'],
-        message: state['namerDialog.message'],
+        open: state.namerDialog.open,
+        message: state.namerDialog.message,
     }
 }
 
@@ -72,4 +72,49 @@ const NamerDialog = connect(
     mapStateToProps, mapDispatchToProps
 )(NamerDialogPres)
 
+const namerDialogState = (
+    state = {
+        name: null,
+        message: 'Name this',
+        onSubmit: null,
+        open: false,
+    }, action) => {
+        switch(action.type) {
+        case 'namerDialog.name.change':
+            return {
+                ...state,
+                name: action.value
+            }
+        case 'namerDialog.message.uiSet':
+            return {
+                ...state,
+                message: action.value
+            }
+        case 'namerDialog.onSubmit.clear':
+            return {
+                state,
+                onSubmit: null
+            }
+        case 'namerDialog.onSubmit.uiSet':
+            return {
+                ...state,
+                onSubmit: action.callback
+            }
+        case 'namerDialog.open.true':
+            return {
+                ...state,
+                open: true
+            }
+        case 'namerDialog.open.false':
+            return {
+                ...state,
+                open: false
+            }
+        default:
+            return state
+        }
+    }
+
+
 export default NamerDialog
+export { namerDialogState } 

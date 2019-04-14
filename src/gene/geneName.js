@@ -4,7 +4,8 @@
 import { connect } from 'react-redux'
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
-//import { serverRequest } from 'gene/inputHeader'
+
+import { onSubmitClick } from 'gene/page'
 
 const Presentation = (props) => {
     const { errorMessage, value, onNameBlur, onNameChange, onNameKeyPress }
@@ -32,17 +33,13 @@ const Presentation = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        errorMessage: state['gene.name.errorMessage'],
-        value: state['gene.name'],
+        errorMessage: state.gene.nameErrorMessage,
+        value: state.gene.name,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onNameBlur: ev => {
-            // Only fetch upon button press for now.
-            //serverRequest(dispatch)
-        },
         onNameChange: ev => {
             dispatch({
                 type: 'gene.name.uiSet',
@@ -50,10 +47,13 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         onNameKeyPress: ev => {
-            // Only fetch upon button press for now.
-            //if (ev.key === 'Enter') {
-            //    ev.target.blur()
-            //}
+            // Clicking on Enter will trigger a server request.
+            if (ev.key === 'Enter') {
+                dispatch({
+                    type: 'gene.nameErrorMessage.clear',
+                })
+                onSubmitClick(dispatch)
+            }
         },
     }
 }

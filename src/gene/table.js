@@ -40,7 +40,7 @@ const columnHeads = (maxClusterCount, state) => {
 const categoryOptions = (name, state) => {
     // Category columns' values display as colors rather than text.
     // Columns containing all the same value are not displayed.
-    const sameValueColumns = state['gene.sameValueColumns']
+    const sameValueColumns = state.gene.sameValueColumns
     let col = { name, options: {} }
     if (Object.keys(sameValueColumns).includes(name)) {
         col.options.display = 'excluded'
@@ -94,8 +94,8 @@ const columnOptions = (maxClusterCount, state) => {
 const transform = (data, state) => {
     // Transform the data received from the server
     // into the structure needed for a dataTable.
-    const colorNegMag = state['gene.colorNegMag']
-    const colorPosMag = state['gene.colorPosMag']
+    const colorNegMag = state.gene.colorNegMag
+    const colorPosMag = state.gene.colorPosMag
     let maxClusterCount = 0
     // Outer loop handles each cluster solution.
     let cData = data.cluster_solutions.map((soln, i) => {
@@ -137,9 +137,9 @@ const mapStateToProps = (state) => {
         columns,
         data: transformed.data,
         optionOverrideFx,
-        show: true, //state['gene.showChart'],
+        show: true, //state.gene.showChart,
         themeOverrides: themeOverrides(),
-        sort: state['gene.sort'],
+        sort: state.gene.sort,
     }
 }
 

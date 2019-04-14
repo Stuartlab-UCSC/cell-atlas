@@ -12,19 +12,19 @@ export const getData = (download) => {
 }
 const mapStateToProps = (state) => {
     // Handle a change in the favorite selected.
-    const tableData = state['database.tableData']
+    const tableData = state.database.tableData
     return {
         downloadUrl: process.env.REACT_APP_DATA_URL +
-            encodeURI('/sql/' + state['database.query']),
-        query: state['database.query'],
-        queryRowCount: state['database.query.rowCount'],
-        showSchema: state['database.showSchema'],
-        showAddToFavorite: state['database.firstTableDisplayed'],
+            encodeURI('/sql/' + state.database.query),
+        query: state.database.query,
+        queryRowCount: state.database.queryRowCount,
+        showSchema: state.database.showSchema,
+        showAddToFavorite: state.database.firstTableDisplayed,
         table: {
-            columns: state['database.tableColumn'],
+            columns: state.database.tableColumn,
             data: tableData,
             header: tableData.length + ' matches found',
-            message: state['database.fetchMessage'],
+            message: state.database.fetchMessage,
         }
     }
 }
@@ -33,12 +33,12 @@ const addFavoriteWithName = (name, dispatch) => {
     // Add the new favorite and the select it.
     const value = rxGet('database.query')
     dispatch({
-        type: 'databaseFavorite.list.uiAdd',
+        type: 'database.favoriteList.uiAdd',
         name,
         value,
     })
     dispatch({
-        type: 'databaseFavorite.selected.uiAdd',
+        type: 'database.favoriteSelected.uiAdd',
         value,
     })
 }
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onQueryKeyPress: ev => {
             if (ev.key === 'Enter') {
-                dispatch({ type:'database.query.rowCount.increment' })
+                dispatch({ type:'database.queryRowCount.increment' })
             }
         },
         onQueryChange: ev => {
@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
             getData()
             // Minimize the query string and schema to make room for the table.
             dispatch({
-                type: 'database.query.rowCount.executeClick',
+                type: 'database.queryRowCount.executeClick',
                 queryString: rxGet('database.query'),
             })
             dispatch({ type: 'database.showSchema.hide' })
