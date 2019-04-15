@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
-import GeneName from 'cellType/geneName'
+import GeneName from 'components/geneName'
 
 const UploadButton = ({ onClick }) => {
     let comp =

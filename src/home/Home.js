@@ -2,8 +2,8 @@
 
 import { connect } from 'react-redux'
 import HomePres from 'home/HomePres'
-
-import { onSubmitClick as onFindGeneClick } from 'gene/page'
+import { isValidGeneName } from 'components/geneName'
+import { onGeneFindClick } from 'gene/page'
 
 const mapStateToProps = (state) => {
     return {
@@ -13,11 +13,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onFindGeneClick: () =>{
-            onFindGeneClick(dispatch)
+        onFindGeneClick: (ev) => {
+            if (isValidGeneName(dispatch, 'gene')) {
+                onGeneFindClick(dispatch)
+            }
         },
         onRedirect: () => {
-
             // We've been redirected to the gene chart page, so reset the home
             // redirect so the home page will display on the next request for
             // it. Set a timeout so the gene chart page gets a chance to
@@ -35,4 +36,3 @@ const Home = connect(
 )(HomePres)
 
 export default Home
-

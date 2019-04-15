@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from '@material-ui/core/Typography'
 
-import GeneName from 'gene/geneName'
+import GeneName from 'components/geneName'
 
 import appLogo from 'app/images/logo.svg'
 

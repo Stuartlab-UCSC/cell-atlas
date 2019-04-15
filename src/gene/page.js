@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 
 import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData from 'fetch/fetchData'
+import { isValidGeneName } from 'components/geneName'
+
 import testData from 'gene/data'
 import { assignCatColors, clearColorCats, coloredAttrs, gatherUniqueCats }
     from 'gene/colorCat'
 import Presentation from 'gene/pagePres'
-import { serverRequest } from 'gene/inputHeader'
 import { sortBy } from 'gene/sort'
 
 const USE_TEST_DATA = true
@@ -78,13 +79,34 @@ const fetchTestData = (gene, url, receiveFx) => {
 const getData = () => {
     // Request the data from the server.
     let url =
-        '/marker/' + rxGet('gene.name') +
+        '/marker/' + rxGet('geneName.gene.name') +
         '/dotplot/' + rxGet('gene.size_by') +
         '/' + rxGet('gene.color_by')
     if (USE_TEST_DATA) {
         fetchTestData('gene', url, receiveDataFromServer)
     } else {
         fetchData('gene', url, receiveDataFromServer)
+    }
+}
+
+const serverRequest = (dispatch) => {
+    dispatch({ type: 'gene.showChart.toRequestStatus' })
+    getData()
+}
+
+const onGeneSubmit = (dispatch) => {
+    // We've already validated the gene name.
+    if (window.location.pathname === '/') {
+        // From home page.
+        dispatch({ type: 'app.homeRedirect.set' })
+    }
+    serverRequest(dispatch)
+}
+
+const onGeneFindClick = (dispatch) => {
+    // Button was clicked so we still need to validate gene name field.
+    if (isValidGeneName(dispatch, 'gene')) {
+        onGeneSubmit(dispatch)
     }
 }
 
@@ -100,20 +122,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-const onSubmitClick = (dispatch) => {
-    serverRequest(dispatch)
-    if (window.location.pathname === '/') {
-        // We are querying from the home page, so set the home redirect
-        // so the next render of home will redirect to the gene chart
-        // page.
-        dispatch({type: 'app.homeRedirect.set'})
-    }
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSubmitClick: ev => {
-            onSubmitClick(dispatch)
+        onFindClick: ev => {
+            onGeneFindClick(dispatch)
         },
     }
 }
@@ -122,6 +134,5 @@ const GeneCharts = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export { getData, data, onSubmitClick, serverRequest }
-
+export { data, serverRequest, onGeneFindClick, onGeneSubmit }
 export default GeneCharts

@@ -9,9 +9,8 @@ import testData from 'cellType/data'
 import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
     from 'cellType/colorCat'
 import Presentation from 'cellType/pagePres'
-import { serverRequest } from 'cellType/inputHeader'
 import { sortBy } from 'cellType/sort'
-import { isValidGeneName } from 'cellType/geneName'
+import { isValidGeneName } from 'components/geneName'
 
 const USE_TEST_DATA = true
 let data // the store for data outside of redux state
@@ -87,12 +86,22 @@ const getData = () => {
     // Request the data from the server.
     let url =
         '/dotplot/cluster_solution/someUserClusterSolution' + // TODO
-        '/color/' + rxGet('cellType.geneName')
+        '/color/' + rxGet('geneName.cellType.name')
     if (USE_TEST_DATA) {
         fetchTestData('cellType', url, receiveDataFromServer)
     } else {
         fetchData('cellType', url, receiveDataFromServer)
     }
+}
+
+const serverRequest = (dispatch) => {
+    dispatch({ type: 'cellType.showChart.toRequestStatus' })
+    getData()
+}
+
+const onGeneSubmit = (dispatch) => {
+    // The gene name is already validated.
+    serverRequest(dispatch)
 }
 
 const mapStateToProps = (state) => {
@@ -106,14 +115,14 @@ const mapStateToProps = (state) => {
     }
 }
 
-const onSubmitClick = (dispatch) => {
-    if (isValidGeneName(dispatch)) {
-        serverRequest(dispatch)
-    }
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
+// TODO: bring back the find button.
+        onFindClick: (ev) => {
+            if (isValidGeneName(dispatch)) {
+                onGeneSubmit(dispatch)
+            }
+        },
     }
 }
 
@@ -121,6 +130,6 @@ const CellType = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export { getData, data, onSubmitClick, serverRequest }
+export { getData, data, onGeneSubmit, serverRequest }
 
 export default CellType

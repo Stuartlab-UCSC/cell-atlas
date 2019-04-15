@@ -3,22 +3,9 @@
 
 import { connect } from 'react-redux'
 
-import { get as rxGet } from 'state/rx'
 import Presentation from 'gene/inputHeaderPres'
 import { colorRef, sizeRef } from 'gene/util'
-import { getData } from 'gene/page'
-
-const serverRequest = (dispatch) => {
-    if (rxGet('gene.name').length < 1) {
-        dispatch({
-            type: 'gene.nameErrorMessage.set',
-            value: 'a gene name is required',
-        })
-    } else {
-        dispatch({ type: 'gene.showChart.toRequestStatus' })
-        getData()
-    }
-}
+import { serverRequest } from 'gene/page'
 
 const showVars = (state) => {
     // Show the variable selectors if not on the home page and
@@ -70,6 +57,6 @@ const InputHeader = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export { serverRequest, showVars }
+export { showVars }
 
 export default InputHeader

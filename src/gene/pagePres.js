@@ -94,12 +94,12 @@ const SameValueMessages = ({ props }) => {
 }
 
 const SubHeader = ({ props }) => {
-    const { data, onSubmitClick, showChart } = props
+    const { data, onFindClick, showChart } = props
     let comp =
         <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
             <Grid item xs={4} style={{marginTop: '2rem', zIndex: 100}} >
                 <SubmitButton
-                    onClick={onSubmitClick}
+                    onClick={onFindClick}
                 />
                 <MatchesFound data={data} showChart={showChart} />
                 <SameValueMessages props={props} />

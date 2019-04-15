@@ -4,25 +4,39 @@
 // The global redux state.
 let reduxStore = null
 
-// Functions to access the redux state.
-export const get = (statePiece) => {
-
-    // Retrieve the state of one piece of state.
-    // @param statePiece: one of the state items with two-level dot-separated ID
-    // @returns: the current state of the piece of state
-    // usage example:  rx.get('app.homeRedirect')
-    const seg = statePiece.split('.')
-    return reduxStore.getState()[seg[0]][seg[1]]
-}
-
 export const getState = () => {
-
     // Retrieve the entire state tree.
     return reduxStore.getState()
 }
 
-export const set = (stateAction, optsIn) => {
+export const get = (statePiece) => {
+    // Retrieve the state of one piece of state.
+    // @param statePiece: one of the state items as a dot-separated ID string
+    // @returns: the current state of the piece of state
+    // usage example:  rx.get('app.homeRedirect')
+    // Transform the string ID into multi-level indices into state.
+    const seg = statePiece.split('.')
+    const len = seg.length
+    const state = reduxStore.getState()
+    switch (len) {
+    case 2:
+        return state[seg[0]][seg[1]]
+    case 3:
+        return state[seg[0]][seg[1]][seg[2]]
+    case 4:
+        return state[seg[0]][seg[1]][seg[2]][seg[3]]
+    case 5:
+        return state[seg[0]][seg[1]][seg[2]][seg[3]][seg[4]]
+    case 6: // heaven forbid
+        return state[seg[0]][seg[1]][seg[2]][seg[3]][seg[4]][seg[5]]
+    default:
+        console.log("I don't know how to process this many levels!")
+        return undefined
+    }
+    //return reduxStore.getState()[seg[0]][seg[1]]
+}
 
+export const set = (stateAction, optsIn) => {
     // Set the state using an state action type.
     // @param stateAction: the action type required for any operation
     // @param optsIn: object containing options specific to a redux action,
@@ -35,13 +49,11 @@ export const set = (stateAction, optsIn) => {
 }
 
 export const dispatch = (stateAction) => {
-
     // Dispatch an action.
     return reduxStore.dispatch(stateAction)
 }
 
 export const subscribe = (callback) => {
-
     // Subscribe to state changes to call back upon change.
     // @param callback: a function to call when the state changes
     // @returns: a function to unsubscribe from state changes.
@@ -49,7 +61,6 @@ export const subscribe = (callback) => {
 }
 
 export function isArrayEqual(a1, a2) {
-
     // Performs a compare between two arrays of strings or arrays of simple
     // values; arrays may not contain objects.
     // Arrays with the same elements but different order are unequal.
@@ -74,7 +85,6 @@ export function isArrayEqual(a1, a2) {
 }
 
 export function copyStringArray(orig) {
-
     // Make a deep copy of an array of strings.
     return orig.map(str => str.slice())
 }

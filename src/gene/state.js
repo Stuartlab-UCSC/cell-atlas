@@ -83,21 +83,6 @@ const State = (
                 ...state,
                 firstChartDisplayed: true
             }
-        case 'gene.name.uiSet':
-            return {
-                ...state,
-                name: action.value
-            }
-        case 'gene.nameErrorMessage.set':
-            return {
-                ...state,
-                errorMessage: action.value
-            }
-        case 'gene.nameErrorMessage.clear':
-            return {
-                ...state,
-                errorMessage: null
-            }
         case 'gene.showChart.toQuietStatus':
             return {
                 ...state,

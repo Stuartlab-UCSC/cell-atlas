@@ -10,7 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 
-import GeneName from 'gene/geneName'
+import GeneName from 'components/geneName'
 
 const VarSelect = ({list, name, show, tooltip, value, variable, onChange }) => {
     let comp = null

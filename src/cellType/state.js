@@ -10,8 +10,6 @@ const State = (
         fetchMessage: ' ',
         fetchStatus: 'initial',
         firstChartDisplayed: false,
-        geneName: '',
-        geneNameErrorMessage: null,
         sameValueColumns: {}, // columns containing a single value
         showChart: false,
         showGene: false,
@@ -74,31 +72,6 @@ const State = (
             return {
                 ...state,
                 firstChartDisplayed: true
-            }
-        case 'cellType.geneName.uiSet':
-            return {
-                ...state,
-                geneName: action.value
-            }
-        case 'cellType.geneNameErrorMessage.set':
-            return {
-                ...state,
-                geneNameErrorMessage: action.value
-            }
-        case 'cellType.geneNameErrorMessage.clear':
-            return {
-                ...state,
-                geneNameErrorMessage: null
-            }
-        case 'cellType.geneNameHelperInLabel.true':
-            return {
-                ...state,
-                geneNameHelperInLabel: true
-            }
-        case 'cellType.geneNameHelperInLabel.false':
-            return {
-                ...state,
-                geneNameHelperInLabel: false
             }
         case 'cellType.sameValueColumns.found':
             return {

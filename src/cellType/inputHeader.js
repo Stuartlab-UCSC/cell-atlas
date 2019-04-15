@@ -3,15 +3,9 @@
 
 import { connect } from 'react-redux'
 
-import { set as rxSet } from 'state/rx'
 import Presentation from 'cellType/inputHeaderPres'
 import { sizeRef } from 'cellType/util'
-import { getData } from 'cellType/page'
-
-const serverRequest = (dispatch) => {
-    dispatch({ type: 'cellType.showChart.toRequestStatus' })
-    getData()
-}
+import { serverRequest } from 'cellType/page'
 
 const showVars = (state) => {
     // Show the variable selectors if not on the home page and
@@ -26,7 +20,6 @@ const mapStateToProps = (state) => {
     })
     const colorValue = state.cellType.color_by
     const sizeValue = state.cellType.size_by
-    rxSet('geneName.helperInLabel.true')
     return {
         showVars: showVars(state),
         colorValue,
@@ -64,6 +57,6 @@ const InputHeader = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export { serverRequest, showVars }
+export { showVars }
 
 export default InputHeader

@@ -8,6 +8,7 @@ import cellType from 'cellType/state'
 import database from 'database/databaseState'
 import dataset from 'dataset/datasetState'
 import gene from 'gene/state'
+import geneName from 'components/geneNameState'
 import { namerDialogState as namerDialog } from 'components/NamerDialog'
 
 // Global application state.
@@ -18,17 +19,17 @@ const app = (
         userEmail: null,
     }, action) => {
         switch(action.type) {
-        case 'homeRedirect.set':
+        case 'app.homeRedirect.set':
             return {
                 ...state,
                 homeRedirect: true
             }
-        case 'homeRedirect.reset':
+        case 'app.homeRedirect.reset':
             return {
                 ...state,
                 homeRedirect: false
             }
-        case 'userEmail.login':
+        case 'app.userEmail.login':
             if (action.user) {
                 return {
                     ...state,
@@ -39,7 +40,7 @@ const app = (
                 ...state,
                 userEmail: null
             }
-        case 'userEmail.logout':
+        case 'app.userEmail.logout':
             return {
                 ...state,
                 userEmail: null
@@ -56,6 +57,7 @@ export const init = () => {
         database,
         dataset,
         gene,
+        geneName,
         namerDialog,
     })
 
