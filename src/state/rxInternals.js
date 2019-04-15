@@ -63,7 +63,7 @@ export const init = () => {
 
     // Create the store.
     let store
-    if (process.env.CELLDEV) {
+    if (process.env.REACT_APP_CELLDEV) {
         const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })
         store = createStore(

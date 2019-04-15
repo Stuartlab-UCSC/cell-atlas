@@ -21,10 +21,13 @@ import sessionStoreInit from 'state/sessionStore'
 import TrajExplore from 'trajExplore/TrajExplore'
 import PageNotFound from 'home/PageNotFound'
 import Theme from 'app/Theme'
+import dotenv from 'dotenv'
 
 import 'app/App.css'
 
 const App = ({store}) => {
+    // Load environment variables.
+    dotenv.config()
     // Load any persistent state.
     sessionStoreInit(store)
 
