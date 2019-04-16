@@ -3,21 +3,32 @@
 
 const State = (
     state = {
+        // bubble common
         bubbleTooltip: false,
         color_by: '',  // TODO null instead?
-        colorNegMag: 0,
-        colorPosMag: 0,
-        fetchMessage: ' ',
-        fetchStatus: 'initial',
-        firstChartDisplayed: false,
         sameValueColumns: {}, // columns containing a single value
         showChart: false,
-        showGene: false,
         size_by: 'similarity',
-        sizeMag: 0,
+        bubbleRange: { min: 0, max: 0 },
         sort: { column: 'size', direction: 'descending' },
+
+        colorRange: { min: 0, max: 0 },
+        
+        // fetch common
+        fetchMessage: ' ',
+        fetchStatus: 'initial',
+        
+        // unique
+        firstChartDisplayed: false,
+        showGene: false,
+        
     }, action) => {
         switch(action.type) {
+        case 'cellType.bubbleRange.set':
+            return {
+                ...state,
+                bubbleRange: action.value
+            }
         case 'cellType.bubbleTooltip.mouseOut':
             return {
                 ...state,
@@ -33,15 +44,10 @@ const State = (
                 ...state,
                 color_by: action.value
             }
-        case 'cellType.colorNegMag.set':
+        case 'cellType.colorRange.set':
             return {
                 ...state,
-                colorNegMag: action.value
-            }
-        case 'cellType.colorPosMag.set':
-            return {
-                ...state,
-                colorPosMag: action.value
+                colorRange: action.value
             }
         case 'cellType.fetchMessage.set':
             return {
@@ -102,11 +108,6 @@ const State = (
             return {
                 ...state,
                 size_by: action.value
-            }
-        case 'cellType.sizeMag.set':
-            return {
-                ...state,
-                sizeMag: action.value
             }
         case 'cellType.sort.uiSet':
             return {

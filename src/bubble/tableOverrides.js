@@ -1,32 +1,50 @@
 
 // Global dataTable option and theme overrides.
 
-import { onColumnSortChange } from 'gene/sort'
-import { maxBubbleDiameter } from 'gene/util'
+import { maxDiameter } from 'bubble/util'
 
+/*
+const pad = '0.5rem'
+const firstCols = {
+    minWidth: 'auto',
+    maxWidth: '5rem',
+    paddingRight: pad,
+}
+*/
+/*
 const wideCell = {
     minWidth: '5rem',
     paddingRight: '0.5rem',
 }
+
 const narrowCell = {
     paddingRight: '0.5rem',
     //maxWidth: '30px',
 }
-const themeOverrides = () => {
+*/
+const bubbleThemeOverrides = () => {
     const style = {
         cell: {
-            paddingTop: 0,
-            paddingLeft: 0,
-            paddingRight: 0,
-            paddingBottom: 0,
             width: '0.5rem',
+            padding: 0,
+            /*
             '&:nth-child(2)': wideCell,
             '&:nth-child(4)': wideCell,
             '&:nth-child(6)': narrowCell,
             '&:nth-child(8)': narrowCell,
+            */
+            /*
+            '&:nth-child(1)': firstCols,
+            '&:nth-child(2)': {
+                minWidth: 'auto',
+                maxWidth: '2rem',
+                paddingRight: pad,
+            },
+            '&:nth-child(3)': firstCols,
+            */
         },
         row: {
-            height: maxBubbleDiameter,
+            height: maxDiameter,
         },
     }
     let theme = {
@@ -64,14 +82,13 @@ const themeOverrides = () => {
     return theme
 }
 
-const optionOverrideFx = (options) => {
+const bubbleOptionOverrideFx = (options) => {
     // Override some standard DataTable options.
     options.elevation = 0
     options.download = false
-    options.onColumnSortChange = onColumnSortChange
     options.responsive = 'scroll'
     options.viewColumns = false
     return options
 }
 
-export { optionOverrideFx, themeOverrides }
+export { bubbleOptionOverrideFx, bubbleThemeOverrides }

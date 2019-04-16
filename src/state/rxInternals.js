@@ -4,6 +4,7 @@
 
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
+import bubble from 'bubble/state'
 import cellType from 'cellType/state'
 import database from 'database/databaseState'
 import dataset from 'dataset/datasetState'
@@ -53,6 +54,7 @@ const app = (
 export const init = () => {
     const Reducers = combineReducers({
         app,
+        bubble,
         cellType,
         database,
         dataset,

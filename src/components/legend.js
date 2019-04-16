@@ -1,10 +1,49 @@
 
-// The gene page legend presentational component.
+// The legend presentational component.
 
 import React from 'react'
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from '@material-ui/core/Typography'
 import { background } from 'app/themeData'
+import { stringToPrecision } from 'app/util'
+import { getRangeColor } from 'color/range'
+import { sizeToRadius } from 'bubble/util'
+
+const rangeColorInfo = (min, max) => {
+    let labels = (min < 0)
+        ? [
+            stringToPrecision(max, 2),
+            stringToPrecision(max / 2, 2),
+            '0',
+            stringToPrecision(min / 2, 2),
+            stringToPrecision(min, 2),
+        ]
+        : [
+            stringToPrecision(max, 2),
+            stringToPrecision(max * 3 / 4, 2),
+            stringToPrecision(max / 2, 2),
+            '0',
+        ]
+    let colors = labels.map(label => {
+        return getRangeColor(parseFloat(label), min, max)
+    })
+    return { labels, values: colors }
+}
+
+const bubbleInfo = (min, max) => {
+    // Find the width of the bubbles where the size values are represented
+    // by the area of the circle.
+    const labels = [
+        stringToPrecision(max, 1),
+        stringToPrecision((max - min) / 2, 1),
+        stringToPrecision((max - min) / 4, 1),
+        stringToPrecision(min, 1),
+    ]
+    let diameters = labels.map(label => {
+        return sizeToRadius(parseFloat(label), min, max) * 2
+    })
+    return { labels, values: diameters }
+}
 
 const Circle = ({ diameters, i }) => {
     const diameter = diameters[i].toString()
@@ -49,8 +88,8 @@ const Rectangle = ({ labels, values, i }) => {
     return comp
 }
 
-const Shape = ({ variable, labels, values, i }) => {
-    return (variable === 'color')
+const Shape = ({ flavor, labels, values, i }) => {
+    return (flavor === 'colorRange')
         ? <Rectangle
             values={values}
             labels={labels}
@@ -63,27 +102,32 @@ const Shape = ({ variable, labels, values, i }) => {
         />
 }
 
-const Presentation = ({ labels, values, showVars, variable }) => {
-    if (!showVars) {
-        return null
-    }
-    const shapeStyle = (variable === 'size')
-        ? {
-            marginBottom: -1,
-            textAlign: 'center',
-        }
-        : {
+const Legend = ({ flavor, min, max }) => {
+    let info
+    let shapeStyle
+    if (flavor === 'colorRange') {
+        info = rangeColorInfo(min, max)
+        shapeStyle = {
             marginBottom: -1,
             textAlign: 'right',
             paddingRight: '0.5rem',
         }
+    } else if (flavor === 'bubble') {
+        info = bubbleInfo(min, max)
+        shapeStyle = {
+            marginBottom: -1,
+            textAlign: 'center',
+        }
+    }
+    let labels = info.labels
+    let values = info.values
     return (
         <Grid container spacing={0}>
             {labels.map((portion, i) =>
                 <React.Fragment key={i}>
                     <Grid item xs={3} style={shapeStyle} >
                         <Shape
-                            variable={variable}
+                            flavor={flavor}
                             labels={labels}
                             values={values}
                             i={i}
@@ -105,4 +149,4 @@ const Presentation = ({ labels, values, showVars, variable }) => {
     )
 }
 
-export default Presentation
+export default Legend

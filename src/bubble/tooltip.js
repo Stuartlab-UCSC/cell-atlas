@@ -6,10 +6,10 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
+import { altBackground, altForeground } from 'app/themeData'
 
-import { set as rxSet } from 'state/rx'
-import { colorRef, maxBubbleDiameter, sizeRef, stringToPrecision }
-    from 'gene/util'
+import { colorRef, sizeRef } from 'gene/util'
+import { stringToPrecision } from 'app/util'
 
 const Row = ({ label, value }) => {
     const comp =
@@ -55,8 +55,12 @@ const BubbleTooltip = ({data}) => {
             position: 'fixed',
             top: data.y + 10,
             left: data.x - 80,
-            background: '#888888',
+            background: altBackground,
+            color: altForeground,
         }
+        const colorLabel = (colorRef && colorRef[data.color_by])
+            ? colorRef[data.color_by].label
+            : data.color_by
         comp =
             <Card style={style} >
                 <CardContent style={{padding: '0.3rem'}} >
@@ -78,7 +82,7 @@ const BubbleTooltip = ({data}) => {
                                     value={data.cell_count}
                                 />
                                 <Row
-                                    label={colorRef[data.color_by].label}
+                                    label={colorLabel}
                                     value={stringToPrecision(data.color)}
                                 />
                                 <Row
@@ -94,49 +98,5 @@ const BubbleTooltip = ({data}) => {
     return comp
 }
 
-const onMouseOut = (ev) => {
-    rxSet('gene.bubbleTooltip.mouseOut')
-}
 
-const onMouseOver = (ev) => {
-    rxSet('gene.bubbleTooltip.mouseOver',
-        { value: {...ev.target.dataset, x: ev.pageX, y: ev.pageY }})
-}
-
-const Bubble = (props) => {
-    // Create a bubble react component given a cluster's data.
-    const { cell_count, color, color_by, colorRgb, description, label, name,
-        radius, size, size_by } = props
-    const radiusStr = radius.toString()
-    const center = (maxBubbleDiameter / 2 + 0.5).toString()
-    const width = (maxBubbleDiameter + 1).toString()
-    return (
-        <svg
-            height={width}
-            width={width}
-            style={{display: 'inline-block'}}
-        >
-            <circle
-                cx={center}
-                cy={center}
-                r={radiusStr}
-                stroke='grey'
-                strokeWidth={1}
-                fill={colorRgb}
-
-                data-cell_count={cell_count}
-                data-color={color}
-                data-color_by={color_by}
-                data-description={description}
-                data-label={label}
-                data-name={name}
-                data-size={size}
-                data-size_by={size_by}
-                onMouseOver={onMouseOver}
-                onMouseOut={onMouseOut}
-            />
-        </svg>
-    )
-}
-
-export { Bubble, BubbleTooltip }
+export default BubbleTooltip

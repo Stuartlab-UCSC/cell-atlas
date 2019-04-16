@@ -8,12 +8,11 @@ import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import { integerToCommaInteger } from 'app/util'
-import { ColorColumnTooltip } from 'gene/colorColumn'
-import { BubbleTooltip } from 'gene/bubble'
+import { ColorColumnTooltip } from 'bubble/colorColumn'
+import BubbleTooltip from 'bubble/tooltip'
 import Table from 'gene/table'
 import InputHeader from 'gene/inputHeader'
-import LegendColor from 'gene/legendColor'
-import LegendSize from 'gene/legendSize'
+import Legend from 'components/legend'
 
 const SubmitButton = ({ onClick }) => {
     let comp =
@@ -48,22 +47,23 @@ const SameValueMessage = ({ name, same }) => {
     // If this name is in the sameValueColumn list
     if (same[name]) {
         const labels = {
+            datasetName: 'dataset',
+            cluster_solution_name: 'cluster solution',
             species: 'species',
-            organ: 'organs',
-            study: 'studies',
+            organ: 'organ',
+            study: 'study',
         }
         // Columns that should be in italics.
         const italics = ['study']
-        
         if (italics.includes(name)) {
             comp =
-                <Typography inline={true}>
-                    &nbsp;All {labels[name]}: <b><i>{same[name]}</i></b>
+                <Typography>
+                    {labels[name]}: <b><i>{same[name]}</i></b>
                 </Typography>
         } else {
             comp =
-                <Typography inline={true}>
-                    &nbsp;All {labels[name]}: <b>{same[name]}</b>
+                <Typography>
+                    {labels[name]}: <b>{same[name]}</b>
                 </Typography>
         }
     }
@@ -72,11 +72,11 @@ const SameValueMessage = ({ name, same }) => {
 
 const SameValueMessages = ({ props }) => {
     let comp = null
-    const { coloredAttrs, sameValueColumns, showChart } = props
+    const { catAttrs, sameValueColumns, showChart } = props
     if (showChart && Object.keys(sameValueColumns).length > 0) {
         // Build a message for each column.
         let items = []
-        coloredAttrs.forEach((attr, i) => {
+        catAttrs.forEach((attr, i) => {
             items.push(
                 <SameValueMessage
                     name={attr}
@@ -93,6 +93,36 @@ const SameValueMessages = ({ props }) => {
     return comp
 }
 
+const ColorLegend = ({ props }) => {
+    const { min, max } = props.colorRange
+    if (min === 0 && max === 0) {
+        return null
+    } else {
+        return (
+            <Legend
+                flavor='colorRange'
+                min={min}
+                max={max}
+            />
+        )
+    }
+}
+
+const BubbleLegend = ({ props }) => {
+    const { min, max } = props.bubbleRange
+    if (min === 0 && max === 0) {
+        return null
+    } else {
+        return (
+            <Legend
+                flavor='bubble'
+                min={min}
+                max={max}
+            />
+        )
+    }
+}
+
 const SubHeader = ({ props }) => {
     const { data, onFindClick, showChart } = props
     let comp =
@@ -105,10 +135,10 @@ const SubHeader = ({ props }) => {
                 <SameValueMessages props={props} />
             </Grid>
             <Grid item xs={3} >
-                <LegendColor />
+                <ColorLegend props={props} />
             </Grid>
             <Grid item xs={2} >
-                <LegendSize />
+                <BubbleLegend props={props} />
             </Grid>
             <Grid item xs={3} />
         </Grid>

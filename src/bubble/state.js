@@ -1,13 +1,13 @@
 
 // Gene page state.
 
-const defaultSort = { column: 'color', direction: 'descending' }
+//const defaultSort = { column: 'color', direction: 'descending' }
 
 const State = (
     state = {
-        bubbleRange: { min: 0, max: 0 },
-        bubbleTooltip: null,
-        color_by: 'log2_fold_change_vs_next',
+        //bubbleRange: { min: 0, max: 0 },
+        tooltip: null,
+        /*color_by: 'log2_fold_change_vs_next',
         colorColumnTooltip: null,
         colorRange: { min: 0, max: 0 },
         fetchMessage: ' ',
@@ -18,25 +18,25 @@ const State = (
         nameErrorMessage: null, // error message displayed in gene input
         showChart: false,
         sameValueColumns: {}, // columns containing a single value
-        size_by: 'sensitivity',
+        size_by: 'sensitivity',*/
     }, action) => {
         switch(action.type) {
-        case 'gene.bubbleRange.set':
+        /*case 'gene.bubbleRange.set':
             return {
                 ...state,
                 bubbleRange: action.value
-            }
-        case 'gene.bubbleTooltip.mouseOut':
+            }*/
+        case 'bubble.tooltip.mouseOut':
             return {
                 ...state,
-                bubbleTooltip: null
+                tooltip: null
             }
-        case 'gene.bubbleTooltip.mouseOver':
+        case 'bubble.tooltip.mouseOver':
             return {
                 ...state,
-                bubbleTooltip: action.value
+                tooltip: action.value
             }
-        case 'gene.color_by.uiSet':
+        /*case 'gene.color_by.uiSet':
             return {
                 ...state,
                 color_by: action.value
@@ -105,7 +105,7 @@ const State = (
             return {
                 ...state,
                 sort: { column: action.column, direction: action.direction }
-            }
+            }*/
         default:
             return state
         }

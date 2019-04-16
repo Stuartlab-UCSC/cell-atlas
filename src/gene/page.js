@@ -8,51 +8,46 @@ import fetchData from 'fetch/fetchData'
 import { isValidGeneName } from 'components/geneName'
 
 import testData from 'gene/data'
-import { assignCatColors, clearColorCats, coloredAttrs, gatherUniqueCats }
-    from 'gene/colorCat'
+import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
+    from 'color/colorCat'
 import Presentation from 'gene/pagePres'
-import { sortBy } from 'gene/sort'
+import sortBy from 'bubble/sortBy'
 
 const USE_TEST_DATA = true
 let data // the store for data outside of redux state
 
 const findDerivedData = (solutions) => {
     // Find the values that are derived from the data.
-    clearColorCats()
-    let colorNegMag = 0
-    let colorPosMag = 0
-    let sizeMag = 0
+    clearCats()
+    let color = { min: 0, max: 0 }
+    let bubble = { min: 0, max: 0 }
     solutions.forEach((soln, i) => {
         
         // Find the unique categorical values.
         gatherUniqueCats(soln.dataset)
 
-        // Find the color and size magnitudes.
+        // Find the color and size color.maxnitudes.
         solutions[i].clusters.forEach((cluster) => {
-            colorPosMag = Math.max(cluster.color, colorPosMag)
-            colorNegMag = Math.min(cluster.color, colorNegMag)
-            sizeMag = Math.max(cluster.size, sizeMag)
+            color.max = Math.max(cluster.color, color.max)
+            color.min = Math.min(cluster.color, color.min)
+            bubble.max = Math.max(cluster.size, bubble.max)
         })
     })
     
     // Assign colors to the categories & get a list of attrs with single values.
-    rxSet('gene.sameValueColumns.found', { value: assignCatColors() })
-    
-    // Save the magnitudes found.
-    let mag
-    let negMag
-    if (colorNegMag < 0) {
+    rxSet('gene.sameValueColumns.found', { value: summarizeCats() })
+
+    // Save the color bounds found.
+    if (color.min < 0) {
         // Adjust the endpoints to be the same distance from zero.
-        mag = Math.max(colorPosMag, -colorNegMag)
-        negMag = -mag
+        color.max = Math.max(color.max, -color.min)
+        color.min = -color.max
     } else {
-        // All values are positive.
-        mag = colorPosMag
-        negMag = 0
+        // All values are positive; set the min to zero.
+        color.min = 0
     }
-    rxSet('gene.colorNegMag.set', { value: negMag })
-    rxSet('gene.colorPosMag.set', { value: mag })
-    rxSet('gene.sizeMag.set', { value: sizeMag })
+    rxSet('gene.colorRange.set', { value: color })
+    rxSet('gene.bubbleRange.set', { value: bubble })
 }
 
 const receiveDataFromServer = (dataIn) => {
@@ -112,9 +107,11 @@ const onGeneFindClick = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
+        bubbleRange: state.gene.bubbleRange,
         bubbleTooltip: state.gene.bubbleTooltip,
+        colorRange: state.gene.colorRange,
         colorColumnTooltip: state.gene.colorColumnTooltip,
-        coloredAttrs,
+        catAttrs,
         data,
         message: state.gene.fetchMessage,
         sameValueColumns: state.gene.sameValueColumns,

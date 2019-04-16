@@ -10,8 +10,7 @@ import { serverRequest } from 'gene/page'
 const showVars = (state) => {
     // Show the variable selectors if not on the home page and
     // a fetch has occurred at least once.
-    return (window.location.pathname !== '/' &&
-         state.gene.firstChartDisplayed)
+    return (window.location.pathname !== '/' && state.gene.firstChartDisplayed)
 }
 
 const mapStateToProps = (state) => {
@@ -56,7 +55,5 @@ const mapDispatchToProps = (dispatch) => {
 const InputHeader = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
-
-export { showVars }
 
 export default InputHeader

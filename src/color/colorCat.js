@@ -3,10 +3,10 @@
 
 import ColorMap from 'lib/jPalette'
 
-// The list of coloring attributes we are handling.
+// The list of categorical color attributes we are handling.
 const coloredAttrs = ['species', 'organ', 'study']
 // The list of categorial attributes that are checked for all the same value.
-const catAttrs = ['datasetName', 'cluster_solution_name',].concat(coloredAttrs)
+const catAttrs = ['datasetName', 'cluster_solution_name'].concat(coloredAttrs)
 // The store for category to color mapping.
 let colorCat = {}
 // This holds unique category values while being gathered.

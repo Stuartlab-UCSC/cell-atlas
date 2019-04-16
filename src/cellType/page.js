@@ -7,9 +7,9 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData from 'fetch/fetchData'
 import testData from 'cellType/data'
 import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
-    from 'cellType/colorCat'
+    from 'color/colorCat'
 import Presentation from 'cellType/pagePres'
-import { sortBy } from 'cellType/sort'
+import sortBy from 'bubble/sortBy'
 import { isValidGeneName } from 'components/geneName'
 
 const USE_TEST_DATA = true
@@ -18,9 +18,8 @@ let data // the store for data outside of redux state
 const findDerivedData = (solutions) => {
     // Find the values that are derived from the data.
     clearCats()
-    let colorNegMag = 0
-    let colorPosMag = 0
-    let sizeMag = 0
+    let color = { min: 0, max: 0 }
+    let bubble = { min: 0, max: 0 }
     solutions.forEach((soln, i) => {
         
         // Find the unique categorical values.
@@ -32,11 +31,11 @@ const findDerivedData = (solutions) => {
             study: soln.dataset.study,
         })
 
-        // Find the color and size magnitudes.
+        // Find the color and size ranges.
         solutions[i].clusters.forEach((cluster) => {
-            colorPosMag = Math.max(cluster.color, colorPosMag)
-            colorNegMag = Math.min(cluster.color, colorNegMag)
-            sizeMag = Math.max(cluster.size, sizeMag)
+            color.max = Math.max(cluster.color, color.max)
+            color.min = Math.min(cluster.color, color.min)
+            bubble.max = Math.max(cluster.size, bubble.max)
         })
     })
     
@@ -45,20 +44,17 @@ const findDerivedData = (solutions) => {
     rxSet('cellType.sameValueColumns.found', { value: sameValueColumns })
     
     // Save the magnitudes found.
-    let mag
-    let negMag
-    if (colorNegMag < 0) {
+    if (color.min < 0) {
         // Adjust the endpoints to be the same distance from zero.
-        mag = Math.max(colorPosMag, -colorNegMag)
-        negMag = -mag
+        color.max = Math.max(color.max, -color.min)
+        color.min = -color.max
     } else {
         // All values are positive.
-        mag = colorPosMag
-        negMag = 0
+        color.max = color.max
+        color.min = 0
     }
-    rxSet('cellType.colorNegMag.set', { value: negMag })
-    rxSet('cellType.colorPosMag.set', { value: mag })
-    rxSet('cellType.sizeMag.set', { value: sizeMag })
+    rxSet('cellType.colorRange.set', { value: color })
+    rxSet('cellType.bubbleRange.set', { value: bubble })
 }
 
 const receiveDataFromServer = (dataIn) => {
@@ -106,8 +102,10 @@ const onGeneSubmit = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
+        bubbleRange: state.cellType.bubbleRange,
         bubbleTooltip: state.cellType.bubbleTooltip,
         catAttrs,
+        colorRange: state.cellType.colorRange,
         data,
         message: state.cellType.fetchMessage,
         sameValueColumns: state.cellType.sameValueColumns,

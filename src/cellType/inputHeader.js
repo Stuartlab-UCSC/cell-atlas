@@ -8,10 +8,8 @@ import { sizeRef } from 'cellType/util'
 import { serverRequest } from 'cellType/page'
 
 const showVars = (state) => {
-    // Show the variable selectors if not on the home page and
-    // a fetch has occurred at least once.
-    return (window.location.pathname !== '/' &&
-         state.cellType.firstChartDisplayed)
+    // Show the variable selectors if a fetch has occurred at least once.
+    return (state.cellType.firstChartDisplayed)
 }
 
 const mapStateToProps = (state) => {
@@ -56,7 +54,5 @@ const mapDispatchToProps = (dispatch) => {
 const InputHeader = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
-
-export { showVars }
 
 export default InputHeader

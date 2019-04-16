@@ -7,11 +7,11 @@ import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import { integerToCommaInteger } from 'app/util'
-import { BubbleTooltip } from 'cellType/bubble'
+import { ColorColumnTooltip } from 'bubble/colorColumn'
+import BubbleTooltip from 'bubble/tooltip'
 import Table from 'cellType/table'
 import InputHeader from 'cellType/inputHeader'
-import LegendColor from 'cellType/legendColor'
-import LegendSize from 'cellType/legendSize'
+import Legend from 'components/legend'
 
 const MatchesFound = ({ data, showChart }) => {
     let comp = null
@@ -76,6 +76,36 @@ const SameValueMessages = ({ props }) => {
     return comp
 }
 
+const ColorLegend = ({ props }) => {
+    const { min, max } = props.colorRange
+    if (min === 0 && max === 0) {
+        return null
+    } else {
+        return (
+            <Legend
+                flavor='colorRange'
+                min={min}
+                max={max}
+            />
+        )
+    }
+}
+
+const BubbleLegend = ({ props }) => {
+    const { min, max } = props.bubbleRange
+    if (min === 0 && max === 0) {
+        return null
+    } else {
+        return (
+            <Legend
+                flavor='bubble'
+                min={min}
+                max={max}
+            />
+        )
+    }
+}
+
 const SubHeader = ({ props }) => {
     const { data, showChart } = props
     let Hr = null
@@ -89,10 +119,10 @@ const SubHeader = ({ props }) => {
         <Grid container spacing={16} style={{marginTop: '-3.5rem'}}>
             <Grid item xs={3} />
             <Grid item xs={3} >
-                <LegendColor />
+                <ColorLegend props={props} />
             </Grid>
             <Grid item xs={2} >
-                <LegendSize />
+                <BubbleLegend props={props} />
             </Grid>
             <Grid item xs={4} style={{marginTop: '-4rem'}} >
                 <MatchesFound data={data} showChart={showChart} />
@@ -109,10 +139,8 @@ const Body = (props) => {
     let comp = null
     if (showChart) {
         comp =
-            <div>
-                <div style={{marginTop: '-5rem'}} >
-                    <Table />
-                </div>
+            <div style={{marginTop: '-5rem'}} >
+                <Table />
             </div>
     } else if (message){
         comp =
@@ -156,6 +184,7 @@ const Presentation = (props) => {
             <InputHeader />
             <SubHeader props={props} />
             <Body props={props} />
+            <ColorColumnTooltip data={props.colorColumnTooltip}/>
             <BubbleTooltip data={props.bubbleTooltip}/>
         </div>
     )

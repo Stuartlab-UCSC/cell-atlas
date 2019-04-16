@@ -1,5 +1,6 @@
 
-// A color column component for a datatable.
+// A color column component for a datatable where the column contains colors
+// rather than text.
 
 import React from 'react'
 
@@ -9,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 
 import { altBackground } from 'app/themeData'
 import { set as rxSet } from 'state/rx'
-import colorCat from 'gene/colorCat'
+import colorCat from 'color/colorCat'
 
 const ColorColumnTooltip = ({data}) => {
     let comp = null
@@ -37,11 +38,11 @@ const ColorColumnTooltip = ({data}) => {
 }
 
 const onMouseOut = (ev) => {
-    rxSet('gene.colorColumnTooltip.mouseOut')
+    rxSet('bubble.colorColumn.Tooltip.mouseOut')
 }
 
 const onMouseOver = (ev) => {
-    rxSet('gene.colorColumnTooltip.mouseOver',
+    rxSet('bubble.colorColumnTooltip.mouseOver',
         { value: {...ev.target.dataset, x: ev.pageX, y: ev.pageY }})
 }
 
@@ -49,6 +50,7 @@ const ColorColumn = (value, tableMeta) => {
     // For rendering colors rather than text in the column.
     const attr = tableMeta.columnData.name
     let comp = null
+
     if (attr) {
         comp =
             <div

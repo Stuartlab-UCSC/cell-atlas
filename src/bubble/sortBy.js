@@ -1,8 +1,5 @@
 
-// The gene page sort by color or size.
-
-import { set as rxSet } from 'state/rx'
-import { data } from 'gene/page'
+// The bubble chart sort by color or size.
 
 const sortClusters = (data, col, dir) => {
     // Sort the clusters within this solution.
@@ -44,12 +41,4 @@ const sortBy = (solutions, col, dir) => {
     sortSolutions(solutions, col, dir)
 }
 
-const onColumnSortChange = (column, direction) => {
-    if (column !== 'color' && column !== 'size') {
-        return
-    }
-    sortBy(data.cluster_solutions, column, direction)
-    rxSet('gene.sort.uiSet', { column, direction })
-}
-
-export { sortBy, onColumnSortChange }
+export default sortBy

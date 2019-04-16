@@ -149,7 +149,7 @@ var ColorMap = function(numSteps, colors) {
    * @return {object} color - Color instance.
    * @todo Check range.
    */
-  ColorMap.prototype.getColor = function(value) {
+  ColorMap.prototype.getRangeColor = function(value) {
     var delta = Math.max(0, Math.min(1, value)),
         index = Math.floor(delta * (this.map.length - 1));
     return this.map[index];
