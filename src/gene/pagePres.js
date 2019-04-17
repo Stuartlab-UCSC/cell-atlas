@@ -172,14 +172,28 @@ const PageTitle = () => {
 }
 
 const Presentation = (props) => {
+    const { onFindClick } = props
     return (
-        <div>
-            <PageTitle />
-            <InputHeader />
-            <SubHeader props={props} />
-            <Body props={props} />
-            <ColorColumnTooltip data={props.colorColumnTooltip}/>
-            <BubbleTooltip data={props.bubbleTooltip}/>
+        <div id='homePage'>
+            <iframe
+                id='geneDummyframe'
+                width='0'
+                height='0'
+                border='0'
+                name='geneDummyframe'
+                title='geneDummyframe' >
+            </iframe>
+            <form
+                target='geneDummyframe'
+                onSubmit={onFindClick}
+            >
+                <PageTitle />
+                <InputHeader />
+                <SubHeader props={props} />
+                <Body props={props} />
+                <ColorColumnTooltip data={props.colorColumnTooltip}/>
+                <BubbleTooltip data={props.bubbleTooltip}/>
+            </form>
         </div>
     )
 }

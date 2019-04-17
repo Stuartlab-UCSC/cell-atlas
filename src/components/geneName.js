@@ -48,14 +48,6 @@ const mapDispatchToProps = (dispatch) => {
             })
             */
         },
-        onNameKeyPress: ev => {
-            // Clicking on Enter will trigger a submit of something.
-            const id = ev.currentTarget.dataset.id
-            if (ev.key === 'Enter' && isValidGeneName(dispatch, id)) {
-                const onReturnClick = rxGet('geneName.' + id + '.onReturnClick')
-                onReturnClick(dispatch)
-            }
-        },
     }
 }
 

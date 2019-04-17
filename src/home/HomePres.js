@@ -5,7 +5,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
-import Grid from "@material-ui/core/Grid/Grid";
+import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import GeneName from 'components/geneName'
@@ -25,48 +25,62 @@ const HomePres = ({redirect, onFindGeneClick, onRedirect }) => {
     //loginUrl += '?next=/cell-help'
     return (
         <div id='homePage'>
-            <Grid container spacing={16} alignItems='center' >
-                <Grid item xs={1} />
-                <Grid item xs={5} style={{paddingBottom: '4rem'}}>
-                    <Typography variant='caption' align='right'
-                        style={{paddingTop: '1.5rem'}}>
-                        UC Santa Cruz Genomics Institute, Stuart Lab
-                    </Typography>
-                    <Typography variant='h4' align='right'>
-                        Cell Atlas
-                    </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <img
-                        src={appLogo}
-                        width='100px'
-                        alt='logo'
-                    />
-                </Grid>
+            <iframe
+                id='homeDummyframe'
+                width='0'
+                height='0'
+                border='0'
+                name='homeDummyframe'
+                title='homeDummyframe' >
+            </iframe>
+            <form
+                target='homeDummyframe'
+                onSubmit={onFindGeneClick}
+            >
+                <Grid container spacing={16} alignItems='center' >
+                    <Grid item xs={1} />
+                    <Grid item xs={5} style={{paddingBottom: '4rem'}}>
+                        <Typography variant='caption' align='right'
+                            style={{paddingTop: '1.5rem'}}>
+                            UC Santa Cruz Genomics Institute, Stuart Lab
+                        </Typography>
+                        <Typography variant='h4' align='right'>
+                            Cell Atlas
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <img
+                            src={appLogo}
+                            width='100px'
+                            alt='logo'
+                        />
+                    </Grid>
             
-                <Grid item xs={4} />
-                <Grid item xs={4}>
-                    <GeneName/>
+                    <Grid item xs={4} />
+                    <Grid item xs={4}>
+                        <GeneName/>
+                    </Grid>
+                    <Grid item xs={4} />
+
+                    <Grid item xs={4} />
+                    <Grid item xs={4}>
+                        <Button
+                            type='submit'
+                            variant='contained'
+                            component='span'
+                            size='small'
+                            color='primary'
+                            style={{width: '5rem'}}
+                            onClick={onFindGeneClick}
+                        >
+                            Find
+                        </Button>
+
+                    </Grid>
+                    <Grid item xs={4} />
+
                 </Grid>
-                <Grid item xs={4} />
-
-                <Grid item xs={4} />
-                <Grid item xs={4}>
-                    <Button
-                        variant='contained'
-                        component='span'
-                        size='small'
-                        color='primary'
-                        style={{width: '5rem'}}
-                        onClick={onFindGeneClick}
-                    >
-                        Find
-                    </Button>
-
-                </Grid>
-                <Grid item xs={4} />
-
-            </Grid>
+            </form>
         </div>
     )
 }

@@ -4,10 +4,8 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 
-
 const Presentation = (props) => {
-    const { errorMessage, id, value, onNameBlur, onNameChange,
-        onNameKeyPress, helperInLabel } = props
+    const { errorMessage, id, value, onNameChange, helperInLabel } = props
     let error = false
     let label = 'Gene'
     let helperText = 'HUGO, Ensembl or Entrez'
@@ -27,9 +25,7 @@ const Presentation = (props) => {
             error={error}
             helperText={helperText}
             inputProps={{'data-id': id}}
-            onBlur={onNameBlur}
             onChange={onNameChange}
-            onKeyPress={onNameKeyPress}
             autoFocus={true}
             style={{ width: '100%' }}
         />
