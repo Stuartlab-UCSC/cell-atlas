@@ -5,11 +5,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import DataTable from 'components/DataTable'
-import dataTableFetch from 'fetch/dataTableFetch'
+import fetchData from 'fetch/dataTableFetch'
 import { integerToCommaInteger } from 'app/util'
 
+let data = []
+let columns = []
+
+const receiveDataFromServer = (columnsIn, dataIn) => {
+    // Handle the data received from the server.
+    columns = columnsIn
+    data = dataIn  // save to our data area
+}
+
 const getData = (download) => {
-    dataTableFetch('dataset', encodeURI('/sql/select * from dataset'))
+    fetchData('dataset', encodeURI('/sql/select * from dataset'),
+        receiveDataFromServer)
 }
 
 const tableStyle = {
@@ -49,16 +59,16 @@ const cellCount = (rows) => {
 }
 
 const mapStateToProps = (state) => {
-    if (state.dataset.tableData.length < 1) {
+    if (data.length < 1) {
         getData()
     }
-    const data = state.dataset.tableData
     return {
         title: 'Datasets',
         header: cellCount(data) + ' Cells in ' + data.length + ' Datasets',
         message: state.dataset.fetchMessage,
-        columns: state.dataset.tableColumn,
-        data: state.dataset.tableData,
+        columns,
+        data,
+        status: state.dataset.fetchStatus,
     }
 }
 

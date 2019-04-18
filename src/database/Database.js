@@ -4,11 +4,11 @@
 import { connect } from 'react-redux'
 
 import DatabasePres from 'database/DatabasePres'
-import dataTableFetch from 'fetch/dataTableFetch'
+import fetchData from 'fetch/dataTableFetch'
 import { get as rxGet } from 'state/rx'
 
 export const getData = (download) => {
-    dataTableFetch('database', encodeURI('/sql/' + rxGet('database.query')))
+    fetchData('database', encodeURI('/sql/' + rxGet('database.query')))
 }
 const mapStateToProps = (state) => {
     // Handle a change in the favorite selected.

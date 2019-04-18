@@ -39,7 +39,7 @@ const addColumnOptions = (names) => {
     return cols
 }
 
-const receiveData = (id, dataIn) => {
+const receiveData = (id, dataIn, callback) => {
     // Receive the data from the fetch & put it into global or state variables.
     // If dataIn is an object, it is not the usual data string of TSV,
     // so handle it like a message.
@@ -75,8 +75,12 @@ const receiveData = (id, dataIn) => {
         })
 
         // Load the data into the state used to render the table.
-        rxSet(id + '.tableColumn.load', { value: columns })
-        rxSet(id + '.tableData.load', { data: cleanData })
+        if (id === 'dataset') {
+            callback(columns, cleanData)
+        } else {
+            rxSet(id + '.tableColumn.load', { value: columns })
+            rxSet(id + '.tableData.load', { data: cleanData })
+        }
 
         // Set status to indicate the data is ready to render.
         rxSet(id + '.fetchStatus.quiet')
@@ -91,16 +95,16 @@ const error = (message) => {
     console.log('fetch error:', message)
 }
 
-const dataTableFetch = (id, urlPath) => {
+const fetchData = (id, urlPath, callback) => {
 
     // Get the table data for a matrix instance.
-    // @param id: ID of the table instance, used as:
-    //            - part of the state name
-    //            - the data server route
+    // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
+    // @param callback: function to call after receiving the data
     if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
     }
+    rxSet(id + '.fetchStatus.waiting')
     rxSet(id + '.fetchMessage.set', { value: 'waiting for data...' })
     
     // Retrieve all rows of the query.
@@ -116,10 +120,10 @@ const dataTableFetch = (id, urlPath) => {
                 error(response.statusText)
             }
         })
-        .then((data) => receiveData(id, data))
+        .then((data) => receiveData(id, data, callback))
         .catch((e) => {
             error(e.toString())
         })
 }
 
-export default dataTableFetch
+export default fetchData

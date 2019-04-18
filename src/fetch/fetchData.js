@@ -28,9 +28,7 @@ const error = (message) => {
 
 const fetchData = (id, urlPath, callback) => {
     // Get data from the data server.
-    // @param id: ID of the table instance, used as:
-    //            - part of the state name
-    //            - the data server route
+    // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
     // @param callback: function to call after receiving the data
     if (rxGet(id + '.fetchStatus') === 'waiting') {

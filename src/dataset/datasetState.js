@@ -28,16 +28,6 @@ const State = (
                 ...state,
                 fetchStatus: 'waiting'
             }
-        case 'dataset.tableColumn.load':
-            return {
-                ...state,
-                tableColumn: action.value
-            }
-        case 'dataset.tableData.load':
-            return {
-                ...state,
-                tableData: action.data
-            }
         default:
             return state
         }
