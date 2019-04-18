@@ -46,7 +46,19 @@ const Description = ({ value }) => {
     return comp
 }
 
-const BubbleTooltip = ({data}) => {
+const ColorRow = ({ label, value, id }) => {
+    let comp = null
+    if (id !== 'cellType') {
+        comp =
+            <Row
+                label={label}
+                value={stringToPrecision(value)}
+            />
+    }
+    return comp
+}
+
+const BubbleTooltip = ({data, id}) => {
     let comp = null
     if (data) {
         const style = {
@@ -76,9 +88,10 @@ const BubbleTooltip = ({data}) => {
                                     label='cell count'
                                     value={data.cell_count}
                                 />
-                                <Row
+                                <ColorRow
                                     label={data.color_by}
-                                    value={stringToPrecision(data.color)}
+                                    value={data.color}
+                                    id={id}
                                 />
                                 <Row
                                     label={data.size_by}

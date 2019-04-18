@@ -4,7 +4,7 @@
 import React from 'react'
 
 import { set as rxSet } from 'state/rx'
-import { maxDiameter as maxBubbleDiameter } from 'bubble/util'
+import { maxDiameter } from 'bubble/util'
 
 const onMouseOut = (ev) => {
     rxSet('bubble.tooltip.mouseOut')
@@ -20,8 +20,8 @@ const Bubble = (props) => {
     const { cell_count, color, color_by, colorRgb, description, label, name,
         radius, size, size_by } = props
     const radiusStr = radius.toString()
-    const center = (maxBubbleDiameter / 2 + 0.5).toString()
-    const width = (maxBubbleDiameter + 1).toString()
+    const center = (maxDiameter / 2 + 0.5).toString()
+    const width = (maxDiameter + 1).toString()
     return (
         <svg
             height={width}

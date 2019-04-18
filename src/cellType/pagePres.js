@@ -190,7 +190,7 @@ const Presentation = (props) => {
             <SubHeader props={props} />
             <Body props={props} />
             <ColorColumnTooltip data={props.colorColumnTooltip}/>
-            <BubbleTooltip data={props.bubbleTooltip}/>
+            <BubbleTooltip data={props.bubbleTooltip} id='cellType' />
         </div>
     )
 }

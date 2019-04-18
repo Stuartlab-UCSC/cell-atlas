@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 
-import { get as rxGet, set as rxSet } from 'state/rx'
+import { /*get as rxGet,*/ set as rxSet } from 'state/rx'
 import fetchData from 'fetch/fetchData'
 import testData from 'cellType/data'
 import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
@@ -12,8 +12,10 @@ import Presentation from 'cellType/pagePres'
 import sortBy from 'cellType/sortBy'
 //import { isValidGeneName } from 'components/geneName'
 
-const USE_TEST_DATA = true
-let data // the store for data outside of redux state
+const USE_TEST_DATA = false
+const FIXED_BUBBLE_SIZE_AT_MAX = false
+
+let data = [] // the store for data outside of redux state
 
 const findDerivedData = (solutions) => {
     // Find the values that are derived from the data.
@@ -54,7 +56,11 @@ const findDerivedData = (solutions) => {
         color.min = 0
     }
     rxSet('cellType.colorRange.set', { value: color })
-    rxSet('cellType.bubbleRange.set', { value: bubble })
+    if (FIXED_BUBBLE_SIZE_AT_MAX) {
+        rxSet('cellType.bubbleRange.set', { value: { min: 0, max: 1 }})
+    } else {
+        rxSet('cellType.bubbleRange.set', { value: bubble })
+    }
 }
 
 const receiveDataFromServer = (dataIn) => {
@@ -65,10 +71,16 @@ const receiveDataFromServer = (dataIn) => {
     data.color_by = data.size_by
     data.cluster_similarities.forEach((cs) => {
         cs.clusters.forEach((c) => {
-            c.color = c.size
             if (c.size < 0) {
-                console.log('< 0: c.size:', c.size)
+                console.error(
+                    'cluster.size is less than zero, so setting it to zero for:',
+                    '\n  dataset:', cs.dataset,
+                    '\n  compared_to_cluster:', cs.compared_to_cluster,
+                    '\n  cluster_solution_name:', cs.cluster_solution_name,
+                    '\n  cluster:', c)
+                c.size = 0
             }
+            c.color = c.size
         })
     })
 
@@ -94,7 +106,8 @@ const getData = () => {
     // Request the data from the server.
     let url =
         '/dotplot/cluster_solution/someUserClusterSolution' + // TODO
-        '/color/' + rxGet('geneName.cellType.name')
+        '/color/MYL7'
+        // '/color/' + rxGet('geneName.cellType.name')
     if (USE_TEST_DATA) {
         fetchTestData('cellType', url, receiveDataFromServer)
     } else {
@@ -113,6 +126,9 @@ const onGeneSubmit = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
+    if (data.length < 1) {
+        getData()
+    }
     return {
         bubbleRange: state.cellType.bubbleRange,
         bubbleTooltip: state.bubble.tooltip,
@@ -141,6 +157,6 @@ const CellType = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export { getData, data, onGeneSubmit, serverRequest }
+export { getData, data, onGeneSubmit, serverRequest, FIXED_BUBBLE_SIZE_AT_MAX }
 
 export default CellType

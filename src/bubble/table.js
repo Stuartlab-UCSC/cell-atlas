@@ -6,10 +6,12 @@
 import React from 'react'
 
 import Bubble from 'bubble/bubble'
-import { sizeToRadius } from 'bubble/util'
+import { maxDiameter, sizeToRadius } from 'bubble/util'
 import { getRangeColor } from 'color/range'
 import colorCat from 'color/colorCat'
 import { coloredAttrs } from 'color/colorCat'
+
+import { FIXED_BUBBLE_SIZE_AT_MAX } from 'cellType/page'
 
 const DATASET_NAME_ONLY = false  // false: data includes only dataset_name
 
@@ -129,6 +131,13 @@ const tableTransform = (id, data, colorRef, sizeRef, state) => {
             if (i === 0) {
                 clusterHeads.push(c.name)
             }
+            let radius
+            if (id === 'cellType' && FIXED_BUBBLE_SIZE_AT_MAX) {
+                radius = maxDiameter / 2
+            } else {
+                radius = sizeToRadius(c.size, bub.min, bub.max)
+            }
+                
             row.push(
                 <Bubble
                     cell_count={c.cell_count}
@@ -136,7 +145,7 @@ const tableTransform = (id, data, colorRef, sizeRef, state) => {
                     color_by={colorRef[data.color_by].label}
                     colorRgb={getRangeColor(c.color, color.min, color.max)}
                     name={c.name}
-                    radius={sizeToRadius(c.size, bub.min, bub.max)}
+                    radius={radius}
                     size={c.size}
                     size_by={sizeRef[data.size_by].label}
                 />
