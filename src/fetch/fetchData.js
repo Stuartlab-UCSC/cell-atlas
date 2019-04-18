@@ -22,8 +22,9 @@ const receiveData = (id, data, callback) => {
     rxSet(id + '.fetchStatus.quiet')
 }
 
-const error = (message) => {
-    console.log('fetch error:', message)
+const error = (id, message) => {
+    console.error('fetch error:', message)
+    rxSet(id + '.fetchMessage.set', { value: message })
 }
 
 const fetchData = (id, urlPath, callback) => {
@@ -47,12 +48,12 @@ const fetchData = (id, urlPath, callback) => {
             if (response.ok) {
                 return response.json()
             } else {
-                error(response.statusText)
+                error(id, response.statusText)
             }
         })
         .then((data) => receiveData(id, data, callback))
         .catch((e) => {
-            error(e.toString())
+            error(id, e.toString())
         })
     }, 0)
 }

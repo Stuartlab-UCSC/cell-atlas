@@ -13,7 +13,7 @@ import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
 import Presentation from 'gene/pagePres'
 import sortBy from 'bubble/sortBy'
 
-const USE_TEST_DATA = true
+const USE_TEST_DATA = false
 let data // the store for data outside of redux state
 
 const findDerivedData = (solutions) => {
