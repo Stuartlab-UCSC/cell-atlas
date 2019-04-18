@@ -10,7 +10,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 
 import appLogo from 'app/images/logo.svg'
 import NavBarList from 'app/NavBarList'
-import { altBackground, altForeground } from 'app/themeData'
+import { altBackground, altForeground, background } from 'app/themeData'
 
 class NavBarPres extends React.Component {
 
@@ -167,7 +167,7 @@ class NavBarPres extends React.Component {
         this.barItemActiveStyle = {
             ...this.itemStyle,
             color: altForeground,
-
+            backgroundColor: background,
         }
         return (
             <div
