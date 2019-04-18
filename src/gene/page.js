@@ -24,7 +24,13 @@ const findDerivedData = (solutions) => {
     solutions.forEach((soln, i) => {
         
         // Find the unique categorical values.
-        gatherUniqueCats(soln.dataset)
+        gatherUniqueCats({
+            datasetName: soln.dataset.name,
+            cluster_solution_name: soln.cluster_solution_name,
+            species: soln.dataset.species,
+            organ: soln.dataset.organ,
+            study: soln.dataset.study,
+        })
 
         // Find the color and size color.maxnitudes.
         solutions[i].clusters.forEach((cluster) => {
