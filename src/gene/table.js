@@ -10,6 +10,7 @@ import { data } from 'gene/page'
 import { bubbleOptionOverrideFx, bubbleThemeOverrides }
     from 'bubble/tableOverrides'
 import sortBy from 'bubble/sortBy'
+import { colorRef, sizeRef } from 'gene/util'
 
 const onColumnSortChange = (column, direction) => {
     if (column !== 'color' && column !== 'size') {
@@ -29,9 +30,33 @@ const themeOverrides = () => {
     return bubbleThemeOverrides()
 }
 
+const columnHeads = (maxClusterCount) => {
+    // Find the column headers.
+    let heads = [
+        'datasetName',
+        'cluster_solution_name',
+        'species',
+        'organ',
+        'study',
+        'color',
+        'size'
+    ]
+    /*
+    if (DATASET_NAME_ONLY) {
+        heads = [
+            'dataset',
+            'cluster_solution_name',
+            'color',
+            'size'
+        ]
+    }
+    */
+    return heads.concat(new Array(maxClusterCount - 2).fill(' '))
+}
 const mapStateToProps = (state) => {
-    const transformed = tableTransform('gene', data, state)
-    const columns = columnOptions('gene', transformed.maxClusterCount, state)
+    const transformed = tableTransform('gene', data, colorRef, sizeRef, state)
+    const columns = columnOptions('gene',
+        columnHeads(transformed.maxClusterCount), state)
     return {
         columns,
         data: transformed.data,

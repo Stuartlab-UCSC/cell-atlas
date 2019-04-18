@@ -4,8 +4,8 @@
 import { connect } from 'react-redux'
 
 import Presentation from 'cellType/inputHeaderPres'
-import { sizeRef } from 'cellType/util'
-import { serverRequest } from 'cellType/page'
+import { colorRef, sizeRef } from 'cellType/util'
+import { onGeneSubmit, serverRequest } from 'cellType/page'
 
 const showVars = (state) => {
     // Show the variable selectors if a fetch has occurred at least once.
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
     return {
         showVars: showVars(state),
         colorValue,
-        colorTooltip: null,
+        colorTooltip: colorRef[colorValue].tooltip,
         sizeList,
         sizeValue,
         sizeTooltip: sizeRef[sizeValue].tooltip,
@@ -46,6 +46,7 @@ const mapDispatchToProps = (dispatch) => {
             serverRequest(dispatch)
         },
         onUploadClick: ev => {
+            onGeneSubmit(dispatch)
             dispatch({ type: 'cellType.showGene.uploadComplete' })
         },
     }

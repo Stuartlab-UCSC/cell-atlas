@@ -77,6 +77,11 @@ const bubbleThemeOverrides = () => {
                     maxHeight: 'none',
                 },
             },
+            MuiPaper: {
+                root: {
+                    backgroundColor: 'transparent',
+                },
+            },
         }
     }
     return theme

@@ -1329,7 +1329,7 @@ let testData = { resource:
                 },
                 {
                     "name": "9",
-                    "size": -0.010821843029420323,
+                    "size": 0,
                     "color": 1.083877444267273,
                     "cell_count": 1016
                 }

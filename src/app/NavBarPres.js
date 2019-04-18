@@ -160,13 +160,6 @@ class NavBarPres extends React.Component {
     }
 
     render() {
-    
-        // Don't show menu items under development.
-        let dev = null
-        if (process.env.REACT_APP_CELLDEV) {
-            dev = this.linkItem('Cell Type', '/cell-type')
-        }
-
         this.barItemStyle = {
             ...this.itemStyle,
             color: altForeground,
@@ -200,7 +193,7 @@ class NavBarPres extends React.Component {
                         {this.logo()}
                     </ToggleButton>
                     {this.linkItem('Gene', '/gene')}
-                    {dev}
+                    {this.linkItem('Cell Type', '/cell-type')}
                     {this.linkItem('Datasets', '/dataset')}
                     {this.linkItem('Trajectory', '/traj')}
                     {this.linkItem('SQL Query', '/sql-query')}

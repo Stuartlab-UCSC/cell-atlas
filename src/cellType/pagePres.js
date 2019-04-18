@@ -6,6 +6,7 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
 
+import MockUp from 'components/MockUp'
 import { integerToCommaInteger } from 'app/util'
 import { ColorColumnTooltip } from 'bubble/colorColumn'
 import BubbleTooltip from 'bubble/tooltip'
@@ -90,7 +91,7 @@ const ColorLegend = ({ props }) => {
         )
     }
 }
-
+/*
 const BubbleLegend = ({ props }) => {
     const { min, max } = props.bubbleRange
     if (min === 0 && max === 0) {
@@ -105,7 +106,7 @@ const BubbleLegend = ({ props }) => {
         )
     }
 }
-
+*/
 const SubHeader = ({ props }) => {
     const { data, showChart } = props
     let Hr = null
@@ -122,7 +123,6 @@ const SubHeader = ({ props }) => {
                 <ColorLegend props={props} />
             </Grid>
             <Grid item xs={2} >
-                <BubbleLegend props={props} />
             </Grid>
             <Grid item xs={4} style={{marginTop: '-4rem'}} >
                 <MatchesFound data={data} showChart={showChart} />
@@ -156,21 +156,25 @@ const DatasetAndClusterSolution = ({props}) => {
     if (props.showChart) {
         const { cluster_solution_name, dataset_name } = props.data
         comp =
-            <Typography inline={true} align='right' style={{float: 'right', marginTop: '0.5rem' }} >
+            <Typography
+                inline={true}
+                align='right'
+                style={{float: 'right',
+                 marginTop: '0.5rem' }}
+            >
                 <b>{dataset_name}</b>, cell type comparison with <b>{cluster_solution_name}</b>
             </Typography>
-    /*} else {
-        comp =
-            <Typography inline={true} align='right' style={{float: 'right' }} >
-                <b>cell type comparison</b>
-            </Typography>*/
     }
     return comp
 }
 
 const PageTitle = () => {
     return (
-            <Typography variant='h6' inline={true} style={{ marginBottom: '-1rem' }}>
+            <Typography
+                variant='h6'
+                inline={true}
+                style={{ marginBottom: '-1rem' }}
+            >
                 Cell Type Psychic
             </Typography>
     )
@@ -179,6 +183,7 @@ const PageTitle = () => {
 const Presentation = (props) => {
     return (
         <div>
+            <MockUp />
             <PageTitle />
             <DatasetAndClusterSolution props={props} />
             <InputHeader />

@@ -6,8 +6,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
 import Typography from '@material-ui/core/Typography'
-
-import GeneName from 'components/geneName'
+//import GeneName from 'components/geneName'
 
 const UploadButton = ({ onClick }) => {
     let comp =
@@ -24,7 +23,7 @@ const UploadButton = ({ onClick }) => {
     return comp
 }
 
-const SizeBy = ({show, tooltip}) => {
+const ColorBy = ({show, tooltip}) => {
     let comp = null
     if (show) {
         comp =
@@ -35,15 +34,29 @@ const SizeBy = ({show, tooltip}) => {
     return comp
 }
 
-const GeneNameCheck = ({show}) => {
+/*
+const SizeBy = ({show, tooltip}) => {
+    let comp = null
     if (show) {
+        comp =
+            <Typography title={tooltip} style={{marginTop: '1rem'}}>
+                Similarity
+            </Typography>
+    }
+    return comp
+}
+*/
+/*
+const GeneNameCheck = ({show}) => {
+    if (false) {
         return (<GeneName />)
     }
     return null
 }
-
+*/
 const Presentation = (props) => {
-    const { showVars, sizeTooltip, showGene, onUploadClick } = props
+    const { colorTooltip, showVars, /*sizeTooltip,*/ /*showGene,*/
+        onUploadClick } = props
     const top = '-2.5rem'
     return (
         <Grid container spacing={16}
@@ -54,10 +67,9 @@ const Presentation = (props) => {
                 <UploadButton onClick={onUploadClick} />
             </Grid>
             <Grid item xs={3} style={{marginTop: top}}>
-                <GeneNameCheck show={showGene} />
+                <ColorBy show={showVars} tooltip={colorTooltip} />
             </Grid>
             <Grid item xs={3} style={{marginTop: top}} >
-                <SizeBy show={showVars} tooltip={sizeTooltip} />
             </Grid>
            <Grid item xs={3} />
         </Grid>

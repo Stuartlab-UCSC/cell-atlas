@@ -13,32 +13,6 @@ import { coloredAttrs } from 'color/colorCat'
 
 const DATASET_NAME_ONLY = false  // false: data includes only dataset_name
 
-const columnHeads = (id, maxClusterCount) => {
-    // Find the column headers.
-    let heads = [
-        'datasetName',
-        'cluster_solution_name',
-        'species',
-        'organ',
-        'study',
-        'color',
-        'size'
-    ]
-    if (DATASET_NAME_ONLY) {
-        heads = [
-            'dataset',
-            'cluster_solution_name',
-            'color',
-            'size'
-        ]
-    }
-    if (id === 'cellType') {
-        heads.splice(1, 1, 'compared_to_cluster')
-    }
-    // Set the rest of the bubble column headers to blank.
-    return heads.concat(new Array(maxClusterCount - 2).fill(' '))
-}
-
 const customBodyRender = (value, tableMeta) => {
     const attr = tableMeta.columnData.name
     let comp = null
@@ -102,20 +76,19 @@ const columnInfo = (id, name) => {
     return info
 }
 
-const columnOptions = (id, maxClusterCount, state) => {
+const columnOptions = (id, heads, state) => {
     // Create column options as a list of objects.
-    const heads = columnHeads(id, maxClusterCount)
     const sameValueColumns = state[id].sameValueColumns
     return heads.map(name => {
-    let col = columnInfo(id, name) || { name, options: {} }
-        
+        let col = columnInfo(id, name) || { name, options: {} }
+            
         // Some columns have custom info.
         if (columnInfo[name]) {
             col = columnInfo[name]
         }
         // Don't show columns with all the same value.
-    if (Object.keys(sameValueColumns).includes(name)) {
-        col.options.display = 'excluded'
+        if (Object.keys(sameValueColumns).includes(name)) {
+            col.options.display = 'excluded'
         }
         // Colored columns get custom rendering.
         if (coloredAttrs.includes(name)) {
@@ -125,7 +98,7 @@ const columnOptions = (id, maxClusterCount, state) => {
     })
 }
 
-const tableTransform = (id, data, state) => {
+const tableTransform = (id, data, colorRef, sizeRef, state) => {
     // Transform the data received from the server
     // into the structure needed for a dataTable.
     const color = state[id].colorRange
@@ -134,6 +107,7 @@ const tableTransform = (id, data, state) => {
     const solutions = (id === 'cellType')
         ? data.cluster_similarities
         : data.cluster_solutions
+    let clusterHeads = []
     let cData = solutions.map((soln, i) => {
         // Inner loop handles each cluster in the solution.
         let row = [
@@ -144,30 +118,34 @@ const tableTransform = (id, data, state) => {
             soln.dataset.study,
         ]
         if ((id === 'cellType')) {
-            row.splice(1, 1, soln.compared_to_cluster)
+            row.splice(1, 0, soln.compared_to_cluster)
         }
         if (DATASET_NAME_ONLY) {
             row = [soln.dataset.name, soln.cluster_solution_name]
         }
         const bub = state[id].bubbleRange
         soln.clusters.forEach((c, j) => {
+            // Save the cluster header labels
+            if (i === 0) {
+                clusterHeads.push(c.name)
+            }
             row.push(
                 <Bubble
                     cell_count={c.cell_count}
                     color={c.color}
-                    color_by={data.color_by}
+                    color_by={colorRef[data.color_by].label}
                     colorRgb={getRangeColor(c.color, color.min, color.max)}
                     name={c.name}
                     radius={sizeToRadius(c.size, bub.min, bub.max)}
                     size={c.size}
-                    size_by={data.size_by}
+                    size_by={sizeRef[data.size_by].label}
                 />
             )
             maxClusterCount = Math.max(j + 1, maxClusterCount)
         })
         return row
     })
-    return { data: cData, maxClusterCount }
+    return { data: cData, maxClusterCount, clusterHeads }
 }
 
 export { columnOptions, tableTransform }

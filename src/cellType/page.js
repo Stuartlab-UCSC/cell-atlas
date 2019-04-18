@@ -9,8 +9,8 @@ import testData from 'cellType/data'
 import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
     from 'color/colorCat'
 import Presentation from 'cellType/pagePres'
-import sortBy from 'bubble/sortBy'
-import { isValidGeneName } from 'components/geneName'
+import sortBy from 'cellType/sortBy'
+//import { isValidGeneName } from 'components/geneName'
 
 const USE_TEST_DATA = true
 let data // the store for data outside of redux state
@@ -60,7 +60,19 @@ const findDerivedData = (solutions) => {
 const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
     data = dataIn.resource  // save to our data area
-    sortBy(data.cluster_similarities, 'size', 'descending')
+    
+    // Make size and color be by sensitivity.
+    data.color_by = data.size_by
+    data.cluster_similarities.forEach((cs) => {
+        cs.clusters.forEach((c) => {
+            c.color = c.size
+            if (c.size < 0) {
+                console.log('< 0: c.size:', c.size)
+            }
+        })
+    })
+
+    data.cluster_similarities = sortBy(data.cluster_similarities)
     findDerivedData(data.cluster_similarities)
     rxSet('cellType.showChart.toQuietStatus')
     rxSet('cellType.firstChartDisplayed.set')
@@ -103,7 +115,7 @@ const onGeneSubmit = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         bubbleRange: state.cellType.bubbleRange,
-        bubbleTooltip: state.cellType.bubbleTooltip,
+        bubbleTooltip: state.bubble.tooltip,
         catAttrs,
         colorRange: state.cellType.colorRange,
         data,
@@ -115,11 +127,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-// TODO: bring back the find button.
         onFindClick: (ev) => {
+            /*
             if (isValidGeneName(dispatch)) {
                 onGeneSubmit(dispatch)
             }
+            */
         },
     }
 }

@@ -5,7 +5,7 @@ const State = (
     state = {
         // bubble common
         bubbleTooltip: false,
-        color_by: '',  // TODO null instead?
+        color_by: 'similarity',
         sameValueColumns: {}, // columns containing a single value
         showChart: false,
         size_by: 'similarity',

@@ -7,8 +7,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import { altBackground, altForeground } from 'app/themeData'
-
-import { colorRef, sizeRef } from 'gene/util'
 import { stringToPrecision } from 'app/util'
 
 const Row = ({ label, value }) => {
@@ -58,9 +56,6 @@ const BubbleTooltip = ({data}) => {
             background: altBackground,
             color: altForeground,
         }
-        const colorLabel = (colorRef && colorRef[data.color_by])
-            ? colorRef[data.color_by].label
-            : data.color_by
         comp =
             <Card style={style} >
                 <CardContent style={{padding: '0.3rem'}} >
@@ -82,11 +77,11 @@ const BubbleTooltip = ({data}) => {
                                     value={data.cell_count}
                                 />
                                 <Row
-                                    label={colorLabel}
+                                    label={data.color_by}
                                     value={stringToPrecision(data.color)}
                                 />
                                 <Row
-                                    label={sizeRef[data.size_by].label}
+                                    label={data.size_by}
                                     value={stringToPrecision(data.size)}
                                 />
                             </tbody>
