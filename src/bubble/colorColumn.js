@@ -38,7 +38,7 @@ const ColorColumnTooltip = ({data}) => {
 }
 
 const onMouseOut = (ev) => {
-    rxSet('bubble.colorColumn.Tooltip.mouseOut')
+    rxSet('bubble.colorColumnTooltip.mouseOut')
 }
 
 const onMouseOver = (ev) => {

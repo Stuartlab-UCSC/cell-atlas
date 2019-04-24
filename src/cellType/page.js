@@ -130,6 +130,7 @@ const mapStateToProps = (state) => {
         getData()
     }
     return {
+        colorColumnTooltip: state.bubble.colorColumnTooltip,
         bubbleRange: state.cellType.bubbleRange,
         bubbleTooltip: state.bubble.tooltip,
         catAttrs,

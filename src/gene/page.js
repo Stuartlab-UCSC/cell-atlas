@@ -114,9 +114,9 @@ const onGeneFindClick = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         bubbleRange: state.gene.bubbleRange,
-        bubbleTooltip: state.gene.bubbleTooltip,
+        bubbleTooltip: state.bubble.tooltip,
         colorRange: state.gene.colorRange,
-        colorColumnTooltip: state.gene.colorColumnTooltip,
+        colorColumnTooltip: state.bubble.colorColumnTooltip,
         catAttrs,
         data,
         message: state.gene.fetchMessage,

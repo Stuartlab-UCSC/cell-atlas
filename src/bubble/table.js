@@ -8,28 +8,12 @@ import React from 'react'
 import Bubble from 'bubble/bubble'
 import { maxDiameter, sizeToRadius } from 'bubble/util'
 import { getRangeColor } from 'color/range'
-import colorCat from 'color/colorCat'
 import { coloredAttrs } from 'color/colorCat'
+import ColorColumn from 'bubble/colorColumn'
 
 import { FIXED_BUBBLE_SIZE_AT_MAX } from 'cellType/page'
 
 const DATASET_NAME_ONLY = false  // false: data includes only dataset_name
-
-const customBodyRender = (value, tableMeta) => {
-    const attr = tableMeta.columnData.name
-    let comp = null
-    if (attr) {
-        comp =
-            <div
-                style={{
-                    backgroundColor: colorCat[attr][value],
-                    width: '1rem',
-                    height: 28,
-                }}
-            />
-    }
-    return comp
-}
 
 const columnInfo = (id, name) => {
     let columnInfo = {
@@ -94,7 +78,7 @@ const columnOptions = (id, heads, state) => {
         }
         // Colored columns get custom rendering.
         if (coloredAttrs.includes(name)) {
-            col.options.customBodyRender = customBodyRender
+            col.options.customBodyRender = ColorColumn
         }
         return col
     })
