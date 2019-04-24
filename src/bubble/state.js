@@ -15,7 +15,6 @@ const State = (
                 colorColumnTooltip: null
             }
         case 'bubble.colorColumnTooltip.mouseOver':
-            console.log('bubble.colorColumnTooltip.mouseOver:', action.value)
             return {
                 ...state,
                 colorColumnTooltip: action.value

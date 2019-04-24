@@ -12,6 +12,7 @@ import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
     from 'color/colorCat'
 import Presentation from 'gene/pagePres'
 import sortBy from 'bubble/sortBy'
+import { tableNewData } from 'gene/table'
 
 const USE_TEST_DATA = false
 let data // the store for data outside of redux state
@@ -32,7 +33,7 @@ const findDerivedData = (solutions) => {
             study: soln.dataset.study,
         })
 
-        // Find the color and size color.maxnitudes.
+        // Find the color and size bounds.
         solutions[i].clusters.forEach((cluster) => {
             color.max = Math.max(cluster.color, color.max)
             color.min = Math.min(cluster.color, color.min)
@@ -43,7 +44,7 @@ const findDerivedData = (solutions) => {
     // Assign colors to the categories & get a list of attrs with single values.
     rxSet('gene.sameValueColumns.found', { value: summarizeCats() })
 
-    // Save the color bounds found.
+    // Save the color and size bounds found.
     if (color.min < 0) {
         // Adjust the endpoints to be the same distance from zero.
         color.max = Math.max(color.max, -color.min)
@@ -61,6 +62,7 @@ const receiveDataFromServer = (dataIn) => {
     data = dataIn.resource  // save to our data area
     sortBy(data.cluster_solutions, 'color', 'descending')
     findDerivedData(data.cluster_solutions)
+    tableNewData(data)
     rxSet('gene.showChart.toQuietStatus')
     rxSet('gene.firstChartDisplayed.set')
 }

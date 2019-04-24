@@ -176,15 +176,15 @@ const Presentation = (props) => {
     return (
         <div id='homePage'>
             <iframe
-                id='geneDummyframe'
+                id='geneDummyIframe'
                 width='0'
                 height='0'
-                border='0'
-                name='geneDummyframe'
-                title='geneDummyframe' >
-            </iframe>
+                name='geneDummyIframe'
+                title='geneDummyIframe'
+                style={{borderWidth: '0'}}
+            />
             <form
-                target='geneDummyframe'
+                target='geneDummyIframe'
                 onSubmit={onFindClick}
             >
                 <PageTitle />

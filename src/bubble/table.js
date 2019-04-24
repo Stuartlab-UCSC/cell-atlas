@@ -1,10 +1,9 @@
 
-
-// The gene page table logic.
-
+// The bubble table logic.
 
 import React from 'react'
 
+import { get as rxGet } from 'state/rx'
 import Bubble from 'bubble/bubble'
 import { maxDiameter, sizeToRadius } from 'bubble/util'
 import { getRangeColor } from 'color/range'
@@ -36,6 +35,14 @@ const columnInfo = (id, name) => {
                 searchable: false,
             },
         },
+        downloadButton: {
+            name: 'download',
+            options: {
+                filter: false,
+                searchable: false,
+                sort: false,
+            },
+        },
         dataset_name: {
             name: 'dataset',
             options: {},
@@ -52,6 +59,7 @@ const columnInfo = (id, name) => {
     if (!info) {
         return null
     }
+    // The default sort depending on page and column name.
     if (id === 'cellType') {
         if (name === 'size') {
             info.options.sortDirection = 'desc'
@@ -64,7 +72,9 @@ const columnInfo = (id, name) => {
 
 const columnOptions = (id, heads, state) => {
     // Create column options as a list of objects.
-    const sameValueColumns = state[id].sameValueColumns
+    const sameValueColumns = state
+        ? state[id].sameValueColumns
+        : rxGet(id + '.sameValueColumns')
     return heads.map(name => {
         let col = columnInfo(id, name) || { name, options: {} }
             
@@ -87,7 +97,7 @@ const columnOptions = (id, heads, state) => {
 const tableTransform = (id, data, colorRef, sizeRef, state) => {
     // Transform the data received from the server
     // into the structure needed for a dataTable.
-    const color = state[id].colorRange
+    const color = state ? state[id].colorRange : rxGet(id + '.colorRange')
     let maxClusterCount = 0
     // Outer loop handles each cluster solution.
     const solutions = (id === 'cellType')
@@ -109,7 +119,7 @@ const tableTransform = (id, data, colorRef, sizeRef, state) => {
         if (DATASET_NAME_ONLY) {
             row = [soln.dataset.name, soln.cluster_solution_name]
         }
-        const bub = state[id].bubbleRange
+        const bub = state? state[id].bubbleRange : rxGet(id + '.bubbleRange')
         soln.clusters.forEach((c, j) => {
             // Save the cluster header labels
             if (i === 0) {
