@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 
 import { get as rxGet, set as rxSet }  from 'state/rx'
-import { fetchAndDownload } from 'app/download'
 import { tableTransform, columnOptions } from 'bubble/table'
 import DataTable from 'components/DataTable'
 import { data } from 'gene/page'
@@ -38,15 +37,15 @@ const getThemeOverrides = () => {
     return bubbleThemeOverrides()
 }
 
-const onDownloadClick = (ev) => {
-    const d = ev.currentTarget.dataset
-    fetchAndDownload(d.dataset + '__' + d.cluster_solution + '.tsv', 'someUrl')
-}
-
 const downloadButtonRender = (value, tableMeta) => {
     // This renders the download button in a row.
     let comp = null
     if (tableMeta.rowData) {
+        const href =
+            process.env.REACT_APP_DATA_URL +
+            '/dataset/' + tableMeta.rowData[0] +
+            '/cluster-solution/' + tableMeta.rowData[1] +
+            '/cell-assignments'
         const style = {
             marginBottom: -12,
             marginRight: -12,
@@ -54,10 +53,10 @@ const downloadButtonRender = (value, tableMeta) => {
         }
         comp =
             <IconButton
-                data-dataset={tableMeta.rowData[0]}
-                data-cluster_solution={tableMeta.rowData[1]}
+                href={href}
+                download
+                target='_blank'
                 style={style}
-                onClick={onDownloadClick}
             >
                 <DownloadIcon />
             </IconButton>
