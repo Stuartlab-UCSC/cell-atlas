@@ -69,17 +69,22 @@ const State = (
         case 'gene.fetchStatus.waiting':
             return {
                 ...state,
-                fetchMessage: 'waiting'
+                fetchStatus: 'waiting'
             }
         case 'gene.fetchStatus.quiet':
             return {
                 ...state,
-                fetchMessage: 'quiet'
+                fetchStatus: 'quiet'
             }
         case 'gene.firstChartDisplayed.set':
             return {
                 ...state,
                 firstChartDisplayed: true
+            }
+        case 'gene.showChart.sorting':
+            return {
+                ...state,
+                showChart: false
             }
         case 'gene.showChart.toQuietStatus':
             return {
@@ -100,6 +105,11 @@ const State = (
             return {
                 ...state,
                 size_by: action.value
+            }
+        case 'gene.sort.reset':
+            return {
+                ...state,
+                sort: defaultSort
             }
         case 'gene.sort.uiSet':
             return {

@@ -11,7 +11,6 @@ import testData from 'gene/data'
 import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
     from 'color/colorCat'
 import Presentation from 'gene/pagePres'
-import sortBy from 'bubble/sortBy'
 import { tableNewData } from 'gene/table'
 
 const USE_TEST_DATA = false
@@ -60,10 +59,9 @@ const findDerivedData = (solutions) => {
 const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
     data = dataIn.resource  // save to our data area
-    sortBy(data.cluster_solutions, 'color', 'descending')
+    rxSet('gene.sort.reset')
     findDerivedData(data.cluster_solutions)
     tableNewData(data)
-    rxSet('gene.showChart.toQuietStatus')
     rxSet('gene.firstChartDisplayed.set')
 }
 

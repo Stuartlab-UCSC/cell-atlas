@@ -18,14 +18,7 @@ import { colorRef, sizeRef } from 'gene/util'
 let columns  // column metadata
 let chartData // data in the format to be rendered
 let themeOverrides  // theme overrides of the default material UI theme
-
-const onColumnSortChange = (column, direction) => {
-    if (column !== 'color' && column !== 'size') {
-        return
-    }
-    sortBy(data.cluster_solutions, column, direction)
-    rxSet('gene.sort.uiSet', { column, direction })
-}
+let transformed
 
 const optionOverrideFx = (options) => {
     options = bubbleOptionOverrideFx(options)
@@ -80,18 +73,43 @@ const columnHeads = (maxClusterCount) => {
     return heads
 }
 
+const tableRefresh = (newData) => {
+    if (rxGet('gene.firstChartDisplayed')) {
+        // Initialize
+        themeOverrides = getThemeOverrides()
+    }
+    const s = rxGet('gene.sort')
+    rxSet('gene.showChart.sorting')
+    sortBy(data.cluster_solutions, s.column, s.direction)
+    transformed = tableTransform('gene', data, colorRef, sizeRef)
+    chartData = transformed.data
+    if (newData) {
+        // Find the column info for new data.
+        columns = columnOptions(
+            'gene', columnHeads(transformed.maxClusterCount))
+        // Set the render function for the download button
+        // which is the last column in the table.
+        columns[columns.length - 1].options.customBodyRender
+            = downloadButtonRender
+    }
+    rxSet('gene.showChart.toQuietStatus')
+}
+
 const tableNewData = (data) => {
     // Executed whenever we get new data from the server.
     if (rxGet('gene.firstChartDisplayed')) {
         // Initialize
         themeOverrides = getThemeOverrides()
     }
-    const transformed = tableTransform('gene', data, colorRef, sizeRef)
-    chartData = transformed.data
-    columns = columnOptions('gene', columnHeads(transformed.maxClusterCount))
-    // Set the render function for the download button
-    // which is the last column in the table.
-    columns[columns.length - 1].options.customBodyRender = downloadButtonRender
+    tableRefresh(true)
+}
+
+const onColumnSortChange = (column, direction) => {
+    if (column !== 'color' && column !== 'size') {
+        return
+    }
+    rxSet('gene.sort.uiSet', { column, direction })
+    tableRefresh()
 }
 
 const mapStateToProps = (state) => {
@@ -99,9 +117,8 @@ const mapStateToProps = (state) => {
         columns,
         data: chartData,
         optionOverrideFx,
-        show: true, //state.gene.showChart,
+        show: state.gene.showChart,
         themeOverrides,
-        sort: state.gene.sort,
     }
 }
 
