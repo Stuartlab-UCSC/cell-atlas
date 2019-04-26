@@ -10,6 +10,7 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import CellType from 'cellType/page'
+import CellTypeDeterm from 'cellTypeDeterm/page'
 import Database from 'database/Database'
 import DataModel from 'dataModel/DataModel'
 import Gene from 'gene/page'
@@ -17,6 +18,7 @@ import Dataset from 'dataset/Dataset'
 import Home from 'home/Home'
 import NamerDialog from 'components/NamerDialog'
 import NavBar from 'app/NavBar'
+import Pipeline from 'pipeline/page'
 import sessionStoreInit from 'state/sessionStore'
 import TrajExplore from 'trajExplore/TrajExplore'
 import PageNotFound from 'home/PageNotFound'
@@ -41,10 +43,12 @@ const App = ({store}) => {
                     <div className='page' >
                         <Switch>
                             <Route exact path='/' component={Home}/>
-                            <Route path='/cell-type' component={CellType}/>
+                            <Route path='/cell-type/determ' component={CellTypeDeterm}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>
+                            <Route path='/cell-type/psychic' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>                            <Route path='/cell-type' component={CellType}/>
                             <Route path='/data-model' component={DataModel}/>
                             <Route path='/dataset' component={Dataset}/>
                             <Route path='/gene' component={Gene}/>
+                            <Route path='/pipeline' component={Pipeline}/>
                             <Route path='/sql-query' component={Database}/>
                             <Route path='/traj' component={TrajExplore}/>
                             <Route component={PageNotFound} />

@@ -17,6 +17,7 @@ class NavBarPres extends React.Component {
     constructor (props) {
         super(props)
         this.listHeads = [
+            'cellType',
             'analyze',
             'explore',
             'settings',
@@ -58,6 +59,7 @@ class NavBarPres extends React.Component {
          // Close all menu lists.
          // It is easier to close them all than to find the one that is open.
         this.setState(this.closeAllLists({...this.state.open}))
+        //this.setState({ active: window.location.pathname })
     }
 
     onThemeClick = () => {
@@ -115,18 +117,17 @@ class NavBarPres extends React.Component {
         return comp
     }
 
-    analyze = () => {
+    cellType = () => {
 
-        // The analyze menu.
+        // The Reference menu.
         const list =
             <MenuList>
-                {this.listItem('Trajectory Similarity', '/analyze/trajSim')}
-                {this.listItem('Molecular Similarity', '/analyze/moleSim')}
-                {this.listItem('Cell Type Psychic', '/analyze/typePsych')}
+                {this.listItem('Determination Plot', '/cell-type/determ')}
+                {this.listItem('Cell Type Psychic', '/cell-type/psych')}
             </MenuList>
         const comp =
             <React.Fragment>
-                <NavBarList id='analyze' label='Analyze' list={list}
+                <NavBarList id='cellType' label='Cell Type' list={list}
                     open={this.state.open}
                     onAnyClick={this.onAnyClick}
                 />
@@ -135,28 +136,23 @@ class NavBarPres extends React.Component {
         return comp
     }
 
-    explore = () => {
+    cellType = () => {
 
-        // The explore menu.
+        // The cell type menu.
         const list =
             <MenuList>
-                {this.listItem('SQL Query', '/explore/database')}
+                {this.listItem('Determination Plot', '/cell-type/determ')}
+                {this.listItem('Cell Type Psychic', '/cell-type/psych')}
             </MenuList>
         const comp =
             <React.Fragment>
-                <NavBarList id='explore' label='Explore' list={list}
+                <NavBarList id='cellType' label='Cell Type' list={list}
                     open={this.state.open}
                     onAnyClick={this.onAnyClick}
                 />
-
             </React.Fragment>
 
         return comp
-        /*
-                {this.listItem('Datasets', '/explore/dataset')}
-                {this.listItem('Search', '/explore/search')}
-                {this.listItem('Trajectories', '/explore/traj')}
-        */
     }
 
     render() {
@@ -192,11 +188,13 @@ class NavBarPres extends React.Component {
                         Stuart Cell Atlas
                         {this.logo()}
                     </ToggleButton>
+                    {this.linkItem('Cell Type Determination', '/cell-type/determ')}
+                    {this.linkItem('Cell Type Psychic', '/cell-type/psych')}
                     {this.linkItem('Gene', '/gene')}
-                    {this.linkItem('Cell Type', '/cell-type')}
                     {this.linkItem('Datasets', '/dataset')}
                     {this.linkItem('Trajectory', '/traj')}
                     {this.linkItem('SQL Query', '/sql-query')}
+                    {this.linkItem('Pipeline', '/pipeline')}
                     {this.linkItem('Data Model', '/data-model')}
                     {this.externalLinkItem('API', this.props.apiUrl)}
                 </ToggleButtonGroup>
