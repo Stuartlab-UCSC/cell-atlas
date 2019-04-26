@@ -8,14 +8,33 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 
+import { altBackground, altForeground, background } from 'app/themeData'
+
 class NavBarList extends React.Component {
 
     constructor (props) {
         super(props)
-        this.color = 'rgba(127,127,127,1)'
+        this.baseStyle = {
+            textTransform: 'none',
+            fontWeight: 400,
+            height: '40px',
+        }
+    }
+    
+    setColors () {
+        // Colors may dynamically change.
+        this.headStyle = {
+            ...this.baseStyle,
+            color: altForeground,
+        }
+        this.headActiveStyle = {
+            ...this.baseStyle,
+            color: altForeground,
+            backgroundColor: background,
+        }
     }
 
-     onListHeadClick = ev => {
+    onListHeadClick = ev => {
 
         // Handle a click on a menu option that has a list of options.
         // Open the menu.
@@ -46,7 +65,7 @@ class NavBarList extends React.Component {
                         data-id={id}
                         style={{ transformOrigin: 'top' }}
                     >
-                        <Paper style={{ backgroundColor: this.color }}>
+                        <Paper style={{ backgroundColor: altBackground }}>
                             <ClickAwayListener
                                 onClickAway={this.props.onAnyClick}
                             >
@@ -64,6 +83,9 @@ class NavBarList extends React.Component {
         const label = this.props.label
         const open = this.props.open[id] // list of options for a menu item
         const menuGrow = id + 'MenuGrow'
+        const style = (this.props.active.slice(0,11) === '/prototypes')
+            ? this.headActiveStyle
+            : this.headStyle
         const comp =
             <ToggleButton
                 className='listHead'
@@ -73,12 +95,7 @@ class NavBarList extends React.Component {
                 }}
                 aria-owns={open ? menuGrow : null}
                 aria-haspopup="true"
-                style={{
-                    textTransform: 'none',
-                    color: this.color,
-                    height: '40px',
-                    fontWeight: 400,
-                }}
+                style={style}
                 value=''
                 onClick={this.onListHeadClick}
             >
@@ -87,6 +104,7 @@ class NavBarList extends React.Component {
         return comp
     }
     render() {
+        this.setColors()
         return (
             <React.Fragment>
                 <this.ListHead />

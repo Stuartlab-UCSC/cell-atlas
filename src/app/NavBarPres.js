@@ -17,20 +17,39 @@ class NavBarPres extends React.Component {
     constructor (props) {
         super(props)
         this.listHeads = [
-            'cellType',
-            'analyze',
-            'explore',
-            'settings',
+            'prototypes',
         ]
         this.state=(this.closeAllLists({}))
         this.state.active = window.location.pathname
-        this.color = 'rgba(127,127,127,1)'
         this.height = '2.5rem'
         this.itemStyle = {
             textTransform: 'none',
             fontWeight: 400,
             height: this.height,
         }
+    }
+    setStyles () {
+        this.barItemStyle = {
+            ...this.itemStyle,
+            color: altForeground,
+        }
+        this.barItemActiveStyle = {
+            ...this.itemStyle,
+            color: altForeground,
+            backgroundColor: background,
+        }
+        this.listItemStyle = {
+            ...this.barItemStyle,
+            fontSize: '0.8rem',
+            height: '1.5rem',
+        }
+    }
+
+    findStyle = (link) => {
+        //console.log('findStyle: link:', link)
+        //console.log('           this.state.active:', this.state.active)
+        return (this.state.active === link)
+            ? this.barItemActiveStyle : this.barItemStyle
     }
 
     logo = () => {
@@ -51,34 +70,30 @@ class NavBarPres extends React.Component {
         this.listHeads.forEach(head => {
             openState[head] = false
         })
-        return {open: openState}
+        const newOpen = {open: openState}
+        return newOpen
     }
 
     onAnyClick = (ev) => {
+        // Executed upon a click to close any open menu lists for clicks
+        // anywhere except the active menu list head.
 
          // Close all menu lists.
          // It is easier to close them all than to find the one that is open.
         this.setState(this.closeAllLists({...this.state.open}))
-        //this.setState({ active: window.location.pathname })
-    }
-
-    onThemeClick = () => {
-        this.props.onThemeClick()
-        this.onAnyClick()
     }
     
     onToggleGroupChange = (ev, value) => {
+        // Executed upon click of an item at the highest level.
         this.setState({ active: value })
     }
 
     externalLinkItem = (text, link) => {
         // An external link on the navigation bar.
-        let style = (this.state.active === link)
-            ? this.barItemActiveStyle : this.barItemStyle
         let comp =
             <ToggleButton
                 href={link}
-                style={style}
+                style={this.findStyle(link)}
                 value={link}
             >
                 {text}
@@ -89,13 +104,11 @@ class NavBarPres extends React.Component {
     linkItem = (text, link) => {
 
         // An internal link on the navigation bar.
-        let style = (this.state.active === link)
-            ? this.barItemActiveStyle : this.barItemStyle
         let comp =
             <ToggleButton
                 component={Link}
                 to={link}
-                style={style}
+                style={this.findStyle(link)}
                 value={link}
             >
                 {text}
@@ -111,43 +124,25 @@ class NavBarPres extends React.Component {
                 component={Link}
                 to={to}
                 onClick={this.onAnyClick}
+                style={this.listItemStyle}
             >
                 {text}
             </MenuItem>
         return comp
     }
 
-    cellType = () => {
-
-        // The Reference menu.
-        const list =
-            <MenuList>
-                {this.listItem('Determination Plot', '/cell-type/determ')}
-                {this.listItem('Cell Type Psychic', '/cell-type/psych')}
-            </MenuList>
-        const comp =
-            <React.Fragment>
-                <NavBarList id='cellType' label='Cell Type' list={list}
-                    open={this.state.open}
-                    onAnyClick={this.onAnyClick}
-                />
-            </React.Fragment>
-
-        return comp
-    }
-
-    cellType = () => {
-
+    prototypes = () => {
         // The cell type menu.
         const list =
             <MenuList>
-                {this.listItem('Determination Plot', '/cell-type/determ')}
-                {this.listItem('Cell Type Psychic', '/cell-type/psych')}
+                {this.listItem('Cell Type Determination', '/prototypes/determ')}
+                {this.listItem('Cell Type Psychic', '/prototypes/cellType')}
             </MenuList>
         const comp =
             <React.Fragment>
-                <NavBarList id='cellType' label='Cell Type' list={list}
+                <NavBarList id='prototypes' label='Prototypes' list={list}
                     open={this.state.open}
+                    active={this.state.active}
                     onAnyClick={this.onAnyClick}
                 />
             </React.Fragment>
@@ -156,15 +151,7 @@ class NavBarPres extends React.Component {
     }
 
     render() {
-        this.barItemStyle = {
-            ...this.itemStyle,
-            color: altForeground,
-        }
-        this.barItemActiveStyle = {
-            ...this.itemStyle,
-            color: altForeground,
-            backgroundColor: background,
-        }
+        this.setStyles()
         return (
             <div
                 style={{
@@ -185,17 +172,15 @@ class NavBarPres extends React.Component {
                         value='/'
                         style={{height: this.height, color: altForeground}}
                     >
-                        Stuart Cell Atlas
+                        UCSC Cell Atlas
                         {this.logo()}
                     </ToggleButton>
-                    {this.linkItem('Cell Type Determination', '/cell-type/determ')}
-                    {this.linkItem('Cell Type Psychic', '/cell-type/psych')}
                     {this.linkItem('Gene', '/gene')}
                     {this.linkItem('Datasets', '/dataset')}
-                    {this.linkItem('Trajectory', '/traj')}
                     {this.linkItem('SQL Query', '/sql-query')}
                     {this.linkItem('Pipeline', '/pipeline')}
                     {this.linkItem('Data Model', '/data-model')}
+                    {this.prototypes()}
                     {this.externalLinkItem('API', this.props.apiUrl)}
                 </ToggleButtonGroup>
             </div>

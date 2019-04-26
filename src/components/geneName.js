@@ -21,7 +21,7 @@ const isValidGeneName = (dispatch, id) => {
 const mapStateToProps = (state) => {
     const route = window.location.pathname
     let id = 'gene' // home page uses same state as gene page
-    if (route === '/cell-type') {
+    if (route === '/prototypes/cellType') {
         id = 'cellType'
     }
     return {

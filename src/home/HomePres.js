@@ -42,7 +42,7 @@ const HomePres = ({redirect, onFindGeneClick, onRedirect }) => {
                     <Grid item xs={5} style={{paddingBottom: '4rem'}}>
                         <Typography variant='caption' align='right'
                             style={{paddingTop: '1.5rem'}}>
-                            UC Santa Cruz Genomics Institute, Stuart Lab
+                            University of California Santa Cruz Genomics Institute
                         </Typography>
                         <Typography variant='h4' align='right'>
                             Cell Atlas
