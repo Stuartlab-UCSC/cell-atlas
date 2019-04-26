@@ -46,8 +46,6 @@ class NavBarPres extends React.Component {
     }
 
     findStyle = (link) => {
-        //console.log('findStyle: link:', link)
-        //console.log('           this.state.active:', this.state.active)
         return (this.state.active === link)
             ? this.barItemActiveStyle : this.barItemStyle
     }
@@ -81,6 +79,10 @@ class NavBarPres extends React.Component {
          // Close all menu lists.
          // It is easier to close them all than to find the one that is open.
         this.setState(this.closeAllLists({...this.state.open}))
+        setTimeout(() => {
+            this.setState({ active: window.location.pathname })
+
+        },10)
     }
     
     onToggleGroupChange = (ev, value) => {
