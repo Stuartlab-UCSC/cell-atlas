@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onFindGeneClick: (ev) => {
             if (isValidGeneName(dispatch, 'gene')) {
+                dispatch({ type: 'app.navBarActive.homeToGene' })
                 onGeneFindClick(dispatch)
             }
         },

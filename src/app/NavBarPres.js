@@ -20,7 +20,6 @@ class NavBarPres extends React.Component {
             'prototypes',
         ]
         this.state=(this.closeAllLists({}))
-        this.state.active = window.location.pathname
         this.height = '2.5rem'
         this.itemStyle = {
             textTransform: 'none',
@@ -32,6 +31,7 @@ class NavBarPres extends React.Component {
         this.barItemStyle = {
             ...this.itemStyle,
             color: altForeground,
+            backgroundColor: 'transparent',
         }
         this.barItemActiveStyle = {
             ...this.itemStyle,
@@ -46,7 +46,7 @@ class NavBarPres extends React.Component {
     }
 
     findStyle = (link) => {
-        return (this.state.active === link)
+        return (this.props.active === link)
             ? this.barItemActiveStyle : this.barItemStyle
     }
 
@@ -79,15 +79,13 @@ class NavBarPres extends React.Component {
          // Close all menu lists.
          // It is easier to close them all than to find the one that is open.
         this.setState(this.closeAllLists({...this.state.open}))
-        setTimeout(() => {
-            this.setState({ active: window.location.pathname })
-
-        },10)
+        
+        this.props.onAnyClick()
     }
     
     onToggleGroupChange = (ev, value) => {
         // Executed upon click of an item at the highest level.
-        this.setState({ active: value })
+        this.props.onTopLevelClick()
     }
 
     externalLinkItem = (text, link) => {
@@ -144,7 +142,7 @@ class NavBarPres extends React.Component {
             <React.Fragment>
                 <NavBarList id='prototypes' label='Prototypes' list={list}
                     open={this.state.open}
-                    active={this.state.active}
+                    active={this.props.active}
                     onAnyClick={this.onAnyClick}
                 />
             </React.Fragment>
@@ -172,7 +170,7 @@ class NavBarPres extends React.Component {
                         component={Link}
                         to='/'
                         value='/'
-                        style={{height: this.height, color: altForeground}}
+                        style={this.findStyle('/')}
                     >
                         UCSC Cell Atlas
                         {this.logo()}

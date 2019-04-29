@@ -6,16 +6,26 @@ import NavBarPres from 'app/NavBarPres'
 
 const mapStateToProps = state => {
     return {
-        theme: state.app.navBarTheme,
+        active: state.app.navBarActive,
         apiUrl: process.env.REACT_APP_DATA_URL,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onThemeClick: ev => {
-            dispatch({ type: 'app.navBarTheme.toggle' })
-         },
+        onAnyClick: (ev) => {
+            // Allow window location pathname to change.
+            setTimeout(() => {
+                dispatch({ type: 'app.navBarActive.anyClick' })},
+            0)
+        },
+        onTopLevelClick: (ev) => {
+            // Allow window location pathname to change.
+            setTimeout(() => {
+                dispatch({ type: 'app.navBarActive.topLevelClick' })},
+            0)
+        },
+        
     }
 }
 

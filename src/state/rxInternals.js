@@ -16,6 +16,7 @@ import { namerDialogState as namerDialog } from 'components/NamerDialog'
 const app = (
     state = {
         homeRedirect: false,
+        navBarActive: window.location.pathname,
         navBarTheme: 'light',
         userEmail: null,
     }, action) => {
@@ -29,6 +30,19 @@ const app = (
             return {
                 ...state,
                 homeRedirect: false
+            }
+        case 'app.navBarActive.anyClick':
+        case 'app.navBarActive.topLevelClick':
+            console.log('state app.navBarActive.*Click: window.location.pathname:',
+                window.location.pathname)
+            return {
+                ...state,
+                navBarActive: window.location.pathname
+            }
+        case 'app.navBarActive.homeToGene':
+            return {
+                ...state,
+                navBarActive: '/gene'
             }
         case 'app.userEmail.login':
             if (action.user) {
