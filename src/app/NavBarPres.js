@@ -31,7 +31,6 @@ class NavBarPres extends React.Component {
         this.barItemStyle = {
             ...this.itemStyle,
             color: altForeground,
-            backgroundColor: 'transparent',
         }
         this.barItemActiveStyle = {
             ...this.itemStyle,
@@ -42,6 +41,17 @@ class NavBarPres extends React.Component {
             ...this.barItemStyle,
             fontSize: '0.8rem',
             height: '1.5rem',
+        }
+        this.loginStyle = {
+            ...this.barItemStyle,
+            position: 'absolute',
+            right: '2rem',
+        }
+        this.usernameStyle = {
+            ...this.barItemStyle,
+            position: 'absolute',
+            right: '6rem',
+            fontStyle: 'italic',
         }
     }
 
@@ -149,6 +159,54 @@ class NavBarPres extends React.Component {
 
         return comp
     }
+    
+    logIn = (link, username) => {
+        // An external link to the login page.
+        if (username) {
+            return null
+        }
+        return (
+            <ToggleButton
+                href={link}
+                style={this.loginStyle}
+                value={'logIn'}
+            >
+                Sign in
+            </ToggleButton>
+        )
+    }
+
+    logOut = (link, username) => {
+        // The log out function.
+         if (!username) {
+            return null
+        }
+        return (
+            <ToggleButton
+                href={link}
+                style={this.loginStyle}
+                value={'logOut'}
+            >
+                Sign out
+            </ToggleButton>
+        )
+    }
+
+    username = (username) => {
+        // The logged in username.
+        if (!username) {
+            return null
+        }
+        return (
+            <ToggleButton
+                disabled={true}
+                style={this.usernameStyle}
+                value={username}
+            >
+                {username}
+            </ToggleButton>
+        )
+    }
 
     render() {
         this.setStyles()
@@ -182,6 +240,9 @@ class NavBarPres extends React.Component {
                     {this.linkItem('Data Model', '/data-model')}
                     {this.prototypes()}
                     {this.externalLinkItem('API', this.props.apiUrl)}
+                    {this.username(this.props.username)}
+                    {this.logIn(this.props.loginUrl, this.props.username)}
+                    {this.logOut(this.props.logoutUrl, this.props.username)}
                 </ToggleButtonGroup>
             </div>
         )

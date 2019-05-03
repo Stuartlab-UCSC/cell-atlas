@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import GeneName from 'components/geneName'
 
 import appLogo from 'app/images/logo.svg'
+import About from 'home/About'
 
 const HomePres = ({redirect, onFindGeneClick, onRedirect }) => {
 
@@ -78,22 +79,15 @@ const HomePres = ({redirect, onFindGeneClick, onRedirect }) => {
 
                     </Grid>
                     <Grid item xs={4} />
+            
+                    <Grid item xs={12} style={{ marginTop: '4rem' }} >
+                        <About />
+                    </Grid>
 
                 </Grid>
             </form>
         </div>
     )
 }
-/*
-
-                <Grid item xs={5}>
-                    <Button href={loginUrl}>Login</Button>
-                </Grid>
-                <Grid item xs={5}>
-                    <Typography>
-                        {'username: ' + username}
-                    </Typography>
-                </Grid>
-*/
 
 export default HomePres

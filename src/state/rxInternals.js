@@ -15,12 +15,29 @@ import { namerDialogState as namerDialog } from 'components/NamerDialog'
 // Global application state.
 const app = (
     state = {
+        auth: { username: null, token: null },
+        homeAboutOpen: false,
         homeRedirect: false,
+        homeUrlSearch: null,
         navBarActive: window.location.pathname,
         navBarTheme: 'light',
-        userEmail: null,
     }, action) => {
         switch(action.type) {
+        case 'app.auth.login':
+            return {
+                ...state,
+                auth: { username: action.username, token: action.token }
+            }
+        case 'app.auth.logout':
+            return {
+                ...state,
+                auth: { username: null, token: null }
+            }
+        case 'app.homeAboutOpen.toggle':
+            return {
+                ...state,
+                homeAboutOpen: !state.homeAboutOpen
+            }
         case 'app.homeRedirect.set':
             return {
                 ...state,
@@ -31,10 +48,18 @@ const app = (
                 ...state,
                 homeRedirect: false
             }
+        case 'app.homeUrlSearch.clear':
+            return {
+                ...state,
+                homeUrlSearch: null
+            }
+        case 'app.homeUrlSearch.set':
+            return {
+                ...state,
+                homeUrlSearch: action.value
+            }
         case 'app.navBarActive.anyClick':
         case 'app.navBarActive.topLevelClick':
-            console.log('state app.navBarActive.*Click: window.location.pathname:',
-                window.location.pathname)
             return {
                 ...state,
                 navBarActive: window.location.pathname
@@ -43,22 +68,6 @@ const app = (
             return {
                 ...state,
                 navBarActive: '/gene'
-            }
-        case 'app.userEmail.login':
-            if (action.user) {
-                return {
-                    ...state,
-                    userEmail: action.user
-                }
-            }
-            return {
-                ...state,
-                userEmail: null
-            }
-        case 'app.userEmail.logout':
-            return {
-                ...state,
-                userEmail: null
             }
         default:
             return state
