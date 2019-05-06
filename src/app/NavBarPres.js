@@ -207,9 +207,19 @@ class NavBarPres extends React.Component {
             </ToggleButton>
         )
     }
+    
+    admin = (isAdmin) => {
+        // The link to the admin page.
+        let comp = null
+        if (isAdmin) {
+            comp = this.linkItem('Admin', '/admin')
+        }
+        return comp
+    }
 
     render() {
         this.setStyles()
+        const username = this.props.user.name
         return (
             <div
                 style={{
@@ -240,9 +250,10 @@ class NavBarPres extends React.Component {
                     {this.linkItem('Data Model', '/data-model')}
                     {this.prototypes()}
                     {this.externalLinkItem('API', this.props.apiUrl)}
-                    {this.username(this.props.username)}
-                    {this.logIn(this.props.loginUrl, this.props.username)}
-                    {this.logOut(this.props.logoutUrl, this.props.username)}
+                    {this.admin(this.props.isAdmin)}
+                    {this.username(username)}
+                    {this.logIn(this.props.loginUrl, username)}
+                    {this.logOut(this.props.logoutUrl, username)}
                 </ToggleButtonGroup>
             </div>
         )

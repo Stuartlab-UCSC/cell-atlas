@@ -4,6 +4,7 @@
 
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
+import auth from 'auth/state'
 import bubble from 'bubble/state'
 import cellType from 'cellType/state'
 import database from 'database/databaseState'
@@ -15,7 +16,6 @@ import { namerDialogState as namerDialog } from 'components/NamerDialog'
 // Global application state.
 const app = (
     state = {
-        auth: { username: null, token: null },
         homeAboutOpen: false,
         homeRedirect: false,
         homeUrlSearch: null,
@@ -23,16 +23,6 @@ const app = (
         navBarTheme: 'light',
     }, action) => {
         switch(action.type) {
-        case 'app.auth.login':
-            return {
-                ...state,
-                auth: { username: action.username, token: action.token }
-            }
-        case 'app.auth.logout':
-            return {
-                ...state,
-                auth: { username: null, token: null }
-            }
         case 'app.homeAboutOpen.toggle':
             return {
                 ...state,
@@ -77,6 +67,7 @@ const app = (
 export const init = () => {
     const Reducers = combineReducers({
         app,
+        auth,
         bubble,
         cellType,
         database,

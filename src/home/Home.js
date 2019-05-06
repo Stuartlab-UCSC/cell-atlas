@@ -18,9 +18,9 @@ const checkUrlSearch = (state) => {
     if (parms) {
         if (parms.t) {
             if (parms.t !== 'logout' && parms.u) {
-                rxSet('app.auth.login', { username: parms.u, token: parms.t })
+                rxSet('auth.user.login', { username: parms.u, token: parms.t })
             } else {
-                rxSet('app.auth.logout', { username: null, token: null })
+                rxSet('auth.user.logout', { username: null, token: null })
             }
         }
     }

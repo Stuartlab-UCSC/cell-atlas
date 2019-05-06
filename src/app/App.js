@@ -9,6 +9,7 @@ import {
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+import Admin from 'app/admin'
 import CellType from 'cellType/page'
 import CellTypeDeterm from 'cellTypeDeterm/page'
 import Database from 'database/Database'
@@ -41,13 +42,14 @@ const App = ({store}) => {
                     <NavBar />
                     <div className='page' >
                         <Switch>
-                            <Route exact path='/' component={Home}/>
-                            <Route path='/prototypes/determ' component={CellTypeDeterm}/>
-                            <Route path='/prototypes/cellType' component={CellType}/>
+                            <Route path='/admin' component={Admin}/>
                             <Route path='/data-model' component={DataModel}/>
                             <Route path='/dataset' component={Dataset}/>
                             <Route path='/gene' component={Gene}/>
+                            <Route exact path='/' component={Home}/>
                             <Route path='/pipeline' component={Pipeline}/>
+                            <Route path='/prototypes/determ' component={CellTypeDeterm}/>
+                            <Route path='/prototypes/cellType' component={CellType}/>
                             <Route path='/sql-query' component={Database}/>
                             <Route component={PageNotFound} />
                         </Switch>
