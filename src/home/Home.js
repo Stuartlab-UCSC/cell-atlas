@@ -13,14 +13,19 @@ const checkUrlSearch = (state) => {
     if (search === state.app.homeUrlSearch) {
         return
     }
+    console.log('checkUrlSearch: search:', search)
     rxSet('app.homeUrlSearch.set', { value: search })
     let parms = parse(search)
     if (parms) {
         if (parms.t) {
             if (parms.t !== 'logout' && parms.u) {
-                rxSet('auth.user.login', { username: parms.u, token: parms.t })
+                rxSet('auth.user.login', {
+                    username: parms.u,
+                    token: parms.t,
+                    roles: parms.r,
+                })
             } else {
-                rxSet('auth.user.logout', { username: null, token: null })
+                rxSet('auth.user.logout')
             }
         }
     }

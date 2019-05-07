@@ -208,10 +208,10 @@ class NavBarPres extends React.Component {
         )
     }
     
-    admin = (isAdmin) => {
+    admin = (roles) => {
         // The link to the admin page.
         let comp = null
-        if (isAdmin) {
+        if (roles && roles.includes('admin')) {
             comp = this.linkItem('Admin', '/admin')
         }
         return comp
@@ -250,7 +250,7 @@ class NavBarPres extends React.Component {
                     {this.linkItem('Data Model', '/data-model')}
                     {this.prototypes()}
                     {this.externalLinkItem('API', this.props.apiUrl)}
-                    {this.admin(this.props.isAdmin)}
+                    {this.admin(this.props.user.roles)}
                     {this.username(username)}
                     {this.logIn(this.props.loginUrl, username)}
                     {this.logOut(this.props.logoutUrl, username)}

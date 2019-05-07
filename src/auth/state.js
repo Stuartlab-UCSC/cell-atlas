@@ -1,6 +1,10 @@
 
 // Global authentication/authorization (auth) state.
-const defaultUser = { name: null, token: null }
+const defaultUser = {
+    name: null,
+    token: null,
+    roles: null,
+}
 
 const auth = (
     state = {
@@ -18,12 +22,13 @@ const auth = (
                 user: {
                     name: action.username,
                     token: action.token,
+                    roles: action.roles,
                 }
             }
         case 'auth.user.logout':
             return {
                 ...state,
-                user: { name: null, token: null }
+                user: defaultUser
             }
          default:
             return state

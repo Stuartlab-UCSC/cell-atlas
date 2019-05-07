@@ -38,11 +38,6 @@ const app = (
                 ...state,
                 homeRedirect: false
             }
-        case 'app.homeUrlSearch.clear':
-            return {
-                ...state,
-                homeUrlSearch: null
-            }
         case 'app.homeUrlSearch.set':
             return {
                 ...state,

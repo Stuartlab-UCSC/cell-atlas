@@ -2,21 +2,33 @@
 // Admin page.
 
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import Link from '@material-ui/core/Link'
+import MenuItem from '@material-ui/core/MenuItem'
+import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography'
+
+
+const linkItem = (text, to) => {
+    return (
+        <MenuItem
+            component={Link}
+            to={to}
+        >
+            {text}
+        </MenuItem>
+    )
+}
 
 const Page = () => {
     return (
-        <Grid container spacing={16}>
-            <Grid item xs={12} >
-                <Typography variant='h6' >
-                    Admin
-                </Typography>
-            </Grid>
-            <Grid item xs={12} >
-                Add role to user
-            </Grid>
-        </Grid>
+        <div>
+            <Typography variant='h6' >
+                Admin
+            </Typography>
+            <MenuList style={{width: '20rem'}}>
+                {linkItem('Add users to role', 'addUsersToRole')}
+            </MenuList>
+        </div>
     )
 }
 

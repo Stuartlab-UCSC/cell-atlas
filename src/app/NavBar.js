@@ -3,10 +3,8 @@
 
 import connect from "react-redux/es/connect/connect";
 import NavBarPres from 'app/NavBarPres'
-//import { authIsAdmin } from 'auth/auth'
 
 const mapStateToProps = state => {
-    //authIsAdmin()
     const dataUrl = process.env.REACT_APP_DATA_URL
     return {
         active: state.app.navBarActive,

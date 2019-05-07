@@ -11,7 +11,7 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import auth from 'auth/state'
 import database from 'database/databaseState'
 
-let LOGGING = true  // true means log the state and store on save and load
+let LOGGING = false  // true means log the state and store on save and load
 let storageSupported
 let storeName
 
