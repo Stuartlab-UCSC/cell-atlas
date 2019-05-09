@@ -18,7 +18,6 @@ const app = (
     state = {
         homeAboutOpen: false,
         homeRedirect: false,
-        homeUrlSearch: null,
         navBarActive: window.location.pathname,
         navBarTheme: 'light',
     }, action) => {
@@ -37,11 +36,6 @@ const app = (
             return {
                 ...state,
                 homeRedirect: false
-            }
-        case 'app.homeUrlSearch.set':
-            return {
-                ...state,
-                homeUrlSearch: action.value
             }
         case 'app.navBarActive.anyClick':
         case 'app.navBarActive.topLevelClick':

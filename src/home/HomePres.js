@@ -27,15 +27,15 @@ const HomePres = ({redirect, onFindGeneClick, onRedirect }) => {
     return (
         <div id='homePage'>
             <iframe
-                id='homeDummyframe'
+                id='homeDummyIframe'
                 width='0'
                 height='0'
-                border='0'
-                name='homeDummyframe'
-                title='homeDummyframe' >
-            </iframe>
+                name='homeDummyIframe'
+                title='homeDummyIframe'
+                style={{borderWidth: '0'}}
+            />
             <form
-                target='homeDummyframe'
+                target='homeDummyIframe'
                 onSubmit={onFindGeneClick}
             >
                 <Grid container spacing={16} alignItems='center' >

@@ -20,6 +20,7 @@ let storeName
 // To add a piece of state to session store, add a line below and provide
 // a ...loadPersist state action.
 const stateKeys = {
+    'auth.redirectPage': auth.defaultRedirectPage,
     'auth.user': auth.defaultUser,
     'database.query': database.defaultQuery,
     'database.favoriteList': database.defaultFavoriteList,
@@ -73,7 +74,7 @@ function localStore (oper, jsonStore) {
         window.localStorage.removeItem(storeName)
         
     } else {
-        console.log('bad operation for local store:', oper)
+        console.error('bad operation for local store:', oper)
     }
 }
 

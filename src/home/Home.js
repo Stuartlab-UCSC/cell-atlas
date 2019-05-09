@@ -4,35 +4,8 @@ import { connect } from 'react-redux'
 import HomePres from 'home/HomePres'
 import { isValidGeneName } from 'components/geneName'
 import { onGeneFindClick } from 'gene/page'
-import parse from 'home/parseUrlParms'
-import { set as rxSet } from 'state/rx'
-
-
-const checkUrlSearch = (state) => {
-    const search = window.location.search
-    if (search === state.app.homeUrlSearch) {
-        return
-    }
-    console.log('checkUrlSearch: search:', search)
-    rxSet('app.homeUrlSearch.set', { value: search })
-    let parms = parse(search)
-    if (parms) {
-        if (parms.t) {
-            if (parms.t !== 'logout' && parms.u) {
-                rxSet('auth.user.login', {
-                    username: parms.u,
-                    token: parms.t,
-                    roles: parms.r,
-                })
-            } else {
-                rxSet('auth.user.logout')
-            }
-        }
-    }
-}
 
 const mapStateToProps = (state) => {
-    checkUrlSearch(state)
     return {
         redirect: state.app.homeRedirect,
     }

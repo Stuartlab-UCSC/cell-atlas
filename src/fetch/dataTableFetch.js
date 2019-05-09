@@ -92,7 +92,7 @@ const receiveData = (id, dataIn, callback) => {
 }
 
 const error = (message) => {
-    console.log('fetch error:', message)
+    console.error('fetch error:', message)
 }
 
 const fetchData = (id, urlPath, callback) => {

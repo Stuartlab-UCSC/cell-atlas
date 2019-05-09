@@ -30,7 +30,7 @@ export const get = (statePiece) => {
     case 6: // heaven forbid
         return state[seg[0]][seg[1]][seg[2]][seg[3]][seg[4]][seg[5]]
     default:
-        console.log("I don't know how to process this many levels!")
+        console.error("I don't know how to process this many levels!")
         return undefined
     }
     //return reduxStore.getState()[seg[0]][seg[1]]

@@ -9,7 +9,7 @@ import {
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import Admin from 'app/admin'
+import Auth from 'auth/auth'
 import CellType from 'cellType/page'
 import CellTypeDeterm from 'cellTypeDeterm/page'
 import Database from 'database/Database'
@@ -42,7 +42,7 @@ const App = ({store}) => {
                     <NavBar />
                     <div className='page' >
                         <Switch>
-                            <Route path='/admin' component={Admin}/>
+                            <Route path='/auth' component={Auth}/>
                             <Route path='/data-model' component={DataModel}/>
                             <Route path='/dataset' component={Dataset}/>
                             <Route path='/gene' component={Gene}/>

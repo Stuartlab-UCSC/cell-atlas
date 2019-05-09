@@ -1,16 +1,27 @@
 
 // Global authentication/authorization (auth) state.
+const defaultRedirectPage = '/'
 const defaultUser = {
     name: null,
-    token: null,
     roles: null,
 }
 
 const auth = (
     state = {
+        redirectPage: defaultRedirectPage,
         user: defaultUser,
     }, action) => {
         switch(action.type) {
+        case 'auth.redirectPage.set':
+            return {
+                ...state,
+                redirectPage: action.value
+            }
+        case 'auth.redirectPage.loadPersist':
+            return {
+                ...state,
+                redirectPage: action.value
+            }
         case 'auth.user.loadPersist':
             return {
                 ...state,
@@ -21,7 +32,6 @@ const auth = (
                 ...state,
                 user: {
                     name: action.username,
-                    token: action.token,
                     roles: action.roles,
                 }
             }
