@@ -11,6 +11,23 @@ export let background
 export let altBackground
 export let altForeground
 export const accentColor = '#03a9f4'
+export const fontFamily = [
+    "Myriad Set Pro",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    "Verdana",
+    "sans-serif"
+    /*'Open Sans',
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Helvetica Neue',
+    'Arial',
+    'sans-serif',*/
+].join(',') // "Roboto", "Helvetica", "Arial", "sans-serif"
+
 const buttonTextColor = '#000'
 
 // Values of the material-ui default theme are in comments.
@@ -41,22 +58,7 @@ export const themeData = themeType => {
         },
         typography: {
             useNextVariants: true,
-            fontFamily: [
-                "Myriad Set Pro",
-                "Helvetica Neue",
-                "Helvetica",
-                "Arial",
-                "Verdana",
-                "sans-serif"
-                /*'Open Sans',
-                '-apple-system',
-                'BlinkMacSystemFont',
-                'Segoe UI',
-                'Roboto',
-                'Helvetica Neue',
-                'Arial',
-                'sans-serif',*/
-            ].join(','), // "Roboto", "Helvetica", "Arial", "sans-serif"
+            fontFamily: fontFamily,
             fontSize: '14', // 14
         },
         overrides: {

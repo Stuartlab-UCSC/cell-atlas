@@ -145,7 +145,8 @@ class NavBarPres extends React.Component {
         // The cell type menu.
         const list =
             <MenuList>
-                {this.listItem('Cell Type Determination', '/prototypes/determ')}
+                {this.listItem(
+                    'Cell Type Worksheet', '/prototypes/cellTypeWorksheet')}
                 {this.listItem('Cell Type Psychic', '/prototypes/cellType')}
             </MenuList>
         const comp =
@@ -162,7 +163,7 @@ class NavBarPres extends React.Component {
     
     logIn = (link, username) => {
         // An external link to the login page.
-        if (username) {
+        if (username || true) {
             return null
         }
         return (

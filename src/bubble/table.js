@@ -1,5 +1,8 @@
 
-// The bubble table logic.
+// The bubble table logic. Prepares data for rendering in a datatable with:
+//  - tooltip containing title, size variable & value, color variable & value
+//  - sort by size or color
+//  - download
 
 import React from 'react'
 

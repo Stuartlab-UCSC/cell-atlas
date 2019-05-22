@@ -10,6 +10,7 @@ import { get as rxGet } from 'state/rx'
 export const getData = (download) => {
     fetchData('database', encodeURI('/sql/' + rxGet('database.query')))
 }
+
 const mapStateToProps = (state) => {
     // Handle a change in the favorite selected.
     const tableData = state.database.tableData

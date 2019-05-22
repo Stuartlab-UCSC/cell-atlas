@@ -17,6 +17,22 @@ const toHexString = (val) => {
     return (hex.length < 2) ? '0' + hex : hex
 }
 
+const getCatColormap = (palette, count) => {
+    // Get the colors as hexadecimal strings.
+    let rgbs = ColorMap.get(palette)(count + 1)
+    let colors = rgbs.map.map(val => {
+        // Ignore alpha, taking the default of one.
+        return '#'
+            + toHexString(val.r)
+            + toHexString(val.g)
+            + toHexString(val.b)
+        }
+    )
+    // Remove the repeating red at the end.
+    colors.splice(count, 1)
+    return colors
+}
+
 const summarizeCats = () => {
     // Find those attrs with all the same value and assign colors.
     let singleValues = {}
@@ -27,17 +43,7 @@ const summarizeCats = () => {
         }
         if (coloredAttrs.includes(at)) {
             // Get the colors as hexadecimal strings.
-            let rgbs = ColorMap.get('hexmap')(cats[at].length + 1)
-            let colors = rgbs.map.map(val => {
-                // Ignore alpha, taking the default of one.
-                return '#'
-                    + toHexString(val.r)
-                    + toHexString(val.g)
-                    + toHexString(val.b)
-                }
-            )
-            // Remove the repeating red at the end.
-            colors.splice(cats[at].length, 1);
+            const colors = getCatColormap('hexmap', cats[at].length)
             // Create the operating colormap.
             cats[at].forEach((cat, i) => {
                 colorCat[at][cat] = colors[i]
@@ -69,4 +75,5 @@ const clearCats = () => {
 
 export default colorCat
 
-export { summarizeCats, clearCats, catAttrs, coloredAttrs, gatherUniqueCats }
+export { getCatColormap, summarizeCats, clearCats, catAttrs, coloredAttrs,
+    gatherUniqueCats }

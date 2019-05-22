@@ -44,6 +44,8 @@ const columnHeads = (clusterHeads) => {
 }
 
 const mapStateToProps = (state) => {
+    // TODO: This should be organized like gene/table.js so the number of
+    // renders are reduced.
     const transformed = tableTransform(
         'cellType', data, colorRef, sizeRef, state)
     const columns = columnOptions(

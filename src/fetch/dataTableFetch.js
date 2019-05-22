@@ -127,3 +127,5 @@ const fetchData = (id, urlPath, callback) => {
 }
 
 export default fetchData
+
+export { receiveData } // for testing

@@ -2,10 +2,12 @@
 // The database favorite logic.
 
 import { connect } from 'react-redux'
-import FavoritePres from 'database/FavoritePres'
+import PickList from 'components/PickList'
 
 const mapStateToProps = (state) => {
     return {
+        id: 'database_favorites',
+        label: 'Favorites',
         list: state.database.favoriteList,
         selected: state.database.favoriteSelected,
     }
@@ -33,6 +35,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const Favorite = connect(
     mapStateToProps, mapDispatchToProps
-)(FavoritePres)
+)(PickList)
 
 export default Favorite
