@@ -9,6 +9,8 @@ const defaultSheetSelected = defaultSheetList[0].value
 const State = (
     state = {
         firstRender: true,
+        geneCluster: '',
+        getGeneTable: false,
         showSave: false,
         sheetList: defaultSheetList,
         sheetSelected: defaultSheetSelected,
@@ -20,6 +22,16 @@ const State = (
             return {
                 ...state,
                 firstRender: false
+            }
+        case 'cellTypeWork.geneCluster.uiSet':
+            return {
+                ...state,
+                geneCluster: action.value
+            }
+        case 'cellTypeWork.getGeneTable.true':
+            return {
+                ...state,
+                getGeneTable: true
             }
         case 'cellTypeWork.sheetList.load':
             return {

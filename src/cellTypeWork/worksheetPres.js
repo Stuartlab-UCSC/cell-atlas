@@ -8,6 +8,7 @@ import bubbles from 'cellTypeWork/cellTypeWorksheet.png'
 
 
 const colWidth = 14
+const rowHeight = 16.45
 const fontSize = 11
 const labelWidth = 100
 const labelFontSize = 16
@@ -21,7 +22,7 @@ const leftColStyle = {
 }
 const geneStyle = {
     ...leftColStyle,
-    height: 14,
+    height: rowHeight,
     paddingRight: 15,
 }
 const labelStyle = {
@@ -197,7 +198,7 @@ const Worksheet = (props) => {
             <Clusters clusters={clusters} colors={colors} />
             <Counts counts={counts} />
             <Genes genes={genes} />
-            <img src={bubbles} alt='bubbles' height={395} style={bubbleStyle}/>
+            <img src={bubbles} alt='bubbles' height={410} width={531} style={bubbleStyle}/>
         </div>
     )
 }
