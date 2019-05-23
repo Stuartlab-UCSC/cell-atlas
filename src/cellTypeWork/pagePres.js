@@ -7,14 +7,15 @@ import Typography from '@material-ui/core/Typography'
 
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
+import GeneClusterSelect from 'cellTypeWork/geneClusterSelect'
 import GeneTable from 'cellTypeWork/geneTable'
 import MockUp from 'components/MockUp'
 
 import scatterPlot from 'cellTypeWork/scatterPlot.png'
 
 const buttonStyle = {
-    width: '100%',
-    marginRight: '1rem',
+    width: '90%',
+    marginLeft: '1rem',
     marginTop: '1rem',
 }
 
@@ -91,7 +92,7 @@ const Presentation = (props) => {
         = props
     return (
         <div>
-        <Grid container spacing={16} style={{background: 'transparent'}}>
+        <Grid container spacing={8} style={{background: 'transparent'}}>
             <Grid item xs={3}>
                 <Typography variant='h6'>
                     Cell Type Worksheet
@@ -123,8 +124,12 @@ const Presentation = (props) => {
             <Grid item xs={8} style={{marginTop: -70}}>
                 <Worksheet />
             </Grid>
+            
+            <Grid item xs={12}>
+                <GeneClusterSelect />
+            </Grid>
 
-            <Grid item xs={12} style={{marginBottom: '2.5rem'}}>
+            <Grid item xs={12}>
                 <GeneTable/>
             </Grid>
         </Grid>

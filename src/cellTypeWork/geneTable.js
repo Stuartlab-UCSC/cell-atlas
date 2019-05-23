@@ -1,9 +1,11 @@
 
 import { connect } from 'react-redux'
+import React from 'react';
+
+import DataTable from 'components/DataTable'
 
 import { set as rxSet } from 'state/rx'
 import { receiveData } from 'fetch/dataTableFetch'
-import Presentation from 'cellTypeWork/geneTablePres'
 
 const dataStub =
 `gene	log2 fold change vs next	mean expression	support
@@ -19,37 +21,39 @@ const getData = () => {
     //    receiveDataFromServer)
 }
 
+const Presentation = (props) => {
+    const { columns, data, header, showTable } = props
+    if (!showTable) {
+        return (null)
+    }
+    return (
+        <div>
+            <DataTable
+                header={header}
+                data={data}
+                columns={columns}
+            />
+        </div>
+    )
+}
+
 const mapStateToProps = (state) => {
     if (state.cellTypeWork.firstRender) {
         getData()
     }
     const tableData = state.cellTypeWork.tableData
+    const cluster = state.cellTypeWork.geneCluster
     return {
-        cluster: state.cellTypeWork.geneCluster,
+        clusters: state.cellTypeWork.clusters,
         columns: state.cellTypeWork.tableColumn,
         data: tableData,
-        header: tableData.length + ' matches found',
-        show: state.cellTypeWork.showSave,
+        header: 'Cluster ' + cluster + ': ' + tableData.length + ' matches found',
         showTable: state.cellTypeWork.getGeneTable,
-        //message: state.database.fetchMessage,
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onClusterChange: ev => {
-            dispatch({ type: 'cellTypeWork.geneCluster.uiSet' })
-        },
-        onClusterKeyPress: ev => {
-            if (ev.key === 'Enter') {
-                dispatch({ type: 'cellTypeWork.getGeneTable.true' })
-            }
-        },
     }
 }
 
 const GeneTable = connect(
-    mapStateToProps, mapDispatchToProps
+    mapStateToProps
 )(Presentation)
 
 export default GeneTable

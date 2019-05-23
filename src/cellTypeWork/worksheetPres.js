@@ -184,6 +184,7 @@ const Worksheet = (props) => {
     }
     const tableStyle = {
         width: ((clusters.length + 6) * colWidth) + labelWidth,
+        paddingTop: 25,
         fontFamily: fontFamily,
         fontSize: fontSize,
     }
