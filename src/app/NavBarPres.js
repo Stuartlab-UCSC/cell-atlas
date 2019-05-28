@@ -239,7 +239,7 @@ class NavBarPres extends React.Component {
                     {this.linkItem('SQL Query', '/sql-query')}
                     {this.linkItem('Pipeline', '/pipeline')}
                     {this.linkItem('Data Model', '/data-model')}
-                    {this.prototypes()}
+                    {this.linkItem('Cell Type Mock-up', '/cell-type')}
                     {this.externalLinkItem('API', this.props.apiUrl)}
                     {this.username(this.props.username)}
                     {this.logIn(this.props.loginUrl, this.props.username)}

@@ -9,7 +9,6 @@ import {
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import CellType from 'cellType/page'
 import CellTypeWork from 'cellTypeWork/page'
 import Database from 'database/Database'
 import DataModel from 'dataModel/DataModel'
@@ -46,9 +45,8 @@ const App = ({store}) => {
                             <Route path='/dataset' component={Dataset}/>
                             <Route path='/gene' component={Gene}/>
                             <Route path='/pipeline' component={Pipeline}/>
-                            <Route path='/prototypes/cellTypeWorksheet' component={CellTypeWork}/>
-                            <Route path='/prototypes/cellType' component={CellType}/>
-                            <Route path='/sql-query' component={Database}/>
+                            <Route path='/cell-type' component={CellTypeWork}/>
+                             <Route path='/sql-query' component={Database}/>
                             <Route component={PageNotFound} />
                         </Switch>
                     </div>
