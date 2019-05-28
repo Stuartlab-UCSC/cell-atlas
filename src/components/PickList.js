@@ -2,36 +2,61 @@
 // A simple pick list, no search.
 
 import React from 'react'
-import FormControl from "@material-ui/core/FormControl/FormControl"
-import Input from "@material-ui/core/Input/Input"
-import InputLabel from "@material-ui/core/InputLabel"
-import NativeSelect from '@material-ui/core/NativeSelect'
+import FormControl from '@material-ui/core/FormControl/FormControl'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 
-const PickList = ({id, label, list, selected, onChange}) => {
+const Label = ({ label }) => {
+    if (!label) {
+        return (null)
+    }
+    return (
+        <InputLabel>
+            {label}
+        </InputLabel>
+    )
+}
+
+const HelperText = ({ helperText }) => {
+    if (!helperText) {
+        return (null)
+    }
+    return (
+        <FormHelperText>
+            {helperText}
+        </FormHelperText>
+    )
+}
+
+const PickList = ({id, helperText, label, list, selected, onChange}) => {
     if (!list) {
         list = []
     }
+    if (!selected) {
+        selected = 'none'
+    }
     return (
-        <FormControl style={{ width: '100%' }}>
-            <InputLabel>
-                {label}
-            </InputLabel>
-            <NativeSelect
+        <FormControl>
+            <Label label={label} />
+            <Select
                 value={selected}
                 onChange={onChange}
-                label={label}
-                input={<Input />}
-                placeholder='Select a worksheet'
+                name={label}
+                displayEmpty
+                style={{width: '100%'}}
             >
-                {list.map((opt, i) => (
-                    <option
-                        value={opt.value}
-                        data-id={id}
-                        key={i}>
-                        {opt.name}
-                    </option>
+                {list.map((item, i) => (
+                    <MenuItem
+                        value={item.value}
+                        key={i}
+                    >
+                        {item.name}
+                    </MenuItem>
                 ))}
-            </NativeSelect>
+            </Select>
+            <HelperText helperText={helperText} />
         </FormControl>
     )
 }
