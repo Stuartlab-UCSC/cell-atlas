@@ -7,7 +7,7 @@ const State = (
     state = {
         bubbleRange: { min: 0, max: 0 },
         bubbleTooltip: null,
-        color_by: 'log2_fold_change_vs_next',
+        colorBy: 'log2_fold_change_vs_next',
         colorColumnTooltip: null,
         colorRange: { min: 0, max: 0 },
         fetchMessage: ' ',
@@ -18,7 +18,7 @@ const State = (
         nameErrorMessage: null, // error message displayed in gene input
         showChart: false,
         sameValueColumns: {}, // columns containing a single value
-        size_by: 'sensitivity',
+        sizeBy: 'sensitivity',
     }, action) => {
         switch(action.type) {
         case 'gene.bubbleRange.set':
@@ -36,10 +36,10 @@ const State = (
                 ...state,
                 bubbleTooltip: action.value
             }
-        case 'gene.color_by.uiSet':
+        case 'gene.colorBy.uiSet':
             return {
                 ...state,
-                color_by: action.value
+                colorBy: action.value
             }
         case 'gene.colorColumnTooltip.mouseOut':
             return {
@@ -101,10 +101,10 @@ const State = (
                 ...state,
                 sameValueColumns: action.value
             }
-        case 'gene.size_by.uiSet':
+        case 'gene.sizeBy.uiSet':
             return {
                 ...state,
-                size_by: action.value
+                sizeBy: action.value
             }
         case 'gene.sort.reset':
             return {

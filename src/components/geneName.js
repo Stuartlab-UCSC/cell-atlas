@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
             /* for cellType:
             // TODO do we need both of these?
             dispatch({
-                type: 'cellType.color_by.uiSet',
+                type: 'cellType.colorBy.uiSet',
                 value: ev.target.value,
             })
             */

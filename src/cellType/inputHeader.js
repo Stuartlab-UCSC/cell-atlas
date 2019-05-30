@@ -13,11 +13,11 @@ const showVars = (state) => {
 }
 
 const mapStateToProps = (state) => {
-    let sizeList = Object.keys(sizeRef).map(size_by => {
-        return { ...sizeRef[size_by], value: size_by }
+    let sizeList = Object.keys(sizeRef).map(sizeBy => {
+        return { ...sizeRef[sizeBy], value: sizeBy }
     })
-    const colorValue = state.cellType.color_by
-    const sizeValue = state.cellType.size_by
+    const colorValue = state.cellType.colorBy
+    const sizeValue = state.cellType.sizeBy
     return {
         showVars: showVars(state),
         colorValue,
@@ -33,14 +33,14 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onColorChange: ev => {
             dispatch({
-                type: 'cellType.color_by.uiSet',
+                type: 'cellType.colorBy.uiSet',
                 value: ev.target.value,
             })
             serverRequest(dispatch)
         },
         onSizeChange: ev => {
             dispatch({
-                type: 'cellType.size_by.uiSet',
+                type: 'cellType.sizeBy.uiSet',
                 value: ev.target.value,
             })
             serverRequest(dispatch)

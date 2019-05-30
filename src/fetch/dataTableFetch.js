@@ -8,7 +8,7 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 // These columns will not have filters, no matter the table.
 const noFilters = [
     'analyst_favorite',
-    'cell_count',
+    'cellCount',
     'data_source_url',
     'description',
     'expression_hash',

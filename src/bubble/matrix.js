@@ -45,14 +45,14 @@ const matrixTransform = (id, data, colorRef, sizeRef, state) => {
                 
             row.push(
                 <Bubble
-                    cell_count={c.cell_count}
+                    cellCount={c.cellCount}
                     color={c.color}
-                    color_by={colorRef[data.color_by].label}
+                    colorBy={colorRef[data.colorBy].label}
                     colorRgb={getRangeColor(c.color, color.min, color.max)}
                     name={c.name}
                     radius={radius}
                     size={c.size}
-                    size_by={sizeRef[data.size_by].label}
+                    sizeBy={sizeRef[data.sizeBy].label}
                 />
             )
             maxClusterCount = Math.max(j + 1, maxClusterCount)

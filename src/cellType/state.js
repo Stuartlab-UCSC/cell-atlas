@@ -5,10 +5,10 @@ const State = (
     state = {
         // bubble common
         bubbleTooltip: false,
-        color_by: 'similarity',
+        colorBy: 'similarity',
         sameValueColumns: {}, // columns containing a single value
         showChart: false,
-        size_by: 'similarity',
+        sizeBy: 'similarity',
         bubbleRange: { min: 0, max: 0 },
         sort: { column: 'size', direction: 'descending' },
 
@@ -39,10 +39,10 @@ const State = (
                 ...state,
                 bubbleTooltip: action.value
             }
-        case 'cellType.color_by.uiSet':
+        case 'cellType.colorBy.uiSet':
             return {
                 ...state,
-                color_by: action.value
+                colorBy: action.value
             }
         case 'cellType.colorRange.set':
             return {
@@ -104,10 +104,10 @@ const State = (
                 ...state,
                 showGene: false
             }
-        case 'cellType.size_by.uiSet':
+        case 'cellType.sizeBy.uiSet':
             return {
                 ...state,
-                size_by: action.value
+                sizeBy: action.value
             }
         case 'cellType.sort.uiSet':
             return {

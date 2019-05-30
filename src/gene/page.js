@@ -81,8 +81,8 @@ const getData = () => {
     // Request the data from the server.
     let url =
         '/marker/' + rxGet('geneName.gene.name') +
-        '/dotplot/' + rxGet('gene.size_by') +
-        '/' + rxGet('gene.color_by')
+        '/dotplot/' + rxGet('gene.sizeBy') +
+        '/' + rxGet('gene.colorBy')
     if (USE_TEST_DATA) {
         fetchTestData('gene', url, receiveDataFromServer)
     } else {

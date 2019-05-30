@@ -18,7 +18,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
-notes.txt
+aNotes.txt
 cell.xcworkspace
 build.tar
 

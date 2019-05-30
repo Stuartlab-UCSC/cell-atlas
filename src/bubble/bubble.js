@@ -17,8 +17,8 @@ const onMouseOver = (ev) => {
 
 const Bubble = (props) => {
     // Create a bubble react component given a cluster's data.
-    const { cell_count, color, color_by, colorRgb, description, label, name,
-        radius, size, size_by } = props
+    const { cellCount, color, colorBy, colorRgb, description, label, name,
+        radius, size, sizeBy } = props
     const radiusStr = radius.toString()
     const center = (maxDiameter / 2 + 0.5).toString()
     const width = (maxDiameter + 1).toString()
@@ -36,14 +36,14 @@ const Bubble = (props) => {
                 strokeWidth={1}
                 fill={colorRgb}
 
-                data-cell_count={cell_count}
+                data-cell_count={cellCount}
                 data-color={color}
-                data-color_by={color_by}
+                data-color_by={colorBy}
                 data-description={description}
                 data-label={label}
                 data-name={name}
                 data-size={size}
-                data-size_by={size_by}
+                data-size_by={sizeBy}
                 onMouseOver={onMouseOver}
                 onMouseOut={onMouseOut}
             />

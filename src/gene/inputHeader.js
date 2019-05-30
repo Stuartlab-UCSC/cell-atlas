@@ -14,14 +14,14 @@ const showVars = (state) => {
 }
 
 const mapStateToProps = (state) => {
-    let colorList = Object.keys(colorRef).map(color_by => {
-        return { ...colorRef[color_by], value: color_by }
+    let colorList = Object.keys(colorRef).map(colorBy => {
+        return { ...colorRef[colorBy], value: colorBy }
     })
-    let sizeList = Object.keys(sizeRef).map(size_by => {
-        return { ...sizeRef[size_by], value: size_by }
+    let sizeList = Object.keys(sizeRef).map(sizeBy => {
+        return { ...sizeRef[sizeBy], value: sizeBy }
     })
-    const colorValue = state.gene.color_by
-    const sizeValue = state.gene.size_by
+    const colorValue = state.gene.colorBy
+    const sizeValue = state.gene.sizeBy
     return {
         showVars: showVars(state),
         colorList,
@@ -37,14 +37,14 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onColorChange: ev => {
             dispatch({
-                type: 'gene.color_by.uiSet',
+                type: 'gene.colorBy.uiSet',
                 value: ev.target.value,
             })
             serverRequest(dispatch)
         },
         onSizeChange: ev => {
             dispatch({
-                type: 'gene.size_by.uiSet',
+                type: 'gene.sizeBy.uiSet',
                 value: ev.target.value,
             })
             serverRequest(dispatch)
