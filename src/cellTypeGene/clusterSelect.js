@@ -93,7 +93,7 @@ const Presentation = ({ clusters, show, onClick }) => {
 
 const mapStateToProps = (state) => {
     return {
-        clusterSelected: state.cellTypeWork.geneCluster,
+        clusterSelected: state.cellTypeGene.cluster,
         clusters: state.cellTypeWork.clusters,
         show: state.cellTypeWork.showSave,
     }
@@ -103,10 +103,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onClick: ev => {
             dispatch({
-                type: 'cellTypeWork.geneCluster.uiSet',
+                type: 'cellTypeGene.cluster.uiSet',
                 value: ev.currentTarget.value,
             })
-            dispatch({ type: 'cellTypeWork.getGeneTable.true' })
+            dispatch({ type: 'cellTypeGene.getTable.true' })
         },
     }
 }

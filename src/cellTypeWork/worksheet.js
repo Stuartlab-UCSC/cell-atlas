@@ -2,76 +2,56 @@
 // The worksheet logic for the cell type worksheet page.
 
 import { connect } from 'react-redux'
+import { set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeWork/worksheetPres'
-import { getCatColormap } from 'color/colorCat'
+import fetchData from 'fetch/fetchData'
+import transformToChart from 'cellTypeWork/transformToChart'
+import testData from 'cellTypeWork/data'  // from a server response
 
-const cellTypes = [
-    '',
-    'Ventricular CMs',
-    '',
-    '',
-    '',
-    '',
-    'Atrial CMs',
-    '',
-    '',
-    'AVC CMs',
-    'CCS CMs',
-    '',
-    'Endocardio',
-    '',
-    'Vascular Endothelial',
-    'Lymphatic',
-    '',
-    '',
-    'Fibroblasts',
-    '',
-    '',
-    '',
-    '',
-    '',
-    'Smooth Muscle',
-    '',
-    '',
-    '',
-    '',
-    '',
-    'VIC',
-    'Epicardial',
-    'Neuronal-like',
-    '',
-    'WBC',
-    '',
-    'RBC',
-]
-const clusters = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
-    '20', '21', '22', '23', '24', '25', '26', '27', '28', '29',
-    '30', '31', '32', '33', '34', '35', '36',
-]
-const colors = getCatColormap('hexmap', clusters.length)
-const counts = [
-    2643, 3322, 13962, 3029, 1413, 1406, 3096, 1873, 3975,  925,
-    2010, 640, 5553, 3138, 310, 353, 8779, 3911, 3666, 1876,
-    1635, 5736, 1530, 4115, 3507, 4110, 3291, 933, 4342, 5024,
-    685, 1313, 596, 3373, 305, 729, 416,
-]
-const genes = [
-    'TP53', 'TNF', 'EGFR', 'VEGFA', 'APOE', 'IL6', 'TGFBI', 'MTHFR', 'ESR1', 'AKTI',
-    'TP53', 'TNF', 'EGFR', 'VEGFA', 'APOE', 'IL6', 'TGFBI', 'MTHFR', 'ESR1', 'AKTI',
-    'TP53', 'TNF', 'EGFR', 'VEGFA',
-]
+const USE_TEST_DATA = true
 
+const receiveDataFromServer = (data) => {
+    // Handle the data received from the server.
+    rxSet('cellTypeWork.showChart.loading')
+    transformToChart(data.resource)
+    rxSet('cellTypeWork.showChart.toQuietStatus')
+    rxSet('cellTypeWork.firstChartDisplayed.now')
+}
+
+// A test stub in place of server query.
+const fetchTestData = (id, url, receiveFx) => {
+    //console.log('fetchTestData: id, url, receiveFx:', id, url, receiveFx)
+    rxSet('cellTypeWork.fetchStatus.waiting')
+    rxSet('cellTypeWork.fetchMessage.set', { value: 'waiting for data...' })
+    setTimeout(() => {
+        receiveFx(testData)
+        rxSet('cellTypeWork.fetchMessage.clear')
+        rxSet('cellTypeWork.fetchStatus.quiet')
+    }, 1000)
+}
+
+const getData = () => {
+    // Request the data from the server.
+    let url =
+        '/cell_type/'
+    if (USE_TEST_DATA) {
+        fetchTestData('cellTypeWork', url, receiveDataFromServer)
+    } else {
+        fetchData('cellTypeWork', url, receiveDataFromServer)
+    }
+}
+
+const serverRequest = (dispatch) => {
+    dispatch({ type: 'cellTypeWork.showChart.toRequestStatus' })
+    getData()
+}
 
 const mapStateToProps = (state) => {
+    let data = state.cellTypeWork.data
     return {
-        cellTypes,
-        clusters,
-        colors,
-        counts,
-        genes,
-        show: state.cellTypeWork.showSave,
+        clusters:  data.clusters,
+        genes:     data.genes,
+        show:      state.cellTypeWork.showSave,
     }
 }
 
@@ -96,3 +76,5 @@ const Worksheet = connect(
 )(Presentation)
 
 export default Worksheet
+
+export { serverRequest }

@@ -5,7 +5,7 @@
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
 import bubble from 'bubble/state'
-import cellType from 'cellType/state'
+import cellTypeGene from 'cellTypeGene/state'
 import cellTypeWork from 'cellTypeWork/state'
 import database from 'database/databaseState'
 import dataset from 'dataset/datasetState'
@@ -79,7 +79,7 @@ export const init = () => {
     const Reducers = combineReducers({
         app,
         bubble,
-        cellType,
+        cellTypeGene,
         cellTypeWork,
         database,
         dataset,

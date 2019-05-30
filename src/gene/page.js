@@ -58,7 +58,7 @@ const findDerivedData = (solutions) => {
 
 const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
-    data = dataIn.resource  // save to our data area
+    data = dataIn.resource
     rxSet('gene.sort.reset')
     findDerivedData(data.cluster_solutions)
     tableNewData(data)

@@ -6,12 +6,11 @@ import PickList from 'components/PickList'
 
 const mapStateToProps = (state) => {
     return {
+        helperText: 'Select a worksheet, or upload data',
         id: 'cell_type_work_sheet',
-        label: 'Worksheets',
+        label: 'Worksheet',
         list: state.cellTypeWork.sheetList,
         selected: state.cellTypeWork.sheetSelected,
-        //list: state.database.favoriteList,
-        //selected: state.database.favoriteSelected,
     }
 }
 

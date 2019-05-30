@@ -1,17 +1,26 @@
 
 // Cell type sheet page state.
 
+const defaultData = {
+    clusters: [],
+    genes: [],
+    colors: [],
+    sizes: [],
+}
+
 export const defaultSheetList = [
-    { name: 'heart of cells #1', value: 'heart of cells #1' },
+    { value:'heart of cells #1', name: 'heart of cells #1' },
+    { value:'#2', name: '#2' },
 ]
 const defaultSheetSelected = defaultSheetList[0].value
 
 const State = (
     state = {
-        clusters: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],
-        firstRender: true,
-        geneCluster: '',
-        getGeneTable: false,
+        data: defaultData,
+        fetchMessage: ' ',
+        fetchStatus: 'initial',
+        firstChartDisplayed: true,
+        showChart: false,
         showSave: false,
         sheetList: defaultSheetList,
         sheetSelected: defaultSheetSelected,
@@ -19,25 +28,40 @@ const State = (
         tableData: [],
     }, action) => {
         switch(action.type) {
-        case 'cellTypeWork.clusters.load':
+        case 'cellTypeWork.data.default':
             return {
                 ...state,
-                clusters: action.value
+                data: defaultData
             }
-        case 'cellTypeWork.firstRender.rendered':
+        case 'cellTypeWork.data.load':
             return {
                 ...state,
-                firstRender: false
+                data: action.value
             }
-        case 'cellTypeWork.geneCluster.uiSet':
+        case 'cellTypeWork.fetchMessage.set':
             return {
                 ...state,
-                geneCluster: action.value
+                fetchMessage: action.value
             }
-        case 'cellTypeWork.getGeneTable.true':
+        case 'cellTypeWork.fetchMessage.clear':
             return {
                 ...state,
-                getGeneTable: true
+                fetchMessage: null
+            }
+        case 'cellTypeWork.fetchStatus.waiting':
+            return {
+                ...state,
+                fetchStatus: 'waiting'
+            }
+        case 'cellTypeWork.fetchStatus.quiet':
+            return {
+                ...state,
+                fetchStatus: 'quiet'
+            }
+        case 'cellTypeWork.firstChartDisplayed.set':
+            return {
+                ...state,
+                firstChartDisplayed: true
             }
         case 'cellTypeWork.sheetList.load':
             return {
@@ -49,6 +73,21 @@ const State = (
             return {
                 ...state,
                 sheetSelected: action.value
+            }
+        case 'cellTypeWork.showChart.loading':
+            return {
+                ...state,
+                showChart: false
+            }
+        case 'cellTypeWork.showChart.toQuietStatus':
+            return {
+                ...state,
+                showChart: true
+            }
+        case 'cellTypeWork.showChart.toRequestStatus':
+            return {
+                ...state,
+                showChart: false
             }
         case 'cellTypeWork.showSave.hide':
             return {

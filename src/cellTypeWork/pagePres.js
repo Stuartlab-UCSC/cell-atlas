@@ -7,11 +7,11 @@ import Typography from '@material-ui/core/Typography'
 
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
-import GeneClusterSelect from 'cellTypeWork/geneClusterSelect'
-import GeneTable from 'cellTypeWork/geneTable'
+//import GeneClusterSelect from 'cellTypeGene/clusterSelect'
+//import GeneTable from 'cellTypeGene/table'
 import MockUp from 'components/MockUp'
 
-import scatterPlot from 'cellTypeWork/scatterPlot.png'
+import scatterPlot from 'cellTypeScatter/scatterPlot.png'
 
 const buttonStyle = {
     width: '90%',
@@ -57,7 +57,7 @@ const Dataset = ({ show, dataset }) => {
     }
     return (
         <Typography>
-            Dataset: {<b><i>{dataset}</i></b>}
+            Dataset: {<b>{dataset}</b>}
         </Typography>
     )
 }
@@ -68,7 +68,7 @@ const ClusterSolution = ({ show, solution }) => {
     }
     return (
         <Typography>
-            Cluster Solution: {<b><i>{solution}</i></b>}
+            Cluster Solution: {<b>{solution}</b>}
         </Typography>
     )
 }
@@ -125,6 +125,11 @@ const Presentation = (props) => {
                 <Worksheet />
             </Grid>
             
+        </Grid>
+        </div>
+    )
+}
+/*
             <Grid item xs={12}>
                 <GeneClusterSelect />
             </Grid>
@@ -132,9 +137,6 @@ const Presentation = (props) => {
             <Grid item xs={12}>
                 <GeneTable/>
             </Grid>
-        </Grid>
-        </div>
-    )
-}
+*/
 
 export default Presentation

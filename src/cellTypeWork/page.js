@@ -1,6 +1,7 @@
 // Cell type worksheet page logic.
 
 import { connect } from 'react-redux'
+import { serverRequest } from 'cellTypeWork/worksheet'
 import Presentation from 'cellTypeWork/pagePres'
 
 const mapStateToProps = (state) => {
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         onUploadClick: ev => {
             dispatch({ type: 'cellTypeWork.showSave.show' })
+            serverRequest(dispatch)
         },
     }
 }

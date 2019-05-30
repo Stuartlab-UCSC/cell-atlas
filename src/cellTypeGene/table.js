@@ -16,13 +16,14 @@ IL6	2.7195	-0.3674	0.54`
 
 const getData = () => {
     receiveData('cellTypeWork', dataStub)  // stub
-    rxSet('cellTypeWork.firstRender.rendered')
+    rxSet('cellTypeGene.firstRender.rendered')
     //fetchData('dataset', encodeURI('/sql/select * from dataset'),
     //    receiveDataFromServer)
 }
 
 const Presentation = (props) => {
     const { columns, data, header, showTable } = props
+    //console.log('table.Presentation.showTable:', showTable)
     if (!showTable) {
         return (null)
     }
@@ -38,17 +39,18 @@ const Presentation = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    if (state.cellTypeWork.firstRender) {
+    //console.log('mapStateToProps: state.cellTypeGene.getTable:', state.cellTypeGene.getTable)
+    if (state.cellTypeGene.firstRender) {
         getData()
     }
     const tableData = state.cellTypeWork.tableData
-    const cluster = state.cellTypeWork.geneCluster
+    const cluster = state.cellTypeGene.cluster
     return {
         clusters: state.cellTypeWork.clusters,
         columns: state.cellTypeWork.tableColumn,
         data: tableData,
         header: 'Cluster ' + cluster + ': ' + tableData.length + ' matches found',
-        showTable: state.cellTypeWork.getGeneTable,
+        showTable: state.cellTypeGene.getTable,
     }
 }
 
