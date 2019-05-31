@@ -124,7 +124,8 @@ const CellCounts = ({ clusters, topStyle, labelStyle }) => {
     )
 }
 
-const Presentation = ({ clusters, geneWidth, colWidth }) => {
+const Presentation = ({ clusters, dims }) => {
+    const { colWidth, geneWidth } = dims
     if (!clusters) {
         return (null)
     }

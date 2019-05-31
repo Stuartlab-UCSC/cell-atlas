@@ -1,8 +1,10 @@
 
 // Transform the data from the server into the chart format.
 
-import { set as rxSet } from 'state/rx'
+import { get as rxGet, set as rxSet } from 'state/rx'
 import { getCatColormap } from 'color/colorCat'
+import { getRangeColor } from 'color/range'
+import { sizeToRadius } from 'bubble/util'
 
 const tsvToArrays = (tsv) => {
     const lines = tsv.split('\n')
@@ -32,14 +34,14 @@ const buildClusters = (data) => {
     lines.slice(1).forEach((line,i) => {
         clusters[line[0]] = {
             name: line[1],
-            cellCount: line[2],
+            cellCount: parseFloat(line[2]),
             barColor: colormap[line[3]],
             cellType: line[4],
             color: colormap[i],
         }
     })
 
-    return clusters
+    return { clusters, colormap }
 }
 
 const buildGenes = (data) => {
@@ -61,6 +63,13 @@ const buildGenes = (data) => {
     return genes
 }
 
+const findBubbleData = (bubbles, cluster, gene) => {
+    const index = bubbles.findIndex(bubble => {
+        return (bubble.gene === gene && bubble.cluster === cluster)
+    })
+    return bubbles[index]
+}
+
 const buildBubbles = (data) => {
     // Find the color and size values and store them with
     // cluster and gene names.
@@ -76,48 +85,82 @@ const buildBubbles = (data) => {
     let bubbles = []
     let line = tsvToArrays(data.colors)
     let clusters = line[0].slice(1)
+    let colorRange = { min: 0, max: 0 }
     line.slice(1).forEach((line) => {
         const gene = line[0]
         line.splice(1).forEach((color,j) => {
             bubbles.push({
                 cluster: clusters[j],
                 gene,
-                color,
+                color: parseFloat(color),
             })
+            colorRange.max = Math.max(color, colorRange.max)
+            colorRange.min = Math.min(color, colorRange.min)
         })
     })
 
     // Size values are received in the same format as color values.
     line = tsvToArrays(data.sizes)
     clusters = line[0].slice(1)
+    let sizeRange = { min: 0, max: 0 }
     line.slice(1).forEach((line) => {
         const gene = line[0]
         line.splice(1).forEach((size,j) => {
             const cluster = clusters[j]
-            const index = bubbles.findIndex(bubble => {
-                return (bubble.gene === gene && bubble.cluster === cluster)
-            })
-            bubbles[index].size = size
+            const bubble = findBubbleData(bubbles, cluster, gene)
+            bubble.size = parseFloat(size)
+            sizeRange.max = Math.max(size, sizeRange.max)
          })
     })
-
-    //console.log('bubbles:', bubbles)
+    
+    // Set the radius and colorRbg now that we know the
+    // color and size value ranges.
+    //bubbles.forEach(bubble => {
+    for (let i = 0; i < bubbles.length; i++) {
+        let bubble = bubbles[i]
+        bubble.colorRgb =
+            getRangeColor(bubble.color, colorRange.min, colorRange.max)
+        bubble.radius = sizeToRadius(bubble.size, sizeRange.min, sizeRange.max)
+    }
 
     return bubbles
 }
 
 const transfromToChart = (data) => {
     // Transform the format from the server response to worksheet chart.
+    rxSet('cellTypeWork.dims.default')
     rxSet('cellTypeWork.data.default')
+    const { clusters, colormap } = buildClusters(data)
+    const genes = buildGenes(data)
+
+    // Update the dimensions now that we know the cluster and gene counts.
+    let clusterCount = 0
+    if (clusters) {
+        clusterCount = clusters.length
+    }
+    let geneCount = 0
+    if (genes) {
+        geneCount = genes.length
+    }
+    let dims = rxGet('cellTypeWork.dims')
+    const { colWidth, overflow, rowHeight } = dims
+    dims.bubblesWidth = clusterCount * colWidth + overflow
+    dims.bubblesHeight = geneCount * rowHeight + overflow
+    rxSet('cellTypeWork.dims.set', { value: dims })
+    
+    // Update the chart data.
     rxSet('cellTypeWork.data.load', { value: {
         dataset:         data.dataset_name,
         clusterSolution: data.cluster_solution_name,
         sizeBy:          data.size_by,
         colorBy:         data.color_by,
-        clusters:        buildClusters(data),
-        genes:           buildGenes(data),
-        //bubbles:         buildBubbles(data),
+        clusters:        clusters,
+        colormap:        colormap,
+        genes:           genes,
+        bubbles:         buildBubbles(data),
     }})
 }
 
 export default transfromToChart
+
+export { findBubbleData }

@@ -1,7 +1,7 @@
 
 // Handle categorical attributes, including colors.
 
-import ColorMap from 'lib/jPalette'
+import ColorMap from 'color/jPalette'
 
 // The list of categorical color attributes we are handling.
 const coloredAttrs = ['species', 'organ', 'study']

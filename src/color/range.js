@@ -1,10 +1,11 @@
 // Handle color ranges.
 
 import colorMix from 'color/colorMix'
-import { background } from 'app/themeData'
 
-const minColor = '#0000ff'
+
 const maxColor = '#ff0000'
+const zeroColor = '#7f00fb'
+const minColor = '#0000ff'
 
 const normalizeColorVal = (valIn, min, max) => {
     // The algorithm assumes a range of -1 to 1 and interpolates between two
@@ -38,7 +39,6 @@ const normalizeColorVal = (valIn, min, max) => {
 }
 
 const getRangeColor = (val, min, max) => {
-    const zeroColor = background
     if (val < 0) {
         return colorMix(normalizeColorVal(val, min, max),
             zeroColor, minColor)

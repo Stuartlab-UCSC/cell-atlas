@@ -3,9 +3,19 @@
 
 const defaultData = {
     clusters: [],
+    colormap: [],
     genes: [],
     colors: [],
     sizes: [],
+}
+const defaultDims = {
+    bubblesHeight: 0,
+    bubblesWidth: 0,
+    colWidth: 14,
+    fontSize: 11,
+    geneWidth: 100,
+    overflow: 100,
+    rowHeight: 14,
 }
 
 export const defaultSheetList = [
@@ -17,6 +27,7 @@ const defaultSheetSelected = defaultSheetList[0].value
 const State = (
     state = {
         data: defaultData,
+        dims: defaultDims,
         fetchMessage: ' ',
         fetchStatus: 'initial',
         firstChartDisplayed: true,
@@ -37,6 +48,16 @@ const State = (
             return {
                 ...state,
                 data: action.value
+            }
+        case 'cellTypeWork.dims.default':
+            return {
+                ...state,
+                dims: defaultDims
+            }
+        case 'cellTypeWork.dims.set':
+            return {
+                ...state,
+                dims: action.value
             }
         case 'cellTypeWork.fetchMessage.set':
             return {

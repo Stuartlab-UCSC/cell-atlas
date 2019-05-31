@@ -2,18 +2,10 @@
 
 import React from 'react';
 import { fontFamily } from 'app/themeData'
-import bubbles from 'cellTypeWork/cellTypeWorksheet.png'
 import Clusters from 'cellTypeWork/clusters'
-//import Bubble from 'bubble/bubble'
-//import BubbleTooltip from 'bubble/tooltip'
+import Bubbles from 'cellTypeWork/bubbles'
 
-const colWidth = 14
-const rowHeight = 14
-const fontSize = 11
-const geneWidth = 100
-const cellTypeOverflow = 100
-
-const Genes = ({ genes }) => {
+const Genes = ({ genes, geneWidth, rowHeight }) => {
     if (!genes) {
         return (null)
     }
@@ -38,32 +30,27 @@ const Genes = ({ genes }) => {
         )
     })
     return (
-        <div style={{ display: 'inline-block' }} >
+        <div style={{ display: 'inline-block', verticalAlign: 'top' }} >
             {tds}
         </div>
     )
 }
 
-const Presentation = ({ clusters, genes, show }) => {
+const Presentation = ({ clusters, dims, genes, show }) => {
     if (!show) {
         return (null)
     }
-    let clusterCount = 0
-    if (clusters) {
-        clusterCount = clusters.length
-    }
-    let bubblesWidth = clusterCount * colWidth
-    let geneCount = 0
-    if (genes) {
-        geneCount = genes.length
+    const { bubblesHeight, bubblesWidth, fontSize, geneWidth, rowHeight } = dims
+    if (bubblesHeight === 0 || bubblesWidth === 0) {
+        return (null)
     }
     const bubbleStyle = {
         display: 'inline-block',
-        height: geneCount * rowHeight,
+        height: bubblesHeight,
         width: bubblesWidth,
     }
     const tableStyle = {
-        width: geneWidth + bubblesWidth + cellTypeOverflow,
+        width: geneWidth + bubblesWidth,
         fontFamily: fontFamily,
         fontSize: fontSize,
     }
@@ -71,11 +58,16 @@ const Presentation = ({ clusters, genes, show }) => {
         <div style={tableStyle}>
             <Clusters
                 clusters={clusters}
-                geneWidth={geneWidth}
-                colWidth={colWidth}
+                dims={dims}
             />
-            <Genes genes={genes} />
-            <img src={bubbles} alt='bubbles' height={410} width={531} style={bubbleStyle}/>
+            <Genes
+                genes={genes}
+                geneWidth={geneWidth}
+                rowHeight={rowHeight}
+            />
+            <div style={bubbleStyle} >
+                <Bubbles />
+            </div>
         </div>
     )
 }

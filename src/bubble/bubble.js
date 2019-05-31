@@ -1,6 +1,7 @@
 
 // A bubble component.
 
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import { set as rxSet } from 'state/rx'
@@ -15,40 +16,71 @@ const onMouseOver = (ev) => {
         { value: {...ev.target.dataset, x: ev.pageX, y: ev.pageY }})
 }
 
-const Bubble = (props) => {
-    // Create a bubble react component given a cluster's data.
-    const { cellCount, color, colorBy, colorRgb, description, label, name,
+const Circle = ({ props }) => {
+    const { cellCount, color, colorBy, colorRgb, name, offsetX, offsetY,
         radius, size, sizeBy } = props
     const radiusStr = radius.toString()
-    const center = (maxDiameter / 2 + 0.5).toString()
-    const width = (maxDiameter + 1).toString()
+    let cx = maxDiameter / 2 + 0.5
+    let cy = cx
+    if (offsetX) {
+        cx += offsetX
+    }
+    if (offsetY) {
+        cy += offsetY
+    }
     return (
-        <svg
-            height={width}
-            width={width}
-            style={{display: 'inline-block'}}
-        >
-            <circle
-                cx={center}
-                cy={center}
-                r={radiusStr}
-                stroke='grey'
-                strokeWidth={1}
-                fill={colorRgb}
+        <circle
+            cx={cx.toString()}
+            cy={cy.toString()}
+            r={radiusStr}
+            strokeWidth={0}
+            fill={colorRgb}
 
-                data-cell_count={cellCount}
-                data-color={color}
-                data-color_by={colorBy}
-                data-description={description}
-                data-label={label}
-                data-name={name}
-                data-size={size}
-                data-size_by={sizeBy}
-                onMouseOver={onMouseOver}
-                onMouseOut={onMouseOut}
-            />
-        </svg>
+            data-cell_count={cellCount}
+            data-color={color}
+            data-color_by={colorBy}
+            data-name={name}
+            data-size={size}
+            data-size_by={sizeBy}
+            onMouseOver={onMouseOver}
+            onMouseOut={onMouseOut}
+        />
     )
+}
+
+const Bubble = (props) => {
+    // Create a bubble react component given a cluster's data.
+    const { justCircleElement } = props
+    const width = (maxDiameter + 1).toString()
+    if (justCircleElement) {
+        return (
+            <Circle props={props} />
+        )
+    } else {
+        return (
+            <svg
+                height={width}
+                width={width}
+                style={{display: 'inline-block'}}
+            >
+                <Circle props={props} />
+            </svg>
+        )
+    }
+}
+
+Bubble.propTypes = {
+    cellCount: PropTypes.number,        // cell count for tooltip
+    color: PropTypes.number,            // color value for tooltip
+    colorBy: PropTypes.string,          // color-by variable for tooltip
+    colorRgb: PropTypes.string.isRequired, // color of bubble
+    name: PropTypes.string,             // name for the tooltip
+    radius: PropTypes.number.isRequired,// radius of bubble
+    size: PropTypes.number,             // size value for tooltip
+    sizeBy: PropTypes.string,           // size-by variable for tooltip
+    offsetX: PropTypes.number,          // pixels to offset in x direction
+    offsetY: PropTypes.number,          // pixels to offset in y direction
+    justCircleElement: PropTypes.bool,  // svg element is not needed
 }
 
 export default Bubble

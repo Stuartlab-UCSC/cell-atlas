@@ -18,15 +18,15 @@ const testData = {resource: {
         '2	TP53\n' +
         '0	TNF',
     colors:
-        'gene	0	1	2\n' +
-        'ALK	.1	.2	.3\n' +
-        'TP53	.4	.5	.6\n' +
-        'TNF	.7	.8	.9',
+        'gene	3	1	2\n' +
+        'ALK	-0.4	-0.3	-0.2\n' +
+       'TP53	-0.1	0	0.4\n' +
+        'TNF	0.3	0.2	0.1',
     sizes:
-        'gene	0	1	2\n' +
-        'ALK	.11	.12	.13\n' +
-        'TP53	.14	.15	.16\n' +
-        'TNF	.17	.18	.19',
+        'gene	3	1	2\n' +
+        'ALK	0.1	0.2	0.3\n' +
+        'TP53	0.4	0.5	0.6\n' +
+        'TNF	0.7	0.8	0.9',
 }}
 
 export default testData
