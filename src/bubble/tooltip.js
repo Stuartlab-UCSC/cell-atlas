@@ -10,7 +10,10 @@ import { altBackground, altForeground } from 'app/themeData'
 import { stringToPrecision } from 'app/util'
 
 const Row = ({ label, value }) => {
-    const comp =
+    if (value === undefined) {
+        return (null)
+    }
+    return (
         <tr>
             <td style={{textAlign: 'right'}} >
                 {label + ':'}
@@ -19,7 +22,7 @@ const Row = ({ label, value }) => {
                 {value}
             </td>
         </tr>
-    return comp
+    )
 }
 
 const Label = ({ value }) => {

@@ -6,6 +6,7 @@ import Presentation from 'cellTypeWork/pagePres'
 
 const mapStateToProps = (state) => {
     return {
+        bubbleTooltip: state.bubble.tooltip,
         clusterSolution: 'louvain100pcs',
         dataset: 'Heart of Cells in vivo, in vitro',
         showSave: state.cellTypeWork.showSave,

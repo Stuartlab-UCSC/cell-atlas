@@ -5,10 +5,9 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
+import BubbleTooltip from 'bubble/tooltip'
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
-//import GeneClusterSelect from 'cellTypeGene/clusterSelect'
-//import GeneTable from 'cellTypeGene/table'
 import MockUp from 'components/MockUp'
 
 import scatterPlot from 'cellTypeScatter/scatterPlot.png'
@@ -88,44 +87,45 @@ const ScatterPlot = ({ show }) => {
 }
 
 const Presentation = (props) => {
-    const { clusterSolution, dataset, showSave, onSaveClick, onUploadClick }
-        = props
+    const { bubbleTooltip, clusterSolution, dataset, showSave,
+        onSaveClick, onUploadClick } = props
     return (
         <div>
-        <Grid container spacing={8} style={{background: 'transparent'}}>
-            <Grid item xs={3}>
-                <Typography variant='h6'>
-                    Cell Type Worksheet
-                </Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <SheetList />
-            </Grid>
-            <Grid item xs={2}>
-                <Upload onClick={onUploadClick} />
-            </Grid>
-            <Grid item xs={2}>
-                <Save
-                    show={showSave}
-                    onClick={onSaveClick}
-                />
-            </Grid>
+            <Grid container spacing={8} style={{background: 'transparent'}}>
+                <Grid item xs={3}>
+                    <Typography variant='h6'>
+                        Cell Type Worksheet
+                    </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    <SheetList />
+                </Grid>
+                <Grid item xs={2}>
+                    <Upload onClick={onUploadClick} />
+                </Grid>
+                <Grid item xs={2}>
+                    <Save
+                        show={showSave}
+                        onClick={onSaveClick}
+                    />
+                </Grid>
             
-            <Grid item xs={4}>
-                <Dataset dataset={dataset} show={showSave} />
-                <ClusterSolution solution={clusterSolution} show={showSave} />
-            </Grid>
-           <Grid item xs={8} />
- 
-            <Grid item xs={4}>
-                <ScatterPlot show={showSave} />
-            </Grid>
-            <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
-            <Grid item xs={8} style={{marginTop: -70}}>
-                <Worksheet />
-            </Grid>
+                <Grid item xs={4}>
+                    <Dataset dataset={dataset} show={showSave} />
+                    <ClusterSolution solution={clusterSolution} show={showSave} />
+                </Grid>
+               <Grid item xs={8} />
+     
+                <Grid item xs={4}>
+                    <ScatterPlot show={showSave} />
+                </Grid>
+                <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
+                <Grid item xs={8} style={{marginTop: -70}}>
+                    <Worksheet />
+                </Grid>
             
-        </Grid>
+            </Grid>
+            <BubbleTooltip data={bubbleTooltip} id='cellTypeWork' />
         </div>
     )
 }

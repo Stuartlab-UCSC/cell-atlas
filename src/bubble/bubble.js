@@ -28,6 +28,15 @@ const Circle = ({ props }) => {
     if (offsetY) {
         cy += offsetY
     }
+    // Optional data to save in the widget.
+    var opt = {}
+    if (cellCount) {
+        opt['data-cell_count'] = cellCount
+    }
+    if (name) {
+        opt['data-name'] = name
+    }
+
     return (
         <circle
             cx={cx.toString()}
@@ -35,11 +44,9 @@ const Circle = ({ props }) => {
             r={radiusStr}
             strokeWidth={0}
             fill={colorRgb}
-
-            data-cell_count={cellCount}
+            {...opt}
             data-color={color}
             data-color_by={colorBy}
-            data-name={name}
             data-size={size}
             data-size_by={sizeBy}
             onMouseOver={onMouseOver}

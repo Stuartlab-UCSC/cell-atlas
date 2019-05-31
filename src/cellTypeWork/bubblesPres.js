@@ -15,7 +15,6 @@ const ManyBubbles = ({ data, dims }) => {
             bubbleList.push(
                 <Bubble
                     key={'[' + i.toString() + ',' + j.toString()+ ']'}
-                    cellCount={cluster.cellCount}
                     color={bubble.color}
                     colorBy={colorBy}
                     colorRgb={bubble.colorRgb}
