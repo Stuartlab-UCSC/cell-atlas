@@ -1,7 +1,10 @@
 // The worksheet of the cell type worksheet page.
 
 import React from 'react';
+import Typography from '@material-ui/core/Typography'
+
 import { fontFamily } from 'app/themeData'
+import Legend from 'components/legend'
 import Clusters from 'cellTypeWork/clusters'
 import Bubbles from 'cellTypeWork/bubbles'
 
@@ -36,11 +39,38 @@ const Genes = ({ genes, geneWidth, rowHeight }) => {
     )
 }
 
-const Presentation = ({ clusters, dims, genes, show }) => {
+const Legends = ({ data, dims }) => {
+    const { colorRange, legendWidth, sizeRange } = dims
+    const { colorBy, sizeBy } = data
+    return (
+        <div style={{display: 'inline-block', width: legendWidth, marginTop: -20}} >
+            <Typography align='center'>
+                {colorBy}
+            </Typography>
+            <Legend
+                flavor='colorBubble'
+                min={colorRange.min}
+                max={colorRange.max}
+            />
+            <Typography align='center' style={{marginTop: 10}}>
+                {sizeBy}
+            </Typography>
+            <Legend
+                flavor='sizeBubble'
+                min={sizeRange.min}
+                max={sizeRange.max}
+            />
+        </div>
+    )
+}
+
+const Presentation = ({ data, dims, show }) => {
     if (!show) {
         return (null)
     }
-    const { bubblesHeight, bubblesWidth, fontSize, geneWidth, rowHeight } = dims
+    const { clusters, genes } = data
+    const { bubblesHeight, bubblesWidth, fontSize, geneWidth, legendWidth,
+        rowHeight } = dims
     if (bubblesHeight === 0 || bubblesWidth === 0) {
         return (null)
     }
@@ -48,14 +78,15 @@ const Presentation = ({ clusters, dims, genes, show }) => {
         display: 'inline-block',
         height: bubblesHeight,
         width: bubblesWidth,
+        verticalAlign: 'top',
     }
     const tableStyle = {
-        width: geneWidth + bubblesWidth,
+        width: geneWidth + bubblesWidth + legendWidth,
         fontFamily: fontFamily,
         fontSize: fontSize,
     }
     return (
-        <div style={tableStyle}>
+        <div id='worksheetPres' style={tableStyle}>
             <Clusters
                 clusters={clusters}
                 dims={dims}
@@ -68,6 +99,7 @@ const Presentation = ({ clusters, dims, genes, show }) => {
             <div style={bubbleStyle} >
                 <Bubbles />
             </div>
+            <Legends data={data} dims={dims} />
         </div>
     )
 }

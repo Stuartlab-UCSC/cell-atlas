@@ -47,12 +47,10 @@ const serverRequest = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-    let data = state.cellTypeWork.data
     return {
-        clusters: data.clusters,
-        dims:     state.cellTypeWork.dims,
-        genes:    data.genes,
-        show:     state.cellTypeWork.showSave,
+        data: state.cellTypeWork.data,
+        dims: state.cellTypeWork.dims,
+        show: state.cellTypeWork.showSave,
     }
 }
 

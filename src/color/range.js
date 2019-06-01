@@ -4,7 +4,7 @@ import colorMix from 'color/colorMix'
 
 
 const maxColor = '#ff0000'
-const zeroColor = '#7f00fb'
+const zeroColor = '#bb00ff'
 const minColor = '#0000ff'
 
 const normalizeColorVal = (valIn, min, max) => {

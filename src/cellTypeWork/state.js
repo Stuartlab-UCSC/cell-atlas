@@ -14,7 +14,7 @@ const defaultDims = {
     colWidth: 14,
     fontSize: 11,
     geneWidth: 100,
-    overflow: 100,
+    legendWidth: 100,
     rowHeight: 14,
 }
 

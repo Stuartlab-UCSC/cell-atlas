@@ -93,38 +93,8 @@ const SameValueMessages = ({ props }) => {
     return comp
 }
 
-const ColorLegend = ({ props }) => {
-    const { min, max } = props.colorRange
-    if (min === 0 && max === 0) {
-        return null
-    } else {
-        return (
-            <Legend
-                flavor='colorRange'
-                min={min}
-                max={max}
-            />
-        )
-    }
-}
-
-const BubbleLegend = ({ props }) => {
-    const { min, max } = props.bubbleRange
-    if (min === 0 && max === 0) {
-        return null
-    } else {
-        return (
-            <Legend
-                flavor='bubble'
-                min={min}
-                max={max}
-            />
-        )
-    }
-}
-
 const SubHeader = ({ props }) => {
-    const { data, onFindClick, showChart } = props
+    const { bubbleRange, colorRange, data, onFindClick, showChart } = props
     let comp =
         <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
             <Grid item xs={4} style={{marginTop: '2rem', zIndex: 100}} >
@@ -135,10 +105,18 @@ const SubHeader = ({ props }) => {
                 <SameValueMessages props={props} />
             </Grid>
             <Grid item xs={3} >
-                <ColorLegend props={props} />
+                <Legend
+                    flavor='colorBubble'
+                    min={colorRange.min}
+                    max={colorRange.max}
+                />
             </Grid>
             <Grid item xs={2} >
-                <BubbleLegend props={props} />
+                <Legend
+                    flavor='sizeBubble'
+                    min={bubbleRange.min}
+                    max={bubbleRange.max}
+                />
             </Grid>
             <Grid item xs={3} />
         </Grid>

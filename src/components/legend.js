@@ -4,33 +4,30 @@
 import React from 'react'
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from '@material-ui/core/Typography'
-import { background } from 'app/themeData'
 import { stringToPrecision } from 'app/util'
 import { getRangeColor } from 'color/range'
-import { sizeToRadius } from 'bubble/util'
+import { maxDiameter, sizeToRadius } from 'bubble/util'
 
 const rangeColorInfo = (min, max) => {
     let labels = (min < 0)
         ? [
             stringToPrecision(max, 2),
-            stringToPrecision(max / 2, 2),
             '0',
-            stringToPrecision(min / 2, 2),
             stringToPrecision(min, 2),
         ]
         : [
             stringToPrecision(max, 2),
-            stringToPrecision(max * 3 / 4, 2),
             stringToPrecision(max / 2, 2),
             '0',
         ]
     let colors = labels.map(label => {
         return getRangeColor(parseFloat(label), min, max)
     })
-    return { labels, values: colors }
+
+    return { labels, values:colors}
 }
 
-const bubbleInfo = (min, max) => {
+const sizeInfo = (min, max) => {
     // Find the width of the bubbles where the size values are represented
     // by the area of the circle.
     const labels = [
@@ -45,27 +42,42 @@ const bubbleInfo = (min, max) => {
     return { labels, values: diameters }
 }
 
-const Circle = ({ diameters, i }) => {
-    const diameter = diameters[i].toString()
-    const rad = (diameters[i] / 2).toString()
+const Circle = ({ diameters, i, colors }) => {
+    let diameter = maxDiameter
+    let color = 'grey'
+    let marginTop = 2
+    if (diameters) { // a sized circle
+        diameter = diameters[i].toString()
+        marginTop = 2 + 2 * i
+    } else {  // a colored circle
+        color = colors[i]
+    }
+    const rad = (diameter / 2).toString()
+    const svgStyle = {
+        display: 'inline-block',
+        marginTop: marginTop,
+        marginLeft: 20,
+    }
     let comp =
         <svg
             height={diameter}
             width={diameter}
-            style={{display: 'inline-block'}}
+            style={svgStyle}
         >
             <circle
                 cx={rad}
                 cy={rad}
                 r={rad}
                 strokeWidth={0}
-                fill='grey'
+                fill={color}
+                style={{textAlign: 'right'}}
             />
         </svg>
     return comp
 }
 
-const Rectangle = ({ labels, values, i }) => {
+/*
+const Rectangle = ({ values, i }) => {
     const width = '20'
     const strokeWidth = (values[i] === background) ? '1' : '0'
     let comp =
@@ -87,62 +99,66 @@ const Rectangle = ({ labels, values, i }) => {
         </svg>
     return comp
 }
+*/
 
-const Shape = ({ flavor, labels, values, i }) => {
-    return (flavor === 'colorRange')
-        ? <Rectangle
-            values={values}
-            labels={labels}
+const Shape = ({ i, flavor, values }) => {
+    switch (flavor) {
+    case 'colorBubble':
+        return (<Circle
             i={i}
-        />
-        : <Circle
+            colors={values}
+        />)
+    case 'sizeBubble':
+        return (<Circle
+            i={i}
             diameters={values}
-            labels={labels}
-            i={i}
-        />
+        />)
+    default:
+        console.log('invalid legend flavor of:', flavor)
+    }
 }
 
 const Legend = ({ flavor, min, max }) => {
+    if (min === 0 && max === 0) {
+        return null
+    }
     let info
     let shapeStyle
-    if (flavor === 'colorRange') {
+    if (flavor === 'colorBubble') {
         info = rangeColorInfo(min, max)
         shapeStyle = {
             marginBottom: -1,
             textAlign: 'right',
             paddingRight: '0.5rem',
         }
-    } else if (flavor === 'bubble') {
-        info = bubbleInfo(min, max)
+    } else if (flavor === 'sizeBubble') {
+        info = sizeInfo(min, max)
         shapeStyle = {
-            marginBottom: -1,
             textAlign: 'center',
         }
     }
-    let labels = info.labels
-    let values = info.values
+    const labels = info.labels
+    const values = info.values
     return (
         <Grid container spacing={0}>
-            {labels.map((portion, i) =>
+            {labels.map((label, i) =>
                 <React.Fragment key={i}>
-                    <Grid item xs={3} style={shapeStyle} >
+                    <Grid item xs={6} style={shapeStyle} >
                         <Shape
-                            flavor={flavor}
-                            labels={labels}
-                            values={values}
                             i={i}
+                            flavor={flavor}
+                            values={values}
                         />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={6}>
                         <Typography
                             variant='caption'
                             align='left'
                             style={{ align: 'left' }}
                         >
-                            {portion}
+                            {label}
                         </Typography>
                     </Grid>
-                    <Grid item xs={6} />
                 </React.Fragment>
             )}
         </Grid>

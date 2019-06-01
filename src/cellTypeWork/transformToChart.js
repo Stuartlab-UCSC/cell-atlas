@@ -123,7 +123,7 @@ const buildBubbles = (data) => {
         bubble.radius = sizeToRadius(bubble.size, sizeRange.min, sizeRange.max)
     }
 
-    return bubbles
+    return { bubbles, colorRange, sizeRange }
 }
 
 const transfromToChart = (data) => {
@@ -132,6 +132,7 @@ const transfromToChart = (data) => {
     rxSet('cellTypeWork.data.default')
     const { clusters, colormap } = buildClusters(data)
     const genes = buildGenes(data)
+    const { bubbles, colorRange, sizeRange } = buildBubbles(data)
 
     // Update the dimensions now that we know the cluster and gene counts.
     let clusterCount = 0
@@ -143,9 +144,11 @@ const transfromToChart = (data) => {
         geneCount = genes.length
     }
     let dims = rxGet('cellTypeWork.dims')
-    const { colWidth, overflow, rowHeight } = dims
-    dims.bubblesWidth = clusterCount * colWidth + overflow
-    dims.bubblesHeight = geneCount * rowHeight + overflow
+    const { colWidth, rowHeight } = dims
+    dims.bubblesWidth = (clusterCount * colWidth) + (colWidth / 4)
+    dims.bubblesHeight = (geneCount * rowHeight) + (colWidth / 4)
+    dims.colorRange = colorRange
+    dims.sizeRange = sizeRange
     rxSet('cellTypeWork.dims.set', { value: dims })
     
     // Update the chart data.
@@ -157,7 +160,7 @@ const transfromToChart = (data) => {
         clusters:        clusters,
         colormap:        colormap,
         genes:           genes,
-        bubbles:         buildBubbles(data),
+        bubbles:         bubbles,
     }})
 }
 
