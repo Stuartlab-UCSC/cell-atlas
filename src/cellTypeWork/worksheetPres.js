@@ -64,9 +64,16 @@ const Legends = ({ data, dims }) => {
     )
 }
 
-const Presentation = ({ data, dims, show }) => {
+const Presentation = ({ data, dims, fetchMessage, show }) => {
     if (!show) {
         return (null)
+    }
+    if (fetchMessage) {
+        return (
+            <Typography style={{marginTop: 40}}>
+                {fetchMessage}
+            </Typography>
+        )
     }
     const { clusters, genes } = data
     const { bubblesHeight, bubblesWidth, fontSize, geneWidth, legendWidth,

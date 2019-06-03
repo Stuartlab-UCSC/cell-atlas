@@ -50,6 +50,7 @@ const mapStateToProps = (state) => {
     return {
         data: state.cellTypeWork.data,
         dims: state.cellTypeWork.dims,
+        fetchMessage: state.cellTypeWork.fetchMessage,
         show: state.cellTypeWork.showSave,
     }
 }

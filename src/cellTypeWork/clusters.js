@@ -1,38 +1,9 @@
 // The worksheet of the cell type worksheet page.
 
 import React from 'react';
+import CellTypes from 'cellTypeWork/cellTypes'
 
 const labelFontSize = 16
-
-const CellTypes = ({ clusters, topStyle, labelStyle }) => {
-    let types = []
-    clusters.forEach((cluster, i) => {
-        types.push(
-            <div
-                key={i}
-                draggable
-                style={{
-                    ...topStyle,
-                    color: cluster.color,
-                    height: 40,
-                    whiteSpace: 'nowrap',
-                    cursor: 'grab',
-                    transform: 'translate(16px ,23px) rotate(-45deg)',
-                }}
-            >
-                {cluster.cellType}
-            </div>
-        )
-    })
-    return (
-        <div>
-            <div style={labelStyle}>
-                Cell-type
-            </div>
-            {types}
-        </div>
-    )
-}
 
 const BarColor = ({ clusters, topStyle, labelStyle, geneWidth }) => {
     let tds = []
@@ -144,8 +115,7 @@ const Presentation = ({ clusters, dims }) => {
         <React.Fragment>
             <CellTypes
                 clusters={clusters}
-                topStyle={topStyle}
-                labelStyle={labelStyle}
+                dims={dims}
             />
             <BarColor
                 clusters={clusters}
