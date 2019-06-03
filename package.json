@@ -12,7 +12,7 @@
     "react": "^16.8.3",
     "react-autosuggest": "^9.4.3",
     "react-dnd": "^7.4.5",
-    "react-dnd-html5-backend": "^7.4.4",
+    "react-dnd-mouse-backend": "^1.0.0-rc.2",
     "react-dom": "^16.8.4",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
