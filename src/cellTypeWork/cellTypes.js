@@ -3,46 +3,41 @@
 import React from 'react';
 
 const CellTypes = ({ clusters, dims }) => {
-    const { colWidth, geneWidth, labelFontSize } = dims
-    
-    const topStyle = {
-        width: colWidth,
-        display: 'inline-block',
-    }
-    const labelStyle = {
-        width: geneWidth,
-        textAlign: 'right',
-        paddingRight: 20,
-        display: 'inline-block',
-        fontSize: labelFontSize,
-    }
+    const { cellTypeHeight, bubblesWidth, colWidth, fontSize, geneWidth,
+        labelFontSize, legendWidth } = dims
     
     let types = []
     clusters.forEach((cluster, i) => {
+        const x = geneWidth + colWidth * i
+        const y = cellTypeHeight
         types.push(
-            <div
+            <text
                 key={i}
-                draggable
-                style={{
-                    ...topStyle,
-                    color: cluster.color,
-                    height: 40,
-                    whiteSpace: 'nowrap',
-                    cursor: 'grab',
-                    transform: 'translate(16px ,23px) rotate(-45deg)',
-                }}
+                x={x}
+                y={y}
+                fontSize={fontSize}
+                fill={cluster.color}
+                transform={'rotate(-45,' + x + ',' + (y-10) + ')'}
             >
                 {cluster.cellType}
-            </div>
+            </text>
         )
     })
+
     return (
-        <div>
-            <div style={labelStyle}>
-                Cell-type
-            </div>
+        <svg
+            height={cellTypeHeight}
+            width={geneWidth + bubblesWidth + legendWidth}
+        >
+            <text
+                x='0'
+                y='28'
+                fontSize={labelFontSize}
+            >
+                Cell Types
+            </text>
             {types}
-        </div>
+        </svg>
     )
 }
 

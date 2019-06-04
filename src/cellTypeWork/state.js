@@ -11,6 +11,7 @@ const defaultData = {
 const defaultDims = {
     bubblesHeight: 0,
     bubblesWidth: 0,
+    cellTypeHeight: 80,
     colWidth: 14,
     fontSize: 11,
     geneWidth: 100,
