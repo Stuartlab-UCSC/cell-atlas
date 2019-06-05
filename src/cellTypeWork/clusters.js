@@ -113,10 +113,7 @@ const Presentation = ({ clusters, dims }) => {
     }
    return (
         <React.Fragment>
-            <CellTypes
-                clusters={clusters}
-                dims={dims}
-            />
+            <CellTypes />
             <BarColor
                 clusters={clusters}
                 topStyle={topStyle}

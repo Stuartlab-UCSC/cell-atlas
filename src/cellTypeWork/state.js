@@ -2,6 +2,7 @@
 // Cell type sheet page state.
 
 const defaultData = {
+    cellTypes: [],
     clusters: [],
     colormap: [],
     genes: [],
@@ -12,6 +13,7 @@ const defaultDims = {
     bubblesHeight: 0,
     bubblesWidth: 0,
     cellTypeHeight: 80,
+    cellTypeLength: 80,
     colWidth: 14,
     fontSize: 11,
     geneWidth: 100,
@@ -30,6 +32,10 @@ const State = (
     state = {
         data: defaultData,
         dims: defaultDims,
+        drag: {
+            column: null,
+            mouseDown: null,
+        },
         fetchMessage: ' ',
         fetchStatus: 'initial',
         firstChartDisplayed: true,
@@ -51,6 +57,12 @@ const State = (
                 ...state,
                 data: action.value
             }
+        case 'cellTypeWork.data.cellTypeReorder':
+            return {
+                ...state,
+                ...state.data,
+                cellTypes: action.value
+            }
         case 'cellTypeWork.dims.default':
             return {
                 ...state,
@@ -60,6 +72,11 @@ const State = (
             return {
                 ...state,
                 dims: action.value
+            }
+        case 'cellTypeWork.drag.set':
+            return {
+                ...state,
+                drag: action.value
             }
         case 'cellTypeWork.fetchMessage.set':
             return {

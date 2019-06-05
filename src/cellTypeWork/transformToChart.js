@@ -30,18 +30,19 @@ const buildClusters = (data) => {
     const lines = tsvToArrays(data.clusters)
     const clusterCount = lines.length - 1
     let clusters = Array.from(clusterCount)
+    let cellTypes = Array.from(clusterCount)
     const colormap = getCatColormap('hexmap', clusterCount)
     lines.slice(1).forEach((line,i) => {
         clusters[line[0]] = {
             name: line[1],
             cellCount: parseFloat(line[2]),
             barColor: colormap[line[3]],
-            cellType: line[4],
             color: colormap[i],
         }
+        cellTypes[line[0]] = line[4]
     })
 
-    return { clusters, colormap }
+    return { clusters, cellTypes, colormap }
 }
 
 const buildGenes = (data) => {
@@ -130,7 +131,7 @@ const transfromToChart = (data) => {
     // Transform the format from the server response to worksheet chart.
     rxSet('cellTypeWork.dims.default')
     rxSet('cellTypeWork.data.default')
-    const { clusters, colormap } = buildClusters(data)
+    const { clusters, cellTypes, colormap } = buildClusters(data)
     const genes = buildGenes(data)
     const { bubbles, colorRange, sizeRange } = buildBubbles(data)
 
@@ -157,10 +158,11 @@ const transfromToChart = (data) => {
         clusterSolution: data.cluster_solution_name,
         sizeBy:          data.size_by,
         colorBy:         data.color_by,
-        clusters:        clusters,
-        colormap:        colormap,
-        genes:           genes,
-        bubbles:         bubbles,
+        clusters,
+        cellTypes,
+        colormap,
+        genes,
+        bubbles,
     }})
 }
 

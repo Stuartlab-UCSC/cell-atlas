@@ -9,9 +9,9 @@ const testData = {resource: {
     color_by: 'z_stat',
     clusters:
         'column	cluster	cell_count	bar_color	cell_type\n' +
-        '0	2	2643	1\n' +
-        '1	1	3322	1\n' +
-        '2	3	13962	2	Ventricular CMs',
+        '0	2	2643	1	Arterial CMs\n' +
+        '1	1	3322	1	Ventricular CMs\n' +
+        '2	3	13962	2	Vascular Endothelial',
     genes:
         'row	gene\n' +
         '1	ALK\n' +
