@@ -1,5 +1,4 @@
 
-
 // Redux implementation.
 
 import { createStore, combineReducers } from 'redux'
@@ -12,6 +11,7 @@ import dataset from 'dataset/datasetState'
 import gene from 'gene/state'
 import geneName from 'components/geneNameState'
 import { namerDialogState as namerDialog } from 'components/NamerDialog'
+import { State as sortable } from 'app/sortable'
 
 // Global application state.
 const app = (
@@ -86,6 +86,7 @@ export const init = () => {
         gene,
         geneName,
         namerDialog,
+        sortable,
     })
 
     // Create the store.

@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-const CellTypes = ({ clusters, cellTypes, dims, onMouseOver, onMouseLeave, onMouseDown, onMouseUp }) => {
+const CellTypes = ({ clusters, cellTypes, dims, onMouseOver, onMouseLeave, onMouseDown }) => {
     const { cellTypeHeight, bubblesWidth, colWidth, fontSize, geneWidth,
         labelFontSize, legendWidth } = dims
     
@@ -13,18 +13,18 @@ const CellTypes = ({ clusters, cellTypes, dims, onMouseOver, onMouseLeave, onMou
         
         types.push(                
             <text
-                data-column={i}
+                data-position={i}
+                data-domain='cellTypes'
                 key={i}
                 x={x}
                 y={y}
                 fontSize={fontSize}
                 fill={clusters[i].color}
                 transform={'rotate(-45,' + x + ',' + (y-10) + ')'}
-                style={{userSelect: 'none'}}
+                style={{userSelect: 'none', cursor: 'grab'}}
                 onMouseOver={onMouseOver}
                 onMouseLeave={onMouseLeave}
                 onMouseDown={onMouseDown}
-                onMouseUp={onMouseUp}
             >
                 {cellType}
             </text>

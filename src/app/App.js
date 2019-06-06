@@ -20,6 +20,7 @@ import NavBar from 'app/NavBar'
 import Pipeline from 'pipeline/page'
 import sessionStoreInit from 'state/sessionStore'
 import PageNotFound from 'home/PageNotFound'
+import { SortableMarker } from 'app/sortable'
 import Theme from 'app/Theme'
 import dotenv from 'dotenv'
 
@@ -51,6 +52,7 @@ const App = ({store}) => {
                         </Switch>
                     </div>
                     <NamerDialog />
+                    <SortableMarker />
                 </div>
             </Router>
         </Theme>

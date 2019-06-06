@@ -14,6 +14,7 @@ const defaultDims = {
     bubblesWidth: 0,
     cellTypeHeight: 80,
     cellTypeLength: 80,
+    cellTypes: [],
     colWidth: 14,
     fontSize: 11,
     geneWidth: 100,
@@ -21,7 +22,6 @@ const defaultDims = {
     legendWidth: 100,
     rowHeight: 14,
 }
-
 export const defaultSheetList = [
     { value:'heart of cells #1', name: 'heart of cells #1' },
     { value:'#2', name: '#2' },
@@ -32,10 +32,6 @@ const State = (
     state = {
         data: defaultData,
         dims: defaultDims,
-        drag: {
-            column: null,
-            mouseDown: null,
-        },
         fetchMessage: ' ',
         fetchStatus: 'initial',
         firstChartDisplayed: true,
@@ -60,8 +56,10 @@ const State = (
         case 'cellTypeWork.data.cellTypeReorder':
             return {
                 ...state,
-                ...state.data,
-                cellTypes: action.value
+                data: {
+                    ...state.data,
+                    cellTypes: [...action.value]
+                }
             }
         case 'cellTypeWork.dims.default':
             return {
@@ -72,11 +70,6 @@ const State = (
             return {
                 ...state,
                 dims: action.value
-            }
-        case 'cellTypeWork.drag.set':
-            return {
-                ...state,
-                drag: action.value
             }
         case 'cellTypeWork.fetchMessage.set':
             return {
