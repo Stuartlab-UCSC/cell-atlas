@@ -45,6 +45,8 @@ const currentPosition = (ev) => {
     let position = null
     // If there is no drag information in the element's data,
     // return the closest position.
+    // TODO: This only returns 0 or n-1. Perhaps it should bail or find the
+    // truely closest position.
     if (!ev.target.dataset || !ev.target.dataset.domain
         || ev.target.dataset.domain !== drag.domain) {
         const diff = (drag.xOrY === 'x')
@@ -52,22 +54,22 @@ const currentPosition = (ev) => {
             : ev.pageY - drag.pageCoord
         position = (diff < 0) ? 0 : drag.count - 1
     } else {
-        // The mouse is on an element in the domain.
-        position = ev.target.dataset.position
-         if (position > drag.position) {
+        // The mouse is on an element in the domain,
+        // so find the dragging element's new position.
+        position = parseInt(ev.target.dataset.position, 10)
+        if (position > drag.position && drag.xOrY === 'x') {
             position -= 1
+        } else if (position < drag.position && drag.xOrY === 'y') {
+            position += 1
         }
     }
-    return { position, drag }
-}
 
-const removeOnMouseUp = () => {
-    document.body.removeEventListener('mouseup', onMouseUp)
+    return { position, drag }
 }
 
 const onMouseUp = (ev) => {
     // End the dragging no matter where the mouse is.
-    removeOnMouseUp()
+    document.body.removeEventListener('mouseup', onMouseUp)
     resetMarker()
     document.body.style.cursor = 'default'
     
@@ -86,6 +88,7 @@ const onMouseUp = (ev) => {
 
 const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
     dispatch) => {
+    
     // Show the cursor as grabbing.
     document.body.style.cursor = 'grabbing'
     ev.target.style.cursor = 'grabbing'
@@ -100,7 +103,7 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
             count,
             domain,
             marker,
-            pageCoord: ev.pageX,
+            pageCoord: xOrY === 'x' ? ev.pageX : ev.pageY,
             position: ev.target.dataset.position,
             reorderFx,
             xOrY,
@@ -110,7 +113,7 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
 
 const sortableOnMouseLeave = (ev) => {
     const drag = rxGet('sortable.drag')
-    if (!drag.domain || ev.target.dataset.domain !== 'cellTypes') {
+    if (!drag.domain || drag.domain !== ev.target.dataset.domain) {
         // We're not dragging the mouse, or we're in some other sortable domain.
         return
     }

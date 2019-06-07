@@ -16,7 +16,7 @@ const CellTypes = (props) => {
         types.push(                
             <text
                 data-position={i}
-                data-domain='cellTypes'
+                data-domain='cellTypeWorkCellTypes'
                 key={i}
                 x={x}
                 y={y}
@@ -40,7 +40,7 @@ const CellTypes = (props) => {
         >
             <text
                 x='0'
-                y='28'
+                y='70'
                 fontSize={labelFontSize}
             >
                 Cell Types

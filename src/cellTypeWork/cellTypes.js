@@ -32,14 +32,14 @@ const mapDispatchToProps = (dispatch) => {
             const marker = {
                 width: '2px',
                 height: '20px',
-                topOffset: -20,
-                leftOffset: 3,
+                topOffset: -15,
+                leftOffset: 12,
                 transform: 'rotate(45deg)',
             }
             sortableOnMouseDown(
                 ev,
                 rxGet('cellTypeWork.data.cellTypes').length,
-                'cellTypes',
+                'cellTypeWorkCellTypes',
                 marker,
                 reorder,
                 'x',

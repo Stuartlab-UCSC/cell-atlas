@@ -6,6 +6,7 @@ const defaultData = {
     barColors: [],
     cellTypes: [],
     clusters: [],
+    colors: [],
     genes: [],
     sizes: [],
 }
@@ -114,6 +115,14 @@ const State = (
             return {
                 ...state,
                 firstChartDisplayed: true
+            }
+        case 'cellTypeWork.data.geneReorder':
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    genes: [...action.value]
+                }
             }
         case 'cellTypeWork.sheetList.load':
             return {

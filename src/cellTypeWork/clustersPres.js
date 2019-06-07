@@ -37,7 +37,7 @@ const ClusterNames = (props) => {
         tds.push(
             <div
                 data-position={i}
-                data-domain='clusters'
+                data-domain='cellTypeWorkClusters'
                 key={i}
                 style={{
                     ...topStyle,
@@ -49,6 +49,7 @@ const ClusterNames = (props) => {
                     verticalAlign: 'middle',
                     height: '18px',
                     paddingTop: '3px',
+                    marginTop: '-5px',
                 }}
                 onMouseDown={onMouseDown}
                 onMouseLeave={onMouseLeave}
@@ -64,6 +65,7 @@ const ClusterNames = (props) => {
                 style={{
                     ...labelStyle,
                     height: 15,
+                    marginTop: 5,
                 }}
             >
                 Cluster #

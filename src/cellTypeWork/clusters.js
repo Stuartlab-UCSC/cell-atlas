@@ -37,13 +37,13 @@ const mapDispatchToProps = (dispatch) => {
             const marker = {
                 width: '2px',
                 height: '20px',
-                topOffset: 0, // -20,
-                leftOffset: 0, // 3,
+                topOffset: 0,
+                leftOffset: -1,
             }
             sortableOnMouseDown(
                 ev,
                 rxGet('cellTypeWork.data.clusters').length,
-                'clusters',
+                'cellTypeWorkClusters',
                 marker,
                 reorder,
                 'x',

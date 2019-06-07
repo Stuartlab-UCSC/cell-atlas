@@ -7,37 +7,7 @@ import { fontFamily } from 'app/themeData'
 import Legend from 'components/legend'
 import Clusters from 'cellTypeWork/clusters'
 import Bubbles from 'cellTypeWork/bubbles'
-
-const Genes = ({ genes, geneWidth, rowHeight }) => {
-    if (!genes) {
-        return (null)
-    }
-    const geneStyle = {
-        width: geneWidth,
-        textAlign: 'right',
-        height: rowHeight,
-        paddingRight: 15,
-        cursor: 'grab',
-    }
-
-    let tds = []
-    genes.forEach((label, i) => {
-        tds.push(
-            <div
-                key={i}
-                draggable
-                style={geneStyle}
-            >
-                {label}
-            </div>
-        )
-    })
-    return (
-        <div style={{ display: 'inline-block', verticalAlign: 'top' }} >
-            {tds}
-        </div>
-    )
-}
+import Genes from 'cellTypeWork/genes'
 
 const Legends = ({ data, dims }) => {
     const { colorRange, legendWidth, sizeRange } = dims
@@ -75,7 +45,7 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
             </Typography>
         )
     }
-    const { barColors, clusters, genes } = data
+    const { genes } = data
     const { bubblesHeight, bubblesWidth, fontSize, geneWidth, legendWidth,
         rowHeight } = dims
     if (bubblesHeight === 0 || bubblesWidth === 0) {
