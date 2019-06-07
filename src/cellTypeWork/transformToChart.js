@@ -31,18 +31,17 @@ const buildClusters = (data) => {
     const clusterCount = lines.length - 1
     let clusters = Array.from(clusterCount)
     let cellTypes = Array.from(clusterCount)
-    const colormap = getCatColormap('hexmap', clusterCount)
+    let barColors = Array.from(clusterCount)
     lines.slice(1).forEach((line,i) => {
         clusters[line[0]] = {
             name: line[1],
             cellCount: parseFloat(line[2]),
-            barColor: colormap[line[3]],
-            color: colormap[i],
         }
         cellTypes[line[0]] = line[4]
+        barColors[line[0]] = line[3]
     })
 
-    return { clusters, cellTypes, colormap }
+    return {barColors, clusters, cellTypes }
 }
 
 const buildGenes = (data) => {
@@ -130,8 +129,9 @@ const buildBubbles = (data) => {
 const transfromToChart = (data) => {
     // Transform the format from the server response to worksheet chart.
     rxSet('cellTypeWork.dims.default')
+    rxSet('cellTypeWork.colormap.default')
     rxSet('cellTypeWork.data.default')
-    const { clusters, cellTypes, colormap } = buildClusters(data)
+    const { barColors, clusters, cellTypes } = buildClusters(data)
     const genes = buildGenes(data)
     const { bubbles, colorRange, sizeRange } = buildBubbles(data)
 
@@ -151,7 +151,11 @@ const transfromToChart = (data) => {
     dims.colorRange = colorRange
     dims.sizeRange = sizeRange
     rxSet('cellTypeWork.dims.set', { value: dims })
-    
+
+    // Create the colormap which will be static for this data load.
+    const colormap = getCatColormap('hexmap', clusterCount)
+    rxSet('cellTypeWork.colormap.create', { value: colormap })
+
     // Update the chart data.
     rxSet('cellTypeWork.data.load', { value: {
         dataset:         data.dataset_name,
@@ -159,8 +163,8 @@ const transfromToChart = (data) => {
         sizeBy:          data.size_by,
         colorBy:         data.color_by,
         clusters,
+        barColors,
         cellTypes,
-        colormap,
         genes,
         bubbles,
     }})

@@ -1,6 +1,8 @@
 
 // This contains routines to handle the drag and drop
 // to re-order sortable elements.
+// Note there are direct DOM style manipulations here, so we don't slow
+// down the user experience when dragging the mouse.
 
 import React from 'react'
 import { get as rxGet, set as rxSet } from 'state/rx'
@@ -136,7 +138,7 @@ const defaultDrag = {
     position: null, // the mouseDown position index within the domain
     reorderFx: null, // the function to call to reorder the elements
     xOrY: null,  // the relevant coordinate depending on domain orientation
-    marker: null, // drop marker dimensions
+    marker: null, // drop marker dimensions object
 }
 
 const State = (

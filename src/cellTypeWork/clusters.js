@@ -1,136 +1,60 @@
-// The worksheet of the cell type worksheet page.
+// The logic for the clusters and their info on the cell type worksheet.
 
-import React from 'react';
-import CellTypes from 'cellTypeWork/cellTypes'
+import { connect } from 'react-redux'
+import { get as rxGet, set as rxSet } from 'state/rx'
+import Presentation from 'cellTypeWork/clustersPres'
+import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
+    from 'app/sortable'
+import { reorder as cellTypeReorder } from 'cellTypeWork/cellTypes'
 
-const labelFontSize = 16
-
-const BarColor = ({ clusters, topStyle, labelStyle, geneWidth }) => {
-    let tds = []
-    clusters.forEach((cluster, i) => {
-        tds.push(
-            <div
-                key={i}
-                style={{
-                    ...topStyle,
-                    height: 10,
-                    background: cluster.barColor
-                }}
-            />
-        )
-    })
-    return (
-        <div>
-            <div style={{ ...labelStyle, paddingLeft: geneWidth }} >
-                {tds}
-            </div>
-        </div>
-    )
-}
-
-const ClusterNames = ({ clusters, topStyle, labelStyle }) => {
-    let tds = []
-    clusters.forEach((cluster, i) => {
-        const color = (i % 2 === 0) ? 'black' : 'white'
-        tds.push(
-            <div
-                key={i}
-                draggable
-                style={{
-                    ...topStyle,
-                    background: cluster.color,
-                    color: color,
-                    cursor: 'grab',
-                    textAlign: 'center',
-                    verticalAlign: 'middle',
-                    height: '18px',
-                    paddingTop: '3px',
-                 }}
-            >
-                {cluster.name}
-            </div>
-        )
-    })
-    return (
-        <div>
-            <div
-                style={{
-                    ...labelStyle,
-                    height: 15,
-                }}
-            >
-                Cluster #
-            </div>
-            {tds}
-        </div>
-    )
-}
-
-const CellCounts = ({ clusters, topStyle, labelStyle }) => {
-    let tds = []
-    clusters.forEach((cluster, i) => {
-        tds.push(
-            <div key={i} style={{
-                ...topStyle,
-                transform: 'translate(-2px, 5px) rotate(-90deg)'
-            }}>
-                {cluster.cellCount}
-            </div>
-        )
-    })
-    return (
-        <div>
-            <div
-                style={{
-                    ...labelStyle,
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    marginLeft: 2,
-                }}
-            >
-                # of Cells
-            </div>
-            {tds}
-        </div>
-    )
-}
-
-const Presentation = ({ clusters, dims }) => {
-    const { colWidth, geneWidth } = dims
-    if (!clusters) {
-        return (null)
+const mapStateToProps = (state) => {
+    const data = state.cellTypeWork.data
+    return {
+        barColors: data.barColors,
+        clusters: data.clusters,
+        colormap: state.cellTypeWork.colormap,
+        dims: state.cellTypeWork.dims,
+        onMouseLeave: sortableOnMouseLeave,
+        onMouseOver: sortableOnMouseOver,
     }
-    const topStyle = {
-        width: colWidth,
-        display: 'inline-block',
-    }
-    const labelStyle = {
-        width: geneWidth,
-        textAlign: 'right',
-        paddingRight: 20,
-        display: 'inline-block',
-        fontSize: labelFontSize,
-    }
-   return (
-        <React.Fragment>
-            <CellTypes />
-            <BarColor
-                clusters={clusters}
-                topStyle={topStyle}
-                geneWidth={geneWidth}
-            />
-            <ClusterNames
-                clusters={clusters}
-                topStyle={topStyle}
-                labelStyle={labelStyle}
-            />
-            <CellCounts
-                clusters={clusters}
-                topStyle={topStyle}
-                labelStyle={labelStyle}
-            />
-        </React.Fragment>
-    )
 }
 
-export default Presentation
+const reorder = (start, end) => {
+    // Remove and insert the cluster column in its new place in the list.
+    const clusters = rxGet('cellTypeWork.data.clusters')
+    const cluster = clusters[start]
+    clusters.splice(start, 1)
+    clusters.splice(end, 0, cluster)
+    rxSet('cellTypeWork.data.clusterReorder', {value: clusters})
+    // Also reorder the cell types the same.
+    cellTypeReorder(start, end)
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onMouseDown: ev => {
+
+            const marker = {
+                width: '2px',
+                height: '20px',
+                topOffset: 0, // -20,
+                leftOffset: 0, // 3,
+            }
+            sortableOnMouseDown(
+                ev,
+                rxGet('cellTypeWork.data.clusters').length,
+                'clusters',
+                marker,
+                reorder,
+                'x',
+                dispatch,
+            )
+        },
+    }
+}
+
+const CellTypes = connect(
+    mapStateToProps, mapDispatchToProps
+)(Presentation)
+
+export default CellTypes

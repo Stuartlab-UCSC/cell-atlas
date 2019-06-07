@@ -75,7 +75,7 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
             </Typography>
         )
     }
-    const { clusters, genes } = data
+    const { barColors, clusters, genes } = data
     const { bubblesHeight, bubblesWidth, fontSize, geneWidth, legendWidth,
         rowHeight } = dims
     if (bubblesHeight === 0 || bubblesWidth === 0) {
@@ -94,10 +94,7 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
     }
     return (
         <div id='worksheetPres' style={tableStyle}>
-            <Clusters
-                clusters={clusters}
-                dims={dims}
-            />
+            <Clusters />
             <Genes
                 genes={genes}
                 geneWidth={geneWidth}

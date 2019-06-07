@@ -9,7 +9,7 @@ import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
 
 const mapStateToProps = (state) => {
     return {
-        clusters: state.cellTypeWork.data.clusters,
+        colormap: state.cellTypeWork.colormap,
         cellTypes: state.cellTypeWork.data.cellTypes,
         dims: state.cellTypeWork.dims,
         onMouseLeave: sortableOnMouseLeave,
@@ -24,7 +24,6 @@ const reorder = (start, end) => {
     cellTypes.splice(start, 1)
     cellTypes.splice(end, 0, cellType)
     rxSet('cellTypeWork.data.cellTypeReorder', {value: cellTypes})
-    
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -55,3 +54,4 @@ const CellTypes = connect(
 )(Presentation)
 
 export default CellTypes
+export { reorder }

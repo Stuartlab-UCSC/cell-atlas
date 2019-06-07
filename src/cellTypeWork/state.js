@@ -1,12 +1,12 @@
 
 // Cell type sheet page state.
 
+const defaultColormap = []
 const defaultData = {
+    barColors: [],
     cellTypes: [],
     clusters: [],
-    colormap: [],
     genes: [],
-    colors: [],
     sizes: [],
 }
 const defaultDims = {
@@ -30,6 +30,7 @@ const defaultSheetSelected = defaultSheetList[0].value
 
 const State = (
     state = {
+        colormap: defaultColormap,
         data: defaultData,
         dims: defaultDims,
         fetchMessage: ' ',
@@ -43,6 +44,16 @@ const State = (
         tableData: [],
     }, action) => {
         switch(action.type) {
+        case 'cellTypeWork.colormap.default':
+            return {
+                ...state,
+                colormap: defaultColormap
+            }
+        case 'cellTypeWork.colormap.create':
+            return {
+                ...state,
+                colormap: action.value
+            }
         case 'cellTypeWork.data.default':
             return {
                 ...state,
@@ -59,6 +70,14 @@ const State = (
                 data: {
                     ...state.data,
                     cellTypes: [...action.value]
+                }
+            }
+        case 'cellTypeWork.data.clusterReorder':
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    clusters: [...action.value]
                 }
             }
         case 'cellTypeWork.dims.default':

@@ -2,7 +2,9 @@
 
 import React from 'react'
 
-const CellTypes = ({ clusters, cellTypes, dims, onMouseOver, onMouseLeave, onMouseDown }) => {
+const CellTypes = (props) => {
+    const { colormap, cellTypes, dims, onMouseDown, onMouseLeave, onMouseOver }
+        = props
     const { cellTypeHeight, bubblesWidth, colWidth, fontSize, geneWidth,
         labelFontSize, legendWidth } = dims
     
@@ -19,7 +21,7 @@ const CellTypes = ({ clusters, cellTypes, dims, onMouseOver, onMouseLeave, onMou
                 x={x}
                 y={y}
                 fontSize={fontSize}
-                fill={clusters[i].color}
+                fill={colormap[i]}
                 transform={'rotate(-45,' + x + ',' + (y-10) + ')'}
                 style={{userSelect: 'none', cursor: 'grab'}}
                 onMouseOver={onMouseOver}
