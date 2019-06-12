@@ -75,6 +75,9 @@ const onMouseUp = (ev) => {
     
     // If the mouse is over the same element as on mouseDown, we're done.
     const { position, drag } = currentPosition(ev)
+    const sourceElement = rxGet('sortable.drag').element
+    sourceElement.style.cursor = 'grab'
+    
     if (position === drag.position) {
         return
     }
@@ -107,6 +110,7 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
             position: ev.target.dataset.position,
             reorderFx,
             xOrY,
+            element: ev.target,
         }
     })
 }
@@ -145,8 +149,8 @@ const defaultDrag = {
     reorderFx: null, // the function to call to reorder the elements
     xOrY: null,  // the relevant coordinate depending on domain orientation
     marker: null, // drop marker dimensions object
+    element: null, // the mouse down target to reset the cursor
 }
-
 const State = (
     state = {
         drag: defaultDrag,

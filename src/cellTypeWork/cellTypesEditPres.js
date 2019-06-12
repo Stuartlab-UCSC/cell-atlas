@@ -11,31 +11,30 @@ const Button = ({ i, dims, onClick, onMouseOver, onMouseLeave }) => {
     // The edit button for a cell type.
     const { colWidth } = dims
     return (
-        <React.Fragment>
-            <IconButton
-                data-domain={DOMAIN}
-                data-editmode={true}
+        <IconButton
+            id='cellTypeWorkCellTypeEditButton'
+            data-domain={DOMAIN}
+            data-editmode={true}
+            data-position={i}
+            style={{
+                position: 'absolute',
+                top: -15,
+                left: 80 + (colWidth * i),
+            }}
+            onClick={onClick}
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
+        >
+            <EditIcon
                 data-position={i}
-                style={{
-                    position: 'absolute',
-                    top: -15,
-                    left: 80 + (colWidth * i),
-                    zIndex: 1000000,
-                }}
-                onClick={onClick}
                 onMouseOver={onMouseOver}
                 onMouseLeave={onMouseLeave}
-            >
-                <EditIcon
-                    onMouseOver={onMouseOver}
-                    onMouseLeave={onMouseLeave}
-                />
-            </IconButton>
-        </React.Fragment>
+            />
+        </IconButton>
     )
 }
 
-const Input = ({ i, value, dims }) => {
+const Input = ({ i, value, dims, onBlur, onChange }) => {
     // The text input box for a cell type.
     const { cellTypeLength, colWidth, fontSize } = dims
     return (
@@ -46,27 +45,40 @@ const Input = ({ i, value, dims }) => {
             data-position={i}
             style={{
                 position: 'absolute',
+                top: 45,
                 left: (colWidth * i),
-                top: 23,
                 transform: 'rotate(-45deg)',
                 width: cellTypeLength,
                 fontSize: fontSize + 'px',
             }}
+            onBlur={onBlur}
+            onChange={onChange}
         />
     )
 }
 
 const CellTypesEdit = (props) => {
     // Show the appropriate button or input.
-    const { showInput, showButton, cellTypes, onClick, onMouseOverButton,
-        onMouseLeaveButton } = props
+    const { showInput, showButton, cellTypes, onChange, onClick, onBlur,
+        onMouseOverButton, onMouseLeaveButton } = props
     if (showInput === null && showButton === null) {
         return (null)
     }
     const { geneWidth } = props.dims
     let edit = null
     cellTypes.forEach((cellType, i) => {
-        if (showButton === i) {
+        if (showInput === i) {
+            edit = (
+                <Input
+                    key={i}
+                    i={i}
+                    value={cellType}
+                    dims={props.dims}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                />
+            )
+        } else if (showButton === i) {
             edit = (
                 <Button
                     key={i}
@@ -75,15 +87,6 @@ const CellTypesEdit = (props) => {
                     onClick={onClick}
                     onMouseOver={onMouseOverButton}
                     onMouseLeave={onMouseLeaveButton}
-                />
-            )
-        } else if (showInput === i) {
-            edit = (
-                <Input
-                    key={i}
-                    i={i}
-                    value={cellType}
-                    dims={props.dims}
                 />
             )
         }

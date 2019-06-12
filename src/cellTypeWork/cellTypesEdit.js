@@ -17,12 +17,16 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onClick: ev => {
             // On the button click, hide the button and show the input element.
+            // Note that the icon itself cannot store a position, so grab that
+            // from the parent
+            const parent =
+                document.getElementById('cellTypeWorkCellTypeEditButton')
             dispatch({
                 type: 'cellTypeWork.cellTypeButton.hide',
             })
             dispatch({
                 type: 'cellTypeWork.cellTypeInput.show',
-                value: ev.target.dataset.position
+                value: parent.dataset.position
             })
         },
         onChange: ev => {
@@ -33,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
                 value: ev.target.value,
             })
         },
-        onInputLeave: ev => {
+        onBlur: ev => {
             dispatch({
                 type: 'cellTypeWork.cellTypeInput.hide',
             })
