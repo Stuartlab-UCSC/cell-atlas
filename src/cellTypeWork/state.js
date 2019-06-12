@@ -13,9 +13,8 @@ const defaultData = {
 const defaultDims = {
     bubblesHeight: 0,
     bubblesWidth: 0,
-    cellTypeHeight: 80,
-    cellTypeLength: 80,
-    cellTypes: [],
+    cellTypesHeight: 100,
+    cellTypeLength: 120,
     colWidth: 14,
     fontSize: 11,
     geneWidth: 100,
@@ -31,6 +30,9 @@ const defaultSheetSelected = defaultSheetList[0].value
 
 const State = (
     state = {
+        cellTypeButton: null,
+        cellTypeHighlight: null,
+        cellTypeInput: null,
         colormap: defaultColormap,
         data: defaultData,
         dims: defaultDims,
@@ -44,7 +46,38 @@ const State = (
         tableColumn: [],
         tableData: [],
     }, action) => {
+        let newState = null
         switch(action.type) {
+        case 'cellTypeWork.cellTypeButton.show':
+            return {
+                ...state,
+                cellTypeButton: parseInt(action.value, 10)
+            }
+        case 'cellTypeWork.cellTypeButton.hide':
+            return {
+                ...state,
+                cellTypeButton: null
+            }
+        case 'cellTypeWork.cellTypeHighlight.show':
+            return {
+                ...state,
+                cellTypeHighlight: parseInt(action.value, 10)
+            }
+        case 'cellTypeWork.cellTypeHighlight.hide':
+            return {
+                ...state,
+                cellTypeHighlight: null
+            }
+        case 'cellTypeWork.cellTypeInput.show':
+            return {
+                ...state,
+                cellTypeInput: parseInt(action.value, 10)
+            }
+        case 'cellTypeWork.cellTypeInput.hide':
+            return {
+                ...state,
+                cellTypeInput: null
+            }
         case 'cellTypeWork.colormap.default':
             return {
                 ...state,
@@ -65,6 +98,14 @@ const State = (
                 ...state,
                 data: action.value
             }
+        
+        case 'cellTypeWork.data.cellTypeChange':
+            newState = {
+                ...state,
+                data: state.data,
+            }
+            newState.data.cellTypes[action.position] = action.value
+            return newState
         case 'cellTypeWork.data.cellTypeReorder':
             return {
                 ...state,

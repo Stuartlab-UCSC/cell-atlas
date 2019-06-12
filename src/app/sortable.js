@@ -113,8 +113,10 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
 
 const sortableOnMouseLeave = (ev) => {
     const drag = rxGet('sortable.drag')
-    if (!drag.domain || drag.domain !== ev.target.dataset.domain) {
-        // We're not dragging the mouse, or we're in some other sortable domain.
+    if (!drag.domain || drag.domain !== ev.target.dataset.domain
+        || ev.target.dataset.editmode) {
+        // We're not dragging the mouse, in some other sortable domain
+        // or in edit mode.
         return
     }
     resetMarker()
@@ -124,7 +126,8 @@ const sortableOnMouseLeave = (ev) => {
 const sortableOnMouseOver = (ev) => {
     const drag = rxGet('sortable.drag')
     if (drag.domain === null
-        || drag.domain !== ev.target.dataset.domain) {
+        || drag.domain !== ev.target.dataset.domain
+        || ev.target.dataset.editmode) {
         return
     }
     // Set the dimensions of the drag marker.

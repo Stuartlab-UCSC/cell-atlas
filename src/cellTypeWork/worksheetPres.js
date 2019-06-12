@@ -61,6 +61,7 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
         width: geneWidth + bubblesWidth + legendWidth,
         fontFamily: fontFamily,
         fontSize: fontSize,
+        position: 'relative',
     }
     return (
         <div id='worksheetPres' style={tableStyle}>

@@ -3,6 +3,7 @@
 
 import React from 'react';
 import CellTypes from 'cellTypeWork/cellTypes'
+import CellTypesEdit from 'cellTypeWork/cellTypesEdit'
 const labelFontSize = 16
 
 const BarColor = ({ barColors, colormap, topStyle, labelStyle, geneWidth }) => {
@@ -125,6 +126,7 @@ const Presentation = (props) => {
    return (
         <React.Fragment>
             <CellTypes />
+            <CellTypesEdit />
             <BarColor
                 barColors={barColors}
                 colormap={colormap}

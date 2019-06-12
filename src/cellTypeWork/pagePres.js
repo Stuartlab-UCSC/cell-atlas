@@ -119,7 +119,7 @@ const Presentation = (props) => {
                 <Grid item xs={4}>
                     <ScatterPlot show={showSave} />
                 </Grid>
-                <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
+                    <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
                 <Grid item xs={8} style={{marginTop: -70}}>
                     <Worksheet />
                 </Grid>

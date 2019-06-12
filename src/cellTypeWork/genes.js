@@ -1,4 +1,4 @@
-// The logic for the clusters and their info on the cell type worksheet.
+// The logic for the genes on the cell type worksheet, not the gene table.
 
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'

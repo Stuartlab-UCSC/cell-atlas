@@ -1,5 +1,5 @@
 
-// A dataTable fetcher that fetches from the data server.
+// A fetcher that fetches from the data server for rendering in a dataTable.
 // Note: this depends on strict naming conventions for redux state
 // and data server routes.
 
