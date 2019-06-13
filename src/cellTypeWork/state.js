@@ -3,7 +3,7 @@
 
 const defaultColormap = []
 const defaultData = {
-    barColors: [],
+    colorBar: [],
     cellTypes: [],
     clusters: [],
     colors: [],
@@ -34,6 +34,7 @@ const State = (
         cellTypeHighlight: null,
         cellTypeInput: null,
         colormap: defaultColormap,
+        colormapPicker: null,
         data: defaultData,
         dims: defaultDims,
         fetchMessage: ' ',
@@ -49,7 +50,8 @@ const State = (
         let newState = null
         switch(action.type) {
         case 'cellTypeWork.cellTypeButton.show':
-            return {
+            // The cellType position is saved here.
+           return {
                 ...state,
                 cellTypeButton: parseInt(action.value, 10)
             }
@@ -59,6 +61,7 @@ const State = (
                 cellTypeButton: null
             }
         case 'cellTypeWork.cellTypeHighlight.show':
+            // The cellType position is saved here.
             return {
                 ...state,
                 cellTypeHighlight: parseInt(action.value, 10)
@@ -69,6 +72,7 @@ const State = (
                 cellTypeHighlight: null
             }
         case 'cellTypeWork.cellTypeInput.show':
+            // The cellType position is saved here.
             return {
                 ...state,
                 cellTypeInput: parseInt(action.value, 10)
@@ -78,15 +82,26 @@ const State = (
                 ...state,
                 cellTypeInput: null
             }
+        case 'cellTypeWork.colormap.create':
+            return {
+                ...state,
+                colormap: action.value
+            }
         case 'cellTypeWork.colormap.default':
             return {
                 ...state,
                 colormap: defaultColormap
             }
-        case 'cellTypeWork.colormap.create':
+        case 'cellTypeWork.colormapPicker.show':
+            // The colorBar position is saved here.
             return {
                 ...state,
-                colormap: action.value
+                colormapPicker: action.value
+            }
+        case 'cellTypeWork.colormapPicker.hide':
+            return {
+                ...state,
+                colormapPicker: null
             }
         case 'cellTypeWork.data.default':
             return {
@@ -122,6 +137,18 @@ const State = (
                     clusters: [...action.value]
                 }
             }
+        case 'cellTypeWork.data.colorBar.uiSet':
+            // The colorbar segment takes on the index of the colormap member
+            // that matches the color of the picked color.
+            const index = action.colormap.findIndex(color => {
+                return (color === action.color)
+            })
+            newState = {
+                ...state,
+                data: state.data,
+            }
+            newState.data.colorBar[action.position] = index
+            return newState
         case 'cellTypeWork.dims.default':
             return {
                 ...state,
@@ -185,6 +212,16 @@ const State = (
             return {
                 ...state,
                 showChart: true
+            }
+        case 'cellTypeWork.showColorPicker.show':
+            return {
+                ...state,
+                showColorPicker: action.value
+            }
+        case 'cellTypeWork.showColorPicker.hide':
+            return {
+                ...state,
+                showColorPicker: null,
             }
         case 'cellTypeWork.showChart.toRequestStatus':
             return {

@@ -31,17 +31,17 @@ const buildClusters = (data) => {
     const clusterCount = lines.length - 1
     let clusters = Array.from(clusterCount)
     let cellTypes = Array.from(clusterCount)
-    let barColors = Array.from(clusterCount)
+    let colorBar = Array.from(clusterCount)
     lines.slice(1).forEach((line,i) => {
         clusters[line[0]] = {
             name: line[1],
             cellCount: parseFloat(line[2]),
         }
         cellTypes[line[0]] = line[4]
-        barColors[line[0]] = line[3]
+        colorBar[line[0]] = line[3]
     })
 
-    return {barColors, clusters, cellTypes }
+    return {colorBar, clusters, cellTypes }
 }
 
 const buildGenes = (data) => {
@@ -131,7 +131,7 @@ const transfromToChart = (data) => {
     rxSet('cellTypeWork.dims.default')
     rxSet('cellTypeWork.colormap.default')
     rxSet('cellTypeWork.data.default')
-    const { barColors, clusters, cellTypes } = buildClusters(data)
+    const { colorBar, clusters, cellTypes } = buildClusters(data)
     const genes = buildGenes(data)
     const { bubbles, colorRange, sizeRange } = buildBubbles(data)
 
@@ -163,7 +163,7 @@ const transfromToChart = (data) => {
         sizeBy:          data.size_by,
         colorBy:         data.color_by,
         clusters,
-        barColors,
+        colorBar,
         cellTypes,
         genes,
         bubbles,

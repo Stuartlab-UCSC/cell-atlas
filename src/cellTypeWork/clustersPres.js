@@ -4,30 +4,8 @@
 import React from 'react';
 import CellTypes from 'cellTypeWork/cellTypes'
 import CellTypesEdit from 'cellTypeWork/cellTypesEdit'
+import ColorBar from 'cellTypeWork/colorBar'
 const labelFontSize = 16
-
-const BarColor = ({ barColors, colormap, topStyle, labelStyle, geneWidth }) => {
-    let tds = []
-    barColors.forEach((barColor, i) => {
-        tds.push(
-            <div
-                key={i}
-                style={{
-                    ...topStyle,
-                    height: 10,
-                    background: colormap[barColor],
-                }}
-            />
-        )
-    })
-    return (
-        <div>
-            <div style={{ ...labelStyle, paddingLeft: geneWidth }} >
-                {tds}
-            </div>
-        </div>
-    )
-}
 
 const ClusterNames = (props) => {
     const { clusters, colormap, topStyle, labelStyle, onMouseDown, onMouseLeave,
@@ -106,8 +84,8 @@ const CellCounts = ({ clusters, topStyle, labelStyle }) => {
 }
 
 const Presentation = (props) => {
-    const { barColors, clusters, colormap, dims, onMouseDown, onMouseLeave,
-        onMouseOver } = props
+    const { clusters, colormap, dims, onMouseDown, onMouseLeave, onMouseOver }
+        = props
     const { colWidth, geneWidth } = dims
     if (!clusters) {
         return (null)
@@ -127,12 +105,7 @@ const Presentation = (props) => {
         <React.Fragment>
             <CellTypes />
             <CellTypesEdit />
-            <BarColor
-                barColors={barColors}
-                colormap={colormap}
-                topStyle={topStyle}
-                geneWidth={geneWidth}
-            />
+            <ColorBar />
             <ClusterNames
                 clusters={clusters}
                 colormap={colormap}

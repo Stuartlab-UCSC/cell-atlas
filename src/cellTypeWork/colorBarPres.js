@@ -1,0 +1,53 @@
+// The presentational component for the clusters and their info
+// on the cell type worksheet.
+
+import React from 'react'
+import { GithubPicker } from 'react-color';
+
+const ColorPicker = ({props}) => {
+    const { showPicker, colormap, startColor} = props
+    if (showPicker === null) {
+        return (null)
+    }
+    return (
+        <GithubPicker
+            colors={colormap}
+            value={startColor}
+            triangle='hide'
+        />
+    )
+}
+
+const ColorBarPres = (props) => {
+    const { colorBar, colormap, onBarClick } = props
+    const { colWidth, geneWidth } = props.dims
+    let tds = []
+    colorBar.forEach((bar, i) => {
+        tds.push(
+            <div
+                key={i}
+                data-position={i}
+                style={{
+                    width: colWidth,
+                    display: 'inline-block',
+                    height: 10,
+                    background: colormap[bar],
+                    cursor: 'pointer',
+                }}
+                onClick={onBarClick}
+            />
+        )
+    })
+    return (
+        <div>
+            <div
+                style={{paddingLeft: geneWidth }}
+            >
+                {tds}
+            </div>
+            <ColorPicker props={props} />
+        </div>
+    )
+}
+
+export default ColorBarPres

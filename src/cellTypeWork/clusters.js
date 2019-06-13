@@ -10,7 +10,6 @@ import { reorder as cellTypeReorder } from 'cellTypeWork/cellTypes'
 const mapStateToProps = (state) => {
     const data = state.cellTypeWork.data
     return {
-        barColors: data.barColors,
         clusters: data.clusters,
         colormap: state.cellTypeWork.colormap,
         dims: state.cellTypeWork.dims,
