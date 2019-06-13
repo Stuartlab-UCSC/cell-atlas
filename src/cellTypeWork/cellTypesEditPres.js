@@ -7,7 +7,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
 import { DOMAIN } from 'cellTypeWork/cellTypes'
 
-const Button = ({ i, dims, onClick, onMouseOver, onMouseLeave }) => {
+const Button = ({ i, dims, onButtonClick, onMouseOver, onMouseLeave }) => {
     // The edit button for a cell type.
     const { colWidth } = dims
     return (
@@ -21,7 +21,7 @@ const Button = ({ i, dims, onClick, onMouseOver, onMouseLeave }) => {
                 top: -15,
                 left: 80 + (colWidth * i),
             }}
-            onClick={onClick}
+            onClick={onButtonClick}
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}
         >
@@ -34,11 +34,12 @@ const Button = ({ i, dims, onClick, onMouseOver, onMouseLeave }) => {
     )
 }
 
-const Input = ({ i, value, dims, onBlur, onChange }) => {
+const Input = ({ i, value, dims, onInputBlur, onInputChange }) => {
     // The text input box for a cell type.
     const { cellTypeLength, colWidth, fontSize } = dims
     return (
         <input
+            id='cellTypeWorkCellTypeEditInput'
             defaultValue={value}
             data-domain={DOMAIN}
             data-editmode={true}
@@ -51,16 +52,16 @@ const Input = ({ i, value, dims, onBlur, onChange }) => {
                 width: cellTypeLength,
                 fontSize: fontSize + 'px',
             }}
-            onBlur={onBlur}
-            onChange={onChange}
+            onBlur={onInputBlur}
+            onChange={onInputChange}
         />
     )
 }
 
 const CellTypesEdit = (props) => {
     // Show the appropriate button or input.
-    const { showInput, showButton, cellTypes, onChange, onClick, onBlur,
-        onMouseOverButton, onMouseLeaveButton } = props
+    const { showInput, showButton, cellTypes, onButtonClick, onButtonMouseLeave,
+        onButtonMouseOver, onInputBlur, onInputChange } = props
     if (showInput === null && showButton === null) {
         return (null)
     }
@@ -74,8 +75,8 @@ const CellTypesEdit = (props) => {
                     i={i}
                     value={cellType}
                     dims={props.dims}
-                    onBlur={onBlur}
-                    onChange={onChange}
+                    onInputBlur={onInputBlur}
+                    onInputChange={onInputChange}
                 />
             )
         } else if (showButton === i) {
@@ -84,9 +85,9 @@ const CellTypesEdit = (props) => {
                     key={i}
                     i={i}
                     dims={props.dims}
-                    onClick={onClick}
-                    onMouseOver={onMouseOverButton}
-                    onMouseLeave={onMouseLeaveButton}
+                    onButtonClick={onButtonClick}
+                    onMouseOver={onButtonMouseOver}
+                    onMouseLeave={onButtonMouseLeave}
                 />
             )
         }
