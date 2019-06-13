@@ -3,6 +3,7 @@
 
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
+import { onBodyClickForButton } from 'cellTypeWork/cellTypesEdit'
 import Presentation from 'cellTypeWork/cellTypesPres'
 import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
     from 'app/sortable'
@@ -41,6 +42,7 @@ const mapDispatchToProps = (dispatch) => {
                     type: 'cellTypeWork.cellTypeButton.show',
                     value: ev.target.dataset.position
                 })
+                document.body.addEventListener('click', onBodyClickForButton)
             }
             // Handle the sortable drag and drop.
             sortableOnMouseOver(ev)

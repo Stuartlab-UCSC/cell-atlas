@@ -14,8 +14,17 @@ const mapStateToProps = (state) => {
     }
 }
 
-const onBodyClick = ev => {
-    document.body.removeEventListener('click', onBodyClick)
+const onBodyClickForButton = ev => {
+    // Hide the button if the user clicks almost anywhere.
+    document.body.removeEventListener('click', onBodyClickForButton)
+    if (ev.target.id !== 'cellTypeWorkCellTypeEditButton') {
+        rxSet('cellTypeWork.cellTypeButton.hide')
+    }
+}
+
+const onBodyClickForInput = ev => {
+    // Hide the input if the user clicks almost anywhere.
+    document.body.removeEventListener('click', onBodyClickForInput)
     if (ev.target.id !== 'cellTypeWorkCellTypeEditInput') {
         rxSet('cellTypeWork.cellTypeInput.hide')
     }
@@ -32,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: 'cellTypeWork.cellTypeButton.hide',
             })
+            document.body.removeEventListener('click', onBodyClickForButton)
             dispatch({
                 type: 'cellTypeWork.cellTypeInput.show',
                 value: parent.dataset.position
@@ -41,7 +51,7 @@ const mapDispatchToProps = (dispatch) => {
             // until the user changes focus to another element by clicking, or
             // using keyboard navigation. In the mean time the input element
             // appears and disappears as it is moused over.
-            document.body.addEventListener('click', onBodyClick)
+            document.body.addEventListener('click', onBodyClickForInput)
             // Set focus to the input element after it has a chance to render.
             setTimeout(() => {
                 document.getElementById('cellTypeWorkCellTypeEditInput').focus()
@@ -65,7 +75,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: 'cellTypeWork.cellTypeInput.hide',
             })
-            document.body.removeEventListener('click', onBodyClick)
+            document.body.removeEventListener('click', onBodyClickForInput)
         },
         onInputChange: ev => {
             // On change of the value update the value in state.
@@ -83,3 +93,4 @@ const CellTypesEdit = connect(
 )(Presentation)
 
 export default CellTypesEdit
+export { onBodyClickForButton }
