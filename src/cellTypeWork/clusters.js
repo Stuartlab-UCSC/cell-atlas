@@ -13,8 +13,9 @@ const mapStateToProps = (state) => {
         clusters: data.clusters,
         colormap: state.cellTypeWork.colormap,
         dims: state.cellTypeWork.dims,
+        mode: state.cellTypeWork.clusterMode,
+        showButton: state.cellTypeWork.clusterButton,
         onMouseLeave: sortableOnMouseLeave,
-        onMouseOver: sortableOnMouseOver,
     }
 }
 
@@ -29,25 +30,80 @@ const reorder = (start, end) => {
     cellTypeReorder(start, end)
 }
 
+const onBodyClickForButton = ev => {
+    // If the user clicks anywhere other than the gene stats button or message,
+    // hide the button, set the mode to the default of 'sortable'.
+    if (!ev.target) {
+        return
+    } else if (rxGet('cellTypeWork.clusterMode') === 'select') {
+        if (ev.target.id === 'cellTypeWorkClusterButton') {
+            return
+        }
+    } else {
+        const parent = ev.target.parentElement
+        if (parent && parent.id === 'cellTypeWorkClusterButton') {
+            return
+        }
+    }
+    rxSet('cellTypeWork.clusterButton.hide')
+    rxSet('cellTypeWork.clusterMode.sortable')
+    document.body.removeEventListener('click', onBodyClickForButton)
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        onMouseDown: ev => {
-
-            const marker = {
-                width: '2px',
-                height: '20px',
-                topOffset: 0,
-                leftOffset: -1,
+        onGeneStatsButtonClick: ev => {
+            // On click of the gene stats button
+            // change the cluster mode from 'sortable' to 'select'.
+            if (rxGet('cellTypeWork.clusterMode') === 'sortable') {
+                dispatch({
+                    type: 'cellTypeWork.clusterMode.select',
+                })
             }
-            sortableOnMouseDown(
-                ev,
-                rxGet('cellTypeWork.data.clusters').length,
-                'cellTypeWorkClusters',
-                marker,
-                reorder,
-                'x',
-                dispatch,
-            )
+        },
+        onClick: ev => {
+            // On click of a cluster, retrieve that cluster's gene stats.
+            if (rxGet('cellTypeWork.clusterMode') === 'select') {
+                const cluster = rxGet('cellTypeWork.data').clusters[
+                    ev.target.dataset.position]
+                dispatch({
+                    type: 'cellTypeWork.clusterSelected.uiSet',
+                    action: cluster
+                })
+                // TODO get the genes.
+                console.log('get the genes for cluster:', cluster)
+            }
+        },
+        onMouseOver: ev => {
+            // On mouse over any cluster,
+            // show the button if the mouse is in sortable mode.
+            if (rxGet('cellTypeWork.clusterMode') === 'sortable') {
+                sortableOnMouseOver(ev)
+                dispatch({ type: 'cellTypeWork.clusterButton.show'})
+                // Add a listener for a click anywhere to hide the
+                // gene stats button.
+                document.body.addEventListener('click', onBodyClickForButton)
+            }
+        },
+        onMouseDown: ev => {
+            // Save the info for this cluster for sortable drag and drop.
+            if (rxGet('cellTypeWork.clusterMode') === 'sortable') {
+                const marker = {
+                    width: '2px',
+                    height: '20px',
+                    topOffset: 0,
+                    leftOffset: -1,
+                }
+                sortableOnMouseDown(
+                    ev,
+                    rxGet('cellTypeWork.data.clusters').length,
+                    'cellTypeWorkClusters',
+                    marker,
+                    reorder,
+                    'x',
+                    dispatch,
+                )
+            }
         },
     }
 }

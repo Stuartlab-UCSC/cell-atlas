@@ -46,7 +46,7 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
         )
     }
     const { genes } = data
-    const { bubblesHeight, bubblesWidth, fontSize, geneWidth, legendWidth,
+    const { bubblesHeight, bubblesWidth, fontSize, clusterButtonWidth, geneWidth,
         rowHeight } = dims
     if (bubblesHeight === 0 || bubblesWidth === 0) {
         return (null)
@@ -58,7 +58,7 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
         verticalAlign: 'top',
     }
     const tableStyle = {
-        width: geneWidth + bubblesWidth + legendWidth,
+        width: geneWidth + bubblesWidth + clusterButtonWidth,
         fontFamily: fontFamily,
         fontSize: fontSize,
         position: 'relative',

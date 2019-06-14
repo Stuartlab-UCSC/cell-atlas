@@ -20,7 +20,7 @@ const ColorPicker = ({props}) => {
 
 const ColorBarPres = (props) => {
     const { colorBar, colormap, onBarClick } = props
-    const { colWidth, geneWidth } = props.dims
+    const { colorBarHeight, colWidth, geneWidth } = props.dims
     let tds = []
     colorBar.forEach((bar, i) => {
         tds.push(
@@ -30,7 +30,7 @@ const ColorBarPres = (props) => {
                 style={{
                     width: colWidth,
                     display: 'inline-block',
-                    height: 10,
+                    height: colorBarHeight,
                     background: colormap[bar],
                     cursor: 'pointer',
                 }}

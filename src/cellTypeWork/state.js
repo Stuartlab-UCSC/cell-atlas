@@ -15,7 +15,10 @@ const defaultDims = {
     bubblesWidth: 0,
     cellTypesHeight: 100,
     cellTypeLength: 120,
+    colorBarHeight: 10,
     colWidth: 14,
+    clusterButtonWidth: 150,
+    clusterMarginTop: 10,
     fontSize: 11,
     geneWidth: 100,
     labelFontSize: 16,
@@ -33,6 +36,8 @@ const State = (
         cellTypeButton: null,
         cellTypeHighlight: null,
         cellTypeInput: null,
+        clusterButton: false,
+        clusterMode: 'sortable',
         colormap: defaultColormap,
         colormapPicker: null,
         data: defaultData,
@@ -81,6 +86,27 @@ const State = (
             return {
                 ...state,
                 cellTypeInput: null
+            }
+        case 'cellTypeWork.clusterButton.show':
+            // The cellType position is saved here.
+            return {
+                ...state,
+                clusterButton: true
+            }
+        case 'cellTypeWork.clusterButton.hide':
+            return {
+                ...state,
+                clusterButton: false
+            }
+        case 'cellTypeWork.clusterMode.select':
+            return {
+                ...state,
+                clusterMode: 'select'
+            }
+        case 'cellTypeWork.clusterMode.sortable':
+            return {
+                ...state,
+                clusterMode: 'sortable'
             }
         case 'cellTypeWork.colormap.create':
             return {
