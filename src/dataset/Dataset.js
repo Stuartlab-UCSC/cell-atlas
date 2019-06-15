@@ -14,6 +14,8 @@ let columns = []
 const receiveDataFromServer = (columnsIn, dataIn) => {
     // Handle the data received from the server.
     columns = columnsIn
+    // TODO we should set the widths of the long data like description and URLs
+    // with setCellPropsFx().
     data = dataIn  // save to our data area
 }
 
@@ -23,9 +25,9 @@ const getData = (download) => {
 }
 
 const tableStyle = {
-    marginTop: '-0.9rem',
-    marginLeft: '-1.5rem',
-    marginRight: '-1.5rem',
+    marginTop: -12,
+    marginLeft: -25,
+    marginRight: -25,
     marginBottom: '3rem',
 }
 

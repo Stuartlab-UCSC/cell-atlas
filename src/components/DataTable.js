@@ -96,6 +96,39 @@ const buildOptions = (data, header, optionOverrideFx) => {
     return options
 }
 
+const buildThemeOverrides = () => {
+    const rowStyle = {
+        height: 28,
+        maxHeight: 28,
+    }
+    let theme = {
+        overrides: {
+            MuiIconButton: {
+                root: {
+                    marginTop: -10,
+                    marginBottom: -10,
+                },
+            },
+            MuiTableCell: {
+                root: {
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                },
+            },
+            MuiTableRow: {
+                root: rowStyle,
+                head: rowStyle,
+            },
+            MuiToolbar: {
+                regular: {
+                    marginBottom: -15,
+                },
+            },
+        }
+    }
+    return theme
+}
+
 const Table = ({ header, props }) => {
     const { title, columns, data, optionOverrideFx } = props
     const columnObjs = formatHttpColumns(columns)
@@ -106,20 +139,6 @@ const Table = ({ header, props }) => {
             data={data}
             options={ buildOptions(data, header, optionOverrideFx) }
         />
-    return comp
-}
-
-const WithTheme = ({ header, props }) => {
-    const { themeOverrides } = props
-    const getMuiTheme = () => createMuiTheme(themeOverrides)
-    
-    let comp =
-        <MuiThemeProvider theme={getMuiTheme()}>
-            <Table
-                header={header}
-                props={props}
-            />
-        </MuiThemeProvider>
     return comp
 }
 
@@ -142,26 +161,22 @@ const DataTable = (props) => {
     // If there is data, render the table.
     if (data.length > 0) {
  
+        let getMuiTheme
         if (themeOverrides) {
-            // Render the table with the additional styling.
-            return (
-                <WithTheme
+            // Render the table with the custom styling.
+            getMuiTheme = () => createMuiTheme(themeOverrides)
+        } else {
+            // Render the table with our default styling.
+            getMuiTheme = () => createMuiTheme(buildThemeOverrides())
+        }
+        return (
+            <MuiThemeProvider theme={getMuiTheme()}>
+                <Table
                     header={header}
                     props={props}
                 />
-            )
-        } else {
-            // Render the table without any additional styling.
-            return (
-                <div style={{position: 'relative'}}>
-                    <Table
-                        header={header}
-                        props={props}
-                    />
-                </div>
-            )
-
-        }
+            </MuiThemeProvider>
+        )
     }
     // Otherwise render nothing.
     return null

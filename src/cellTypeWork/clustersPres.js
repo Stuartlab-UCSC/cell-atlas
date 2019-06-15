@@ -71,9 +71,9 @@ const ClusterNames = ({ labelStyle, topStyle, props }) => {
                     userSelect: 'none',
                     textAlign: 'center',
                     verticalAlign: 'middle',
-                    height: '18px',
-                    paddingTop: '3px',
-                    marginTop: '-5px',
+                    height: 18,
+                    paddingTop: 3,
+                    marginTop: -5,
                 }}
                 onClick={onClick}
                 onMouseDown={onMouseDown}

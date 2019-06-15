@@ -56,21 +56,10 @@ const bubbleThemeOverrides = () => {
                 root: style.row,
             },
             MUIDataTableHeadCell: {
-                // Set the width of header for size and color.
                 root: style.cell,
-                //fixedHeader: style.cell,
             },
             MUIDataTableHeadRow: {
                 root: style.row,
-            },
-            MUIDataTableToolbar: {
-                left: {
-                    position: 'absolute',
-                    right: '-4rem',
-                    top: '3rem',
-                    width: '30rem',
-                    zIndex: 200,
-                },
             },
             MUIDataTable: {
                 responsiveScroll: {
@@ -80,6 +69,11 @@ const bubbleThemeOverrides = () => {
             MuiPaper: {
                 root: {
                     backgroundColor: 'transparent',
+                },
+            },
+            MuiToolbar: {
+                gutters: {
+                    paddingLeft: 300,
                 },
             },
         }

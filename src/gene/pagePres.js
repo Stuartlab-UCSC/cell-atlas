@@ -96,7 +96,7 @@ const SameValueMessages = ({ props }) => {
 const SubHeader = ({ props }) => {
     const { bubbleRange, colorRange, data, onFindClick, showChart } = props
     let comp =
-        <Grid container spacing={16} style={{marginTop: '-2.5rem'}}>
+        <Grid container spacing={16} style={{marginTop: -40}}>
             <Grid item xs={4} style={{marginTop: '2rem', zIndex: 100}} >
                 <SubmitButton
                     onClick={onFindClick}
@@ -129,7 +129,7 @@ const Body = (props) => {
     let comp = null
     if (showChart) {
         comp =
-            <div style={{marginTop: '-4rem'}} >
+            <div style={{marginTop: -30}} >
                 <Table />
             </div>
     } else if (message){
