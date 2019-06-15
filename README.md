@@ -1,5 +1,8 @@
 echo # cell
 
+install:
+ npm install
+ 
 run locally:
  npm start
 

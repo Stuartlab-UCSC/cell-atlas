@@ -75,7 +75,7 @@ const receiveData = (id, dataIn, callback) => {
         })
 
         // Load the data into the state used to render the table.
-        if (id === 'dataset') {
+        if (callback) {
             callback(columns, cleanData)
         } else {
             rxSet(id + '.tableColumn.load', { value: columns })

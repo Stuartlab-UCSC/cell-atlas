@@ -40,6 +40,7 @@ const SelectMessage = ({props}) => {
     return (
         <Typography
             id='cellTypeWorkClusterButton'
+            color='primary'
             style={{
                 position: 'absolute',
                 top: cellTypesHeight + colorBarHeight + clusterMarginTop,

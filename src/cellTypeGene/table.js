@@ -1,32 +1,22 @@
 
 import { connect } from 'react-redux'
-import React from 'react';
-
+import React from 'react'
+//import IconButton from '@material-ui/core/IconButton';
+//import AddIcon from '@material-ui/icons/Add';
 import DataTable from 'components/DataTable'
+import { get as rxGet, set as rxSet } from 'state/rx'
+import fetchData, { receiveData } from 'fetch/dataTableFetch'
 
-import { set as rxSet } from 'state/rx'
-import { receiveData } from 'fetch/dataTableFetch'
-
-const dataStub =
+const USE_TEST_DATA = true
+const testData =
 `gene	log2 fold change vs next	mean expression	support
 EGFR	0	0.1333	0.6357	0.44
 VEGFA	-1.8606	0.2378	0.74
 APOE	-2.4382	-0.234	0.94
 IL6	2.7195	-0.3674	0.54`
 
-const getData = () => {
-    receiveData('cellTypeWork', dataStub)  // stub
-    rxSet('cellTypeGene.firstRender.rendered')
-    //fetchData('dataset', encodeURI('/sql/select * from dataset'),
-    //    receiveDataFromServer)
-}
-
 const Presentation = (props) => {
-    const { columns, data, header, showTable } = props
-    //console.log('table.Presentation.showTable:', showTable)
-    if (!showTable) {
-        return (null)
-    }
+    const { columns, data, header } = props
     return (
         <div>
             <DataTable
@@ -38,19 +28,61 @@ const Presentation = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    //console.log('mapStateToProps: state.cellTypeGene.getTable:', state.cellTypeGene.getTable)
-    if (state.cellTypeGene.firstRender) {
-        getData()
+/*
+const onAddClick = (ev) => {
+    console.log('onAddClick target:', ev.target)
+}
+*/
+const makeAddButtons = (columns, data, onAddClick) => {
+    // Insert a new column at the beginning.
+    /*
+    columns.splice(0, 0, {name: ''})
+    // Make a button for each row in the first column.
+    for (let i = 0; i++; i < data.length) {
+        const gene = data[0]
+        data[i].unshift((
+            <IconButton
+                size='small'
+                color='primary'
+                data-gene={gene}
+                onClick={onAddClick}
+            >
+                <AddIcon />
+            </IconButton>
+        ))
     }
-    const tableData = state.cellTypeWork.tableData
+    console.log('data:', data)
+    */
+}
+
+const receiveDataFromServer = (columns, data) => {
+    // Add the gene selection buttons.
+    makeAddButtons(columns, data)    
+    rxSet('cellTypeGene.tableColumn.load', { value: columns })
+    rxSet('cellTypeGene.tableData.load', { value: data })
+}
+
+const getGeneTableData = () => {
+    // Request the data from the server.
+    let url =
+        '/user/elie' +
+        '/worksheet/worksheetName' +
+        '/cluster/' + rxGet('cellTypeGene.cluster')
+    if (USE_TEST_DATA) {
+        receiveData('cellTypeGene', testData, receiveDataFromServer)
+    } else {
+        fetchData('cellTypeGene', url, receiveDataFromServer)
+    }
+}
+
+const mapStateToProps = (state) => {
+    const data = state.cellTypeGene.tableData
     const cluster = state.cellTypeGene.cluster
     return {
-        clusters: state.cellTypeWork.clusters,
-        columns: state.cellTypeWork.tableColumn,
-        data: tableData,
-        header: 'Cluster ' + cluster + ': ' + tableData.length + ' matches found',
-        showTable: state.cellTypeGene.getTable,
+        columns: state.cellTypeGene.tableColumn,
+        data: data,
+        header: 'Cluster ' + cluster + ': ' + data.length + ' matches found',
+        message: state.cellTypeGene.fetchMessage,
     }
 }
 
@@ -59,3 +91,4 @@ const GeneTable = connect(
 )(Presentation)
 
 export default GeneTable
+export { getGeneTableData }

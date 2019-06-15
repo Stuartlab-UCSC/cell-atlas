@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import BubbleTooltip from 'bubble/tooltip'
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
+import GeneTable from 'cellTypeGene/table'
 import MockUp from 'components/MockUp'
 
 import scatterPlot from 'cellTypeScatter/scatterPlot.png'
@@ -124,6 +125,10 @@ const Presentation = (props) => {
                     <Worksheet />
                 </Grid>
             
+                <Grid item xs={12}>
+                    <GeneTable/>
+                </Grid>
+
             </Grid>
             <BubbleTooltip data={bubbleTooltip} id='cellTypeWork' />
         </div>
@@ -134,9 +139,6 @@ const Presentation = (props) => {
                 <GeneClusterSelect />
             </Grid>
 
-            <Grid item xs={12}>
-                <GeneTable/>
-            </Grid>
 */
 
 export default Presentation

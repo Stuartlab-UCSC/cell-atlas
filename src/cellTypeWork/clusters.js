@@ -5,8 +5,10 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeWork/clustersPres'
 import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
     from 'app/sortable'
+import { getGeneTableData } from 'cellTypeGene/table'
 import { reorder as cellTypeReorder } from 'cellTypeWork/cellTypes'
 
+const DOMAIN = 'cellTypeWorkClusters'
 const mapStateToProps = (state) => {
     const data = state.cellTypeWork.data
     return {
@@ -36,12 +38,15 @@ const onBodyClickForButton = ev => {
     if (!ev.target) {
         return
     } else if (rxGet('cellTypeWork.clusterMode') === 'select') {
-        if (ev.target.id === 'cellTypeWorkClusterButton') {
+        // Click on the button or a cluster is ignored.
+        if (ev.target.id === 'cellTypeWorkClusterButton'
+            || ev.target.dataset.domain === DOMAIN) {
             return
         }
     } else {
         const parent = ev.target.parentElement
         if (parent && parent.id === 'cellTypeWorkClusterButton') {
+            // Click on the button in sortable mode is ignored.
             return
         }
     }
@@ -63,16 +68,21 @@ const mapDispatchToProps = (dispatch) => {
         },
         onClick: ev => {
             // On click of a cluster, retrieve that cluster's gene stats.
-            if (rxGet('cellTypeWork.clusterMode') === 'select') {
-                const cluster = rxGet('cellTypeWork.data').clusters[
-                    ev.target.dataset.position]
-                dispatch({
-                    type: 'cellTypeWork.clusterSelected.uiSet',
-                    action: cluster
-                })
-                // TODO get the genes.
-                console.log('get the genes for cluster:', cluster)
+            if (rxGet('cellTypeWork.clusterMode') === 'sortable') {
+                return
             }
+            const cluster = rxGet('cellTypeWork.data').clusters[
+                ev.target.dataset.position]
+            dispatch({
+                type: 'cellTypeGene.cluster.uiSet',
+                value: cluster.name
+            })
+            getGeneTableData()
+            
+            // Change the cluster mode from 'select' to 'sortable'.
+            dispatch({
+                type: 'cellTypeWork.clusterMode.sortable',
+            })
         },
         onMouseOver: ev => {
             // On mouse over any cluster,
@@ -97,7 +107,7 @@ const mapDispatchToProps = (dispatch) => {
                 sortableOnMouseDown(
                     ev,
                     rxGet('cellTypeWork.data.clusters').length,
-                    'cellTypeWorkClusters',
+                    DOMAIN,
                     marker,
                     reorder,
                     'x',

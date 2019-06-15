@@ -1,69 +1,55 @@
 
 const State = (
     state = {
-        //fetchMessage: ' ',
-        //fetchStatus: 'initial',
-        cluster: '',
-        firstRender: true,
-        getTable: false,
-        //showChart: false,
+        cluster: null,
+        fetchMessage: ' ',
+        fetchStatus: 'quiet',
+        firstTableDisplayed: false,
+        tableColumn: [],
+        tableData: [],
     }, action) => {
         switch(action.type) {
-/*
-        case 'cellTypeGene.fetchMessage.set':
+        case 'cellTypeGene.cluster.uiSet':
             return {
                 ...state,
-                fetchMessage: action.value
+                cluster: action.value
             }
-        case 'cellTypeGene.fetchMessage.clear':
+       case 'cellTypeGene.fetchMessage.clear':
             return {
                 ...state,
                 fetchMessage: null
             }
-        case 'cellTypeGene.fetchStatus.waiting':
+        case 'cellTypeGene.fetchMessage.set':
             return {
                 ...state,
-                fetchStatus: 'waiting'
+                fetchMessage: action.value
             }
         case 'cellTypeGene.fetchStatus.quiet':
             return {
                 ...state,
                 fetchStatus: 'quiet'
             }
-*/
-        case 'cellTypeGene.cluster.uiSet':
-            //console.log('cellTypeGene.cluster.uiSet:value', action.value)
+        case 'cellTypeGene.fetchStatus.waiting':
             return {
                 ...state,
-                geneCluster: action.value
+                fetchStatus: 'waiting'
             }
-        case 'cellTypeGene.firstRender.rendered':
+        case 'cellTypeGene.firstTableDisplayed.set':
             return {
                 ...state,
-                firstRender: false
+                firstTableDisplayed: true
             }
-        case 'cellTypeGene.getTable.true':
+        case 'cellTypeGene.tableColumn.load':
             return {
                 ...state,
-                getGeneTable: true
+                tableColumn: action.value
             }
-/*
-        case 'cellTypeGene.showChart.sorting':
+        case 'cellTypeGene.tableData.load':
             return {
                 ...state,
-                showChart: false
+                tableData: action.value
             }
-        case 'cellTypeGene.showChart.toQuietStatus':
-            return {
-                ...state,
-                showChart: true
-            }
-        case 'cellTypeGene.showChart.toRequestStatus':
-            return {
-                ...state,
-                showChart: false
-            }
-*/        default:
+        default:
             return state
         }
     }

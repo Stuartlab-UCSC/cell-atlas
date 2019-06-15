@@ -239,6 +239,11 @@ const State = (
                 ...state,
                 showChart: true
             }
+        case 'cellTypeWork.showChart.toRequestStatus':
+            return {
+                ...state,
+                showChart: false
+            }
         case 'cellTypeWork.showColorPicker.show':
             return {
                 ...state,
@@ -248,11 +253,6 @@ const State = (
             return {
                 ...state,
                 showColorPicker: null,
-            }
-        case 'cellTypeWork.showChart.toRequestStatus':
-            return {
-                ...state,
-                showChart: false
             }
         case 'cellTypeWork.showSave.hide':
             return {
