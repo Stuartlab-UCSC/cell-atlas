@@ -23,4 +23,14 @@ const stringToPrecision = (x, p) => {
     return parseFloat(x).toPrecision(p)
 }
 
-export { integerToCommaInteger, isoToday, stringToPrecision }
+const tsvToArrays = (tsv) => {
+    const lines = tsv.split('\n')
+    let arrays = []
+    lines.forEach(line => {
+        const cols = line.split('\t')
+        arrays.push(cols)
+    })
+    return arrays
+}
+
+export { integerToCommaInteger, isoToday, stringToPrecision, tsvToArrays }

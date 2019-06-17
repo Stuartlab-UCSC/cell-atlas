@@ -3,12 +3,15 @@
 
 const defaultColormap = []
 const defaultData = {
+    dataset: '',
+    clusterSolution: '',
+    sizeBy: '',
+    colorBy: '',
+    clusters: [],
     colorBar: [],
     cellTypes: [],
-    clusters: [],
-    colors: [],
     genes: [],
-    sizes: [],
+    bubbles: [],
 }
 const defaultDims = {
     bubblesHeight: 0,
@@ -16,6 +19,7 @@ const defaultDims = {
     cellTypesHeight: 100,
     cellTypeLength: 120,
     colorBarHeight: 10,
+    colorRange:{},
     colWidth: 14,
     clusterButtonWidth: 150,
     clusterMarginTop: 10,
@@ -24,6 +28,7 @@ const defaultDims = {
     labelFontSize: 16,
     legendWidth: 100,
     rowHeight: 14,
+    sizeRange:{},
 }
 export const defaultSheetList = [
     { value:'heart of cells #1', name: 'heart of cells #1' },
@@ -139,7 +144,6 @@ const State = (
                 ...state,
                 data: action.value
             }
-        
         case 'cellTypeWork.data.cellTypeChange':
             newState = {
                 ...state,
@@ -175,16 +179,27 @@ const State = (
             }
             newState.data.colorBar[action.position] = index
             return newState
+        case 'cellTypeWork.data.newGene':
+            newState = {...state, data: state.data}
+            newState.data.bubbles = newState.data.bubbles.concat(action.bubbles)
+            newState.data.genes = newState.data.genes.concat(action.gene)
+            console.log('cellTypeWork.data.newGene: newState.data.bubbles:', newState.data.bubbles)
+            return newState
         case 'cellTypeWork.dims.default':
             return {
                 ...state,
                 dims: defaultDims
             }
-        case 'cellTypeWork.dims.set':
+        case 'cellTypeWork.dims.load':
             return {
                 ...state,
                 dims: action.value
             }
+        case 'cellTypeWork.dims.newGene':
+            newState = {...state, dims: state.dims}
+            newState.dims.colorRange = action.colorRange
+            newState.dims.sizewRange = action.sizeRange
+            return newState
         case 'cellTypeWork.fetchMessage.set':
             return {
                 ...state,

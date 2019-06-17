@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Bubble from 'bubble/bubble'
-import { findBubbleData } from 'cellTypeWork/transformToChart'
+import { findBubbleData } from 'cellTypeWork/transformToBubbles'
 
 const ManyBubbles = ({ data, dims }) => {
     const { bubbles, colorBy, clusters, genes, sizeBy } = data

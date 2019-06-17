@@ -6,7 +6,7 @@ import { set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeWork/worksheetPres'
 import fetchData from 'fetch/fetchData'
 import transformToChart from 'cellTypeWork/transformToChart'
-import testData from 'cellTypeWork/data'  // from a server response
+import testData from 'cellTypeWork/testData'
 
 const USE_TEST_DATA = true
 
@@ -23,11 +23,11 @@ const fetchTestData = (id, url, receiveFx) => {
     //console.log('fetchTestData: id, url, receiveFx:', id, url, receiveFx)
     rxSet('cellTypeWork.fetchStatus.waiting')
     rxSet('cellTypeWork.fetchMessage.set', { value: 'waiting for data...' })
-    setTimeout(() => {
+    //setTimeout(() => {
         receiveFx(testData)
         rxSet('cellTypeWork.fetchMessage.clear')
         rxSet('cellTypeWork.fetchStatus.quiet')
-    }, 1000)
+    //}, 1000)
 }
 
 const getData = () => {
@@ -48,6 +48,7 @@ const serverRequest = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
+        newDataReady: 'cellTypeGeneClusters.newData',
         data: state.cellTypeWork.data,
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeWork.fetchMessage,
