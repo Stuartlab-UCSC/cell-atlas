@@ -2,7 +2,6 @@
 // Cell type sheet page state.
 
 let renderSeq = 0  // A change here causes the worksheet to re-rendered
-const defaultColormap = []
 const defaultData = {
     dataset: '',
     clusterSolution: '',
@@ -44,7 +43,7 @@ const State = (
         cellTypeInput: null,
         clusterButton: false,
         clusterMode: 'sortable',
-        colormap: defaultColormap,
+        colormap: [],
         colormapPicker: null,
         data: defaultData,
         dims: defaultDims,
@@ -119,11 +118,6 @@ const State = (
             return {
                 ...state,
                 colormap: action.value
-            }
-        case 'cellTypeWork.colormap.default':
-            return {
-                ...state,
-                colormap: defaultColormap
             }
         case 'cellTypeWork.colormapPicker.show':
             // The colorBar position is saved here.

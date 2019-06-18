@@ -3,8 +3,7 @@
 
 import { set as rxSet } from 'state/rx'
 import { getCatColormap } from 'color/colorCat'
-import { buildBubblesOnLoad, setDimensions }
-    from 'cellTypeWork/transformToBubbles'
+import { buildBubblesOnLoad } from 'cellTypeWork/transformToBubbles'
 import { tsvToArrays } from 'app/util'
 
 
@@ -58,20 +57,16 @@ const buildGenes = (data) => {
 const transfromToChart = (data) => {
     // Transform the format from the server response to worksheet chart.
     rxSet('cellTypeWork.dims.default')
-    rxSet('cellTypeWork.colormap.default')
     rxSet('cellTypeWork.data.default')
     const { colorBar, clusters, cellTypes } = buildClusters(data)
     const genes = buildGenes(data)
-    const { bubbles, colorRange, sizeRange } = buildBubblesOnLoad(data)
+    const bubbles = buildBubblesOnLoad(data, clusters.length, genes.length)
 
-    // Update the dimensions now that we know the cluster and gene counts.
+    // Create the colormap which will be static for this data load.
     let clusterCount = 0
     if (clusters) {
         clusterCount = clusters.length
     }
-    setDimensions(data, genes.length, clusters.length, colorRange, sizeRange)
-
-    // Create the colormap which will be static for this data load.
     const colormap = getCatColormap('hexmap', clusterCount)
     rxSet('cellTypeWork.colormap.create', { value: colormap })
 
@@ -87,6 +82,9 @@ const transfromToChart = (data) => {
         genes,
         bubbles,
     }})
+    
+    // Notify to re-render worksheet.
+    rxSet('cellTypeWork.render.now')
 }
 
 export default transfromToChart

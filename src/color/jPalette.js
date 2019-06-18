@@ -165,6 +165,12 @@ var ColorMap = function(numSteps, colors) {
     return function(steps) {
       switch (name) {
         default:
+        case 'expression':
+          return new ColorMap(steps, [
+            new Color(0,0,255, 255),
+            new Color(187,0,255, 255),
+            new Color(255,0,0, 255),
+        ]);
         case 'hexmap3':
           return new ColorMap(steps, [
             new Color(166,206,227, 255),
@@ -214,5 +220,4 @@ var ColorMap = function(numSteps, colors) {
     };
   };
 export default ColorMap
-//export class jColormap extends ColorMap {};
 /* eslint-enable */
