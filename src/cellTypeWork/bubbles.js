@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
     return {
         data: state.cellTypeWork.data,
         dims: state.cellTypeWork.dims,
+        render: state.cellTypeWork.render,
     }
 }
 

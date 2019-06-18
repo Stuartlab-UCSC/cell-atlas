@@ -2,7 +2,7 @@
 // The logic to get a gene's values for all clusters to add to the
 // cell type worksheet.
 
-import { get as rxGet, set as rxSet } from 'state/rx'
+import { set as rxSet } from 'state/rx'
 import fetchData from 'fetch/fetchData'
 import { addGeneBubbles } from 'cellTypeWork/transformToBubbles'
 
@@ -14,18 +14,7 @@ size_by	0.8606	0.74	0.4`
 
 const receiveDataFromServer = (data) => {
     // Handle the data received from the server.
-    const gene = rxGet('cellTypeGene.geneSelected')
-    const { bubbles, colorRange, sizeRange } = addGeneBubbles(data, gene)
-    rxSet('cellTypeWork.dims.newGene', {
-        colorRange,
-        sizeRange,
-    })
-    rxSet('cellTypeWork.data.newGene', {
-        gene,
-        bubbles,
-    })
-    // Notify that new data is ready
-    //rxSet('cellTypeGeneClusters.newData.ready')
+    addGeneBubbles(data)
 }
 
 // A test stub in place of server query.

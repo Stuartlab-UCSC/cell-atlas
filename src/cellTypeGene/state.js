@@ -89,11 +89,6 @@ const cellTypeGeneClusters = (
                 ...state,
                 fetchStatus: 'waiting'
             }
-        case 'cellTypeGeneClusters.newData.ready':
-            return {
-                ...state,
-                newData: newDataSeq++
-            }
         default:
             return state
         }

@@ -1,6 +1,7 @@
 
 // Cell type sheet page state.
 
+let renderSeq = 0  // A change here causes the worksheet to re-rendered
 const defaultColormap = []
 const defaultData = {
     dataset: '',
@@ -50,6 +51,7 @@ const State = (
         fetchMessage: ' ',
         fetchStatus: 'initial',
         firstChartDisplayed: true,
+        render: renderSeq++,
         showChart: false,
         showSave: false,
         sheetList: defaultSheetList,
@@ -183,23 +185,23 @@ const State = (
             newState = {...state, data: state.data}
             newState.data.bubbles = newState.data.bubbles.concat(action.bubbles)
             newState.data.genes = newState.data.genes.concat(action.gene)
-            console.log('cellTypeWork.data.newGene: newState.data.bubbles:', newState.data.bubbles)
             return newState
         case 'cellTypeWork.dims.default':
             return {
                 ...state,
                 dims: defaultDims
             }
-        case 'cellTypeWork.dims.load':
+        case 'cellTypeWork.dims.set':
             return {
                 ...state,
-                dims: action.value
+                dims: {
+                    ...state.dims,
+                    bubblesWidth: action.bubblesWidth,
+                    bubblesHeight: action.bubblesHeight,
+                    colorRange: action.colorRange,
+                    sizeRange: action.sizeRange,
+                }
             }
-        case 'cellTypeWork.dims.newGene':
-            newState = {...state, dims: state.dims}
-            newState.dims.colorRange = action.colorRange
-            newState.dims.sizewRange = action.sizeRange
-            return newState
         case 'cellTypeWork.fetchMessage.set':
             return {
                 ...state,
@@ -232,6 +234,11 @@ const State = (
                     ...state.data,
                     genes: [...action.value]
                 }
+            }
+        case 'cellTypeWork.render.now':
+            return {
+                ...state,
+                render: renderSeq++
             }
         case 'cellTypeWork.sheetList.load':
             return {

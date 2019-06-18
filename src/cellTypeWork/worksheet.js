@@ -48,10 +48,10 @@ const serverRequest = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        newDataReady: 'cellTypeGeneClusters.newData',
         data: state.cellTypeWork.data,
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeWork.fetchMessage,
+        render: state.cellTypeWork.render,
         show: state.cellTypeWork.showSave,
     }
 }

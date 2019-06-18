@@ -1,10 +1,12 @@
 
 // Transform the data from the server into the chart format.
 
-import { get as rxGet, set as rxSet } from 'state/rx'
+import { set as rxSet } from 'state/rx'
 import { getCatColormap } from 'color/colorCat'
-import { buildBubblesOnLoad } from 'cellTypeWork/transformToBubbles'
+import { buildBubblesOnLoad, setDimensions }
+    from 'cellTypeWork/transformToBubbles'
 import { tsvToArrays } from 'app/util'
+
 
 const buildClusters = (data) => {
     // Find the clusters and sort them by column position.
@@ -67,17 +69,7 @@ const transfromToChart = (data) => {
     if (clusters) {
         clusterCount = clusters.length
     }
-    let geneCount = 0
-    if (genes) {
-        geneCount = genes.length
-    }
-    let dims = rxGet('cellTypeWork.dims')
-    const { colWidth, rowHeight } = dims
-    dims.bubblesWidth = (clusterCount * colWidth) + (colWidth / 4)
-    dims.bubblesHeight = (geneCount * rowHeight) + (colWidth / 4)
-    dims.colorRange = colorRange
-    dims.sizeRange = sizeRange
-    rxSet('cellTypeWork.dims.load', { value: dims })
+    setDimensions(data, genes.length, clusters.length, colorRange, sizeRange)
 
     // Create the colormap which will be static for this data load.
     const colormap = getCatColormap('hexmap', clusterCount)
