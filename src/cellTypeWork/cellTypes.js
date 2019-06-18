@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
-import { onBodyClickForButton } from 'cellTypeWork/cellTypesEdit'
+import { onBodyClick } from 'cellTypeWork/cellTypesEdit'
 import Presentation from 'cellTypeWork/cellTypesPres'
 import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
     from 'app/sortable'
@@ -14,8 +14,9 @@ const mapStateToProps = (state) => {
     return {
         colormap: state.cellTypeWork.colormap,
         cellTypes: state.cellTypeWork.data.cellTypes,
-        showHighlight: state.cellTypeWork.cellTypeHighlight,
         dims: state.cellTypeWork.dims,
+        showHighlight: state.cellTypeWork.cellTypeHighlight,
+        mode: state.cellTypeWork.cellTypeMode,
     }
 }
 
@@ -30,6 +31,22 @@ const reorder = (start, end) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onClick: ev => {
+            // On click of a cellType, save that position.
+            dispatch({
+                type: 'cellTypeWork.cellTypeInput.show',
+                value: ev.target.dataset.position
+            })
+            // Change the edit mode.
+            //dispatch({
+            //    type: 'cellTypeWork.cellTypeMode.hide'
+            //})
+            // Set focus to the input element after it has a chance to render.
+            setTimeout(() => {
+                //document.getElementById('cellTypeWorkCellTypeEditInput').focus()
+            })
+            //document.body.removeEventListener('click', onBodyClick)
+        },
         onMouseOver: ev => {
             // On mouse over the text, highlight the text and
             // show the button if the mouse is not being dragged.
@@ -39,10 +56,9 @@ const mapDispatchToProps = (dispatch) => {
                     value: ev.target.dataset.position
                 })
                 dispatch({
-                    type: 'cellTypeWork.cellTypeButton.show',
-                    value: ev.target.dataset.position
+                    type: 'cellTypeWork.cellTypeButton.show'
                 })
-                document.body.addEventListener('click', onBodyClickForButton)
+                document.body.addEventListener('click', onBodyClick)
             }
             // Handle the sortable drag and drop.
             sortableOnMouseOver(ev)
@@ -56,10 +72,6 @@ const mapDispatchToProps = (dispatch) => {
             sortableOnMouseLeave(ev)
         },
         onMouseDown: ev => {
-            // On mouse down on the text, hide the edit button.
-            dispatch({
-                type: 'cellTypeWork.cellTypeButton.hide',
-            })
             // Save the info for this cellType for sortable drag and drop.
             const marker = {
                 width: '2px',

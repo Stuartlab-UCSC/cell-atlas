@@ -41,6 +41,7 @@ const State = (
         cellTypeButton: null,
         cellTypeHighlight: null,
         cellTypeInput: null,
+        cellTypeMode: 'readOnly',
         clusterButton: false,
         clusterMode: 'sortable',
         colormap: [],
@@ -64,12 +65,12 @@ const State = (
             // The cellType position is saved here.
            return {
                 ...state,
-                cellTypeButton: parseInt(action.value, 10)
+                cellTypeButton: true
             }
         case 'cellTypeWork.cellTypeButton.hide':
             return {
                 ...state,
-                cellTypeButton: null
+                cellTypeButton: false
             }
         case 'cellTypeWork.cellTypeHighlight.show':
             // The cellType position is saved here.
@@ -92,6 +93,16 @@ const State = (
             return {
                 ...state,
                 cellTypeInput: null
+            }
+        case 'cellTypeWork.cellTypeMode.select':
+            return {
+                ...state,
+                cellTypeMode: 'select'
+            }
+        case 'cellTypeWork.cellTypeMode.readOnly':
+            return {
+                ...state,
+                cellTypeMode: 'readOnly'
             }
         case 'cellTypeWork.clusterButton.show':
             // The cellType position is saved here.
