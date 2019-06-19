@@ -9,12 +9,12 @@ import Presentation from 'cellTypeWork/worksheetPres'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 
-const USE_TEST_DATA = true
+const USE_TEST_DATA = false
 
 const receiveDataFromServer = (data) => {
     // Handle the data received from the server.
     rxSet('cellTypeWork.showChart.loading')
-    transformToChart(data.resource)
+    transformToChart(data)
     rxSet('cellTypeWork.showChart.toQuietStatus')
     rxSet('cellTypeWork.firstChartDisplayed.now')
 }
@@ -33,8 +33,7 @@ const fetchTestData = (id, url, receiveFx) => {
 
 const getData = () => {
     // Request the data from the server.
-    let url =
-        '/cell_type/'
+    let url = '/user/{user}/worksheet/worksheet1'
     if (USE_TEST_DATA) {
         fetchTestData('cellTypeWork', url, receiveDataFromServer)
     } else {

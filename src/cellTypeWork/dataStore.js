@@ -82,14 +82,26 @@ class DataStore {
     getCellTypes() {
         return this.data.cellTypes
     }
+    getClusterSolution() {
+        return this.data.clusterSolution
+    }
     getClusters() {
         return this.data.clusters
+    }
+    getColorBy() {
+        return this.data.colorBy
     }
     getColorBar() {
         return this.data.colorBar
     }
+    getDataset() {
+        return this.data.dataset
+    }
     getGenes() {
         return this.data.genes
+    }
+    getSizeBy() {
+        return this.data.sizeBy
     }
     load(data) {
         this.data = data

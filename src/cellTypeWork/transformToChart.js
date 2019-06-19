@@ -19,7 +19,7 @@ const buildClusters = (data) => {
     //      1       0       456         4
     //      2       1       344         3           Atrial CMs
     const lines = tsvToArrays(data.clusters)
-    const clusterCount = lines.length - 1
+    let clusterCount = lines.length - 1
     let clusters = Array.from(clusterCount)
     let cellTypes = Array.from(clusterCount)
     let colorBar = Array.from(clusterCount)
@@ -66,7 +66,7 @@ const transfromToChart = (data) => {
     if (clusters) {
         clusterCount = clusters.length
     }
-    const colormap = getCatColormap('hexmap', clusterCount)
+    const colormap = getCatColormap('elie', clusterCount)
     rxSet('cellTypeWork.colormap.create', { value: colormap })
 
     // Update the chart data.

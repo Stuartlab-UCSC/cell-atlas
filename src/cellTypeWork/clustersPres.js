@@ -11,7 +11,7 @@ const labelFontSize = 16
 
 const GeneButton = ({props}) => {
     // The gene stats button.
-    const { onGeneStatsButtonClick } = props
+    const { clusters, onGeneStatsButtonClick } = props
     const { cellTypesHeight, clusterMarginTop, colorBarHeight, colWidth,
         fontSize, geneWidth } = props.dims
     return (
@@ -23,7 +23,7 @@ const GeneButton = ({props}) => {
             style={{
                 position: 'absolute',
                 top: cellTypesHeight + colorBarHeight + clusterMarginTop - 6,
-                left: geneWidth + (colWidth * 3) + 10,
+                left: geneWidth + (colWidth * clusters.length) + 10,
                 fontSize: fontSize,
             }}
             onClick={onGeneStatsButtonClick}
@@ -35,6 +35,7 @@ const GeneButton = ({props}) => {
 
 const SelectMessage = ({props}) => {
     // The gene stats select message.
+    const { clusters } = props
     const { cellTypesHeight, clusterMarginTop, colorBarHeight, colWidth,
         geneWidth } = props.dims
     return (
@@ -44,7 +45,7 @@ const SelectMessage = ({props}) => {
             style={{
                 position: 'absolute',
                 top: cellTypesHeight + colorBarHeight + clusterMarginTop,
-                left: geneWidth + (colWidth * 3) + 10,
+                left: geneWidth + (colWidth * clusters.length) + 10,
             }}
         >
             Click on a Cluster

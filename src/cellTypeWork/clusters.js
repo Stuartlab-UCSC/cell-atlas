@@ -23,10 +23,11 @@ const mapStateToProps = (state) => {
 }
 
 const reorder = (start, end) => {
-    // Remove and insert the cluster column in its new place in the list.
+    // Remove the cluster data from it's current position.
     const clusters = dataStore.getClusters()
     const cluster = clusters[start]
     clusters.splice(start, 1)
+    // Insert the cluster data into its new position.
     clusters.splice(end, 0, cluster)
     dataStore.reorderClusters(clusters)
     // Also reorder the cell types the same.

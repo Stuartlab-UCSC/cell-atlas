@@ -10,7 +10,7 @@ import { DOMAIN } from 'cellTypeWork/cellTypes'
 
 const EditButton = ({props}) => {
     // The cell type button.
-    const { onButtonClick } = props
+    const { clusterCount, onButtonClick } = props
     const { cellTypesHeight, colWidth, fontSize, geneWidth } = props.dims
     return (
         <Button
@@ -21,7 +21,7 @@ const EditButton = ({props}) => {
             style={{
                 position: 'absolute',
                 top: cellTypesHeight - 30,
-                left: geneWidth + (colWidth * 3) + 20,
+                left: geneWidth + (colWidth * clusterCount) + 20,
                 fontSize: fontSize,
             }}
             onClick={onButtonClick}
@@ -31,9 +31,10 @@ const EditButton = ({props}) => {
     )
 }
 
-const SelectMessage = ({dims}) => {
+const SelectMessage = ({props}) => {
     // The select cell type message.
-    const { cellTypesHeight, colWidth, geneWidth } = dims
+    const { clusterCount } = props
+    const { cellTypesHeight, colWidth, geneWidth } = props.dims
     return (
         <Typography
             id='cellTypeWorkCellTypeButton'
@@ -41,7 +42,7 @@ const SelectMessage = ({dims}) => {
             style={{
                 position: 'absolute',
                 top: cellTypesHeight - 24,
-                left: geneWidth + (colWidth * 3) + 20,
+                left: geneWidth + (colWidth * clusterCount) + 20,
             }}
         >
             Click Cell Type
@@ -105,7 +106,7 @@ const CellTypesEdit = (props) => {
             )
         } else {
             button = (
-                <SelectMessage dims={dims} />
+                <SelectMessage props={props} />
             )
         }
     }

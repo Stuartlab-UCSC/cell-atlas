@@ -3,12 +3,13 @@
 import { connect } from 'react-redux'
 import { serverRequest } from 'cellTypeWork/worksheet'
 import Presentation from 'cellTypeWork/pagePres'
+import dataStore from 'cellTypeWork/dataStore'
 
 const mapStateToProps = (state) => {
     return {
         bubbleTooltip: state.bubble.tooltip,
-        clusterSolution: 'louvain100pcs',
-        dataset: 'Heart of Cells in vivo, in vitro',
+        clusterSolution: dataStore.getClusterSolution(),
+        dataset: dataStore.getDataset(),
         showSave: state.cellTypeWork.showSave,
     }
 }

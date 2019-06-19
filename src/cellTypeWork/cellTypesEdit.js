@@ -10,6 +10,7 @@ import { DOMAIN } from 'cellTypeWork/cellTypes'
 const mapStateToProps = (state) => {
     return {
         cellTypes: dataStore.getCellTypes(),
+        clusterCount: dataStore.getClusters().length,
         dims: state.cellTypeWork.dims,
         mode: state.cellTypeWork.cellTypeMode,
         render: state.cellTypeWork.render,

@@ -165,6 +165,16 @@ var ColorMap = function(numSteps, colors) {
     return function(steps) {
       switch (name) {
         default:
+        case 'elie':
+          return new ColorMap(steps, [
+            new Color(253,111,133, 255),
+            new Color(236,104,238, 255),
+            new Color(48,162,255, 255),
+            new Color(0,192,188, 255),
+            new Color(0,185,41, 255),
+            new Color(186,158,0, 255),
+            new Color(248,118,109, 255),
+        ]);
         case 'expression':
           return new ColorMap(steps, [
             new Color(0,0,255, 255),
