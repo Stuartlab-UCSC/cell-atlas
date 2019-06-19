@@ -7,16 +7,21 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import DataTable from 'components/DataTable'
 import { get as rxGet, set as rxSet } from 'state/rx'
-import fetchData, { receiveData } from 'fetch/dataTableFetch'
+import fetchData, { receiveData } from 'fetch/data'
+import { receiveTableData } from 'fetch/tableData'
 import { getDataForAllClusters } from 'cellTypeGene/allClusters'
 
-const USE_TEST_DATA = true
-const testData =
+const DOMAIN = 'cellTypeGene'
+const USE_TEST_DATA = false
+const testData = {
+    cluster_name: 'cluster-name',
+    gene_table:
 `gene	log2 fold change vs next	support
 EGFR	0	0.1333	0.6357
 VEGFA	-1.8606	0.2378	0.74
 APOE	-2.4382	-0.234	0.94
 IL6	2.7195	-0.3674	0.54`
+}
 
 const Presentation = (props) => {
     // Rendering of the gene table.
@@ -41,12 +46,14 @@ const onAddClick = (gene, tableMeta) => {
 
 const makeAddButtons = (columns, data) => {
     // Insert a new column for adding the gene to the worksheet.
-    // Add a duplicate of the gene to the beginning of each row.
+    
+    // Add a duplicate of the gene to the beginning of each row that gets
+    // converted to an add button.
     for (let i = 0; i < data.length; i++) {
         const gene = data[i][0]
         data[i].unshift(gene)
     }
-    // Add the column info for the operation to be performed on the value.
+    // Add the column info for the conversion to be performed on the value.
     columns.unshift(
         {
             name: "Add",
@@ -70,12 +77,33 @@ const makeAddButtons = (columns, data) => {
     )
 }
 
-const receiveDataFromServer = (columns, data) => {
-    // Add the gene selection buttons.
+const receiveTableDataFromServer = (columns, data) => {
+    // Receive the table column and body data
+    // derived from the original data from the server.
+    
+    // Set the initial sort to the most likely column.
+    if (!columns[2].options) {
+        columns[2].options = {}
+    }
+    columns[2].options.sortDirection = 'desc'
+    
+    // Build the add buttons for each row.
     makeAddButtons(columns, data)
-    // Save the data in our space.
+    
+    // Save the columns and data.
     rxSet('cellTypeGene.tableColumn.load', { value: columns })
     rxSet('cellTypeGene.tableData.load', { value: data })
+}
+
+const receiveDataFromServer = (data) => {
+    // Receive the data from the server and call to extract the columns from
+    // the data.
+    
+    // Save the cluster to which this gene data belongs.
+    rxSet('cellTypeGene.cluster.set', { value: data.cluster_name })
+    
+    // Derive the table columns and body data from the server data.
+    receiveTableData(DOMAIN, data.gene_table, receiveTableDataFromServer)
 }
 
 const getGeneTableData = () => {
@@ -85,9 +113,9 @@ const getGeneTableData = () => {
         '/worksheet/worksheetName' +
         '/cluster/' + rxGet('cellTypeGene.cluster')
     if (USE_TEST_DATA) {
-        receiveData('cellTypeGene', testData, receiveDataFromServer)
+        receiveData(DOMAIN, testData, receiveDataFromServer)
     } else {
-        fetchData('cellTypeGene', url, receiveDataFromServer)
+        fetchData(DOMAIN, url, receiveDataFromServer)
     }
 }
 

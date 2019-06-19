@@ -43,7 +43,10 @@ const receiveTableData = (id, dataIn, callback) => {
     // Receive the tabledata from the fetch & put it into state variables.
     // Errors in the fetch have already been handled by the general receive data
     // function that calls this.
-    
+    // @param id: ID of the table instance, used as part of the state name
+    // @param dataIn: data received from the server; a text value containing TSV
+    // @param callback: function to call after receiving the data; optional
+
     // Parse the rows, building an array of arrays.
     // First build the column information array.
     let columns = []
