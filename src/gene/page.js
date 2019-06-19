@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 
 import { get as rxGet, set as rxSet } from 'state/rx'
-import fetchData from 'fetch/fetchData'
+import fetchData from 'fetch/data'
 import { isValidGeneName } from 'components/geneName'
 
 import testData from 'gene/data'

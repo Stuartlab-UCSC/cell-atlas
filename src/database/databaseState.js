@@ -67,7 +67,6 @@ const State = (
                 fetchMessage: null
             }
         case 'database.fetchMessage.set':
-            console.log('database.fetchMessage.set: action.value:', action.value)
             return {
                 ...state,
                 fetchMessage: action.value

@@ -5,7 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import DataTable from 'components/DataTable'
-import fetchData from 'fetch/dataTableFetch'
+import fetchTableData from 'fetch/tableData'
 import { integerToCommaInteger } from 'app/util'
 
 let data = []
@@ -20,7 +20,7 @@ const receiveDataFromServer = (columnsIn, dataIn) => {
 }
 
 const getData = (download) => {
-    fetchData('dataset', encodeURI('/sql/select * from dataset'),
+    fetchTableData('dataset', encodeURI('/sql/select * from dataset'),
         receiveDataFromServer)
 }
 

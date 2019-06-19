@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 
 import { /*get as rxGet,*/ set as rxSet } from 'state/rx'
-import fetchData from 'fetch/fetchData'
+import fetchData from 'fetch/data'
 import testData from 'cellType/data'
 import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
     from 'color/colorCat'

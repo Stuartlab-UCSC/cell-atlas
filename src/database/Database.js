@@ -4,11 +4,11 @@
 import { connect } from 'react-redux'
 
 import DatabasePres from 'database/DatabasePres'
-import fetchData from 'fetch/dataTableFetch'
+import fetchTableData from 'fetch/tableData'
 import { get as rxGet } from 'state/rx'
 
 export const getData = (download) => {
-    fetchData('database', encodeURI('/sql/' + rxGet('database.query')))
+    fetchTableData('database', encodeURI('/sql/' + rxGet('database.query')))
 }
 
 const mapStateToProps = (state) => {

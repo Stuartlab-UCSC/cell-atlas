@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 import { set as rxSet } from 'state/rx'
-import fetchData from 'fetch/fetchData'
+import fetchData from 'fetch/data'
 import dataStore from 'cellTypeWork/dataStore'
 import Presentation from 'cellTypeWork/worksheetPres'
 import transformToChart from 'cellTypeWork/transformToChart'
