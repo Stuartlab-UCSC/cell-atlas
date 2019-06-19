@@ -39,7 +39,7 @@ const error = (id, message) => {
     rxSet(id + '.fetchMessage.set', { value: message })
 }
 
-const fetchData = (id, urlPath, callback, tableData) => {
+const fetchData = (id, urlPath, callback, textResponse, tableData) => {
     // Get data from the data server.
     // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
@@ -59,7 +59,7 @@ const fetchData = (id, urlPath, callback, tableData) => {
         fetch(url, { headers })
         .then((response) => {
             if (response.ok) {
-                return (tableData) ? response.text() : response.json()
+                return (textResponse) ? response.text() : response.json()
             } else {
                 error(id, response.statusText)
             }

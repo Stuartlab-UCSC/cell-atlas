@@ -1,7 +1,7 @@
 
-// A fetcher that fetches from the data server for rendering in a dataTable.
-// Note: this depends on strict naming conventions for redux state
-// and data server routes.
+// A fetcher that fetches from the data server for rendering in a dataTable
+// components. It transforms the data into the form expected by the dataTable.
+// Note: this depends on strict naming conventions for redux state.
 
 import { set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
@@ -83,7 +83,7 @@ const fetchTableData = (id, urlPath, callback) => {
     // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
     // @param callback: function to call after receiving the data
-    fetchData(id, urlPath, callback, true)
+    fetchData(id, urlPath, callback, true, true)
 }
 
 export default fetchTableData

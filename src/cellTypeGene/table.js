@@ -10,7 +10,9 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { receiveTableData } from 'fetch/tableData'
 import { getDataForAllClusters } from 'cellTypeGene/allClusters'
+import dataStore from 'cellTypeGene/dataStore'
 
+const DATA_WORKAROUND = true
 const DOMAIN = 'cellTypeGene'
 const USE_TEST_DATA = false
 const testData = {
@@ -80,19 +82,22 @@ const makeAddButtons = (columns, data) => {
 const receiveTableDataFromServer = (columns, data) => {
     // Receive the table column and body data
     // derived from the original data from the server.
-    
-    // Set the initial sort to the most likely column.
-    if (!columns[2].options) {
-        columns[2].options = {}
+    if (DATA_WORKAROUND) {
+        // remove the last line of junk
+        data.splice(-1, 1)
     }
-    columns[2].options.sortDirection = 'desc'
-    
+    // Set the initial sort to the most likely column.
+    let likely = columns[1]
+    if (!likely.options) {
+        likely.options = {}
+    }
+    likely.options.sortDirection = 'desc'
     // Build the add buttons for each row.
     makeAddButtons(columns, data)
-    
-    // Save the columns and data.
-    rxSet('cellTypeGene.tableColumn.load', { value: columns })
-    rxSet('cellTypeGene.tableData.load', { value: data })
+
+    // Save the columns and data and render.
+    dataStore.load(columns, data)
+    rxSet('cellTypeGene.render.now')
 }
 
 const receiveDataFromServer = (data) => {
@@ -120,13 +125,15 @@ const getGeneTableData = () => {
 }
 
 const mapStateToProps = (state) => {
-    const data = state.cellTypeGene.tableData
+    const table = dataStore.get()
     const cluster = state.cellTypeGene.cluster
     return {
-        columns: state.cellTypeGene.tableColumn,
-        data: data,
-        header: 'Cluster ' + cluster + ': ' + data.length + ' matches found',
+        columns: table.columns,
+        data: table.data,
+        header:
+            'Cluster ' + cluster + ': ' + table.data.length + ' matches found',
         message: state.cellTypeGene.fetchMessage,
+        render: state.cellTypeGene.render,
     }
 }
 

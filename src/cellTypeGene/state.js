@@ -1,4 +1,6 @@
 
+let renderSeq = 0  // A change here causes the gene table to re-rendered
+
 const cellTypeGene = (
     state = {
         cluster: null,
@@ -6,9 +8,8 @@ const cellTypeGene = (
         fetchStatus: 'quiet',
         firstTableDisplayed: false,
         geneSelected: null,
+        render: renderSeq,
         statsNames: [],
-        tableColumn: [],
-        tableData: [],
     }, action) => {
         switch(action.type) {
         case 'cellTypeGene.cluster.uiSet':
@@ -46,15 +47,10 @@ const cellTypeGene = (
                 ...state,
                 geneSelected: action.value
             }
-        case 'cellTypeGene.tableColumn.load':
+        case 'cellTypeGene.render.now':
             return {
                 ...state,
-                tableColumn: action.value
-            }
-        case 'cellTypeGene.tableData.load':
-            return {
-                ...state,
-                tableData: action.value
+                render: renderSeq++
             }
         default:
             return state

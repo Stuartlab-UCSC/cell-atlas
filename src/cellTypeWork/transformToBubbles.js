@@ -7,6 +7,7 @@ import { sizeToRadius } from 'bubble/util'
 import { tsvToArrays } from 'app/util'
 import dataStore from 'cellTypeWork/dataStore'
 
+const DATA_WORKAROUND = false
 // colorScale is the array of colors for the bubbles.
 let colorScale = []
 
@@ -82,6 +83,7 @@ const setDimsAndColor = (bubbles, colorRange, sizeRange, clusterCount,
 
 const setBubbleColorBy = (gene, bubbles, line, clusters, colorRange) => {
     // Set the primary and colorBy properties of the bubble.
+    console.log('setBubbleColorBy: line:', line)
     line.splice(1).forEach((color,j) => {
 
         bubbles.push({
@@ -103,6 +105,7 @@ const findBubbleData = (bubbles, cluster, gene) => {
 
 const setBubbleSizeBy = (gene, bubbles, line, clusters, sizeRange) => {
     // Set the sizeBy properties of the bubble.
+    console.log('setBubbleSizeBy: line:', line)
     line.splice(1).forEach((size,j) => {
         const cluster = clusters[j]
         const bubble = findBubbleData(bubbles, cluster, gene)
@@ -124,7 +127,16 @@ const addGeneBubbles = (data) => {
         return
     }
     let bubbles = []
+    console.log('addGeneBubbles: data.length:', data.length)
+    console.log('addGeneBubbles: data[0]:', data[0])
+    console.log('addGeneBubbles: data[1]:', data[1])
+    console.log('addGeneBubbles: data[1][0]:', data[1][0])
+    console.log('addGeneBubbles: data[1][3]:', data[1][3])
+    //let lines = data
     let lines = tsvToArrays(data)
+    if (DATA_WORKAROUND) {
+        lines.splice(-1,1)
+    }
     // TODO: don't rely on position; check the label at lines[0][0] & lines[1][0]
     let clusters = lines[0].slice(1)
     const gene = rxGet('cellTypeGene.geneSelected')
