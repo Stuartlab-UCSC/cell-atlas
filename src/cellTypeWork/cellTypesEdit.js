@@ -3,14 +3,16 @@
 
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
+import dataStore from 'cellTypeWork/dataStore'
 import Presentation from 'cellTypeWork/cellTypesEditPres'
 import { DOMAIN } from 'cellTypeWork/cellTypes'
 
 const mapStateToProps = (state) => {
     return {
-        cellTypes: state.cellTypeWork.data.cellTypes,
+        cellTypes: dataStore.getCellTypes(),
         dims: state.cellTypeWork.dims,
         mode: state.cellTypeWork.cellTypeMode,
+        render: state.cellTypeWork.render,
         showButton: state.cellTypeWork.cellTypeButton,
         showInput: state.cellTypeWork.cellTypeInput,
     }
@@ -57,11 +59,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onInputChange: ev => {
             // On change of the value update the value in state.
-            dispatch({
-                type: 'cellTypeWork.data.cellTypeChange',
-                position: ev.target.dataset.position,
-                value: ev.target.value,
-            })
+            dataStore.changeCellType(
+                ev.target.value, ev.target.dataset.position)
+            dispatch({ type: 'cellTypeWork.render.now' })
         },
     }
 }

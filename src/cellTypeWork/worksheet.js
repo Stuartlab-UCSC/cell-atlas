@@ -3,8 +3,9 @@
 
 import { connect } from 'react-redux'
 import { set as rxSet } from 'state/rx'
-import Presentation from 'cellTypeWork/worksheetPres'
 import fetchData from 'fetch/fetchData'
+import dataStore from 'cellTypeWork/dataStore'
+import Presentation from 'cellTypeWork/worksheetPres'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 
@@ -48,7 +49,7 @@ const serverRequest = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        data: state.cellTypeWork.data,
+        data: dataStore.get(),
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeWork.fetchMessage,
         render: state.cellTypeWork.render,

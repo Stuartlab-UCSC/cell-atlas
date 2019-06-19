@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
         id: 'cell_type_work_sheet',
         label: 'Worksheet',
         list: state.cellTypeWork.sheetList,
+        render: state.cellTypeWork.render,
         selected: state.cellTypeWork.sheetSelected,
     }
 }

@@ -2,15 +2,17 @@
 
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
+import dataStore from 'cellTypeWork/dataStore'
 import Presentation from 'cellTypeWork/genesPres'
 import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
     from 'app/sortable'
 
 const mapStateToProps = (state) => {
-    const data = state.cellTypeWork.data
+    const data = dataStore.get()
     return {
         genes: data.genes,
         dims: state.cellTypeWork.dims,
+        render: state.cellTypeWork.render,
         onMouseLeave: sortableOnMouseLeave,
         onMouseOver: sortableOnMouseOver,
     }
@@ -18,11 +20,12 @@ const mapStateToProps = (state) => {
 
 const reorder = (start, end) => {
     // Remove and insert the gene row in its new place in the list.
-    const genes = rxGet('cellTypeWork.data.genes')
+    const genes = dataStore.getGenes()
     const gene = genes[start]
     genes.splice(start, 1)
     genes.splice(end, 0, gene)
-    rxSet('cellTypeWork.data.geneReorder', {value: genes})
+    dataStore.reorderGenes(genes)
+    rxSet('cellTypeWork.render.now')
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -37,7 +40,7 @@ const mapDispatchToProps = (dispatch) => {
             }
             sortableOnMouseDown(
                 ev,
-                rxGet('cellTypeWork.data.genes').length,
+                dataStore.getGenes().length,
                 'cellTypeWorkGenes',
                 marker,
                 reorder,

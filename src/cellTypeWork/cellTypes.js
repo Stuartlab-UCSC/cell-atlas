@@ -7,26 +7,29 @@ import { onBodyClick } from 'cellTypeWork/cellTypesEdit'
 import Presentation from 'cellTypeWork/cellTypesPres'
 import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
     from 'app/sortable'
+import dataStore from 'cellTypeWork/dataStore'
 
 const DOMAIN = 'cellTypeWorkCellTypes'
 
 const mapStateToProps = (state) => {
     return {
         colormap: state.cellTypeWork.colormap,
-        cellTypes: state.cellTypeWork.data.cellTypes,
+        cellTypes: dataStore.getCellTypes(),
         dims: state.cellTypeWork.dims,
-        showHighlight: state.cellTypeWork.cellTypeHighlight,
         mode: state.cellTypeWork.cellTypeMode,
+        render: state.cellTypeWork.render,
+        showHighlight: state.cellTypeWork.cellTypeHighlight,
     }
 }
 
 const reorder = (start, end) => {
     // Remove and insert the cellType in its new place in the list.
-    const cellTypes = rxGet('cellTypeWork.data.cellTypes')
+    const cellTypes = dataStore.getCellTypes()
     const cellType = cellTypes[start]
     cellTypes.splice(start, 1)
     cellTypes.splice(end, 0, cellType)
-    rxSet('cellTypeWork.data.cellTypeReorder', {value: cellTypes})
+    dataStore.reorderCellTypes(cellTypes)
+    rxSet('cellTypeWork.render.now')
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -37,15 +40,13 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'cellTypeWork.cellTypeInput.show',
                 value: ev.target.dataset.position
             })
-            // Change the edit mode.
-            //dispatch({
-            //    type: 'cellTypeWork.cellTypeMode.hide'
-            //})
-            // Set focus to the input element after it has a chance to render.
             setTimeout(() => {
-                //document.getElementById('cellTypeWorkCellTypeEditInput').focus()
-            })
-            //document.body.removeEventListener('click', onBodyClick)
+                try {
+                    document.getElementById(
+                        'cellTypeWorkCellTypeEditInput').focus()
+                } catch(e) {
+                }
+            }, 10)
         },
         onMouseOver: ev => {
             // On mouse over the text, highlight the text and
@@ -82,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
             }
             sortableOnMouseDown(
                 ev,
-                rxGet('cellTypeWork.data.cellTypes').length,
+                dataStore.getCellTypes().length,
                 DOMAIN,
                 marker,
                 reorder,

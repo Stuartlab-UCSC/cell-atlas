@@ -7,15 +7,16 @@ import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
     from 'app/sortable'
 import { getGeneTableData } from 'cellTypeGene/table'
 import { reorder as cellTypeReorder } from 'cellTypeWork/cellTypes'
+import dataStore from 'cellTypeWork/dataStore'
 
 const DOMAIN = 'cellTypeWorkClusters'
 const mapStateToProps = (state) => {
-    const data = state.cellTypeWork.data
     return {
-        clusters: data.clusters,
+        clusters: dataStore.getClusters(),
         colormap: state.cellTypeWork.colormap,
         dims: state.cellTypeWork.dims,
         mode: state.cellTypeWork.clusterMode,
+        render: state.cellTypeWork.render,
         showButton: state.cellTypeWork.clusterButton,
         onMouseLeave: sortableOnMouseLeave,
     }
@@ -23,11 +24,11 @@ const mapStateToProps = (state) => {
 
 const reorder = (start, end) => {
     // Remove and insert the cluster column in its new place in the list.
-    const clusters = rxGet('cellTypeWork.data.clusters')
+    const clusters = dataStore.getClusters()
     const cluster = clusters[start]
     clusters.splice(start, 1)
     clusters.splice(end, 0, cluster)
-    rxSet('cellTypeWork.data.clusterReorder', {value: clusters})
+    dataStore.reorderClusters(clusters)
     // Also reorder the cell types the same.
     cellTypeReorder(start, end)
 }
@@ -71,7 +72,7 @@ const mapDispatchToProps = (dispatch) => {
             if (rxGet('cellTypeWork.clusterMode') === 'sortable') {
                 return
             }
-            const cluster = rxGet('cellTypeWork.data').clusters[
+            const cluster = dataStore.getClusters()[
                 ev.target.dataset.position]
             dispatch({
                 type: 'cellTypeGene.cluster.uiSet',
@@ -106,7 +107,7 @@ const mapDispatchToProps = (dispatch) => {
                 }
                 sortableOnMouseDown(
                     ev,
-                    rxGet('cellTypeWork.data.clusters').length,
+                    dataStore.getClusters().length,
                     DOMAIN,
                     marker,
                     reorder,

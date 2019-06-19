@@ -5,6 +5,7 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import {getCatColormap } from 'color/colorCat'
 import { sizeToRadius } from 'bubble/util'
 import { tsvToArrays } from 'app/util'
+import dataStore from 'cellTypeWork/dataStore'
 
 // colorScale is the array of colors for the bubbles.
 let colorScale = []
@@ -137,18 +138,15 @@ const addGeneBubbles = (data) => {
     setBubbleSizeBy(gene, bubbles, lines[2], clusters, sizeRange)
 
     // Add these bubbles to the existing bubbles.
-    bubbles = rxGet('cellTypeWork.data').bubbles.concat(bubbles)
+    bubbles = dataStore.getBubbles().concat(bubbles)
 
     // Find the dimensions and add the colors and sizes to the bubbles.
-    const dataStore = rxGet('cellTypeWork.data')
     bubbles = setDimsAndColor(bubbles, colorRange, sizeRange,
-        dataStore.clusters.length, dataStore.genes.length + 1)
+        dataStore.getClusters().length,
+        dataStore.getGenes().length + 1)
 
     // Save the new genes and bubbles
-    rxSet('cellTypeWork.data.newGene', {
-        gene,
-        bubbles,
-    })
+    dataStore.addGene(gene, bubbles)
 
     // Notify to re-render worksheet.
     rxSet('cellTypeWork.render.now')

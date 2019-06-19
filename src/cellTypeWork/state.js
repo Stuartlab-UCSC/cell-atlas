@@ -2,17 +2,6 @@
 // Cell type sheet page state.
 
 let renderSeq = 0  // A change here causes the worksheet to re-rendered
-const defaultData = {
-    dataset: '',
-    clusterSolution: '',
-    sizeBy: '',
-    colorBy: '',
-    clusters: [],
-    colorBar: [],
-    cellTypes: [],
-    genes: [],
-    bubbles: [],
-}
 const defaultDims = {
     bubblesHeight: 0,
     bubblesWidth: 0,
@@ -46,7 +35,6 @@ const State = (
         clusterMode: 'sortable',
         colormap: [],
         colormapPicker: null,
-        data: defaultData,
         dims: defaultDims,
         fetchMessage: ' ',
         fetchStatus: 'initial',
@@ -59,7 +47,6 @@ const State = (
         tableColumn: [],
         tableData: [],
     }, action) => {
-        let newState = null
         switch(action.type) {
         case 'cellTypeWork.cellTypeButton.show':
             // The cellType position is saved here.
@@ -141,56 +128,6 @@ const State = (
                 ...state,
                 colormapPicker: null
             }
-        case 'cellTypeWork.data.default':
-            return {
-                ...state,
-                data: defaultData
-            }
-        case 'cellTypeWork.data.load':
-            return {
-                ...state,
-                data: action.value
-            }
-        case 'cellTypeWork.data.cellTypeChange':
-            newState = {
-                ...state,
-                data: state.data,
-            }
-            newState.data.cellTypes[action.position] = action.value
-            return newState
-        case 'cellTypeWork.data.cellTypeReorder':
-            return {
-                ...state,
-                data: {
-                    ...state.data,
-                    cellTypes: [...action.value]
-                }
-            }
-        case 'cellTypeWork.data.clusterReorder':
-            return {
-                ...state,
-                data: {
-                    ...state.data,
-                    clusters: [...action.value]
-                }
-            }
-        case 'cellTypeWork.data.colorBar.uiSet':
-            // The colorbar segment takes on the index of the colormap member
-            // that matches the color of the picked color.
-            const index = action.colormap.findIndex(color => {
-                return (color === action.color)
-            })
-            newState = {
-                ...state,
-                data: state.data,
-            }
-            newState.data.colorBar[action.position] = index
-            return newState
-        case 'cellTypeWork.data.newGene':
-            newState = {...state, data: state.data}
-            newState.data.bubbles = newState.data.bubbles.concat(action.bubbles)
-            newState.data.genes = newState.data.genes.concat(action.gene)
-            return newState
         case 'cellTypeWork.dims.default':
             return {
                 ...state,
@@ -231,14 +168,6 @@ const State = (
             return {
                 ...state,
                 firstChartDisplayed: true
-            }
-        case 'cellTypeWork.data.geneReorder':
-            return {
-                ...state,
-                data: {
-                    ...state.data,
-                    genes: [...action.value]
-                }
             }
         case 'cellTypeWork.render.now':
             return {

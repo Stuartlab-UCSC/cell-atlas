@@ -3,20 +3,23 @@
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeWork/colorBarPres'
+import dataStore from 'cellTypeWork/dataStore'
 
 const mapStateToProps = (state) => {
     // Find the position stored in the colormapPicker state.
     const showPicker = state.cellTypeWork.colormapPicker
     let startColor = null
     // Set the starting colorPicker color to that at colormap[index].
+    const colorBar = dataStore.getColorBar()
     if (showPicker !== null) {
-        startColor = state.cellTypeWork.data.colorBar[showPicker]
+        startColor = colorBar[showPicker]
     }
     return {
         showPicker,
-        colorBar: state.cellTypeWork.data.colorBar,
+        colorBar,
         colormap: state.cellTypeWork.colormap,
         dims: state.cellTypeWork.dims,
+        render: state.cellTypeWork.render,
         startColor,
     }
 }
@@ -25,11 +28,12 @@ const onColorChange = (ev, color) => {
     // Update the colormap index of the colorBar segment.
     // This event is propagated from the body onMouseUp handler, rather than
     // directly from the color picker's onColorChangeComplete event.
-    rxSet('cellTypeWork.data.colorBar.uiSet', {
-        position: rxGet('cellTypeWork.colormapPicker'),
-        color: color.hex,
-        colormap: rxGet('cellTypeWork.colormap'),
-    })
+    dataStore.setColorBar(
+        rxGet('cellTypeWork.colormapPicker'),
+        color.hex,
+        rxGet('cellTypeWork.colormap'),
+    )
+    rxSet('cellTypeWork.render.now')
     // Hide the color picker.
     rxSet('cellTypeWork.colormapPicker.hide')
 }

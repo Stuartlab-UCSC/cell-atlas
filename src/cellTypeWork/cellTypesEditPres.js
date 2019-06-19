@@ -77,13 +77,11 @@ const Input = ({ i, value, dims, onInputChange }) => {
 const CellTypesEdit = (props) => {
     // Show the appropriate button or input.
     const { cellTypes, dims, mode, showButton, showInput,
-        onButtonClick, onTextClick, onInputChange } = props
+        onInputChange } = props
     if (showInput === null && !showButton) {
         return (null)
     }
-    const { geneWidth } = dims
     let input = null
-    console.log('showInput:', showInput)
     if (showInput !== null) {
         cellTypes.forEach((cellType, i) => {
             if (showInput === i) {
