@@ -13,13 +13,6 @@ const testData =
 color_by	0	0.6357	-0.4
 size_by	0.8606	0.74	0.4`
 
-const receiveDataFromServer = (data) => {
-    // Handle the data received from the server.
-    //console.log('1receiveDataFromServer: data.length:', data.length)
-    //console.log('receiveDataFromServer: data[0]:', data[0])
-    addGeneBubbles(data)
-}
-
 // A test stub in place of server query.
 const fetchTestData = (id, url, receiveFx) => {
     rxSet('cellTypeGeneClusters.fetchStatus.waiting')

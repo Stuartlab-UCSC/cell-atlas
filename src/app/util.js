@@ -30,10 +30,11 @@ const tsvToArrays = (tsv) => {
         const cols = line.split('\t')
         arrays.push(cols)
     })
-    // Remove a blank last line.
-    console.log('arrays.slice(-1).length):', arrays.slice(-1).length)
-    console.log('arrays.slice(-1)):', arrays.slice(-1))
-    if (arrays.slice(-1).length < 1) {
+    // Remove the last line if it is blank or contains a single empty string.
+    const lastLine = arrays.slice(-1)
+    const lastFirst = lastLine[0]
+    if (lastLine.length < 1 ||
+        (lastFirst.length === 1 && lastFirst[0] === '')) {
         arrays.splice(-1,1)
     }
     return arrays

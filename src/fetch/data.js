@@ -44,7 +44,8 @@ const fetchData = (id, urlPath, callback, textResponse, tableData) => {
     // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
     // @param callback: optional function to call after receiving the data
-    // @param tableData: true for simple tsv table data in the response
+    // @param textResponse: get response as text rather than json
+    // @param tableData: true to transform the data into dataTable format
     if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
     }

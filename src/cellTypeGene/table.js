@@ -12,7 +12,6 @@ import { receiveTableData } from 'fetch/tableData'
 import { getDataForAllClusters } from 'cellTypeGene/allClusters'
 import dataStore from 'cellTypeGene/dataStore'
 
-const DATA_WORKAROUND = true
 const DOMAIN = 'cellTypeGene'
 const USE_TEST_DATA = false
 const testData = {
@@ -82,16 +81,14 @@ const makeAddButtons = (columns, data) => {
 const receiveTableDataFromServer = (columns, data) => {
     // Receive the table column and body data
     // derived from the original data from the server.
-    if (DATA_WORKAROUND) {
-        // remove the last line of junk
-        data.splice(-1, 1)
-    }
+
     // Set the initial sort to the most likely column.
     let likely = columns[1]
     if (!likely.options) {
         likely.options = {}
     }
     likely.options.sortDirection = 'desc'
+    
     // Build the add buttons for each row.
     makeAddButtons(columns, data)
 

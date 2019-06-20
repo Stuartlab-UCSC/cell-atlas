@@ -5,6 +5,7 @@
 
 import { set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
+import { tsvToArrays } from 'app/util'
 
 // These columns will not have filters, no matter the table.
 const noFilters = [
@@ -47,17 +48,15 @@ const receiveTableData = (id, dataIn, callback) => {
     // @param dataIn: data received from the server; a text value containing TSV
     // @param callback: function to call after receiving the data; optional
 
-    // Parse the rows, building an array of arrays.
     // First build the column information array.
     let columns = []
-    let data = []
-    const rows = dataIn.split('\n')
-    columns = addColumnOptions(rows[0].split('\t'))
+    let data = tsvToArrays(dataIn)
+    columns = addColumnOptions(data[0])
     
-    // Find the data arrays.
-    data = rows.slice(1).map(row => row.split('\t'))
+    // Remove the header line.
+    data.splice(0,1)
     
-   // Replace any values of 'None' with ''.
+    // Replace any values of 'None' with ''.
     const cleanData = data.map((row, i) => {
         return row.map((col, j) => {
             return (col === 'None') ? '' : data[i][j].slice(0)
@@ -83,6 +82,9 @@ const fetchTableData = (id, urlPath, callback) => {
     // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
     // @param callback: function to call after receiving the data
+    
+    // Call the generic data fetch indictating that text should be returned
+    // rather than text, and call the post fetch processing for dataTables.
     fetchData(id, urlPath, callback, true, true)
 }
 
