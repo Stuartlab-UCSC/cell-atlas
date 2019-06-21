@@ -87,6 +87,16 @@ const ScatterPlot = ({ show }) => {
     )
 }
 
+const LeftPanel = ({ props }) => {
+    const { showSave } = props
+    return (
+        <React.Fragment>
+            <ScatterPlot show={showSave} />
+            <GeneTable/>
+        </React.Fragment>
+    )
+}
+
 const Presentation = (props) => {
     const { bubbleTooltip, clusterSolution, dataset, showSave,
         onSaveClick, onUploadClick } = props
@@ -117,16 +127,12 @@ const Presentation = (props) => {
                 </Grid>
                <Grid item xs={8} />
      
-                <Grid item xs={4}>
-                    <ScatterPlot show={showSave} />
+                <Grid item xs={5}>
+                    <LeftPanel props={props} />
                 </Grid>
                     <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
-                <Grid item xs={8} style={{marginTop: -70}}>
+                <Grid item xs={7} style={{marginTop: -70}}>
                     <Worksheet />
-                </Grid>
-            
-                <Grid item xs={12}>
-                    <GeneTable/>
                 </Grid>
 
             </Grid>

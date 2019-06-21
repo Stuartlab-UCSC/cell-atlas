@@ -96,7 +96,7 @@ const buildOptions = (data, header, optionOverrideFx) => {
     return options
 }
 
-const buildThemeOverrides = () => {
+const buildThemeOverrides = (themeOverrideFx) => {
     const rowStyle = {
         height: 28,
         maxHeight: 28,
@@ -126,6 +126,9 @@ const buildThemeOverrides = () => {
             },
         }
     }
+    if (themeOverrideFx) {
+        theme = themeOverrideFx(theme)
+    }
     return theme
 }
 
@@ -143,7 +146,8 @@ const Table = ({ header, props }) => {
 }
 
 const DataTable = (props) => {
-    const { data, header, message, show, themeOverrides } = props
+    const { data, header, message, show, themeOverrides, themeOverrideFx }
+        = props
     // If we should not show, then don't.
     if (!show) {
         return null
@@ -167,7 +171,7 @@ const DataTable = (props) => {
             getMuiTheme = () => createMuiTheme(themeOverrides)
         } else {
             // Render the table with our default styling.
-            getMuiTheme = () => createMuiTheme(buildThemeOverrides())
+            getMuiTheme = () => createMuiTheme(buildThemeOverrides(themeOverrideFx))
         }
         return (
             <MuiThemeProvider theme={getMuiTheme()}>
@@ -190,7 +194,8 @@ DataTable.propTypes = {
     message: PropTypes.string, // message to display rather than table
     optionOverrideFx: PropTypes.func, // function to override standard options
     show: PropTypes.bool, // show or don't show the table
-    themeOverrides: PropTypes.object, // styling to override existing theme
+    themeOverrides: PropTypes.object, // styling to replace existing theme
+    themeOverrideFx: PropTypes.func, // styling to add to existing theme
     title: PropTypes.string, // main title string at the top
 }
 DataTable.defaultProps = {

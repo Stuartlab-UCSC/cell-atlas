@@ -64,8 +64,9 @@ const receiveTableData = (id, dataIn, callback) => {
     })
 
     // Load the data into the state used to render the table.
+    // Use a timeout so we have good debugging available.
     if (callback) {
-        callback(columns, cleanData)
+        setTimeout(() => { callback(columns, cleanData) })
     } else {
         rxSet(id + '.tableColumn.load', { value: columns })
         rxSet(id + '.tableData.load', { data: cleanData })

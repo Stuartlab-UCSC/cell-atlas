@@ -27,7 +27,8 @@ const receiveData = (id, data, callback, tableData) => {
             receiveTableData(id, data, callback)
         } else {
             // With this not being table data, there must be a callback.
-            callback(data)
+            // Use a timeout so we have good debugging available.
+            setTimeout(() => { callback(data) })
         }
         rxSet(id + '.fetchMessage.clear')
     }
