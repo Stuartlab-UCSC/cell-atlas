@@ -26,8 +26,6 @@ const defaultSheetSelected = defaultSheetList[0].value
 
 const State = (
     state = {
-        cellTypeButton: null,
-        cellTypeHighlight: null,
         cellTypeInput: null,
         cellTypeMode: 'readOnly',
         colormap: [],
@@ -46,28 +44,6 @@ const State = (
         tableData: [],
     }, action) => {
         switch(action.type) {
-        case 'cellTypeWork.cellTypeButton.show':
-            // The cellType position is saved here.
-           return {
-                ...state,
-                cellTypeButton: true
-            }
-        case 'cellTypeWork.cellTypeButton.hide':
-            return {
-                ...state,
-                cellTypeButton: false
-            }
-        case 'cellTypeWork.cellTypeHighlight.show':
-            // The cellType position is saved here.
-            return {
-                ...state,
-                cellTypeHighlight: parseInt(action.value, 10)
-            }
-        case 'cellTypeWork.cellTypeHighlight.hide':
-            return {
-                ...state,
-                cellTypeHighlight: null
-            }
         case 'cellTypeWork.cellTypeInput.show':
             // The cellType position is saved here.
             return {
@@ -105,7 +81,11 @@ const State = (
                 ...state,
                 colormapPicker: null
             }
-        case 'cellTypeWork.contextMenu.close':
+        case 'cellTypeWork.contextMenu.closeFromCellTypeHover':
+        case 'cellTypeWork.contextMenu.closeFromClusterClickAway':
+        case 'cellTypeWork.contextMenu.closeFromClusterMouseDown':
+        case 'cellTypeWork.contextMenu.closeFromClusterMouseLeave':
+        case 'cellTypeWork.contextMenu.closeFromGeneStatsClick':
             return {
                 ...state,
                 contextMenu: false

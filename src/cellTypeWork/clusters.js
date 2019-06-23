@@ -47,13 +47,13 @@ const mapDispatchToProps = (dispatch) => {
             getGeneTableData()
             // Close the context menu.
             dispatch({
-                type: 'cellTypeWork.contextMenu.close',
+                type: 'cellTypeWork.contextMenu.closeFromGeneStatsClick',
             })
         },
         onMenuClickAway: ev => {
 
             dispatch({
-                type: 'cellTypeWork.contextMenu.close',
+                type: 'cellTypeWork.contextMenu.closeFromClusterClickAway',
             })
         },
         onMouseOver: ev => {
@@ -69,12 +69,13 @@ const mapDispatchToProps = (dispatch) => {
         },
         onMouseleave: ev => {
             // The elements are not being sorted, so close the context menu.
-            dispatch({ type: 'cellTypeWork.contextMenu.close' })
+            dispatch({
+                type: 'cellTypeWork.contextMenu.closeFromClusterMouseLeave' })
         },
         onMouseDown: ev => {
             // Close the context menu.
             dispatch({
-                type: 'cellTypeWork.contextMenu.close',
+                type: 'cellTypeWork.contextMenu.closeFromClusterMouseDown',
             })
             // Save the info for this cluster for sortable drag and drop.
             const marker = {

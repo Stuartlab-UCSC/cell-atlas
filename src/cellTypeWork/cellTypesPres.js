@@ -4,63 +4,9 @@
 import React from 'react'
 import { DOMAIN } from 'cellTypeWork/cellTypes'
 
-const Highlight =  ({ i, props }) => {
-    // The text highlighting.
-    const { mode, showHighlight, onClick, onMouseLeave, onMouseOver } = props
-    const { cellTypesHeight, cellTypeLength, colWidth, fontSize, geneWidth }
-        = props.dims
-    const x = geneWidth + colWidth * i
-    const y = cellTypesHeight
-    if (i === showHighlight) {
-        // Show the highlight.
-        return (
-            <rect
-                data-position={i}
-                data-domain={DOMAIN}
-                x={x}
-                y={y+2-fontSize}
-                width={cellTypeLength}
-                height={fontSize-2}
-                fill='#eeeeee'
-                style={{
-                    userSelect: 'none',
-                    cursor: (mode === 'select') ? 'pointer' : 'grab',
-                    zIndex: -10000,
-                }}
-                onClick={mode === 'select' ? onClick : null}
-                onMouseOver={onMouseOver}
-                onMouseLeave={onMouseLeave}
-            />
-        )
-    } else {
-        // Make the highlight invisible.
-        // We have this duplicate because for some reason changing the fill
-        // doesn't work.
-        return (
-            <rect
-                data-position={i}
-                data-domain={DOMAIN}
-                x={x}
-                y={y+2-fontSize}
-                width={cellTypeLength}
-                height={fontSize-2}
-                fill='transparent'
-                style={{
-                    userSelect: 'none',
-                    cursor: (mode === 'select') ? 'pointer' : 'grab',
-                    zIndex: 2,
-                }}
-                onClick={mode === 'select' ? onClick : null}
-                onMouseOver={onMouseOver}
-                onMouseLeave={onMouseLeave}
-            />
-        )
-    }
-}
-
 const CellType = ({ i, color, value, props }) => {
     // A cell type text area.
-    const { mode, onClick, onMouseDown, onMouseLeave, onMouseOver } = props
+    const { onMouseOver } = props
     const { cellTypesHeight, colWidth, fontSize, geneWidth } = props.dims
     const x = geneWidth + colWidth * i
     const y = cellTypesHeight
@@ -68,7 +14,6 @@ const CellType = ({ i, color, value, props }) => {
         <g
             transform={'rotate(-45,' + x + ',' + (y-10) + ')'}
         >
-            <Highlight i={i} props={props} />
             <text
                 data-position={i}
                 data-domain={DOMAIN}
@@ -78,13 +23,10 @@ const CellType = ({ i, color, value, props }) => {
                 fill={color}
                 style={{
                     userSelect: 'none',
-                    cursor: (mode === 'select') ? 'pointer' : 'grab',
+                    cursor: 'grab',
                     zIndex: 3,
                 }}
-                onClick={mode === 'select' ? onClick : null}
                 onMouseOver={onMouseOver}
-                onMouseLeave={onMouseLeave}
-                onMouseDown={mode === 'select' ? null : onMouseDown}
             >
                 {value}
             </text>
