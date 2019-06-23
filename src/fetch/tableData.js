@@ -74,6 +74,7 @@ const receiveTableData = (id, dataIn, callback) => {
     
     // Indicate the first table has displayed so some UI elements will now
     // be visible.
+    // TODO: move this into the caller's domain.
     rxSet(id + '.firstTableDisplayed.set')
 }
 

@@ -27,16 +27,23 @@ IL6	2.7195	-0.3674	0.54`
 
 const Presentation = (props) => {
     // Rendering of the gene table.
-    const { columns, cluster, data, header, optionOverrideFx } = props
-    return (
-        <div>
-            <Typography>
+    const { columns, cluster, data, header, message, optionOverrideFx } = props
+    let Counts = null
+    if (!message) {
+        Counts = (
+            <Typography style={{fontSize: '1rem'}}>
                 {'Cluster ' + cluster + ': ' + data.length + ' matches found'}
             </Typography>
+        )
+    }
+    return (
+        <div>
+            {Counts}
             <DataTable
                 header={header}
                 data={data}
                 columns={columns}
+                message={message}
                 optionOverrideFx={optionOverrideFx}
                 themeOverrideFx={themeOverrideFx}
             />
@@ -97,7 +104,6 @@ const receiveDataFromServer = (data) => {
 const getGeneTableData = (urlIn) => {
     // Request the data from the server.
     console.log('getGeneTableData: urlIn:', urlIn)
-    
     // If no url is supplied, get the cluster from state.
     let url = urlIn
     if (url === undefined) {

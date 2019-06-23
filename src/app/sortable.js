@@ -5,19 +5,22 @@
 // down the user experience when dragging the mouse.
 
 import React from 'react'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { get as rxGet, set as rxSet } from 'state/rx'
 
 const SortableMarker = () => {
     return (
-        <div
-            id='sortable_drop_marker'
-            style = {{
-                background: 'black',
-                width: 0,
-                height: 0,
-                position: 'fixed',
-            }}
-        />
+        <ClickAwayListener onClickAway={onMenuClickAway}>
+            <div
+                id='sortable_drop_marker'
+                style = {{
+                    background: 'black',
+                    width: 0,
+                    height: 0,
+                    position: 'fixed',
+                }}
+            />
+        </ClickAwayListener>
     )
 }
 
@@ -44,9 +47,8 @@ const currentPosition = (ev) => {
     const drag = rxGet('sortable.drag')
     let position = null
     // If there is no drag information in the element's data,
-    // return the closest position.
-    // TODO: This only returns 0 or n-1. Perhaps it should bail or find the
-    // truely closest position.
+    // return the closest position. This picks the leftmost or rightmost
+    // element.
     if (!ev.target.dataset || !ev.target.dataset.domain
         || ev.target.dataset.domain !== drag.domain) {
         const diff = (drag.xOrY === 'x')
@@ -55,8 +57,10 @@ const currentPosition = (ev) => {
         position = (diff < 0) ? 0 : drag.count - 1
     } else {
         // The mouse is on an element in the domain,
-        // so find the dragging element's new position.
+        // so find the dragging element's new position if dropped now.
         position = parseInt(ev.target.dataset.position, 10)
+        // If needed, adjust the insertion position to what it would be
+        // after the element is removed prior to insertion.
         if (position > drag.position && drag.xOrY === 'x') {
             position -= 1
         } else if (position < drag.position && drag.xOrY === 'y') {
@@ -67,24 +71,24 @@ const currentPosition = (ev) => {
     return { position, drag }
 }
 
+const onMenuClickAway = ev => {
+    resetMarker()
+}
+
 const onMouseUp = (ev) => {
     // End the dragging no matter where the mouse is.
     document.body.removeEventListener('mouseup', onMouseUp)
     resetMarker()
+    
+    // Reset the body cursor.
     document.body.style.cursor = 'default'
-    
-    // If the mouse is over the same element as on mouseDown, we're done.
+
+    // If the mouse came up over any position other than the start position...
     const { position, drag } = currentPosition(ev)
-    const sourceElement = rxGet('sortable.drag').element
-    sourceElement.style.cursor = 'grab'
-    
-    if (position === drag.position) {
-        return
+    if (position !== drag.position) {
+        // Reorder the elements in the domain.
+        drag.reorderFx(drag.position, position)
     }
-
-    // Reorder the domain.
-    drag.reorderFx(drag.position, position)
-
     // Reset the drag state.
     rxSet('sortable.drag.mouseUp')
 }
@@ -92,9 +96,8 @@ const onMouseUp = (ev) => {
 const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
     dispatch) => {
     
-    // Show the cursor as grabbing.
+    // Show the body cursor as grabbing.
     document.body.style.cursor = 'grabbing'
-    ev.target.style.cursor = 'grabbing'
 
     // Listen for a mouseUp event anywhere.
     document.body.addEventListener('mouseup', onMouseUp)
@@ -110,34 +113,24 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
             position: ev.target.dataset.position,
             reorderFx,
             xOrY,
-            element: ev.target,
         }
     })
 }
 
+// TODO remove use of this everywhere because it is not hit.
 const sortableOnMouseLeave = (ev) => {
-    const drag = rxGet('sortable.drag')
-    if (!drag.domain || drag.domain !== ev.target.dataset.domain
-        || ev.target.dataset.editmode) {
-        // We're not dragging the mouse, in some other sortable domain
-        // or in edit mode.
-        return
-    }
     resetMarker()
-    ev.target.style.cursor = 'grab'
 }
 
 const sortableOnMouseOver = (ev) => {
     const drag = rxGet('sortable.drag')
-    if (drag.domain === null
-        || drag.domain !== ev.target.dataset.domain
-        || ev.target.dataset.editmode) {
+    if (drag.count === null) {
+        // The mouse is not down.
         return
     }
     // Set the dimensions of the drag marker.
     const bounds = ev.target.getBoundingClientRect()
     showMarker(bounds.bottom, bounds.left, drag.marker)
-    ev.target.style.cursor = 'grabbing'
 }
 
 // State.
@@ -149,7 +142,6 @@ const defaultDrag = {
     reorderFx: null, // the function to call to reorder the elements
     xOrY: null,  // the relevant coordinate depending on domain orientation
     marker: null, // drop marker dimensions object
-    element: null, // the mouse down target to reset the cursor
 }
 const State = (
     state = {
@@ -173,4 +165,3 @@ const State = (
 
 export { SortableMarker, sortableOnMouseDown, sortableOnMouseLeave,
     sortableOnMouseOver, State }
-

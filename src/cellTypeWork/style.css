@@ -1,0 +1,14 @@
+
+/* Popover arrow */
+.popover::before{
+    content:"";
+    position: absolute;
+    left: 45px !important;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 8px;
+    border-color: #888 transparent transparent transparent;
+    z-index:9998;
+}

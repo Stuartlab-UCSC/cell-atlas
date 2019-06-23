@@ -10,7 +10,6 @@ const defaultDims = {
     colorBarHeight: 10,
     colorRange:{},
     colWidth: 14,
-    clusterButtonWidth: 150,
     clusterMarginTop: 10,
     fontSize: 11,
     geneWidth: 100,
@@ -31,10 +30,9 @@ const State = (
         cellTypeHighlight: null,
         cellTypeInput: null,
         cellTypeMode: 'readOnly',
-        clusterButton: false,
-        clusterMode: 'sortable',
         colormap: [],
         colormapPicker: null,
+        contextMenu: false,
         dims: defaultDims,
         fetchMessage: ' ',
         fetchStatus: 'initial',
@@ -91,27 +89,6 @@ const State = (
                 ...state,
                 cellTypeMode: 'readOnly'
             }
-        case 'cellTypeWork.clusterButton.show':
-            // The cellType position is saved here.
-            return {
-                ...state,
-                clusterButton: true
-            }
-        case 'cellTypeWork.clusterButton.hide':
-            return {
-                ...state,
-                clusterButton: false
-            }
-        case 'cellTypeWork.clusterMode.select':
-            return {
-                ...state,
-                clusterMode: 'select'
-            }
-        case 'cellTypeWork.clusterMode.sortable':
-            return {
-                ...state,
-                clusterMode: 'sortable'
-            }
         case 'cellTypeWork.colormap.create':
             return {
                 ...state,
@@ -127,6 +104,20 @@ const State = (
             return {
                 ...state,
                 colormapPicker: null
+            }
+        case 'cellTypeWork.contextMenu.close':
+            return {
+                ...state,
+                contextMenu: false
+            }
+        case 'cellTypeWork.contextMenu.mouseUp':
+        case 'cellTypeWork.contextMenu.open':
+            return {
+                ...state,
+                contextMenu: {
+                    open: true,
+                    position: action.position,
+                }
             }
         case 'cellTypeWork.dims.default':
             return {
