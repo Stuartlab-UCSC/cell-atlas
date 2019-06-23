@@ -7,6 +7,7 @@ import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
 import { getGeneTableData } from 'cellTypeGene/table'
 import { reorder as cellTypeReorder } from 'cellTypeWork/cellTypes'
 import dataStore from 'cellTypeWork/dataStore'
+import { clearContextElements } from 'cellTypeWork/worksheet'
 
 const DOMAIN = 'cellTypeWorkClusters'
 
@@ -51,12 +52,15 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         onMenuClickAway: ev => {
-
             dispatch({
                 type: 'cellTypeWork.contextMenu.closeFromClusterClickAway',
             })
         },
         onMouseOver: ev => {
+            // Clear any leftover context elements.
+            clearContextElements(dispatch, 'clusters')
+            
+            // If we're sorting, handle the drag even.
             if (rxGet('sortable.drag').count !== null) {
                 sortableOnMouseOver(ev)
             } else {

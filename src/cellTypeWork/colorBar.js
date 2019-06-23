@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeWork/colorBarPres'
 import dataStore from 'cellTypeWork/dataStore'
+import { clearContextElements } from 'cellTypeWork/worksheet'
 
 const mapStateToProps = (state) => {
     // Find the position stored in the colormapPicker state.
@@ -54,6 +55,10 @@ const onMouseUp = (ev) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onMouseOver: ev => {
+            // Clear any leftover context elements.
+            clearContextElements(dispatch, 'colorBar')
+        },
         onBarClick: ev => {
             dispatch({
                 type: 'cellTypeWork.colormapPicker.show',

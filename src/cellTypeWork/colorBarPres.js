@@ -19,7 +19,7 @@ const ColorPicker = ({props}) => {
 }
 
 const ColorBarPres = (props) => {
-    const { colorBar, colormap, onBarClick } = props
+    const { colorBar, colormap, onBarClick, onMouseOver } = props
     const { colorBarHeight, colWidth, geneWidth } = props.dims
     let tds = []
     colorBar.forEach((bar, i) => {
@@ -35,6 +35,7 @@ const ColorBarPres = (props) => {
                     cursor: 'pointer',
                 }}
                 onClick={onBarClick}
+                onMouseOver={onMouseOver}
             />
         )
     })

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeWork/cellTypesPres'
 import dataStore from 'cellTypeWork/dataStore'
+import { clearContextElements } from 'cellTypeWork/worksheet'
 
 const DOMAIN = 'cellTypeWorkCellTypes'
 
@@ -35,9 +36,8 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'cellTypeWork.cellTypeInput.show',
                 value: ev.target.dataset.position
             })
-            // Hide any context menu open.
-            dispatch({
-                type: 'cellTypeWork.contextMenu.closeFromCellTypeHover' })
+            // Clear any leftover context elements.
+            clearContextElements(dispatch, 'cellTypes')
             
             // Set focus to the input component.
             setTimeout(() => {

@@ -12,6 +12,15 @@ import testData from 'cellTypeWork/testData'
 
 const USE_TEST_DATA = false
 
+const clearContextElements = (dispatch, except) => {
+    if (except !== 'cellTypes') {
+        dispatch({ type: 'cellTypeWork.cellTypeInput.hide' })
+    }
+    if (except !== 'clusters') {
+         dispatch({ type: 'cellTypeWork.contextMenu.close' })
+    }
+}
+
 const receiveDataFromServer = (data) => {
     // Handle the data received from the server.
     
@@ -85,4 +94,4 @@ const Worksheet = connect(
 
 export default Worksheet
 
-export { serverRequest }
+export { clearContextElements, serverRequest }
