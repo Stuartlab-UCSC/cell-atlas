@@ -37,7 +37,7 @@ const getDataForAllClusters = (gene) => {
     if (USE_TEST_DATA) {
         fetchTestData('cellTypeGeneClusters', url, addGeneBubbles)
     } else {
-        fetchData('cellTypeGeneClusters', url, addGeneBubbles, true)
+        fetchData('cellTypeGeneClusters', url, addGeneBubbles, 'text')
     }
 }
 

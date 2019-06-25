@@ -5,6 +5,7 @@ import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
 import bubble from 'bubble/state'
 import { cellTypeGeneClusters, cellTypeGene } from 'cellTypeGene/state'
+import cellTypeScatter from 'cellTypeScatter/state'
 import cellTypeWork from 'cellTypeWork/state'
 import database from 'database/databaseState'
 import dataset from 'dataset/datasetState'
@@ -81,6 +82,7 @@ export const init = () => {
         bubble,
         cellTypeGene,
         cellTypeGeneClusters,
+        cellTypeScatter,
         cellTypeWork,
         database,
         dataset,

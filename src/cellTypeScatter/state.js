@@ -8,8 +8,12 @@ const State = (
         firstChartDisplayed: true,
         showChart: false,
     }, action) => {
-        let newState = null
         switch(action.type) {
+        case 'cellTypeScatter.gene.uiSet':
+            return {
+                ...state,
+                gene: action.value
+            }
         case 'cellTypeScatter.fetchMessage.set':
             return {
                 ...state,

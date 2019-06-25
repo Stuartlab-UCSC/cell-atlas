@@ -5,7 +5,7 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import dataStore from 'cellTypeWork/dataStore'
 import GenePresentation from 'cellTypeWork/genesPres'
 import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
-//import { getGeneScatterPlot } from 'cellTypeScatter/scatterPlot'
+import { getGeneScatterPlot } from 'cellTypeScatter/scatter'
 import { clearContextElements } from 'cellTypeWork/worksheet'
 import { removeGeneBubbles } from 'cellTypeWork/transformToBubbles'
 
@@ -38,10 +38,10 @@ const mapDispatchToProps = (dispatch) => {
             // Save the gene name.
             console.log('onScatterPlotClick: position:',
                 ev.target.dataset.position)
-            //const gene = dataStore.getGenes()[ev.target.dataset.position]
+            const gene = dataStore.getGenes()[ev.target.dataset.position]
             
             // Get the scatter plot from the data server.
-            //getGeneScatterPlot(gene)
+            getGeneScatterPlot(gene)
             
             // Close the context menu.
             clearContextElements()

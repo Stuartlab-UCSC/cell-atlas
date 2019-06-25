@@ -8,10 +8,9 @@ import Typography from '@material-ui/core/Typography'
 import BubbleTooltip from 'bubble/tooltip'
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
+import ScatterPlot from 'cellTypeScatter/scatter'
 import GeneTable from 'cellTypeGene/table'
 import MockUp from 'components/MockUp'
-
-import scatterPlot from 'cellTypeScatter/scatterPlot.png'
 
 const buttonStyle = {
     width: '90%',
@@ -73,25 +72,10 @@ const ClusterSolution = ({ show, solution }) => {
     )
 }
 
-const ScatterPlot = ({ show }) => {
-    if (!show) {
-        return null
-    }
-    return (
-        <img
-            src={scatterPlot}
-            alt='scatterPlot'
-            height={400}
-            style={{zIndex:-1}}
-        />
-    )
-}
-
-const LeftPanel = ({ props }) => {
-    const { showSave } = props
+const LeftPanel = () => {
     return (
         <React.Fragment>
-            <ScatterPlot show={showSave} />
+            <ScatterPlot />
             <GeneTable/>
         </React.Fragment>
     )
@@ -128,7 +112,7 @@ const Presentation = (props) => {
                <Grid item xs={8} />
      
                 <Grid item xs={5}>
-                    <LeftPanel props={props} />
+                    <LeftPanel />
                 </Grid>
                     <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
                 <Grid item xs={7} style={{marginTop: -70}}>

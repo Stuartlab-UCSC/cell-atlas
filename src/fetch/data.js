@@ -40,12 +40,38 @@ const error = (id, message) => {
     rxSet(id + '.fetchMessage.set', { value: message })
 }
 
-const fetchData = (id, urlPath, callback, textResponse, tableData) => {
+const imageResponse = (response) => {
+    console.log('fetched an image response')
+    return null
+/*
+// from
+// https://medium.com/front-end-weekly/fetching-images-with-the-fetch-api-fb8761ed27b2
+fetch(request, options).then((response) => {
+  response.arrayBuffer().then((buffer) => {
+    var base64Flag = 'data:image/jpeg;base64,';
+    var imageStr = arrayBufferToBase64(buffer);
+
+    document.querySelector('img').src = base64Flag + imageStr;
+  });
+});
+
+function arrayBufferToBase64(buffer) {
+  var binary = '';
+  var bytes = [].slice.call(new Uint8Array(buffer));
+
+  bytes.forEach((b) => binary += String.fromCharCode(b));
+
+  return window.btoa(binary);
+};
+*/
+}
+
+const fetchData = (id, urlPath, callback, responseType, tableData) => {
     // Get data from the data server.
     // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
     // @param callback: optional function to call after receiving the data
-    // @param textResponse: get response as text rather than json
+    // @param responseType: optional one of json/text/image; defaults to json
     // @param tableData: true to transform the data into dataTable format
     if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
@@ -61,7 +87,16 @@ const fetchData = (id, urlPath, callback, textResponse, tableData) => {
         fetch(url, { headers })
         .then((response) => {
             if (response.ok) {
-                return (textResponse) ? response.text() : response.json()
+                switch(responseType) {
+                case 'text':
+                    return response.text()
+                case 'image':
+                    return imageResponse(response)
+                case 'json':
+                case null:
+                default:
+                    return response.json()
+                }
             } else {
                 error(id, response.statusText)
             }

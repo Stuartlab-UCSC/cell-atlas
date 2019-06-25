@@ -6,6 +6,7 @@ import { getCatColormap } from 'color/colorCat'
 import { buildBubblesOnLoad } from 'cellTypeWork/transformToBubbles'
 import { tsvToArrays } from 'app/util'
 import dataStore from 'cellTypeWork/dataStore'
+import { getScatterPlot } from 'cellTypeScatter/scatter'
 
 const buildClusters = (data) => {
     // Find the clusters and sort them by column position.
@@ -68,6 +69,9 @@ const transfromToChart = (data) => {
     }
     const colormap = getCatColormap('elie', clusterCount)
     rxSet('cellTypeWork.colormap.create', { value: colormap })
+    
+    // Load any initial scatter plot included.
+    getScatterPlot(clusters, colormap, data.scatterplot_url)
 
     // Update the chart data.
     dataStore.load({
@@ -75,6 +79,8 @@ const transfromToChart = (data) => {
         clusterSolution: data.cluster_solution_name,
         colorBy:         data.color_by,
         sizeBy:          data.size_by,
+        geneTableUrl:    data.gene_table_url,
+        scatterplotUrl:  data.scatterplot_url,
         bubbles,
         cellTypes,
         clusters,
