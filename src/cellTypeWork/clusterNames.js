@@ -10,15 +10,8 @@ import MenuList from '@material-ui/core/MenuList'
 import 'cellTypeWork/style.css'
 
 function ClusterNames({ labelStyle, topStyle, props }) {
-    const { clusters, colormap, menuPosition, sorting,
-        onGeneStatsClick, onMenuClickAway, onMouseDown, onMouseLeave,
-        onMouseOver } = props
-    
-    // Make references for each cluster to anchor its context menu.
-    let anchorRef =
-        Array.from({length: clusters.length}, v => React.useRef(null))
-        
     const ContextMenu = () => {
+        const { menuPosition, onGeneStatsClick, onMenuClickAway } = props
         if (menuPosition === null) {
             return (null)
         }
@@ -26,7 +19,7 @@ function ClusterNames({ labelStyle, topStyle, props }) {
             <Popper
                 open={true}
                 anchorEl={anchorRef[menuPosition].current}
-                placement='top'
+                placement='bottom'
                 className='popover_clusters'
                 style={{ width: '105px' }}
             >
@@ -34,7 +27,7 @@ function ClusterNames({ labelStyle, topStyle, props }) {
                     <MenuList
                         style={{
                             backgroundColor: 'white',
-                            marginBottom: 8,
+                            marginTop: 8,
                             padding: 0,
                             border: 'solid 1px #888',
                             borderRadius: 5,
@@ -57,6 +50,13 @@ function ClusterNames({ labelStyle, topStyle, props }) {
     }
 
     // Render each cluster.
+    const { clusters, colormap, sorting, onMouseDown, onMouseLeave, onMouseOver
+        } = props
+    
+    // Make references for each cluster to anchor its context menu.
+    let anchorRef =
+        Array.from({length: clusters.length}, v => React.useRef(null))
+    
     let tds = []
     clusters.forEach((cluster, i) => {
         const color = (i % 2 === 0) ? 'black' : 'white'
@@ -70,13 +70,13 @@ function ClusterNames({ labelStyle, topStyle, props }) {
                     ...topStyle,
                     background: colormap[i],
                     color: color,
-                    cursor: (sorting) ? 'grabbing' : 'grab',
-                    userSelect: 'none',
-                    textAlign: 'center',
                     verticalAlign: 'middle',
-                    height: 18,
                     paddingTop: 3,
                     marginTop: -5,
+                    height: 18,
+                    textAlign: 'center',
+                    cursor: (sorting) ? 'grabbing' : 'grab',
+                    userSelect: 'none',
                 }}
                 onMouseDown={onMouseDown}
                 onMouseLeave={onMouseLeave}
@@ -86,17 +86,15 @@ function ClusterNames({ labelStyle, topStyle, props }) {
             </div>
         )
     })
+    // Render the cluster bar.
     return (
-        // Render the cluster bar.
         <div>
             <ContextMenu />
-            <div
-                style={{
-                    ...labelStyle,
-                    height: 15,
-                    marginTop: 5,
-                }}
-            >
+            <div style={{
+                ...labelStyle,
+                height: 15,
+                marginTop: 5,
+            }} >
                 Cluster #
             </div>
             {tds}

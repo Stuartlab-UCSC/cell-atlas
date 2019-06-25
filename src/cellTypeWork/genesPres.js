@@ -9,7 +9,6 @@ import MenuList from '@material-ui/core/MenuList'
 import 'cellTypeWork/style.css'
 
 function GenesPresentation(props) {
-
     const ContextMenu = () => {
         const { menuPosition, onScatterPlotClick, onRemoveClick, onMenuClickAway
             } = props
@@ -66,24 +65,12 @@ function GenesPresentation(props) {
 
 
     const { genes, sorting, onMouseDown, onMouseLeave, onMouseOver } = props
-    //console.log('genesPres 11 menuPosition:', menuPosition)
-    if (!genes) {
-        return (null)
-    }
+
     // Make references for each gene to anchor its context menu.
     let anchorRef =
         Array.from({length: genes.length}, v => React.useRef(null))
 
     const { geneWidth, rowHeight } = props.dims
-    const geneStyle = {
-        width: geneWidth,
-        textAlign: 'right',
-        height: rowHeight,
-        paddingRight: 10,
-        cursor: (sorting) ? 'grabbing' : 'grab',
-        userSelect: 'none',
-    }
-
     let tds = []
     genes.forEach((label, i) => {
         tds.push(
@@ -92,7 +79,14 @@ function GenesPresentation(props) {
                 data-domain='cellTypeWorkGenes'
                 key={i}
                 ref={anchorRef[i]}
-                style={geneStyle}
+                style={{
+                    width: geneWidth,
+                    paddingRight: 10,
+                    height: rowHeight,
+                    textAlign: 'right',
+                    cursor: (sorting) ? 'grabbing' : 'grab',
+                    userSelect: 'none',
+                }}
                 onMouseDown={onMouseDown}
                 onMouseLeave={onMouseLeave}
                 onMouseOver={onMouseOver}
@@ -102,18 +96,17 @@ function GenesPresentation(props) {
         )
     })
 
-    let comp = (
+    // Render the cluster bar.
+    return (
         <div style={{
             display: 'inline-block',
             verticalAlign: 'top',
-            marginTop: '3px'
+            marginTop: 3
         }} >
             <ContextMenu />
             {tds}
         </div>
     )
-    //console.log('genesPres last comp:', comp)
-    return comp
 }
 
 export default GenesPresentation

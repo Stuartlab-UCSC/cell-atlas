@@ -10,7 +10,7 @@ import WorksheetPresentation from 'cellTypeWork/worksheetPres'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 
-const USE_TEST_DATA = true
+const USE_TEST_DATA = false
 
 const clearContextElements = (except) => {
     // All context-specific element will be hidden except for the one specified.
