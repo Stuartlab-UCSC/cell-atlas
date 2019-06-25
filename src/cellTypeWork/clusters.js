@@ -15,11 +15,11 @@ const mapStateToProps = (state) => {
     return {
         clusters: dataStore.getClusters(),
         colormap: state.cellTypeWork.colormap,
-        menuOpen: state.cellTypeWork.contextMenu.open,
-        menuPosition: state.cellTypeWork.contextMenu.position,
+        menuPosition: state.cellTypeWork.clusterMenu,
         sorting: (state.sortable.drag.count !== null),
         dims: state.cellTypeWork.dims,
         render: state.cellTypeWork.render,
+        onMenuClickAway: clearContextElements,
     }
 }
 
@@ -39,48 +39,37 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGeneStatsClick: ev => {
             // Save the cluster name then get its gene stats.
-            const cluster = dataStore.getClusters()[
-                ev.target.dataset.position]
+            const cluster = dataStore.getClusters()[ev.target.dataset.position]
             dispatch({
                 type: 'cellTypeGene.cluster.uiSet',
                 value: cluster.name
             })
             getGeneTableData()
             // Close the context menu.
-            dispatch({
-                type: 'cellTypeWork.contextMenu.closeFromGeneStatsClick',
-            })
+            clearContextElements()
         },
-        onMenuClickAway: ev => {
-            dispatch({
-                type: 'cellTypeWork.contextMenu.closeFromClusterClickAway',
-            })
+        onMouseLeave: ev => {
+            clearContextElements(DOMAIN)
         },
         onMouseOver: ev => {
-            // Clear any leftover context elements.
-            clearContextElements(dispatch, 'clusters')
+            // Clear any context elements not belonging to cluster names.
+            clearContextElements(DOMAIN)
             
-            // If we're sorting, handle the drag even.
+            // If we're sorting, handle the drag event.
             if (rxGet('sortable.drag').count !== null) {
                 sortableOnMouseOver(ev)
             } else {
                 // The elements are not being sorted, so show the context menu.
                 dispatch({
-                    type: 'cellTypeWork.contextMenu.open',
+                    type: 'cellTypeWork.clusterMenu.open',
                     position: ev.target.dataset.position
                 })
             }
         },
-        onMouseleave: ev => {
-            // The elements are not being sorted, so close the context menu.
-            dispatch({
-                type: 'cellTypeWork.contextMenu.closeFromClusterMouseLeave' })
-        },
         onMouseDown: ev => {
             // Close the context menu.
-            dispatch({
-                type: 'cellTypeWork.contextMenu.closeFromClusterMouseDown',
-            })
+            dispatch({ type: 'cellTypeWork.clusterMenu.hide' })
+            clearContextElements()
             // Save the info for this cluster for sortable drag and drop.
             const marker = {
                 width: '2px',
@@ -97,14 +86,6 @@ const mapDispatchToProps = (dispatch) => {
                 'x',
                 dispatch,
             )
-        },
-        onMouseUp: ev => {
-            // On mouse up, show the context menu when we're not dragging,
-            dispatch({
-                type: 'cellTypeWork.contextMenu.mouseUp',
-                open: true,
-                position: ev.target.dataset.position,
-            })
         },
     }
 }

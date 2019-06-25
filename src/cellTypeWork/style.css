@@ -1,6 +1,6 @@
 
-/* Popover arrow */
-.popover::before{
+/* Popover arrow for clusters */
+.popover_clusters::before{
     content:"";
     position: absolute;
     left: 45px !important;
@@ -12,3 +12,18 @@
     border-color: #888 transparent transparent transparent;
     z-index:9998;
 }
+/* Popover arrow for genes */
+.popover_genes::before{
+    content:"";
+    position: absolute;
+    top: 42px !important;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 8px 0;
+    border-color: transparent #888 transparent transparent;
+    z-index:9998;
+}
+
+/* top, right, bottom, left */

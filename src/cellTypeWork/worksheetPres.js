@@ -34,7 +34,7 @@ const Legends = ({ data, dims }) => {
     )
 }
 
-const Presentation = ({ data, dims, fetchMessage, show }) => {
+const WorksheetPresentation = ({ data, dims, fetchMessage, show }) => {
     if (!show) {
         return (null)
     }
@@ -45,9 +45,8 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
             </Typography>
         )
     }
-    const { genes } = data
-    const { bubblesHeight, bubblesWidth, fontSize, legendWidth, geneWidth,
-        rowHeight } = dims
+    const { bubblesHeight, bubblesWidth, fontSize, legendWidth, geneWidth }
+        = dims
     if (bubblesHeight === 0 || bubblesWidth === 0) {
         return (null)
     }
@@ -66,11 +65,7 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
     return (
         <div id='worksheetPres' style={tableStyle}>
             <Clusters />
-            <Genes
-                genes={genes}
-                geneWidth={geneWidth}
-                rowHeight={rowHeight}
-            />
+            <Genes/>
             <div style={bubbleStyle} >
                 <Bubbles />
             </div>
@@ -79,4 +74,4 @@ const Presentation = ({ data, dims, fetchMessage, show }) => {
     )
 }
 
-export default Presentation
+export default WorksheetPresentation

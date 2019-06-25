@@ -84,6 +84,12 @@ class DataStore {
     reorderCellTypes(cellTypes) {
         this.data.cellTypes = cellTypes
     }
+    
+    removeGene(genePosition, bubbles) {
+        // Remove the gene and replace the bubbles.
+        this.data.genes.splice(genePosition, 1)
+        this.bubbles = bubbles
+    }
 
     reorderClusters(clusters) {
         this.data.clusters = clusters

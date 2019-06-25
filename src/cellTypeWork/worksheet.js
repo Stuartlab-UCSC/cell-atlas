@@ -5,19 +5,27 @@ import { connect } from 'react-redux'
 import { set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
 import dataStore from 'cellTypeWork/dataStore'
-import Presentation from 'cellTypeWork/worksheetPres'
+import WorksheetPresentation from 'cellTypeWork/worksheetPres'
 //import getGeneTableData from 'cellTypeGene/table'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 
-const USE_TEST_DATA = false
+const USE_TEST_DATA = true
 
-const clearContextElements = (dispatch, except) => {
-    if (except !== 'cellTypes') {
-        dispatch({ type: 'cellTypeWork.cellTypeInput.hide' })
+const clearContextElements = (except) => {
+    // All context-specific element will be hidden except for the one specified.
+    // @param except: a domain
+    if (except !== 'cellTypeWorkCellTypes') {
+        rxSet('cellTypeWork.cellTypeInput.hide')
     }
-    if (except !== 'clusters') {
-         dispatch({ type: 'cellTypeWork.contextMenu.close' })
+    if (except !== 'cellTypeWorkClusters') {
+         rxSet('cellTypeWork.clusterMenu.close')
+    }
+    if (except !== 'cellTypeWorkColorBar') {
+        rxSet('cellTypeWork.colormapPicker.hide')
+    }
+    if (except !== 'cellTypeWorkGenes') {
+         rxSet('cellTypeWork.geneMenu.close')
     }
 }
 
@@ -37,7 +45,6 @@ const receiveDataFromServer = (data) => {
 
 // A test stub in place of server query.
 const fetchTestData = (id, url, receiveFx) => {
-    //console.log('fetchTestData: id, url, receiveFx:', id, url, receiveFx)
     rxSet('cellTypeWork.fetchStatus.waiting')
     rxSet('cellTypeWork.fetchMessage.set', { value: 'waiting for data...' })
     //setTimeout(() => {
@@ -90,7 +97,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const Worksheet = connect(
     mapStateToProps, mapDispatchToProps
-)(Presentation)
+)(WorksheetPresentation)
 
 export default Worksheet
 

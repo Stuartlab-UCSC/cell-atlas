@@ -10,18 +10,6 @@ import dataStore from 'cellTypeWork/dataStore'
 // colorScale is the array of colors for the bubbles.
 let colorScale = []
 
-const setDimensions = (geneCount, clusterCount, colorRange, sizeRange) => {
-    // Set the new dimensions.
-    const { colWidth, rowHeight } = rxGet('cellTypeWork.dims')
-    // Update state.
-    rxSet('cellTypeWork.dims.set', {
-        bubblesWidth: (clusterCount * colWidth) + (colWidth / 4),
-        bubblesHeight: (geneCount * rowHeight) + (colWidth / 4),
-        colorRange,
-        sizeRange,
-    })
-}
-
 const getRangeColor = (value, min, max) => {
     // Get the color of this value in a colorScale of colors between 0 and 100.
     // Due to rounding, the value may be just outside the min or max,
@@ -37,18 +25,6 @@ const getRangeColor = (value, min, max) => {
     // Return the color at that index.
     return colorScale[Math.floor(norm)]}
 
-const setBubbleColorAndRadius = (bubbles, colorRange, sizeRange) => {
-    // Set the radius and colorRbg using the colorBy & sizeBy values & ranges.
-    for (let i = 0; i < bubbles.length; i++) {
-        let bubble = bubbles[i]
-        bubble.colorRgb = getRangeColor(bubble.color, colorRange.min,
-            colorRange.max)
-        bubble.radius = sizeToRadius(bubble.size, sizeRange.min, sizeRange.max)
-    }
-
-    return bubbles
-}
-
 const getColorScale = (colorRange) => {
     // Find the final color range.
     // Put zero is in the middle of the color range by using the largest
@@ -61,53 +37,69 @@ const getColorScale = (colorRange) => {
     return getCatColormap('expression', 101)
 }
 
-const setDimsAndColor = (bubbles, colorRange, sizeRange, clusterCount,
-    geneCount) => {
-    // Finalize the colorRange and get the colorScale.
+const setDimsAndColor = (bubbles, clusterCount, geneCount) => {
+    
+    // Find the color and size ranges.
+    let colorRange = { min: 0, max: 0 }
+    let sizeRange = { min: 0, max: 0 }
+    bubbles.forEach(bubble => {
+        colorRange.max = Math.max(bubble.color, colorRange.max)
+        colorRange.min = Math.min(bubble.color, colorRange.min)
+        sizeRange.max = Math.max(bubble.size, sizeRange.max)
+    })
+
+    // Update the dimensions state.
+    const { colWidth, rowHeight } = rxGet('cellTypeWork.dims')
+    rxSet('cellTypeWork.dims.set', {
+        bubblesWidth: (clusterCount * colWidth) + (colWidth / 4),
+        bubblesHeight: (geneCount * rowHeight) + (colWidth / 4),
+        colorRange,
+        sizeRange,
+    })
+    
+    // Build the color scale colormap from the color range.
     colorScale = getColorScale(colorRange)
     
-    // Find the color and radius to each bubble, including previous bubbles
-    // due the possibilty of the color and size ranges changing.
-    setBubbleColorAndRadius(bubbles, colorRange, sizeRange)
-    
-    // Save the new dimensions of the bubble matrix.
-    setDimensions(
-        geneCount,
-        clusterCount,
-        colorRange,
-        sizeRange
-    )
+    // Set the color and radius of each bubble
+    for (let i = 0; i < bubbles.length; i++) {
+        let bubble = bubbles[i]
+        bubble.colorRgb = getRangeColor(bubble.color, colorRange.min,
+            colorRange.max)
+        bubble.radius = sizeToRadius(bubble.size, sizeRange.min, sizeRange.max)
+    }
+
     return bubbles
 }
 
-const setBubbleColorBy = (gene, bubbles, line, clusters, colorRange) => {
+const setBubbleColorBy = (gene, bubbles, line, clusters) => {
     // Set the primary and colorBy properties of the bubble.
     line.splice(1).forEach((color,j) => {
-
         bubbles.push({
             cluster: clusters[j],
             gene,
             color: parseFloat(color),
         })
-        colorRange.max = Math.max(color, colorRange.max)
-        colorRange.min = Math.min(color, colorRange.min)
+    })
+}
+
+const findBubbleIndex = (bubbles, cluster, gene) => {
+    // Find the index of a bubble by its cluster name and gene.
+    return bubbles.findIndex(bubble => {
+        return (bubble.gene === gene && bubble.cluster === cluster)
     })
 }
 
 const findBubbleData = (bubbles, cluster, gene) => {
-    const index = bubbles.findIndex(bubble => {
-        return (bubble.gene === gene && bubble.cluster === cluster)
-    })
-    return bubbles[index]
+    // Find a bubble by its cluster name and gene.
+    return bubbles[findBubbleIndex(bubbles, cluster, gene)]
 }
 
-const setBubbleSizeBy = (gene, bubbles, line, clusters, sizeRange) => {
+const setBubbleSizeBy = (gene, bubbles, line, clusters) => {
     // Set the sizeBy properties of the bubble.
     line.splice(1).forEach((size,j) => {
         const cluster = clusters[j]
         const bubble = findBubbleData(bubbles, cluster, gene)
         bubble.size = parseFloat(size)
-        sizeRange.max = Math.max(size, sizeRange.max)
     })
 }
 
@@ -131,23 +123,46 @@ const addGeneBubbles = (data) => {
     const gene = rxGet('cellTypeGene.geneSelected')
     
     // Save colorBy values.
-    let colorRange = rxGet('cellTypeWork.dims.colorRange')
-    setBubbleColorBy(gene, bubbles, lines[1], clusters, colorRange)
+    setBubbleColorBy(gene, bubbles, lines[1], clusters)
 
     // Save sizeBy values.
-    let sizeRange = rxGet('cellTypeWork.dims.sizeRange')
-    setBubbleSizeBy(gene, bubbles, lines[2], clusters, sizeRange)
+    setBubbleSizeBy(gene, bubbles, lines[2], clusters)
 
     // Add these bubbles to the existing bubbles.
     bubbles = dataStore.getBubbles().concat(bubbles)
 
     // Find the dimensions and add the colors and sizes to the bubbles.
-    bubbles = setDimsAndColor(bubbles, colorRange, sizeRange,
+    bubbles = setDimsAndColor(bubbles,
         dataStore.getClusters().length,
         dataStore.getGenes().length + 1)
 
     // Save the new genes and bubbles
     dataStore.addGene(gene, bubbles)
+
+    // Notify to re-render worksheet.
+    rxSet('cellTypeWork.render.now')
+}
+
+const removeGeneBubbles = (genePosition) => {
+    // Find the ranges, colors, & sizes of bubbles after some bubbles have
+    // been removed.
+    // @param gene: gene to remove
+    
+    // Remove the gene's bubbles.
+    let bubbles = dataStore.getBubbles()
+    const genes = dataStore.getGenes()
+    const gene = genes[genePosition]
+    const clusters = dataStore.getClusters()
+    clusters.forEach(cluster => {
+        const index = findBubbleIndex(bubbles, cluster.name, gene)
+        bubbles.splice(index, 1)
+    })
+
+    // Find the dimensions and add the colors and sizes to the bubbles.
+    bubbles = setDimsAndColor(bubbles, clusters.length, genes.length - 1)
+
+    // Remove the gene and save the bubbles in the data store.
+    dataStore.removeGene(genePosition, bubbles)
 
     // Notify to re-render worksheet.
     rxSet('cellTypeWork.render.now')
@@ -170,20 +185,18 @@ const buildBubblesOnLoad = (data, clusterCount, geneCount) => {
     let clusters = lines[0].slice(1)
 
     // Handle the colorBy values.
-    let colorRange = { min: 0, max: 0 }
     lines.slice(1).forEach((line, i) => {
-        setBubbleColorBy(line[0], bubbles, line, clusters, colorRange)
+        setBubbleColorBy(line[0], bubbles, line, clusters)
     })
     // Size values are received in the same format as color values.
     lines = tsvToArrays(data.sizes)
     clusters = lines[0].slice(1)
-    let sizeRange = { min: 0, max: 0 }
     lines.slice(1).forEach((line) => {
-        setBubbleSizeBy(line[0], bubbles, line, clusters, sizeRange)
+        setBubbleSizeBy(line[0], bubbles, line, clusters)
     })
     // Find the dimensions and add the colors and sizes to the bubbles.
-    return setDimsAndColor(bubbles, colorRange, sizeRange,
-        clusterCount, geneCount)
+    return setDimsAndColor(bubbles, clusterCount, geneCount)
 }
 
-export { addGeneBubbles, buildBubblesOnLoad, findBubbleData }
+export { addGeneBubbles, buildBubblesOnLoad, findBubbleIndex, findBubbleData,
+    removeGeneBubbles }

@@ -10,16 +10,16 @@ import MenuList from '@material-ui/core/MenuList'
 import 'cellTypeWork/style.css'
 
 function ClusterNames({ labelStyle, topStyle, props }) {
-    const { clusters, colormap, menuOpen, menuPosition, sorting,
+    const { clusters, colormap, menuPosition, sorting,
         onGeneStatsClick, onMenuClickAway, onMouseDown, onMouseLeave,
-        onMouseOver, onMouseUp } = props
+        onMouseOver } = props
     
-    // Make references for each cluster to anchor each context menu.
+    // Make references for each cluster to anchor its context menu.
     let anchorRef =
         Array.from({length: clusters.length}, v => React.useRef(null))
         
     const ContextMenu = () => {
-        if (!menuOpen) {
+        if (menuPosition === null) {
             return (null)
         }
         return (
@@ -27,15 +27,13 @@ function ClusterNames({ labelStyle, topStyle, props }) {
                 open={true}
                 anchorEl={anchorRef[menuPosition].current}
                 placement='top'
-                className='popover'
-                style={{
-                    backgroundColor: 'white',
-                    width: '105px',
-                }}
+                className='popover_clusters'
+                style={{ width: '105px' }}
             >
                 <ClickAwayListener onClickAway={onMenuClickAway}>
                     <MenuList
                         style={{
+                            backgroundColor: 'white',
                             marginBottom: 8,
                             padding: 0,
                             border: 'solid 1px #888',
@@ -83,7 +81,6 @@ function ClusterNames({ labelStyle, topStyle, props }) {
                 onMouseDown={onMouseDown}
                 onMouseLeave={onMouseLeave}
                 onMouseOver={onMouseOver}
-                onMouseUp={onMouseUp}
             >
                 {cluster.name}
             </div>

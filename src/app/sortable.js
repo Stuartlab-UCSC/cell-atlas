@@ -46,9 +46,9 @@ const currentPosition = (ev) => {
     // Determine the current position index in the domain.
     const drag = rxGet('sortable.drag')
     let position = null
-    // If there is no drag information in the element's data,
-    // return the closest position. This picks the leftmost or rightmost
-    // element.
+    // If the mouse position is outside of the domain,
+    // return the closest position. This picks the left-most or right-most for
+    // horizontal domains and top-most or bottom-most for vertical domains.
     if (!ev.target.dataset || !ev.target.dataset.domain
         || ev.target.dataset.domain !== drag.domain) {
         const diff = (drag.xOrY === 'x')
@@ -61,10 +61,16 @@ const currentPosition = (ev) => {
         position = parseInt(ev.target.dataset.position, 10)
         // If needed, adjust the insertion position to what it would be
         // after the element is removed prior to insertion.
-        if (position > drag.position && drag.xOrY === 'x') {
-            position -= 1
-        } else if (position < drag.position && drag.xOrY === 'y') {
-            position += 1
+        if (drag.xOrY === 'x') {
+            if (position > drag.position) {
+                position -= 1
+            }
+        } else { // drag.xOrY === 'y'
+            if (position > drag.position) {
+                position -= 1
+            } else {
+                position -= 2
+            }
         }
     }
 

@@ -28,13 +28,14 @@ const State = (
     state = {
         cellTypeInput: null,
         cellTypeMode: 'readOnly',
+        clusterMenu: null,
         colormap: [],
         colormapPicker: null,
-        contextMenu: false,
         dims: defaultDims,
         fetchMessage: ' ',
         fetchStatus: 'initial',
         firstChartDisplayed: true,
+        geneMenu: null,
         render: renderSeq++,
         showChart: false,
         showSave: false,
@@ -65,6 +66,16 @@ const State = (
                 ...state,
                 cellTypeMode: 'readOnly'
             }
+        case 'cellTypeWork.clusterMenu.close':
+            return {
+                ...state,
+                clusterMenu: null
+            }
+        case 'cellTypeWork.clusterMenu.open':
+            return {
+                ...state,
+                clusterMenu: action.position
+            }
         case 'cellTypeWork.colormap.create':
             return {
                 ...state,
@@ -80,24 +91,6 @@ const State = (
             return {
                 ...state,
                 colormapPicker: null
-            }
-        case 'cellTypeWork.contextMenu.closeFromCellTypeHover':
-        case 'cellTypeWork.contextMenu.closeFromClusterClickAway':
-        case 'cellTypeWork.contextMenu.closeFromClusterMouseDown':
-        case 'cellTypeWork.contextMenu.closeFromClusterMouseLeave':
-        case 'cellTypeWork.contextMenu.closeFromGeneStatsClick':
-            return {
-                ...state,
-                contextMenu: false
-            }
-        case 'cellTypeWork.contextMenu.mouseUp':
-        case 'cellTypeWork.contextMenu.open':
-            return {
-                ...state,
-                contextMenu: {
-                    open: true,
-                    position: action.position,
-                }
             }
         case 'cellTypeWork.dims.default':
             return {
@@ -139,6 +132,16 @@ const State = (
             return {
                 ...state,
                 firstChartDisplayed: true
+            }
+        case 'cellTypeWork.geneMenu.close':
+            return {
+                ...state,
+                geneMenu: null
+            }
+        case 'cellTypeWork.geneMenu.open':
+            return {
+                ...state,
+                geneMenu: action.position,
             }
         case 'cellTypeWork.render.now':
             return {

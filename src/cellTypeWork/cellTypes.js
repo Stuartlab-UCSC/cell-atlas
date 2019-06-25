@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
                 value: ev.target.dataset.position
             })
             // Clear any leftover context elements.
-            clearContextElements(dispatch, 'cellTypes')
+            clearContextElements(DOMAIN)
             
             // Set focus to the input component.
             setTimeout(() => {

@@ -6,6 +6,8 @@ import Presentation from 'cellTypeWork/colorBarPres'
 import dataStore from 'cellTypeWork/dataStore'
 import { clearContextElements } from 'cellTypeWork/worksheet'
 
+const DOMAIN = 'cellTypeWorkColorBar'
+
 const mapStateToProps = (state) => {
     // Find the position stored in the colormapPicker state.
     const showPicker = state.cellTypeWork.colormapPicker
@@ -57,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onMouseOver: ev => {
             // Clear any leftover context elements.
-            clearContextElements(dispatch, 'colorBar')
+            clearContextElements(DOMAIN)
         },
         onBarClick: ev => {
             dispatch({

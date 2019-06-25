@@ -3,18 +3,22 @@
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
 import dataStore from 'cellTypeWork/dataStore'
-import Presentation from 'cellTypeWork/genesPres'
-import { sortableOnMouseDown, sortableOnMouseLeave, sortableOnMouseOver }
-    from 'app/sortable'
+import GenePresentation from 'cellTypeWork/genesPres'
+import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
+//import { getGeneScatterPlot } from 'cellTypeScatter/scatterPlot'
+import { clearContextElements } from 'cellTypeWork/worksheet'
+import { removeGeneBubbles } from 'cellTypeWork/transformToBubbles'
+
+const DOMAIN = 'cellTypeWorkGenes'
 
 const mapStateToProps = (state) => {
-    const data = dataStore.get()
     return {
-        genes: data.genes,
+        genes: dataStore.getGenes(),
         dims: state.cellTypeWork.dims,
+        menuPosition: state.cellTypeWork.geneMenu,
         render: state.cellTypeWork.render,
-        onMouseLeave: sortableOnMouseLeave,
-        onMouseOver: sortableOnMouseOver,
+        sorting: (state.sortable.drag.count !== null),
+        onMenuClickAway: clearContextElements,
     }
 }
 
@@ -30,18 +34,61 @@ const reorder = (start, end) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onScatterPlotClick: ev => {
+            // Save the gene name.
+            console.log('onScatterPlotClick: position:',
+                ev.target.dataset.position)
+            //const gene = dataStore.getGenes()[ev.target.dataset.position]
+            
+            // Get the scatter plot from the data server.
+            //getGeneScatterPlot(gene)
+            
+            // Close the context menu.
+            clearContextElements()
+        },
+        onRemoveClick: ev => {
+            console.log('genes onRemoveClick 1')
+            // Close the context menu.
+            clearContextElements()
+            console.log('genes onRemoveClick 2')
+
+            // Remove the gene's row from the worksheet.
+            removeGeneBubbles(ev.target.dataset.position)
+            console.log('genes onRemoveClick 3')
+        },
+        onMouseLeave: ev => {
+            clearContextElements(DOMAIN)
+        },
+        onMouseOver: ev => {
+            // Clear any context elements not belonging to genes.
+            clearContextElements(DOMAIN)
+            
+            // If we're sorting, handle the drag event.
+            if (rxGet('sortable.drag').count !== null) {
+                sortableOnMouseOver(ev)
+            } else {
+                // The elements are not being sorted, so show the context menu.
+                dispatch({
+                    type: 'cellTypeWork.geneMenu.open',
+                    position: ev.target.dataset.position
+                })
+            }
+        },
         onMouseDown: ev => {
-            const geneWidth = rxGet('cellTypeWork.dims').geneWidth
+            // Close the context menu.
+            clearContextElements()
+            // Save the info for this gene for sortable drag and drop.
+            const { geneWidth, rowHeight } = rxGet('cellTypeWork.dims')
             const marker = {
                 width: '20px',
                 height: '2px',
-                topOffset: -2,
+                topOffset: -rowHeight - 2,
                 leftOffset: geneWidth - 15,
             }
             sortableOnMouseDown(
                 ev,
                 dataStore.getGenes().length,
-                'cellTypeWorkGenes',
+                DOMAIN,
                 marker,
                 reorder,
                 'y',
@@ -53,6 +100,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const Genes = connect(
     mapStateToProps, mapDispatchToProps
-)(Presentation)
+)(GenePresentation)
 
 export default Genes
