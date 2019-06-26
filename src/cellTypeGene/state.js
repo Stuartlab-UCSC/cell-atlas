@@ -4,7 +4,6 @@ let renderSeq = 0
 const cellTypeGene = (
     state = {
         cluster: null,
-        expanded: false,
         fetchMessage: ' ',
         fetchStatus: 'quiet',
         firstTableDisplayed: false,
@@ -14,21 +13,6 @@ const cellTypeGene = (
         statsNames: [],
     }, action) => {
         switch(action.type) {
-        case 'cellTypeGene.expanded.true':
-            return {
-                ...state,
-                expanded: true
-            }
-        case 'cellTypeGene.expanded.false':
-            return {
-                ...state,
-                expanded: false
-            }
-        case 'cellTypeGene.expanded.toggle':
-            return {
-                ...state,
-                expanded: !state.expanded
-            }
         case 'cellTypeGene.cluster.uiSet':
             return {
                 ...state,

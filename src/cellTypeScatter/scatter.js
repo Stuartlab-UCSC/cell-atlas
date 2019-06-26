@@ -17,7 +17,6 @@ const receiveDataFromServer = (data) => {
     rxSet('cellTypeScatter.showChart.loading')
     scatterPlot = data
     rxSet('cellTypeScatter.showChart.toQuietStatus')
-    rxSet('cellTypeScatter.expanded.true')
     rxSet('cellTypeScatter.firstChartDisplayed.now')
 }
 
@@ -76,7 +75,6 @@ const mapStateToProps = (state) => {
     return {
         plot: scatterPlot,
         fetchMessage: state.cellTypeScatter.fetchMessage,
-        expanded: state.cellTypeScatter.expanded,
     }
 }
 

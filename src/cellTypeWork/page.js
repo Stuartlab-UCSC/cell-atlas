@@ -11,20 +11,12 @@ const mapStateToProps = (state) => {
         bubbleTooltip: state.bubble.tooltip,
         clusterSolution: dataStore.getClusterSolution(),
         dataset: dataStore.getDataset(),
-        geneTableExpanded: state.cellTypeGene.expanded,
-        scatterExpanded: state.cellTypeScatter.expanded,
         showEditables: state.cellTypeWork.showEditables,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGeneTableExpandChange: ev => {
-            dispatch({ type: 'cellTypeGene.expanded.toggle' })
-        },
-        onScatterExpandChange: ev => {
-            dispatch({ type: 'cellTypeScatter.expanded.toggle' })
-        },
         onSaveClick: ev => {
             console.log('onSaveClick')
         },

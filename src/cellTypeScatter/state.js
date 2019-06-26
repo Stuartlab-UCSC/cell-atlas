@@ -3,27 +3,16 @@
 
 const State = (
     state = {
-        expanded: false,
         fetchMessage: ' ',
         fetchStatus: 'initial',
         firstChartDisplayed: true,
         showChart: false,
     }, action) => {
         switch(action.type) {
-        case 'cellTypeScatter.expanded.true':
+        case 'cellTypeScatter.gene.uiSet':
             return {
                 ...state,
-                expanded: true
-            }
-        case 'cellTypeScatter.expanded.false':
-            return {
-                ...state,
-                expanded: false
-            }
-        case 'cellTypeScatter.expanded.toggle':
-            return {
-                ...state,
-                expanded: !state.expanded
+                gene: action.value
             }
         case 'cellTypeScatter.fetchMessage.set':
             return {
@@ -49,11 +38,6 @@ const State = (
             return {
                 ...state,
                 firstChartDisplayed: true
-            }
-        case 'cellTypeScatter.gene.uiSet':
-            return {
-                ...state,
-                gene: action.value
             }
         case 'cellTypeScatter.showChart.loading':
             return {

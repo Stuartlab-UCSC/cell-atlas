@@ -90,8 +90,6 @@ const receiveTableDataFromServer = (columns, data) => {
 
     // Save the columns and data then render.
     dataStore.load(columns, cleanData)
-    rxSet('cellTypeGene.expanded.true')
-    rxSet('cellTypeScatter.expanded.false')
     rxSet('cellTypeGene.render.now')
 }
 
