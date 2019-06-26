@@ -8,8 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import BubbleTooltip from 'bubble/tooltip'
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
-import ScatterPlot from 'cellTypeScatter/scatter'
-import GeneTable from 'cellTypeGene/table'
+import PageExpanders from 'cellTypeWork/pageExpanders'
 import MockUp from 'components/MockUp'
 
 const buttonStyle = {
@@ -72,18 +71,11 @@ const ClusterSolution = ({ show, solution }) => {
     )
 }
 
-const LeftPanel = () => {
-    return (
-        <React.Fragment>
-            <ScatterPlot />
-            <GeneTable/>
-        </React.Fragment>
-    )
-}
-
 const Presentation = (props) => {
-    const { bubbleTooltip, clusterSolution, dataset, showSave,
-        onSaveClick, onUploadClick } = props
+    const { bubbleTooltip, clusterSolution, dataset, geneOrCluster,
+        geneTableExpanded, scatterExpanded, showEditables,
+        onGeneTableExpandChange, onScatterExpandChange, onSaveClick,
+        onUploadClick } = props
     return (
         <div>
             <Grid container spacing={8} style={{background: 'transparent'}}>
@@ -100,19 +92,26 @@ const Presentation = (props) => {
                 </Grid>
                 <Grid item xs={2}>
                     <Save
-                        show={showSave}
+                        show={showEditables}
                         onClick={onSaveClick}
                     />
                 </Grid>
             
                 <Grid item xs={4}>
-                    <Dataset dataset={dataset} show={showSave} />
-                    <ClusterSolution solution={clusterSolution} show={showSave} />
+                    <Dataset dataset={dataset} show={showEditables} />
+                    <ClusterSolution solution={clusterSolution} show={showEditables} />
                 </Grid>
                <Grid item xs={8} />
      
                 <Grid item xs={5}>
-                    <LeftPanel />
+                    <PageExpanders
+                        geneOrCluster={geneOrCluster}
+                        geneTableExpanded={geneTableExpanded}
+                        scatterExpanded={scatterExpanded}
+                        show={showEditables}
+                        onGeneTableExpandChange={onGeneTableExpandChange}
+                        onScatterExpandChange={onScatterExpandChange}
+                    />
                 </Grid>
                     <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
                 <Grid item xs={7} style={{marginTop: -70}}>
@@ -124,11 +123,5 @@ const Presentation = (props) => {
         </div>
     )
 }
-/*
-            <Grid item xs={12}>
-                <GeneClusterSelect />
-            </Grid>
-
-*/
 
 export default Presentation

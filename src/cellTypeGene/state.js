@@ -1,17 +1,34 @@
 
-let renderSeq = 0  // A change here causes the gene table to re-rendered
+let renderSeq = 0
 
 const cellTypeGene = (
     state = {
         cluster: null,
+        expanded: false,
         fetchMessage: ' ',
         fetchStatus: 'quiet',
         firstTableDisplayed: false,
+        geneOrCluster: null,
         geneSelected: null,
         render: renderSeq,
         statsNames: [],
     }, action) => {
         switch(action.type) {
+        case 'cellTypeGene.expanded.true':
+            return {
+                ...state,
+                expanded: true
+            }
+        case 'cellTypeGene.expanded.false':
+            return {
+                ...state,
+                expanded: false
+            }
+        case 'cellTypeGene.expanded.toggle':
+            return {
+                ...state,
+                expanded: !state.expanded
+            }
         case 'cellTypeGene.cluster.uiSet':
             return {
                 ...state,
@@ -41,6 +58,11 @@ const cellTypeGene = (
             return {
                 ...state,
                 firstTableDisplayed: true
+            }
+        case 'cellTypeGene.geneOrCluster.set':
+            return {
+                ...state,
+                geneOrCluster: action.value
             }
         case 'cellTypeGene.geneSelected.uiSet':
             return {

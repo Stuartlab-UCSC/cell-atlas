@@ -34,7 +34,7 @@ const Presentation = (props) => {
     if (!message) {
         Counts = (
             <Typography style={{fontSize: '1rem'}}>
-                {'Cluster ' + cluster + ': ' + data.length + ' matches found'}
+                {'Cluster ' + cluster + ': ' + data.length + ' genes found'}
             </Typography>
         )
     }
@@ -90,6 +90,8 @@ const receiveTableDataFromServer = (columns, data) => {
 
     // Save the columns and data then render.
     dataStore.load(columns, cleanData)
+    rxSet('cellTypeGene.expanded.true')
+    rxSet('cellTypeScatter.expanded.false')
     rxSet('cellTypeGene.render.now')
 }
 

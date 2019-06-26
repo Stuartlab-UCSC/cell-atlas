@@ -41,7 +41,7 @@ const makeAbutton = (columns, data, name) => {
                         color='primary'
                         style={{
                             marginTop: -10,
-                            marginLeft: (name === 'Add') ? -15 : 5,
+                            marginLeft: -15,
                         }}
                     >
                         {(name === 'Add')
@@ -56,7 +56,7 @@ const makeAbutton = (columns, data, name) => {
 
 const makeButtons = (columns, data) => {
     makeAbutton(columns, data, 'Add')
-    makeAbutton(columns, data, 'ScatterPlot')
+    makeAbutton(columns, data, 'Map')
     // Center the scatter plot icon in the column.
     columns[0].options.setCellProps = setScatterProps
 }

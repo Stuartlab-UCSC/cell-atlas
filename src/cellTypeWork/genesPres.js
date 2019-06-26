@@ -41,7 +41,7 @@ const Menu = ({i, props}) => {
                         style={{ fontSize: 14 }}
                         onClick={onScatterClick}
                     >
-                        Scatter Plot
+                        Show Map
                     </MenuItem>
                     <MenuItem
                         data-position={menuPosition}

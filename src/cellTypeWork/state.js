@@ -38,7 +38,7 @@ const State = (
         geneMenu: null,
         render: renderSeq++,
         showChart: false,
-        showSave: false,
+        showEditables: false,
         sheetList: defaultSheetList,
         sheetSelected: defaultSheetSelected,
         tableColumn: [],
@@ -184,15 +184,15 @@ const State = (
                 ...state,
                 showColorPicker: null,
             }
-        case 'cellTypeWork.showSave.hide':
+        case 'cellTypeWork.showEditables.hide':
             return {
                 ...state,
-                showSave: false
+                showEditables: false
             }
-        case 'cellTypeWork.showSave.show':
+        case 'cellTypeWork.showEditables.show':
             return {
                 ...state,
-                showSave: true
+                showEditables: true
             }
         case 'cellTypeWork.tableColumn.load':
             return {

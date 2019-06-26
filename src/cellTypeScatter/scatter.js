@@ -12,11 +12,12 @@ const testData = testScatterPlot
 let scatterPlot = testScatterPlot // the png from the data server.
 
 const receiveDataFromServer = (data) => {
-    console.log('data:', data)
+    //console.log('data:', data)
     // Handle the data received from the server.
     rxSet('cellTypeScatter.showChart.loading')
     scatterPlot = data
     rxSet('cellTypeScatter.showChart.toQuietStatus')
+    rxSet('cellTypeScatter.expanded.true')
     rxSet('cellTypeScatter.firstChartDisplayed.now')
 }
 
@@ -33,7 +34,7 @@ const fetchTestData = (id, url, receiveFx) => {
 }
 
 const getClusterAssignmentScatterPlot = (urlIn) => {
-    console.log('getClusterAssignmentScatterPlot')
+    //console.log('getClusterAssignmentScatterPlot')
     /*
     let url = urlIn
     if (!url) {
@@ -49,6 +50,7 @@ const getClusterAssignmentScatterPlot = (urlIn) => {
 
 const getGeneScatterPlot = (gene, urlIn) => {
     // Request the data from the server.
+    //console.log('getGeneScatterPlot: gene:', gene)
     let url = urlIn
     if (!url) {
         url = '/user/someUser/worksheet/someWorksheet/scatterplot/umap/gene/'
@@ -74,6 +76,7 @@ const mapStateToProps = (state) => {
     return {
         plot: scatterPlot,
         fetchMessage: state.cellTypeScatter.fetchMessage,
+        expanded: state.cellTypeScatter.expanded,
     }
 }
 

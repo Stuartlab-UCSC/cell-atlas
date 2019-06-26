@@ -74,7 +74,7 @@ const mapStateToProps = (state) => {
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeWork.fetchMessage,
         render: state.cellTypeWork.render,
-        show: state.cellTypeWork.showSave,
+        show: state.cellTypeWork.showEditables,
     }
 }
 

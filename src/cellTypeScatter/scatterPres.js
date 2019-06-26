@@ -2,7 +2,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
-const ScatterPlotPres = ({ fetchMessage, plot,  }) => {
+const ScatterPlotPres = ({ fetchMessage, plot }) => {
     if (fetchMessage) {
         return (
             <Typography style={{marginTop: 40}}>
