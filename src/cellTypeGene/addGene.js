@@ -13,6 +13,14 @@ const testData =
 color_by	0	0.6357	-0.4
 size_by	0.8606	0.74	0.4`
 
+const receiveDataFromServer = (data, error) => {
+    if (error) {
+        alert(error)
+    } else {
+        addGeneBubbles(data)
+    }
+}
+
 // A test stub in place of server query.
 const fetchTestData = (id, url, receiveFx) => {
     rxSet('cellTypeGeneClusters.fetchStatus.waiting')
@@ -35,10 +43,13 @@ const getDataForAllClusters = (gene) => {
         '/color/' + colorBy +
         '/size/' + sizeBy
     if (USE_TEST_DATA) {
-        fetchTestData('cellTypeGeneClusters', url, addGeneBubbles)
+        fetchTestData('cellTypeGeneClusters', url, receiveDataFromServer)
     } else {
-        fetchData('cellTypeGeneClusters', url, addGeneBubbles, 'text')
+        fetchData('cellTypeGeneClusters', url, receiveDataFromServer, 'text')
     }
+    // Save the gene selected.
+    rxSet('cellTypeGene.geneSelected.uiSet', { value: gene })
+
 }
 
 export { getDataForAllClusters }

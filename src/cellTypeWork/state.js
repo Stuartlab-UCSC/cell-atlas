@@ -141,7 +141,7 @@ const State = (
         case 'cellTypeWork.geneMenu.open':
             return {
                 ...state,
-                geneMenu: action.position,
+                geneMenu: parseInt(action.position, 10),
             }
         case 'cellTypeWork.render.now':
             return {

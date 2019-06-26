@@ -2,109 +2,104 @@
 
 import React from 'react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Popper from '@material-ui/core/Popper'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 
 import 'cellTypeWork/style.css'
 
-function GenesPresentation(props) {
-    const ContextMenu = () => {
-        const { menuPosition, onScatterPlotClick, onRemoveClick, onMenuClickAway
-            } = props
-        if (menuPosition === null) {
-            return (null)
-        }
-        return (
-            <Popper
-                open={true}
-                anchorEl={anchorRef[menuPosition].current}
-                placement='right'
-                className='popover_genes'
-                style={{
-                    width: '120px',
-                    marginLeft: -8,
-                }}
-            >
-                <ClickAwayListener onClickAway={onMenuClickAway}>
-                    <MenuList
-                        style={{
-                            backgroundColor: 'white',
-                            marginTop: 33,
-                            marginLeft: 8,
-                            padding: 0,
-                            border: 'solid 1px #888',
-                            borderRadius: 5,
-                        }}
-                    >
-                        <MenuItem
-                            data-position={menuPosition}
-                            style={{
-                                padding: '3 0',
-                                fontSize: 12,
-                            }}
-                            onClick={onScatterPlotClick}
-                        >
-                            SCATTERPLOT
-                        </MenuItem>
-                        <MenuItem
-                            data-position={menuPosition}
-                            style={{
-                                padding: '3 0',
-                                fontSize: 12,
-                            }}
-                            onClick={onRemoveClick}
-                        >
-                            REMOVE
-                        </MenuItem>
-                    </MenuList>
-                </ClickAwayListener>
-            </Popper>
-        )
+const Menu = ({i, props}) => {
+    // Render a menu on hover.
+    const { menuPosition, onMenuClickAway, onRemoveClick, onScatterClick }
+        = props
+    const { geneWidth } = props.dims
+    if (menuPosition === null || menuPosition !== i) {
+        return (null)
     }
+    return (
+        <div
+            className='popover_genes'
+            style={{
+                position: 'absolute',
+                top: -10,
+                left: geneWidth - 8,
+                width: '120px',
+            }}
+        >
+            <ClickAwayListener onClickAway={onMenuClickAway}>
+                <MenuList
+                    style={{
+                        marginTop: 0,
+                        marginLeft: 8,
+                        padding: 0,
+                        border: 'solid 1px #888',
+                        backgroundColor: 'white',
+                        zIndex: 1,
+                    }}
+                >
+                    <MenuItem
+                        data-position={menuPosition}
+                        style={{ fontSize: 14 }}
+                        onClick={onScatterClick}
+                    >
+                        Scatter Plot
+                    </MenuItem>
+                    <MenuItem
+                        data-position={menuPosition}
+                        style={{ fontSize: 14 }}
+                        onClick={onRemoveClick}
+                    >
+                        Remove
+                    </MenuItem>
+                </MenuList>
+            </ClickAwayListener>
+        </div>
+    )
+}
 
-
+const GeneList = ({ props }) => {
     const { genes, sorting, onMouseDown, onMouseLeave, onMouseOver } = props
-
-    // Make references for each gene to anchor its context menu.
-    let anchorRef =
-        Array.from({length: genes.length}, v => React.useRef(null))
-
     const { geneWidth, rowHeight } = props.dims
-    let tds = []
-    genes.forEach((label, i) => {
-        tds.push(
-            <div
-                data-position={i}
-                data-domain='cellTypeWorkGenes'
-                key={i}
-                ref={anchorRef[i]}
-                style={{
-                    width: geneWidth,
-                    paddingRight: 10,
-                    height: rowHeight,
-                    textAlign: 'right',
-                    cursor: (sorting) ? 'grabbing' : 'grab',
-                    userSelect: 'none',
-                }}
-                onMouseDown={onMouseDown}
-                onMouseLeave={onMouseLeave}
-                onMouseOver={onMouseOver}
-            >
-                {label}
+    
+    // Build the labels.
+    let geneList = []
+    genes.forEach((gene, i) => {
+        geneList.push(
+            <div key={i} style={{position: 'relative'}} >
+                <div
+                    key={i}
+                    data-gene={gene}
+                    data-position={i}
+                    data-domain='cellTypeWorkGenes'
+                    style={{
+                        width: geneWidth,
+                        paddingRight: 10,
+                        height: rowHeight,
+                        textAlign: 'right',
+                        cursor: (sorting) ? 'grabbing' : 'grab',
+                        userSelect: 'none',
+                    }}
+                    onMouseDown={onMouseDown}
+                    onMouseLeave={onMouseLeave}
+                    onMouseOver={onMouseOver}
+                >
+                    {gene}
+                </div>
+                <Menu i={i} props={props} />
             </div>
         )
     })
+    return geneList
+}
 
-    // Render the cluster bar.
+const GenesPresentation = (props) => {
+    // Render the gene list.
     return (
         <div style={{
             display: 'inline-block',
             verticalAlign: 'top',
             marginTop: 3
         }} >
-            <ContextMenu />
-            {tds}
+            <GeneList props={props} />
         </div>
     )
 }

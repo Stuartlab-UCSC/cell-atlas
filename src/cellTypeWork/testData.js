@@ -2,7 +2,7 @@
 // Cell Type Worksheet page data stub.
 
 // Data server response.
-const testData = {resource: {
+const testData = {
     dataset_name: 'dataset 1',
     cluster_solution_name: 'solution 1',
     size_by: 'sensitivity',
@@ -27,6 +27,6 @@ const testData = {resource: {
         'ALK	0.1	0.2	0.3\n' +
         'TP53	0.4	0.5	0.6\n' +
         'TNF	0.7	0.8	0.9',
-}}
+}
 
 export default testData

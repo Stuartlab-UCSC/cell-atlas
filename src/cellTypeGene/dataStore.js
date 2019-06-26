@@ -16,6 +16,10 @@ class DataStore {
         return this.tableData
     }
     
+    getData() {
+        return this.tableData.data
+    }
+    
     load(columns, data) {
         this.tableData = {
             columns,

@@ -34,7 +34,6 @@ const receiveDataFromServer = (data) => {
     
     // Kick off the request for the gene table for cluster
     if (data && data.gene_table_url) {
-        console.log('data.gene_table_url:', data.gene_table_url)
         //getGeneTableData(data.gene_table_url)
     }
     rxSet('cellTypeWork.showChart.loading')

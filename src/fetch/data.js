@@ -17,7 +17,13 @@ const receiveData = (id, data, callback, tableData) => {
     // If the data contains a message, set the fetch message to that error.
     if (typeof data === 'object' && data.message) {
         rxSet(id + '.fetchMessage.set', { value: data.message })
-        
+        console.error('fetch error:', data.message)
+        if (callback) {
+            setTimeout(() => {
+                callback(null, data.message)
+            })
+        }
+
     // If data is empty, let the user know there is no data.
     } else if (data === null || data === undefined || data.length < 1) {
         rxSet(id + '.fetchMessage.set', { value: 'No data found' })
@@ -99,6 +105,7 @@ const fetchData = (id, urlPath, callback, responseType, tableData) => {
                 }
             } else {
                 error(id, response.statusText)
+                return response.json()
             }
         })
         .then((data) => receiveData(id, data, callback, tableData))

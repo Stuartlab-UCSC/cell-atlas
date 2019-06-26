@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
         render: state.cellTypeWork.render,
         sorting: (state.sortable.drag.count !== null),
         onMenuClickAway: clearContextElements,
+        onScatterClick: getGeneScatterPlot,
     }
 }
 
@@ -34,27 +35,12 @@ const reorder = (start, end) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onScatterPlotClick: ev => {
-            // Save the gene name.
-            console.log('onScatterPlotClick: position:',
-                ev.target.dataset.position)
-            const gene = dataStore.getGenes()[ev.target.dataset.position]
-            
-            // Get the scatter plot from the data server.
-            getGeneScatterPlot(gene)
-            
-            // Close the context menu.
-            clearContextElements()
-        },
         onRemoveClick: ev => {
-            console.log('genes onRemoveClick 1')
             // Close the context menu.
             clearContextElements()
-            console.log('genes onRemoveClick 2')
 
             // Remove the gene's row from the worksheet.
             removeGeneBubbles(ev.target.dataset.position)
-            console.log('genes onRemoveClick 3')
         },
         onMouseLeave: ev => {
             clearContextElements(DOMAIN)

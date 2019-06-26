@@ -11,7 +11,9 @@ import { receiveTableData } from 'fetch/tableData'
 import { stringToPrecision } from 'app/util'
 import dataStore from 'cellTypeGene/dataStore'
 import { optionOverrideFx, themeOverrideFx } from 'cellTypeGene/tableOverrides'
-import makeAddButtons from 'cellTypeGene/addButton'
+import makeButtons from 'cellTypeGene/buttons'
+import { getDataForAllClusters } from 'cellTypeGene/addGene'
+import { getGeneScatterPlot } from 'cellTypeScatter/scatter'
 
 const DOMAIN = 'cellTypeGene'
 const USE_TEST_DATA = false
@@ -51,6 +53,16 @@ const Presentation = (props) => {
     )
 }
 
+const onCellClick = (colData, cellMeta) => {
+    const { colIndex } = cellMeta
+    const gene = colData.props['data-gene']
+    if (colIndex === 0) {
+        getGeneScatterPlot(gene)
+    } else if (colIndex === 1) {
+        getDataForAllClusters(gene)
+    }
+}
+
 const receiveTableDataFromServer = (columns, data) => {
     // Receive the table column and body data
     // derived from the original data from the server.
@@ -73,17 +85,8 @@ const receiveTableDataFromServer = (columns, data) => {
     }
     likely.options.sortDirection = 'desc'
     
-    // Tell the dataTable component these are numeric for sorting and display.
-    columns.slice(1).forEach(col => {
-        if (!col.options) {
-            col.options = {}
-        }
-        col.options.number = true
-        col.options.numeric = true
-    })
-    
-    // Build the add buttons for each row.
-    makeAddButtons(columns, cleanData)
+    // Build the buttons for each row.
+    makeButtons(columns, cleanData)
 
     // Save the columns and data then render.
     dataStore.load(columns, cleanData)
@@ -103,7 +106,7 @@ const receiveDataFromServer = (data) => {
 
 const getGeneTableData = (urlIn) => {
     // Request the data from the server.
-    console.log('getGeneTableData: urlIn:', urlIn)
+
     // If no url is supplied, get the cluster from state.
     let url = urlIn
     if (url === undefined) {
@@ -137,4 +140,4 @@ const GeneTable = connect(
 )(Presentation)
 
 export default GeneTable
-export { getGeneTableData }
+export { getGeneTableData, onCellClick }

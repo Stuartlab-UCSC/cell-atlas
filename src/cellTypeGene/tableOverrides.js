@@ -2,6 +2,8 @@
 // Theme overrides for the dataTable component.
 // These are added to the existing overrides in dataTable.
 
+import { onCellClick } from 'cellTypeGene/table'
+
 const customSort = (data, col, dir) => {
     if (col > 1) {
         // Numeric sort.
@@ -28,6 +30,7 @@ const customSort = (data, col, dir) => {
 const optionOverrideFx = (options) => {
     options.filter = false
     options.customSort = customSort
+    options.onCellClick = onCellClick
     return options
 }
 

@@ -30,18 +30,14 @@ function ClusterNames({ labelStyle, topStyle, props }) {
                             marginTop: 8,
                             padding: 0,
                             border: 'solid 1px #888',
-                            borderRadius: 5,
                         }}
                     >
                         <MenuItem
                             data-position={menuPosition}
-                            style={{
-                                padding: '3 0',
-                                fontSize: 12,
-                            }}
+                            style={{ fontSize: 14 }}
                             onClick={onGeneStatsClick}
                         >
-                            GENE STATS
+                            Gene Stats
                         </MenuItem>
                     </MenuList>
                 </ClickAwayListener>

@@ -16,7 +16,7 @@
 .popover_genes::before{
     content:"";
     position: absolute;
-    top: 42px !important;
+    top: 8px !important;
     left: 0;
     width: 0;
     height: 0;

@@ -2,21 +2,16 @@
 // The gene table component for the cell type worksheet.
 
 import React from 'react'
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import { set as rxSet } from 'state/rx'
-import { getDataForAllClusters } from 'cellTypeGene/addGene'
+import IconButton from '@material-ui/core/IconButton'
+import { Add, ScatterPlot } from '@material-ui/icons'
 
-const onAddClick = (gene, tableMeta) => {
-    // Save the gene selected.
-    rxSet('cellTypeGene.geneSelected.uiSet', { value: gene })
-    // Request the gene values for all clusters.
-    getDataForAllClusters(gene)
+const setScatterProps = (cellValue, rowIndex, columnIndex) => {
+    // Center the scatter plot icon in the column.
+    return { style: { marginLeft: 10 }}
 }
 
-const makeAddButtons = (columns, data) => {
-    // Insert a new column for adding the gene to the worksheet
-    // and set some column options
+const makeAbutton = (columns, data, name) => {
+    // Insert a new column with a button.
     
     // Don't show the gene in the columns selector.
     if (!columns[0].options) {
@@ -25,7 +20,7 @@ const makeAddButtons = (columns, data) => {
     columns[0].options.viewColumns = false
     
     // Add a duplicate of the gene to the beginning of each row that gets
-    // converted to an add button.
+    // converted to a button.
     for (let i = 0; i < data.length; i++) {
         const gene = data[i][0]
         data[i].unshift(gene)
@@ -33,7 +28,7 @@ const makeAddButtons = (columns, data) => {
     // Add the column info for the conversion to be performed on the value.
     columns.unshift(
         {
-            name: "Add",
+            name,
             options: {
                 filter: false,
                 searchable: false,
@@ -41,15 +36,17 @@ const makeAddButtons = (columns, data) => {
                 viewColumns: false,
                 customBodyRender: (value, tableMeta, updateValue) => (
                     <IconButton
+                        data-gene={value}
                         size='small'
                         color='primary'
                         style={{
                             marginTop: -10,
-                            marginLeft: -15,
+                            marginLeft: (name === 'Add') ? -15 : 5,
                         }}
-                        onClick={event => onAddClick(value, tableMeta)}
                     >
-                        <AddIcon />
+                        {(name === 'Add')
+                            ? <Add />
+                            : <ScatterPlot />}
                     </IconButton>
                 )
             }
@@ -57,4 +54,11 @@ const makeAddButtons = (columns, data) => {
     )
 }
 
-export default makeAddButtons
+const makeButtons = (columns, data) => {
+    makeAbutton(columns, data, 'Add')
+    makeAbutton(columns, data, 'ScatterPlot')
+    // Center the scatter plot icon in the column.
+    columns[0].options.setCellProps = setScatterProps
+}
+
+export default makeButtons
