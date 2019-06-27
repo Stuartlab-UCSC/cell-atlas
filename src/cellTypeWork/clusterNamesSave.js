@@ -5,15 +5,14 @@ import React from 'react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
+
 import 'cellTypeWork/style.css'
 
 const Menu = ({i, props}) => {
-    const { menuPosition } = props
+    const { menuPosition, onGeneStatsClick, onMenuClickAway } = props
     if (menuPosition === null || menuPosition !== i) {
         return (null)
     }
-    const { onGeneStatsClick, onMenuClickAway } = props
-    const { fontFamily } = props.dims
     return (
         <div
             className='popover_clusters'
@@ -31,7 +30,6 @@ const Menu = ({i, props}) => {
                         padding: 0,
                         border: 'solid 1px #888',
                         backgroundColor: 'white',
-                        fontFamily,
                         zIndex: 1,
                     }}
                 >
@@ -48,17 +46,10 @@ const Menu = ({i, props}) => {
     )
 }
 
-const ClusterNames = (props) => {
+const ClusterNames = ({ topStyle, props }) => {
     // Render each cluster.
-    const { topStyle, clusters, colormap, sorting, onClick, onMouseDown,
-        onMouseLeave, onMouseOver } = props
-    const { fontFamily, fontSize } = props.dims
-    
-    let cursor = (sorting) ? 'grabbing' : 'grab'
-    if (onClick) {
-        // If we have an onClick handler, this is not sortable.
-        cursor = 'pointer'
-    }
+    const { clusters, colormap, sorting, onMouseDown, onMouseLeave, onMouseOver
+        } = props
     
     let clusterList = []
     clusters.forEach((cluster, i) => {
@@ -73,22 +64,18 @@ const ClusterNames = (props) => {
             >
                 <div
                     data-position={i}
-                    data-cluster={cluster.name}
                     data-domain='cellTypeWorkClusters'
                     style={{
                         background: colormap[i],
                         color: color,
-                        fontFamily,
-                        fontSize,
                         verticalAlign: 'middle',
                         paddingTop: 3,
                         marginTop: -5,
                         height: 18,
                         textAlign: 'center',
-                        cursor: cursor,
+                        cursor: (sorting) ? 'grabbing' : 'grab',
                         userSelect: 'none',
                     }}
-                    onClick={onClick}
                     onMouseDown={onMouseDown}
                     onMouseLeave={onMouseLeave}
                     onMouseOver={onMouseOver}

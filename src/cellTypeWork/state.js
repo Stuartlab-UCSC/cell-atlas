@@ -1,6 +1,8 @@
 
 // Cell type sheet page state.
 
+import { fontFamily } from 'app/themeData'
+
 let renderSeq = 0  // A change here causes the worksheet to re-rendered
 const defaultDims = {
     bubblesHeight: 0,
@@ -11,6 +13,7 @@ const defaultDims = {
     colorRange:{},
     colWidth: 14,
     clusterMarginTop: 10,
+    fontFamily,
     fontSize: 11,
     geneWidth: 100,
     labelFontSize: 16,
@@ -74,7 +77,7 @@ const State = (
         case 'cellTypeWork.clusterMenu.open':
             return {
                 ...state,
-                clusterMenu: action.position
+                clusterMenu: parseInt(action.position, 10)
             }
         case 'cellTypeWork.colormap.create':
             return {

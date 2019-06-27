@@ -3,7 +3,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography'
 
-import { fontFamily } from 'app/themeData'
 import Legend from 'components/legend'
 import Clusters from 'cellTypeWork/clusters'
 import Bubbles from 'cellTypeWork/bubbles'
@@ -45,8 +44,8 @@ const WorksheetPresentation = ({ data, dims, fetchMessage, show }) => {
             </Typography>
         )
     }
-    const { bubblesHeight, bubblesWidth, fontSize, legendWidth, geneWidth }
-        = dims
+    const { bubblesHeight, bubblesWidth, fontFamily, fontSize, legendWidth,
+        geneWidth } = dims
     if (bubblesHeight === 0 || bubblesWidth === 0) {
         return (null)
     }
@@ -58,8 +57,8 @@ const WorksheetPresentation = ({ data, dims, fetchMessage, show }) => {
     }
     const tableStyle = {
         width: geneWidth + bubblesWidth + legendWidth,
-        fontFamily: fontFamily,
-        fontSize: fontSize,
+        fontFamily,
+        fontSize,
         position: 'relative',
     }
     return (

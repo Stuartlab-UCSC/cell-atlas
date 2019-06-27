@@ -38,7 +38,8 @@ const CellCounts = ({ clusters, topStyle, labelStyle }) => {
 }
 
 const Presentation = (props) => {
-    const { clusters } = props
+    const { clusters, colormap, dims, menuPosition, sorting, onMenuClickAway,
+        onGeneStatsClick, onMouseDown, onMouseLeave, onMouseOver} = props
     const { colWidth, geneWidth } = props.dims
     if (!clusters) {
         return (null)
@@ -59,12 +60,27 @@ const Presentation = (props) => {
             <CellTypes />
             <CellTypesEdit />
             <ColorBar />
+            <div style={{
+                ...labelStyle,
+                height: 15,
+                marginTop: 5,
+            }} >
+                Cluster #
+            </div>
             <ClusterNames
-                props={props}
+                clusters={clusters}
+                colormap={colormap}
+                dims={dims}
+                menuPosition={menuPosition}
+                sorting={sorting}
                 topStyle={topStyle}
-                labelStyle={labelStyle}
-            />
-            <CellCounts
+                onGeneStatsClick={onGeneStatsClick}
+                onMenuClickAway={onMenuClickAway}
+                onMouseDown={onMouseDown}
+                onMouseLeave={onMouseLeave}
+                onMouseOver={onMouseOver}
+             />
+                 <CellCounts
                 clusters={clusters}
                 topStyle={topStyle}
                 labelStyle={labelStyle}

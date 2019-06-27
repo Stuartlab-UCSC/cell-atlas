@@ -9,7 +9,7 @@ import BubbleTooltip from 'bubble/tooltip'
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
 import ScatterPlot from 'cellTypeScatter/scatter'
-import GeneTable from 'cellTypeGene/table'
+import GeneTable from 'cellTypeGene/ctgMain'
 import MockUp from 'components/MockUp'
 
 const buttonStyle = {
@@ -72,15 +72,6 @@ const ClusterSolution = ({ show, solution }) => {
     )
 }
 
-const LeftPanel = () => {
-    return (
-        <React.Fragment>
-            <ScatterPlot />
-            <GeneTable/>
-        </React.Fragment>
-    )
-}
-
 const Presentation = (props) => {
     const { bubbleTooltip, clusterSolution, dataset, showEditables,
         onSaveClick, onUploadClick } = props
@@ -111,12 +102,16 @@ const Presentation = (props) => {
                 </Grid>
                <Grid item xs={8} />
      
-                <Grid item xs={5}>
-                    <LeftPanel />
+                <Grid item xs={4}>
+                    <ScatterPlot show={showEditables} />
                 </Grid>
                     <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
-                <Grid item xs={7} style={{marginTop: -70}}>
+                <Grid item xs={8} style={{marginTop: -70}}>
                     <Worksheet />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <GeneTable/>
                 </Grid>
 
             </Grid>

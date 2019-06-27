@@ -2,7 +2,7 @@
 // Theme overrides for the dataTable component.
 // These are added to the existing overrides in dataTable.
 
-import { onCellClick } from 'cellTypeGene/table'
+import { onCellClick } from 'cellTypeGene/ctgTable'
 
 const customSort = (data, col, dir) => {
     if (col > 1) {

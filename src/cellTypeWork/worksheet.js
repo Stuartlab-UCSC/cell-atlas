@@ -6,7 +6,7 @@ import { set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
 import dataStore from 'cellTypeWork/dataStore'
 import WorksheetPresentation from 'cellTypeWork/worksheetPres'
-//import getGeneTableData from 'cellTypeGene/table'
+//import getGeneTableData from 'cellTypeGene/ctgFetch'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 

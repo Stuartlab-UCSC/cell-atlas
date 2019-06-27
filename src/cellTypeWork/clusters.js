@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { get as rxGet } from 'state/rx'
 import Presentation from 'cellTypeWork/clustersPres'
 import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
-import { getGeneTableData } from 'cellTypeGene/table'
+import getGeneTableData from 'cellTypeGene/ctgFetch'
 import { reorder as cellTypeReorder } from 'cellTypeWork/cellTypes'
 import dataStore from 'cellTypeWork/dataStore'
 import { clearContextElements } from 'cellTypeWork/worksheet'
@@ -38,13 +38,9 @@ const reorder = (start, end) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onGeneStatsClick: ev => {
-            // Save the cluster name then get its gene stats.
+            // Get the cluster's gene stats.
             const cluster = dataStore.getClusters()[ev.target.dataset.position]
-            dispatch({
-                type: 'cellTypeGene.cluster.uiSet',
-                value: cluster.name
-            })
-            getGeneTableData()
+            getGeneTableData(cluster.name)
             // Close the context menu.
             clearContextElements()
         },

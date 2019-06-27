@@ -66,7 +66,6 @@ const GeneList = ({ props }) => {
         geneList.push(
             <div key={i} style={{position: 'relative'}} >
                 <div
-                    key={i}
                     data-gene={gene}
                     data-position={i}
                     data-domain='cellTypeWorkGenes'
