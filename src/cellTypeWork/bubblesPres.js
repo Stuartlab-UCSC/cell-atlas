@@ -35,7 +35,7 @@ const ManyBubbles = ({ data, dims }) => {
     )
 }
 
-const Presentation = ({ data, dims }) => {
+const Presentation = ({ data, dims, onMouseOver }) => {
     const { bubblesHeight, bubblesWidth } = dims
     if (!data.genes.length || !data.clusters.length) {
         return (null)
@@ -45,6 +45,7 @@ const Presentation = ({ data, dims }) => {
             height={bubblesHeight}
             width={bubblesWidth}
             style={{display: 'inline-block'}}
+            onMouseOver={onMouseOver}
         >
             <ManyBubbles data={data} dims={dims} />
         </svg>

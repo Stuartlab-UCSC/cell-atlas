@@ -4,6 +4,7 @@
 import { connect } from 'react-redux'
 import Presentation from 'cellTypeWork/bubblesPres'
 import dataStore from 'cellTypeWork/dataStore'
+import { clearContextElements } from 'cellTypeWork/worksheet'
 
 const mapStateToProps = (state) => {
     return {
@@ -13,8 +14,16 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onMouseOver: ev => {
+            clearContextElements()
+        },
+    }
+}
+
 const Bubbles = connect(
-    mapStateToProps
+    mapStateToProps, mapDispatchToProps
 )(Presentation)
 
 export default Bubbles
