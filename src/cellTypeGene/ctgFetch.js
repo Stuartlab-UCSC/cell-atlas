@@ -1,7 +1,7 @@
 
 // The fetch for the cell type worksheet gene table.
 
-import { get as rxGet, set as rxSet } from 'state/rx'
+import { set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { receiveTableData } from 'fetch/tableData'
 import { stringToPrecision } from 'app/util'
@@ -65,25 +65,18 @@ const receiveDataFromServer = (data) => {
     // the data.
     
     // Save the cluster to which this gene data belongs.
-    rxSet('cellTypeGene.cluster.set', { value: data.cluster_name })
+    rxSet('cellTypeGene.cluster.load', { value: data.cluster_name })
     
     // Derive the table columns and body data from the server data.
     receiveTableData(DOMAIN, data.gene_table, receiveTableDataFromServer)
 }
 
-const getGeneTableData = (cluster, urlIn) => {
+const getGeneTableData = (cluster) => {
     // Request the data from the server.
-    // Save the cluster for later.
-    rxSet('cellTypeGene.cluster.uiSet', { value: cluster  })
-
-    // If no url is supplied, get the cluster from state.
-    let url = urlIn
-    if (url === undefined) {
-        url =
-            '/user/elie' +
-            '/worksheet/worksheetName' +
-            '/cluster/' + rxGet('cellTypeGene.cluster')
-    }
+    let url =
+        '/user/elie' +
+        '/worksheet/worksheetName' +
+        '/cluster/' + cluster
     if (USE_TEST_DATA) {
         receiveData(DOMAIN, testData, receiveDataFromServer)
     } else {
@@ -91,4 +84,18 @@ const getGeneTableData = (cluster, urlIn) => {
     }
 }
 
+const getInitalGeneTableData = (url) => {
+    // Request the initial data from the server.
+    if (!url) {
+        return
+    }
+    if (USE_TEST_DATA) {
+        receiveData(DOMAIN, testData, receiveDataFromServer)
+    } else {
+        fetchData(DOMAIN, url, receiveDataFromServer,
+            { fullUrl: true })
+    }
+}
+
 export default getGeneTableData
+export { getInitalGeneTableData } 

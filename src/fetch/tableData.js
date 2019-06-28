@@ -87,7 +87,8 @@ const fetchTableData = (id, urlPath, callback) => {
     
     // Call the generic data fetch indictating that text should be returned
     // rather than text, and call the post fetch processing for dataTables.
-    fetchData(id, urlPath, callback, 'text', true)
+    fetchData(id, urlPath, callback,
+        { responseType: 'text',  tableData: true })
 }
 
 export default fetchTableData

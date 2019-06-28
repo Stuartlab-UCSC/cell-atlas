@@ -72,28 +72,35 @@ function arrayBufferToBase64(buffer) {
 */
 }
 
-const fetchData = (id, urlPath, callback, responseType, tableData) => {
+const fetchData = (id, urlPath, callback, optionsIn) => {
     // Get data from the data server.
     // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
     // @param callback: optional function to call after receiving the data
-    // @param responseType: optional one of json/text/image; defaults to json
-    // @param tableData: true to transform the data into dataTable format
+    // @param options: optional with these possible properties:
+    //                 fullUrl: true: the url needs no prefix to request
+    //                 responseType: one of json/text/image; defaults to json
+    //                 tableData: true: transform response into dataTable format
     if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
     }
     rxSet(id + '.fetchStatus.waiting')
     rxSet(id + '.fetchMessage.set', { value: 'waiting for data...' })
     
+    let options = optionsIn || {}
+    
     // Allow the state to be recorded.
     setTimeout(() => {
-        const url = process.env.REACT_APP_DATA_URL + urlPath
+        let url = process.env.REACT_APP_DATA_URL + urlPath
+        if (options.fullUrl) {
+            url = urlPath
+        }
         let headers = {}
 
         fetch(url, { headers })
         .then((response) => {
             if (response.ok) {
-                switch(responseType) {
+                switch(options.responseType) {
                 case 'text':
                     return response.text()
                 case 'image':
@@ -108,7 +115,7 @@ const fetchData = (id, urlPath, callback, responseType, tableData) => {
                 return response.json()
             }
         })
-        .then((data) => receiveData(id, data, callback, tableData))
+        .then((data) => receiveData(id, data, callback, options.tableData))
         .catch((e) => {
             error(id, e.toString())
         })

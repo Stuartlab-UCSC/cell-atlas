@@ -60,7 +60,8 @@ const getGeneScatterPlot = (gene, urlIn) => {
     if (USE_TEST_DATA) {
         fetchTestData('cellTypeScatter', url, receiveDataFromServer, 'image')
     } else {
-        fetchData('cellTypeScatter', url, receiveDataFromServer, 'image')
+        fetchData('cellTypeScatter', url, receiveDataFromServer,
+            { responseType: 'image' })
     }
 }
 

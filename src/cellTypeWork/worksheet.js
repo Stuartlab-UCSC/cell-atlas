@@ -6,7 +6,6 @@ import { set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
 import dataStore from 'cellTypeWork/dataStore'
 import WorksheetPresentation from 'cellTypeWork/worksheetPres'
-//import getGeneTableData from 'cellTypeGene/ctgFetch'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 
@@ -31,11 +30,6 @@ const clearContextElements = (except) => {
 
 const receiveDataFromServer = (data) => {
     // Handle the data received from the server.
-    
-    // Kick off the request for the gene table for cluster
-    if (data && data.gene_table_url) {
-        //getGeneTableData(data.gene_table_url)
-    }
     rxSet('cellTypeWork.showChart.loading')
     transformToChart(data)
     rxSet('cellTypeWork.showChart.toQuietStatus')

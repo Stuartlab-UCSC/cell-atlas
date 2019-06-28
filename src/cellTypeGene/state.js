@@ -13,7 +13,7 @@ const cellTypeGene = (
         statsNames: [],
     }, action) => {
         switch(action.type) {
-        case 'cellTypeGene.cluster.uiSet':
+        case 'cellTypeGene.cluster.load':
             return {
                 ...state,
                 cluster: action.value

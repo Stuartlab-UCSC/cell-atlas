@@ -7,6 +7,7 @@ import { buildBubblesOnLoad } from 'cellTypeWork/transformToBubbles'
 import { tsvToArrays } from 'app/util'
 import dataStore from 'cellTypeWork/dataStore'
 import { getScatterPlot } from 'cellTypeScatter/scatter'
+import { getInitalGeneTableData } from 'cellTypeGene/ctgFetch'
 
 const buildClusters = (data) => {
     // Find the clusters and sort them by column position.
@@ -70,8 +71,11 @@ const transfromToChart = (data) => {
     const colormap = getCatColormap('elie', clusterCount)
     rxSet('cellTypeWork.colormap.create', { value: colormap })
     
-    // Load any initial scatter plot included.
+    // Load an initial scatter plot if a URL is provided.
     getScatterPlot(clusters, colormap, data.scatterplot_url)
+
+    // Load an initial gene table if a URL is provided.
+    getInitalGeneTableData(data.gene_table_url)
 
     // Update the chart data.
     dataStore.load({
