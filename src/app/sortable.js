@@ -61,16 +61,8 @@ const currentPosition = (ev) => {
         position = parseInt(ev.target.dataset.position, 10)
         // If needed, adjust the insertion position to what it would be
         // after the element is removed prior to insertion.
-        if (drag.xOrY === 'x') {
-            if (position > drag.position) {
-                position -= 1
-            }
-        } else { // drag.xOrY === 'y'
-            if (position > drag.position) {
-                position -= 1
-            } else {
-                position -= 2
-            }
+        if (position > drag.position) {
+            position -= 1
         }
     }
 
