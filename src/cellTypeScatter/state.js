@@ -1,15 +1,22 @@
 
 // Scatterplot of the cell type work page, state.
 
+let renderSeq = 0
+
 const State = (
     state = {
         fetchMessage: ' ',
         fetchStatus: 'initial',
-        firstChartDisplayed: true,
+        render: renderSeq,
         showChart: false,
     }, action) => {
         switch(action.type) {
-        case 'cellTypeScatter.gene.uiSet':
+        case 'cellTypeScatter.gene.clear':
+            return {
+                ...state,
+                gene: null
+            }
+        case 'cellTypeScatter.gene.set':
             return {
                 ...state,
                 gene: action.value
@@ -34,10 +41,10 @@ const State = (
                 ...state,
                 fetchStatus: 'quiet'
             }
-        case 'cellTypeScatter.firstChartDisplayed.set':
+        case 'cellTypeScatter.render.now':
             return {
                 ...state,
-                firstChartDisplayed: true
+                render: renderSeq++
             }
         case 'cellTypeScatter.showChart.loading':
             return {

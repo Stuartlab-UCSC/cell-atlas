@@ -7,7 +7,7 @@ import MenuList from '@material-ui/core/MenuList'
 
 import 'cellTypeWork/style.css'
 
-const Menu = ({i, props}) => {
+const Menu = ({ gene, i, props }) => {
     // Render a menu on hover.
     const { menuPosition, onMenuClickAway, onRemoveClick, onScatterClick }
         = props
@@ -37,6 +37,7 @@ const Menu = ({i, props}) => {
                     }}
                 >
                     <MenuItem
+                        data-gene={gene}
                         data-position={menuPosition}
                         style={{ fontSize: 14 }}
                         onClick={onScatterClick}
@@ -44,6 +45,7 @@ const Menu = ({i, props}) => {
                         Show Map
                     </MenuItem>
                     <MenuItem
+                        data-gene={gene}
                         data-position={menuPosition}
                         style={{ fontSize: 14 }}
                         onClick={onRemoveClick}
@@ -83,7 +85,7 @@ const GeneList = ({ props }) => {
                 >
                     {gene}
                 </div>
-                <Menu i={i} props={props} />
+                <Menu gene={gene} i={i} props={props} />
             </div>
         )
     })

@@ -6,7 +6,7 @@ import { getCatColormap } from 'color/colorCat'
 import { buildBubblesOnLoad } from 'cellTypeWork/transformToBubbles'
 import { tsvToArrays } from 'app/util'
 import dataStore from 'cellTypeWork/dataStore'
-import { getScatterPlot } from 'cellTypeScatter/scatter'
+import { getInitialScatterPlot } from 'cellTypeScatter/scatter'
 import { getInitalGeneTableData } from 'cellTypeGene/ctgFetch'
 
 const buildClusters = (data) => {
@@ -72,7 +72,7 @@ const transfromToChart = (data) => {
     rxSet('cellTypeWork.colormap.create', { value: colormap })
     
     // Load an initial scatter plot if a URL is provided.
-    getScatterPlot(clusters, colormap, data.scatterplot_url)
+    getInitialScatterPlot(clusters, colormap, data.scatterplot_url)
 
     // Load an initial gene table if a URL is provided.
     getInitalGeneTableData(data.gene_table_url)

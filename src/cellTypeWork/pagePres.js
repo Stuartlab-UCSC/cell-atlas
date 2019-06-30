@@ -96,7 +96,7 @@ const Presentation = (props) => {
                     />
                 </Grid>
             
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{zIndex: 1}}>
                     <Dataset dataset={dataset} show={showEditables} />
                     <ClusterSolution solution={clusterSolution} show={showEditables} />
                 </Grid>

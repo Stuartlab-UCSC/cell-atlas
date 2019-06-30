@@ -5,14 +5,14 @@
 import { get as rxGet, set as rxSet } from 'state/rx'
 import { receiveTableData } from 'fetch/tableData'
 
-const receiveData = (id, data, callback, tableData) => {
+const receiveData = (id, data, callback, options) => {
     // Receive the data from the fetch.
     // @param id: ID of the table instance, used as part of the state name
     // @param data: data received from the server; for table data this is a text
     //              value containing TSV, otherwise an object
     // @param callback: function to call after receiving the data; optional for
     //                   table data, otherwise required
-    // @param tableData: true for simple tsv table data as text, optional
+    // @param options: the same as that for fetchData()
 
     // If the data contains a message, set the fetch message to that error.
     if (typeof data === 'object' && data.message) {
@@ -29,10 +29,24 @@ const receiveData = (id, data, callback, tableData) => {
         rxSet(id + '.fetchMessage.set', { value: 'No data found' })
 
     } else {
-        if (tableData) {
+        // Process the data.
+        if (options.tableData) {
+        
+            // Receiving of dataTables includes formatting for a dataTable.
             receiveTableData(id, data, callback)
+        } else if (options.responseType === 'png') {
+        
+            // Receiving of a png includes converting it to 'src' for an <img>.
+            // Use a timeout for good debugging information.
+            setTimeout(() => {
+                const file = new FileReader();
+                file.onload = (e) => {
+                    callback(e.target.result)
+                }
+                file.readAsDataURL(data);
+            })
         } else {
-            // With this not being table data, there must be a callback.
+            // If we get here, there must be a callback.
             // Use a timeout so we have good debugging available.
             setTimeout(() => { callback(data) })
         }
@@ -46,32 +60,6 @@ const error = (id, message) => {
     rxSet(id + '.fetchMessage.set', { value: message })
 }
 
-const imageResponse = (response) => {
-    console.log('fetched an image response')
-    return null
-/*
-// from
-// https://medium.com/front-end-weekly/fetching-images-with-the-fetch-api-fb8761ed27b2
-fetch(request, options).then((response) => {
-  response.arrayBuffer().then((buffer) => {
-    var base64Flag = 'data:image/jpeg;base64,';
-    var imageStr = arrayBufferToBase64(buffer);
-
-    document.querySelector('img').src = base64Flag + imageStr;
-  });
-});
-
-function arrayBufferToBase64(buffer) {
-  var binary = '';
-  var bytes = [].slice.call(new Uint8Array(buffer));
-
-  bytes.forEach((b) => binary += String.fromCharCode(b));
-
-  return window.btoa(binary);
-};
-*/
-}
-
 const fetchData = (id, urlPath, callback, optionsIn) => {
     // Get data from the data server.
     // @param id: ID of the table instance, used as part of the state name
@@ -79,7 +67,8 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
     // @param callback: optional function to call after receiving the data
     // @param options: optional with these possible properties:
     //                 fullUrl: true: the url needs no prefix to request
-    //                 responseType: one of json/text/image; defaults to json
+    //                 payload: the POST data payload
+    //                 responseType: one of json/text/png; defaults to json
     //                 tableData: true: transform response into dataTable format
     if (rxGet(id + '.fetchStatus') === 'waiting') {
         return  // we don't want to request again
@@ -95,16 +84,26 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
         if (options.fullUrl) {
             url = urlPath
         }
-        let headers = {}
+        let fetchOpts = {}
+        if (options.payload) {
+            // Any request with a payload is assumed to be a POST request.
+            fetchOpts = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(options.payload),
+            }
+        }
 
-        fetch(url, { headers })
+        fetch(url, fetchOpts)
         .then((response) => {
             if (response.ok) {
                 switch(options.responseType) {
                 case 'text':
                     return response.text()
-                case 'image':
-                    return imageResponse(response)
+                case 'png':
+                    return response.blob()
                 case 'json':
                 case null:
                 default:
@@ -115,7 +114,7 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
                 return response.json()
             }
         })
-        .then((data) => receiveData(id, data, callback, options.tableData))
+        .then((data) => receiveData(id, data, callback, options))
         .catch((e) => {
             error(id, e.toString())
         })

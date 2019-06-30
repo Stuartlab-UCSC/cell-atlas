@@ -168,6 +168,32 @@ var ColorMap = function(numSteps, colors) {
         case 'elie':
           return new ColorMap(steps, [
             new Color(253,111,133, 255),
+            new Color(204,122,255, 255),
+            new Color(48,162,255, 255),
+            new Color(0,190,205, 255),
+            new Color(0,185,41, 255),
+            new Color(170,163,0, 255),
+            new Color(248,118,109, 255),
+        ]);
+        case 'elie2':
+          return new ColorMap(steps, [
+            new Color(253,111,133, 255),
+            new Color(255,97,193, 255),
+            new Color(236,104,238, 255),
+            new Color(181,132,255, 255),
+            new Color(48,162,255, 255),
+            new Color(0,183,233, 255),
+            new Color(0,192,188, 255),
+            new Color(0,191,130, 255),
+            new Color(0,185,41, 255),
+            new Color(130,173,0, 255),
+            new Color(186,158,0, 255),
+            new Color(223,139,0, 255),
+            new Color(248,118,109, 255),
+        ]);
+        case 'elie1':
+          return new ColorMap(steps, [
+            new Color(253,111,133, 255),
             new Color(236,104,238, 255),
             new Color(48,162,255, 255),
             new Color(0,192,188, 255),

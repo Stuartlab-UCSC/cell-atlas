@@ -19,7 +19,6 @@ const mapStateToProps = (state) => {
         render: state.cellTypeWork.render,
         sorting: (state.sortable.drag.count !== null),
         onMenuClickAway: clearContextElements,
-        onScatterClick: getGeneScatterPlot,
     }
 }
 
@@ -81,6 +80,10 @@ const mapDispatchToProps = (dispatch) => {
                 dispatch,
             )
         },
+        onScatterClick: ev => {
+            getGeneScatterPlot(ev.target.dataset.gene)
+            clearContextElements()
+        }
     }
 }
 
