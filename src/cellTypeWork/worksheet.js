@@ -2,7 +2,7 @@
 // The worksheet logic for the cell type worksheet page.
 
 import { connect } from 'react-redux'
-import { set as rxSet } from 'state/rx'
+import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
 import dataStore from 'cellTypeWork/dataStore'
 import WorksheetPresentation from 'cellTypeWork/worksheetPres'
@@ -28,12 +28,12 @@ const clearContextElements = (except) => {
     }
 }
 
-const receiveDataFromServer = (data) => {
+const receiveDataFromServer = (data, error) => {
     // Handle the data received from the server.
-    rxSet('cellTypeWork.showChart.loading')
-    transformToChart(data)
+    if (!error && data !== null) {
+        transformToChart(data)
+    }
     rxSet('cellTypeWork.showChart.toQuietStatus')
-    rxSet('cellTypeWork.firstChartDisplayed.now')
 }
 
 // A test stub in place of server query.
@@ -47,19 +47,20 @@ const fetchTestData = (id, url, receiveFx) => {
     //}, 1000)
 }
 
-const getData = () => {
+const getData = (options) => {
     // Request the data from the server.
-    let url = '/user/{user}/worksheet/worksheet1'
-    if (USE_TEST_DATA) {
-        fetchTestData('cellTypeWork', url, receiveDataFromServer)
+    let url = '/user/someUser/worksheet/' + rxGet('cellTypeWork.sheetSelected')
+    if (USE_TEST_DATA && !options) {
+        fetchTestData('cellTypeWork', url, receiveDataFromServer, options)
     } else {
-        fetchData('cellTypeWork', url, receiveDataFromServer)
+        // Only GET test data, but always POST real data.
+        fetchData('cellTypeWork', url, receiveDataFromServer, options)
     }
 }
 
-const serverRequest = (dispatch) => {
-    dispatch({ type: 'cellTypeWork.showChart.toRequestStatus' })
-    getData()
+const serverRequest = (options) => {
+    rxSet('cellTypeWork.showChart.toRequestStatus')
+    getData(options)
 }
 
 const mapStateToProps = (state) => {

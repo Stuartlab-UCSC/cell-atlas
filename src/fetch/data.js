@@ -14,8 +14,14 @@ const receiveData = (id, data, callback, options) => {
     //                   table data, otherwise required
     // @param options: the same as that for fetchData()
 
+    // If this is a POST and the data is null, that's fine, we're done.
+    const post = (options && options.payload)
+    if (post && data === null && callback) {
+        setTimeout(() => { callback(data) })
+    }
+    
     // If the data contains a message, set the fetch message to that error.
-    if (typeof data === 'object' && data.message) {
+    if (data !== null && typeof data === 'object' && data.message) {
         rxSet(id + '.fetchMessage.set', { value: data.message })
         console.error('fetch error:', data.message)
         if (callback) {
@@ -24,8 +30,9 @@ const receiveData = (id, data, callback, options) => {
             })
         }
 
-    // If data is empty, let the user know there is no data.
-    } else if (data === null || data === undefined || data.length < 1) {
+    // If data is empty on a GET, let the user know there is no data.
+    } else if (!post &&
+        (data === null || data === undefined || data.length < 1)) {
         rxSet(id + '.fetchMessage.set', { value: 'No data found' })
 
     } else {
@@ -45,13 +52,14 @@ const receiveData = (id, data, callback, options) => {
                 }
                 file.readAsDataURL(data);
             })
-        } else {
-            // If we get here, there must be a callback.
+        } else if (callback) {
             // Use a timeout so we have good debugging available.
             setTimeout(() => { callback(data) })
         }
+        // Clear the fetch message on valid data.
         rxSet(id + '.fetchMessage.clear')
     }
+    // Quiet the fetch status, no matter if data is valid or not.
     rxSet(id + '.fetchStatus.quiet')
 }
 
@@ -84,6 +92,8 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
         if (options.fullUrl) {
             url = urlPath
         }
+
+        const encodedUrl = encodeURI(url)
         let fetchOpts = {}
         if (options.payload) {
             // Any request with a payload is assumed to be a POST request.
@@ -96,7 +106,7 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
             }
         }
 
-        fetch(url, fetchOpts)
+        fetch(encodedUrl, fetchOpts)
         .then((response) => {
             if (response.ok) {
                 switch(options.responseType) {

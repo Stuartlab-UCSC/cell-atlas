@@ -33,7 +33,7 @@ const Upload = ({ onClick} ) => {
     )
 }
 
-const Save = ({ show, onClick }) => {
+const Save = ({ label, show, onClick }) => {
     if (!show) {
         return null
     }
@@ -45,7 +45,7 @@ const Save = ({ show, onClick }) => {
             onClick={onClick}
             style={buttonStyle}
         >
-            Save
+            {label}
         </Button>
     )
 }
@@ -74,7 +74,7 @@ const ClusterSolution = ({ show, solution }) => {
 
 const Presentation = (props) => {
     const { bubbleTooltip, clusterSolution, dataset, showEditables,
-        onSaveClick, onUploadClick } = props
+        onSaveAsClick, onSaveClick, onUploadClick } = props
     return (
         <div>
             <Grid container spacing={8} style={{background: 'transparent'}}>
@@ -83,16 +83,24 @@ const Presentation = (props) => {
                         Cell Type Worksheet
                     </Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={5} >
                     <SheetList />
                 </Grid>
                 <Grid item xs={2}>
                     <Upload onClick={onUploadClick} />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                     <Save
+                        label='Save'
                         show={showEditables}
                         onClick={onSaveClick}
+                    />
+                </Grid>
+                <Grid item xs={1}>
+                    <Save
+                        label='Save as'
+                        show={showEditables}
+                        onClick={onSaveAsClick}
                     />
                 </Grid>
             
@@ -102,11 +110,11 @@ const Presentation = (props) => {
                 </Grid>
                <Grid item xs={8} />
      
-                <Grid item xs={4}>
+                <Grid item xs={5}>
                     <ScatterPlot show={showEditables} />
                 </Grid>
                     <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
-                <Grid item xs={8} style={{marginTop: -70}}>
+                <Grid item xs={7} style={{marginTop: -70}}>
                     <Worksheet />
                 </Grid>
 

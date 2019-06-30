@@ -5,6 +5,18 @@ const integerToCommaInteger = x => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const cleanName = (dirty) => {
+    
+    // Make a name out of some string that will be safe for file and directory
+    // names and for inclusion in URLs
+    // Valid characters:
+    //     a-z, A-Z, 0-9, dash (-), dot (.), underscore (_)
+    // All other characters are replaced with underscores.
+    if (dirty === undefined || dirty === null) { return '_' }
+    
+    return dirty.replace(/[^A-Za-z0-9_\-.]/g, "_");
+}
+
 const isoToday = () => {
 
     // Get todays date in ISO format such as 2018-08-31.
@@ -40,4 +52,5 @@ const tsvToArrays = (tsv) => {
     return arrays
 }
 
-export { integerToCommaInteger, isoToday, stringToPrecision, tsvToArrays }
+export { cleanName, integerToCommaInteger, isoToday, stringToPrecision,
+    tsvToArrays }

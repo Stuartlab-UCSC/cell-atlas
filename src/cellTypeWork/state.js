@@ -20,10 +20,11 @@ const defaultDims = {
     legendWidth: 100,
     rowHeight: 14,
     sizeRange:{},
+    worksheetSelected: null,
 }
 export const defaultSheetList = [
-    { value:'heart of cells #1', name: 'heart of cells #1' },
-    { value:'#2', name: '#2' },
+    { value:'heart of cells 1', name: 'heart of cells 1' },
+    { value:'22', name: '22' },
 ]
 const defaultSheetSelected = defaultSheetList[0].value
 
@@ -37,9 +38,9 @@ const State = (
         dims: defaultDims,
         fetchMessage: ' ',
         fetchStatus: 'initial',
-        firstChartDisplayed: true,
         geneMenu: null,
         render: renderSeq++,
+        sheetSaveAs: '',
         showChart: false,
         showEditables: false,
         sheetList: defaultSheetList,
@@ -131,11 +132,6 @@ const State = (
                 ...state,
                 fetchStatus: 'quiet'
             }
-        case 'cellTypeWork.firstChartDisplayed.set':
-            return {
-                ...state,
-                firstChartDisplayed: true
-            }
         case 'cellTypeWork.geneMenu.close':
             return {
                 ...state,
@@ -155,6 +151,33 @@ const State = (
             return {
                 ...state,
                 sheetList: action.value
+            }
+        case 'cellTypeWork.sheetList.new':
+            // Remove the sheet from the list if it is there.
+            const value = action.value
+            let sheetList = [...state.sheetList]
+            const foundIndex = sheetList.findIndex(sheet => {
+                return sheet.value === value
+            })
+            if (foundIndex > -1) {
+                sheetList.splice(foundIndex, 1)
+            }
+            // Add a new sheet to the list then select it.
+            sheetList.unshift({value, name: value})
+            return {
+                ...state,
+                sheetList,
+                sheetSelected: value,
+            }
+        case 'cellTypeWork.sheetSaveAs.clear':
+            return {
+                ...state,
+                sheetSaveAs: ''
+            }
+        case 'cellTypeWork.sheetSaveAs.uiSet':
+            return {
+                ...state,
+                sheetSaveAs: action.value
             }
         case 'cellTypeWork.sheetSelected.loadPersist':
         case 'cellTypeWork.sheetSelected.uiSelect':

@@ -71,12 +71,15 @@ const receiveDataFromServer = (data) => {
     receiveTableData(DOMAIN, data.gene_table, receiveTableDataFromServer)
 }
 
-const getGeneTableData = (cluster) => {
-    // Request the data from the server.
-    let url =
-        '/user/elie' +
+const buildGeneTableUrl = (cluster) => {
+    return '/user/elie' +
         '/worksheet/worksheetName' +
         '/cluster/' + cluster
+}
+
+const getGeneTableData = (cluster) => {
+    // Request the data from the server.
+    const url = buildGeneTableUrl(cluster)
     if (USE_TEST_DATA) {
         receiveData(DOMAIN, testData, receiveDataFromServer)
     } else {
@@ -98,4 +101,4 @@ const getInitalGeneTableData = (url) => {
 }
 
 export default getGeneTableData
-export { getInitalGeneTableData } 
+export { buildGeneTableUrl, getInitalGeneTableData } 

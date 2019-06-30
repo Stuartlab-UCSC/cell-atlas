@@ -10,7 +10,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { get as rxGet } from 'state/rx'
 
-const NamerDialogPres = ({ open, message, onTextChange, onClose, onSubmit }) => {
+const NamerDialogPres = (props) => {
+    let {error, helperText, message, name, open, onTextChange, onTextKeyPress,
+        onClose, onSubmit } = props
+    name = name || ''
     return (
         <div>
             <Dialog
@@ -23,18 +26,26 @@ const NamerDialogPres = ({ open, message, onTextChange, onClose, onSubmit }) => 
                 <DialogContent>
                     <TextField
                         autoFocus
-                        margin="dense"
-                        id="namerDialog"
+                        defaultValue={name}
+                        error={error}
                         fullWidth
+                        helperText={helperText}
+                        id="namerDialog"
+                        margin="dense"
                         onChange={onTextChange}
+                        onKeyPress={onTextKeyPress}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={onSubmit} color="primary">
-                        Name It
+                    <Button
+                        onClick={onSubmit}
+                        color="primary"
+                        variant='contained'
+                    >
+                        Save
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -43,14 +54,29 @@ const NamerDialogPres = ({ open, message, onTextChange, onClose, onSubmit }) => 
 }
 
 const mapStateToProps = (state) => {
+    const { error, helperText, name, message, open } = state.namerDialog
     return {
-        open: state.namerDialog.open,
-        message: state.namerDialog.message,
+        error,
+        helperText,
+        name,
+        message,
+        open,
     }
+}
+
+const onSubmit = (dispatch) => {
+    dispatch({ type: 'namerDialog.open.false' })
+    const name = rxGet('namerDialog.name')
+    rxGet('namerDialog.onSubmit')(name, dispatch)
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onTextKeyPress: ev => {
+            if (ev.key === 'Enter') {
+                onSubmit(dispatch)
+            }
+        },
         onTextChange: ev => {
             dispatch({
                 type: 'namerDialog.name.change',
@@ -58,9 +84,7 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         onSubmit: ev => {
-            dispatch({ type: 'namerDialog.open.false' })
-            const name = rxGet('namerDialog.name')
-            rxGet('namerDialog.onSubmit')(name, dispatch)
+            onSubmit(dispatch, ev)
         },
         onClose: ev => {
             dispatch({ type: 'namerDialog.open.false' })
@@ -72,43 +96,33 @@ const NamerDialog = connect(
     mapStateToProps, mapDispatchToProps
 )(NamerDialogPres)
 
+const defaultState = {
+    name: null,
+    message: 'Name this',
+    onSubmit: null,
+    open: false,
+}
 const namerDialogState = (
-    state = {
-        name: null,
-        message: 'Name this',
-        onSubmit: null,
-        open: false,
-    }, action) => {
+    state = defaultState, action) => {
         switch(action.type) {
         case 'namerDialog.name.change':
             return {
                 ...state,
                 name: action.value
             }
-        case 'namerDialog.message.uiSet':
+        case 'namerDialog.useNow':
             return {
-                ...state,
-                message: action.value
-            }
-        case 'namerDialog.onSubmit.clear':
-            return {
-                state,
-                onSubmit: null
-            }
-        case 'namerDialog.onSubmit.uiSet':
-            return {
-                ...state,
-                onSubmit: action.callback
-            }
-        case 'namerDialog.open.true':
-            return {
-                ...state,
-                open: true
+                error: action.error,
+                helperText: action.helperText,
+                name: action.name,
+                message: action.message,
+                open: true,
+                onSubmit: action.onSubmit,
             }
         case 'namerDialog.open.false':
             return {
                 ...state,
-                open: false
+                open: false,
             }
         default:
             return state

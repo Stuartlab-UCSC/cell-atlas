@@ -72,14 +72,10 @@ const mapDispatchToProps = (dispatch) => {
             // Save the callback to handle the new favorite name
             // and open the namer dialog.
             dispatch({
-                type: 'namerDialog.onSubmit.uiSet',
-                callback: addFavoriteWithName,
+                type: 'namerDialog.useNow',
+                message: 'Name this favorite query',
+                onSubmit: addFavoriteWithName,
             })
-            dispatch({
-                type: 'namerDialog.message.uiSet',
-                value: 'Name this favorite query',
-            })
-            dispatch({ type: 'namerDialog.open.true' })
         },
     }
 }

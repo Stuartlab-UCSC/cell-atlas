@@ -4,7 +4,8 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
-const imageHeight = 360
+const imageHeight = 420
+const paperWidth = 440
 
 const Label = ({ gene }) => {
     if (gene === null) {
@@ -56,8 +57,8 @@ const ScatterPlotPres = ({ fetchMessage, gene, plot, onClick }) => {
     return (
         <Paper style={{
             position: 'relative',
-            height: imageHeight - 15,
-            width: 375
+            height: imageHeight - 20,
+            width: paperWidth
         }}>
             <img
                 src={plot}
@@ -66,7 +67,7 @@ const ScatterPlotPres = ({ fetchMessage, gene, plot, onClick }) => {
                 style={{
                     position: 'absolute',
                     top: 10,
-                    left: -50,
+                    left: -65,
                     zIndex: -1,
                 }}
             />

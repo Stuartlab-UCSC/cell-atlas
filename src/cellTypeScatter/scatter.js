@@ -32,12 +32,21 @@ const fetchTestData = (id, url, receiveFx, options) => {
     }, 1000)
 }
 
+const buildScatterPlotUrl = (gene) => {
+    let url = '/user/someUser/worksheet/someWorksheet/scatterplot/umap'
+    if (gene) {
+         url = '/user/someUser/worksheet/someWorksheet/scatterplot/umap/gene/'
+            + gene
+    }
+    return url
+}
+
 const getClusterAssignmentScatterPlot =
     (clustersIn, colormapIn, urlIn, optionsIn) => {
     // Request a cluster assignment plot from the server.
     let clusters = clustersIn || dataStore.getClusters()
     let colormap = colormapIn || rxGet('cellTypeWork.colormap')
-    let url = urlIn || '/user/someUser/worksheet/someWorksheet/scatterplot/umap'
+    let url = urlIn || buildScatterPlotUrl()
     let options = optionsIn || {}
     options.responseType = 'png'
     options.payload = {
@@ -56,8 +65,7 @@ const getClusterAssignmentScatterPlot =
 
 const getGeneScatterPlot = (gene, urlIn, optionsIn) => {
     // Request a gene plot from the server.
-    let url = urlIn ||
-        '/user/someUser/worksheet/someWorksheet/scatterplot/umap/gene/' + gene
+    let url = urlIn || buildScatterPlotUrl(gene)
     let options = optionsIn || {}
     options.responseType = 'png'
     // Save the gene.
@@ -76,11 +84,6 @@ const getInitialScatterPlot = (clusters, colormap, url) => {
     if (!url) {
         getClusterAssignmentScatterPlot(clusters, colormap, null, options)
     }
-    // Testing
-    //url =
-    //    'http://localhost:5555/user/someUser/worksheet/someWorksheet/scatterplot/umap/gene/C1QC'
-    //
-    
     // Retrieve either a gene or cluster assignment scatterplot.
     const split = url.split('/')
     if (split.slice(-2,-1)[0] === 'gene') {
@@ -114,5 +117,5 @@ const ScatterPlot = connect(
 
 export default ScatterPlot
 
-export { getClusterAssignmentScatterPlot, getGeneScatterPlot,
-    getInitialScatterPlot }
+export { buildScatterPlotUrl, getClusterAssignmentScatterPlot,
+    getGeneScatterPlot, getInitialScatterPlot }
