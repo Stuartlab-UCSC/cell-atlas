@@ -26,7 +26,6 @@ export const defaultSheetList = [
     { value:'heart of cells 1', name: 'heart of cells 1' },
     { value:'22', name: '22' },
 ]
-const defaultSheetSelected = defaultSheetList[0].value
 
 const State = (
     state = {
@@ -44,7 +43,7 @@ const State = (
         showChart: false,
         showEditables: false,
         sheetList: defaultSheetList,
-        sheetSelected: defaultSheetSelected,
+        sheetSelected: null,
         tableColumn: [],
         tableData: [],
     }, action) => {

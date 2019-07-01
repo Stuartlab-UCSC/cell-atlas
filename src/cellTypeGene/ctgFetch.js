@@ -63,6 +63,9 @@ const receiveTableDataFromServer = (columns, data) => {
 const receiveDataFromServer = (data) => {
     // Receive the data from the server and call to extract the columns from
     // the data.
+    if (!data) {
+        return
+    }
     
     // Save the cluster to which this gene data belongs.
     rxSet('cellTypeGene.cluster.load', { value: data.cluster_name })
@@ -71,13 +74,18 @@ const receiveDataFromServer = (data) => {
     receiveTableData(DOMAIN, data.gene_table, receiveTableDataFromServer)
 }
 
-const buildGeneTableUrl = (cluster) => {
-    return '/user/elie' +
+const buildGeneTableUrl = (cluster, includeHost) => {
+    let url = '/user/elie' +
         '/worksheet/worksheetName' +
         '/cluster/' + cluster
+    if (includeHost) {
+        url = process.env.REACT_APP_DATA_URL + url
+    }
+    return url
 }
 
 const getGeneTableData = (cluster) => {
+    console.log('getGeneTableData: cluster:', cluster)
     // Request the data from the server.
     const url = buildGeneTableUrl(cluster)
     if (USE_TEST_DATA) {

@@ -51,7 +51,7 @@ const buildGenes = (data) => {
     //      2    TP53
     //      ...'
     let tsvLines = data.genes.map((gene, i) => {
-        return [i, gene].join('/t')
+        return [i, gene].join('\t')
     })
     // The header.
     tsvLines.unshift(['row\tgene'])
@@ -119,9 +119,10 @@ const transformToServerStore = () => {
         cluster_solution: data.clusterSolution,
         size_by: data.sizeBy,
         color_by: data.colorBy,
-        gene_table_url: buildGeneTableUrl(rxGet('cellTypeGene.cluster')),
-        scatterplot_url: buildScatterPlotUrl(rxGet('cellTypeScatter.gene')),
-        cluster: buildClusters(data),
+        gene_table_url: buildGeneTableUrl(rxGet('cellTypeGene.cluster'), true),
+        scatterplot_url:
+            buildScatterPlotUrl(rxGet('cellTypeScatter.gene'), true),
+        clusters: buildClusters(data),
         genes: buildGenes(data),
         colors,
         sizes,

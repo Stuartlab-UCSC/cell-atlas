@@ -32,11 +32,14 @@ const fetchTestData = (id, url, receiveFx, options) => {
     }, 1000)
 }
 
-const buildScatterPlotUrl = (gene) => {
+const buildScatterPlotUrl = (gene, includeHost) => {
     let url = '/user/someUser/worksheet/someWorksheet/scatterplot/umap'
     if (gene) {
          url = '/user/someUser/worksheet/someWorksheet/scatterplot/umap/gene/'
             + gene
+    }
+    if (includeHost) {
+        url = process.env.REACT_APP_DATA_URL + url
     }
     return url
 }
@@ -80,16 +83,17 @@ const getGeneScatterPlot = (gene, urlIn, optionsIn) => {
 const getInitialScatterPlot = (clusters, colormap, url) => {
     // Request a plot from the server when a url is known.
     let options = { fullUrl: true }
-    // By default get a cluster assignment scatterplot.
-    if (!url) {
-        getClusterAssignmentScatterPlot(clusters, colormap, null, options)
-    }
-    // Retrieve either a gene or cluster assignment scatterplot.
-    const split = url.split('/')
-    if (split.slice(-2,-1)[0] === 'gene') {
-        getGeneScatterPlot(split.slice(-1)[0], url, options)
+    if (url) {
+        // Retrieve either a gene or cluster assignment scatterplot.
+        const split = url.split('/')
+        if (split.slice(-2,-1)[0] === 'gene') {
+            getGeneScatterPlot(split.slice(-1)[0], url, options)
+        } else {
+            getClusterAssignmentScatterPlot(clusters, colormap, url, options)
+        }
     } else {
-        getClusterAssignmentScatterPlot(clusters, colormap, url, options)
+        // By default get a cluster assignment scatterplot.
+        getClusterAssignmentScatterPlot(clusters, colormap, null, options)
     }
 }
 

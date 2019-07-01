@@ -1,6 +1,5 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-
 # dependencies
 /node_modules
 
@@ -21,7 +20,7 @@
 aNotes.txt
 cell.xcworkspace
 build.tar
-
+/tmp
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

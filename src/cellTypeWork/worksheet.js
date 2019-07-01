@@ -47,20 +47,17 @@ const fetchTestData = (id, url, receiveFx) => {
     //}, 1000)
 }
 
-const getData = (options) => {
+const getPostWorksheetData = (worksheetIn, options) => {
     // Request the data from the server.
-    let url = '/user/someUser/worksheet/' + rxGet('cellTypeWork.sheetSelected')
+    rxSet('cellTypeWork.showChart.toRequestStatus')
+    const worksheet = worksheetIn || rxGet('cellTypeWork.sheetSelected')
+    const url = '/user/someUser/worksheet/' + worksheet
     if (USE_TEST_DATA && !options) {
         fetchTestData('cellTypeWork', url, receiveDataFromServer, options)
     } else {
         // Only GET test data, but always POST real data.
         fetchData('cellTypeWork', url, receiveDataFromServer, options)
     }
-}
-
-const serverRequest = (options) => {
-    rxSet('cellTypeWork.showChart.toRequestStatus')
-    getData(options)
 }
 
 const mapStateToProps = (state) => {
@@ -95,4 +92,4 @@ const Worksheet = connect(
 
 export default Worksheet
 
-export { clearContextElements, serverRequest }
+export { clearContextElements, getPostWorksheetData }

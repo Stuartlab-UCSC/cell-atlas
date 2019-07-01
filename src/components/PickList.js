@@ -30,12 +30,21 @@ const HelperText = ({ helperText }) => {
     )
 }
 
-const PickList = ({id, helperText, label, list, selected, onChange}) => {
+const PickList = ({id, helperText, label, list, placeholder, selected,
+    onChange}) => {
     if (!list) {
         list = []
     }
     if (!selected) {
         selected = 'none'
+    }
+    let Placeholder = null
+    if (placeholder) {
+        Placeholder = (
+            <MenuItem value="none" disabled >
+                {placeholder}
+            </MenuItem>
+        )
     }
     return (
         <FormControl>
@@ -47,6 +56,7 @@ const PickList = ({id, helperText, label, list, selected, onChange}) => {
                 displayEmpty
                 style={{width: '100%'}}
             >
+                {Placeholder}
                 {list.map((item, i) => (
                     <MenuItem
                         value={item.value}

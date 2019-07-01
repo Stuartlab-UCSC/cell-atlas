@@ -3,8 +3,8 @@
 import { connect } from 'react-redux'
 import { get as rxGet } from 'state/rx'
 import { cleanName } from 'app/util'
-import { serverRequest } from 'cellTypeWork/worksheet'
 import Presentation from 'cellTypeWork/pagePres'
+import { getPostWorksheetData } from 'cellTypeWork/worksheet'
 import dataStore from 'cellTypeWork/dataStore'
 import transformToServerStore from 'cellTypeWork/transformToServerStore'
 
@@ -15,7 +15,7 @@ const onSaveSubmit = (name, dispatch) => {
         value: name
     })
     // Save the worksheet on the server.
-    serverRequest({ payload: transformToServerStore() })
+    getPostWorksheetData(null, { payload: transformToServerStore() })
 }
 
 const onSaveAsSubmit = (name, dispatch) => {
@@ -92,8 +92,6 @@ const mapDispatchToProps = (dispatch) => {
             onSaveSubmit(rxGet('cellTypeWork.sheetSelected'), dispatch)
         },
         onUploadClick: ev => {
-            dispatch({ type: 'cellTypeWork.showEditables.show' })
-            serverRequest()
         },
     }
 }

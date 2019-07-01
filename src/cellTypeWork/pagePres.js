@@ -18,6 +18,7 @@ const buttonStyle = {
     marginTop: '1rem',
 }
 
+/*
 const Upload = ({ onClick} ) => {
     return (
         <Button
@@ -32,6 +33,7 @@ const Upload = ({ onClick} ) => {
         </Button>
     )
 }
+*/
 
 const Save = ({ label, show, onClick }) => {
     if (!show) {
@@ -71,10 +73,12 @@ const ClusterSolution = ({ show, solution }) => {
         </Typography>
     )
 }
-
+/*
+                    <Upload onClick={onUploadClick} />
+*/
 const Presentation = (props) => {
     const { bubbleTooltip, clusterSolution, dataset, showEditables,
-        onSaveAsClick, onSaveClick, onUploadClick } = props
+        onSaveAsClick, onSaveClick, /*onUploadClick*/ } = props
     return (
         <div>
             <Grid container spacing={8} style={{background: 'transparent'}}>
@@ -87,7 +91,6 @@ const Presentation = (props) => {
                     <SheetList />
                 </Grid>
                 <Grid item xs={2}>
-                    <Upload onClick={onUploadClick} />
                 </Grid>
                 <Grid item xs={1}>
                     <Save

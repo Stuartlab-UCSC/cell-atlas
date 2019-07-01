@@ -66,6 +66,7 @@ const receiveData = (id, data, callback, options) => {
 const error = (id, message) => {
     console.error('fetch error:', message)
     rxSet(id + '.fetchMessage.set', { value: message })
+    rxSet(id + '.fetchStatus.quiet')
 }
 
 const fetchData = (id, urlPath, callback, optionsIn) => {
