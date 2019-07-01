@@ -8,6 +8,7 @@
 // Don't know which is less code at this point.
 
 import { get as rxGet, set as rxSet } from 'state/rx'
+import auth from 'auth/state'
 import database from 'database/databaseState'
 
 let LOGGING = false  // true means log the state and store on save and load
@@ -16,12 +17,18 @@ let storeName
 
 // The state pieces to save to session store, with their defaults.
 // We don't save defaults to session store.
+// To add a piece of state to session store, add a line below and provide
+// a ...loadPersist state action.
 const stateKeys = {
+    'auth.redirectPage': auth.defaultRedirectPage,
+    'auth.user': auth.defaultUser,
     'database.query': database.defaultQuery,
     'database.favoriteList': database.defaultFavoriteList,
     'database.favoriteSelected': database.defaultFavoriteSelected,
 }
 
+// TODO: need routines to determine equality with default for a single-level
+//       object and an array.
 function isDefault (key, val) {
     return (rxGet(key) === stateKeys[key])
 }
@@ -56,11 +63,6 @@ function logStore (label, store) {
     }
 }
 
-function setDefaults () {
-
-    // Set the default of each persistent variable.
-}
-
 function localStore (oper, jsonStore) {
     if (oper === 'get') {
         return JSON.parse(window.localStorage.getItem(storeName))
@@ -72,7 +74,7 @@ function localStore (oper, jsonStore) {
         window.localStorage.removeItem(storeName)
         
     } else {
-        console.log('bad operation for local store:', oper)
+        console.error('bad operation for local store:', oper)
     }
 }
 
@@ -156,7 +158,6 @@ function checkLocalStore () {
 
 const sessionStoreInit = function (state) {
     storageSupported = checkLocalStore()
-    setDefaults()
 
     // Give different servers different store names.
     storeName = 'stuartCellAtlasState'

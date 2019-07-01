@@ -95,7 +95,7 @@ class NavBarPres extends React.Component {
     
     onToggleGroupChange = (ev, value) => {
         // Executed upon click of an item at the highest level.
-        this.props.onTopLevelClick()
+        this.props.onTopLevelClick(value)
     }
 
     externalLinkItem = (text, link) => {
@@ -161,16 +161,32 @@ class NavBarPres extends React.Component {
         return comp
     }
     
+    username = (username, changePasswordUrl) => {
+        // The logged in username.
+        if (!username) {
+            return null
+        }
+        return (
+            <ToggleButton
+                href={changePasswordUrl}
+                style={this.usernameStyle}
+                value='auth'
+            >
+                {username}
+            </ToggleButton>
+        )
+    }
+    
     logIn = (link, username) => {
         // An external link to the login page.
-        if (username || true) {
+        if (username) {
             return null
         }
         return (
             <ToggleButton
                 href={link}
                 style={this.loginStyle}
-                value={'logIn'}
+                value='auth'
             >
                 Sign in
             </ToggleButton>
@@ -186,31 +202,25 @@ class NavBarPres extends React.Component {
             <ToggleButton
                 href={link}
                 style={this.loginStyle}
-                value={'logOut'}
+                value='auth'
             >
                 Sign out
             </ToggleButton>
         )
     }
 
-    username = (username) => {
-        // The logged in username.
-        if (!username) {
-            return null
+    admin = (roles, link) => {
+        // The link to the admin page.
+        let comp = null
+        if (roles && roles.includes('admin')) {
+            comp = this.externalLinkItem('Admin', link)
         }
-        return (
-            <ToggleButton
-                disabled={true}
-                style={this.usernameStyle}
-                value={username}
-            >
-                {username}
-            </ToggleButton>
-        )
+        return comp
     }
 
     render() {
         this.setStyles()
+        const username = this.props.user.name
         return (
             <div
                 style={{
@@ -241,9 +251,10 @@ class NavBarPres extends React.Component {
                     {this.linkItem('Data Model', '/data-model')}
                     {this.linkItem('Cell Type Mock-up', '/cell-type')}
                     {this.externalLinkItem('API', this.props.apiUrl)}
-                    {this.username(this.props.username)}
-                    {this.logIn(this.props.loginUrl, this.props.username)}
-                    {this.logOut(this.props.logoutUrl, this.props.username)}
+                    {this.admin(this.props.user.roles, this.props.adminUrl)}
+                    {this.username(username, this.props.changePasswordUrl)}
+                    {this.logIn(this.props.loginUrl, username)}
+                    {this.logOut(this.props.logoutUrl, username)}
                 </ToggleButtonGroup>
             </div>
         )

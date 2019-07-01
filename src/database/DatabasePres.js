@@ -142,7 +142,7 @@ const DatabasePres = (props) => {
                     header={table.header}
                     data={table.data}
                     columns={table.columns}
-                    status={table.status}
+                    message={table.message}
                 />
             </Grid>
         </Grid>

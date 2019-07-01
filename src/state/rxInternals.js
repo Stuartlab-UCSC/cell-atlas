@@ -3,6 +3,7 @@
 
 import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
+import auth from 'auth/state'
 import bubble from 'bubble/state'
 import { cellTypeGeneClusters, cellTypeGene } from 'cellTypeGene/state'
 import cellTypeScatter from 'cellTypeScatter/state'
@@ -17,24 +18,12 @@ import { State as sortable } from 'app/sortable'
 // Global application state.
 const app = (
     state = {
-        auth: { username: null, token: null },
         homeAboutOpen: false,
         homeRedirect: false,
-        homeUrlSearch: null,
         navBarActive: window.location.pathname,
         navBarTheme: 'light',
     }, action) => {
         switch(action.type) {
-        case 'app.auth.login':
-            return {
-                ...state,
-                auth: { username: action.username, token: action.token }
-            }
-        case 'app.auth.logout':
-            return {
-                ...state,
-                auth: { username: null, token: null }
-            }
         case 'app.homeAboutOpen.toggle':
             return {
                 ...state,
@@ -49,16 +38,6 @@ const app = (
             return {
                 ...state,
                 homeRedirect: false
-            }
-        case 'app.homeUrlSearch.clear':
-            return {
-                ...state,
-                homeUrlSearch: null
-            }
-        case 'app.homeUrlSearch.set':
-            return {
-                ...state,
-                homeUrlSearch: action.value
             }
         case 'app.navBarActive.anyClick':
         case 'app.navBarActive.topLevelClick':
@@ -79,6 +58,7 @@ const app = (
 export const init = () => {
     const Reducers = combineReducers({
         app,
+        auth,
         bubble,
         cellTypeGene,
         cellTypeGeneClusters,
