@@ -99,8 +99,18 @@ const getInitialScatterPlot = (clusters, colormap, url) => {
     }
 }
 
+const scatterColumnsReordered = () => {
+    // When columns are re-ordered we need to update the colors on the
+    // cluster assignment scatterplot if one is showing.
+    if (rxGet('cellTypeScatter.gene')) {
+        return
+    }
+    getClusterAssignmentScatterPlot()
+}
+
 const mapStateToProps = (state) => {
     return {
+        columnsReordered: state.cellTypeWork.columnOrder,
         fetchMessage: state.cellTypeScatter.fetchMessage,
         gene: state.cellTypeScatter.gene,
         plot: scatterStore,
@@ -123,5 +133,5 @@ const ScatterPlot = connect(
 
 export default ScatterPlot
 
-export { buildScatterPlotUrl, getClusterAssignmentScatterPlot,
-    getGeneScatterPlot, getInitialScatterPlot }
+export { buildScatterPlotUrl, scatterColumnsReordered,
+    getClusterAssignmentScatterPlot, getGeneScatterPlot, getInitialScatterPlot }

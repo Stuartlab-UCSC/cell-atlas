@@ -8,6 +8,7 @@ import getGeneTableData from 'cellTypeGene/ctgFetch'
 import { reorder as cellTypeReorder } from 'cellTypeWork/cellTypes'
 import dataStore from 'cellTypeWork/dataStore'
 import { clearContextElements } from 'cellTypeWork/worksheet'
+import { scatterColumnsReordered } from 'cellTypeScatter/scatter'
 
 const DOMAIN = 'cellTypeWorkClusters'
 
@@ -33,6 +34,8 @@ const reorder = (start, end) => {
     dataStore.reorderClusters(clusters)
     // Also reorder the cell types the same.
     cellTypeReorder(start, end)
+    // Update the scatter plot to the new colors.
+    scatterColumnsReordered()
 }
 
 const mapDispatchToProps = (dispatch) => {
