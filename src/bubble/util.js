@@ -18,7 +18,8 @@ const radiusFromArea = (area) => {
 }
 
 const sizeToRadius = (size, min, max) => {
-    return radiusFromArea(((maxArea - minArea) * size) + minArea)
+    const normSize = (size - min) / (max - min)
+    return radiusFromArea(((maxArea - minArea) * normSize) + minArea)
 }
 
 // Color references anad size references for name to label translations

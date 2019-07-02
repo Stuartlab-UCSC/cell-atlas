@@ -31,10 +31,9 @@ const sizeInfo = (min, max) => {
     // Find the width of the bubbles where the size values are represented
     // by the area of the circle.
     const labels = [
-        stringToPrecision(max, 1),
-        stringToPrecision((max - min) / 2, 1),
-        stringToPrecision((max - min) / 4, 1),
-        stringToPrecision(min, 1),
+        stringToPrecision(max, 2),
+        stringToPrecision((max - min) / 2, 2),
+        stringToPrecision(min, 2),
     ]
     let diameters = labels.map(label => {
         return sizeToRadius(parseFloat(label), min, max) * 2
