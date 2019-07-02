@@ -1,7 +1,8 @@
 
 // The bubble matrix presentational component for the cell type worksheet page.
 
-import React from 'react';
+import React from 'react'
+import Typography from '@material-ui/core/Typography'
 import Bubble from 'bubble/bubble'
 import { findBubbleData } from 'cellTypeWork/transformToBubbles'
 
@@ -12,6 +13,9 @@ const ManyBubbles = ({ data, dims }) => {
     genes.forEach((gene,i) => {
         clusters.forEach((cluster,j) => {
             const bubble = findBubbleData(bubbles, cluster.name, gene)
+            if (!bubble) {
+               console.error('no bubble data for gene, cluster:', gene, cluster)
+            }
             bubbleList.push(
                 <Bubble
                     key={'[' + i.toString() + ',' + j.toString()+ ']'}
@@ -35,11 +39,24 @@ const ManyBubbles = ({ data, dims }) => {
     )
 }
 
-const Presentation = ({ data, dims, onMouseOver }) => {
+const Presentation = ({ data, dims, geneCluster, onMouseOver }) => {
     const { bubblesHeight, bubblesWidth } = dims
-    if (!data.genes.length || !data.clusters.length) {
+    const { clusters, genes } = data
+    if (clusters.length < 1) {
         return (null)
     }
+    if (genes.length < 1 && geneCluster) {
+        return (
+            <Typography style={{
+                marginLeft: '2rem',
+                marginTop: '2rem',
+                color: 'red',
+            }}>
+    Add a marker gene for cluster <b>{geneCluster}</b> from the table below
+            </Typography>
+        )
+    }
+
     return (
         <svg
             height={bubblesHeight}

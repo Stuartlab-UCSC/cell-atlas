@@ -29,7 +29,8 @@ const getColorScale = (colorRange) => {
     // Find the final color range.
     // Put zero is in the middle of the color range by using the largest
     // magnitude to find the two endpoints of the color range.
-    const magnitude = Math.abs(colorRange.min, colorRange.max)
+    const magnitude = Math.max(
+        Math.abs(colorRange.min), Math.abs(colorRange.max))
     colorRange.min = -magnitude
     colorRange.max = magnitude
 

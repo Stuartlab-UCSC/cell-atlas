@@ -164,13 +164,13 @@ class NavBarPres extends React.Component {
     cellType = (roles, link) => {
         // The link to the admin page.
         let comp = null
-        console.log('roles:', roles)
-        if (roles && (roles.includes('worksheet') || roles.includes('admin'))) {
+        //console.log('roles:', roles)
+        //if (roles && (roles.includes('worksheet') || roles.includes('admin'))) {
             comp = this.linkItem('Cell Type Mock-up', link)
-        }
+        //}
         return comp
     }
-
+/*
     username = (username, changePasswordUrl) => {
         // The logged in username.
         if (!username) {
@@ -186,7 +186,7 @@ class NavBarPres extends React.Component {
             </ToggleButton>
         )
     }
-    
+
     logIn = (link, username) => {
         // An external link to the login page.
         if (username) {
@@ -227,10 +227,10 @@ class NavBarPres extends React.Component {
         }
         return comp
     }
-
+*/
     render() {
         this.setStyles()
-        const username = this.props.user.name
+        //const username = this.props.user.name
         return (
             <div
                 style={{
@@ -261,14 +261,16 @@ class NavBarPres extends React.Component {
                     {this.linkItem('Data Model', '/data-model')}
                     {this.cellType(this.props.user.roles, '/cell-type')}
                     {this.externalLinkItem('API', this.props.apiUrl)}
-                    {this.admin(this.props.user.roles, this.props.adminUrl)}
-                    {this.username(username, this.props.changePasswordUrl)}
-                    {this.logIn(this.props.loginUrl, username)}
-                    {this.logOut(this.props.logoutUrl, username)}
                 </ToggleButtonGroup>
             </div>
         )
     }
 }
+/*
+                    {this.admin(this.props.user.roles, this.props.adminUrl)}
+                    {this.username(username, this.props.changePasswordUrl)}
+                    {this.logIn(this.props.loginUrl, username)}
+                    {this.logOut(this.props.logoutUrl, username)}
+*/
 
 export default NavBarPres

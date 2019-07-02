@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
     return {
         data: dataStore.get(),
         dims: state.cellTypeWork.dims,
+        geneCluster: state.cellTypeGene.cluster,
         render: state.cellTypeWork.render,
     }
 }

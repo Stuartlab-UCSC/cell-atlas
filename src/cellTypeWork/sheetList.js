@@ -11,8 +11,8 @@ const DOMAIN = 'cellTypeSheet'
 
 const USE_TEST_DATA = true
 const testData = [
-    'heart of cells 1',
-    '22',
+    'krigstien6K A',
+    'krigstien6K B',
 ]
 let lastUser = null
 
@@ -24,15 +24,12 @@ const receiveDataFromServer = (data, error) => {
         let sheets = data.map(worksheet => {
             return { value: worksheet, name: worksheet }
         })
-        console.log('receiveDataFromServer: sheets:', sheets)
-        console.log('receiveDataFromServer: typeof sheets:', typeof sheets)
         rxSet('cellTypeWork.sheetList.load', { value: sheets })
     }
 }
 
 const getSheetListData = () => {
     // Load a new sheetList when the user changes or on initial page load.
-    console.log('getSheetListData')
     let initialPageLoaded = rxGet('cellTypeWork.initialPageLoaded')
     let user = rxGet('auth.user').name
     if (user === lastUser && initialPageLoaded) {
@@ -57,7 +54,6 @@ const getSheetListData = () => {
 }
 
 const mapStateToProps = (state) => {
-    console.log('mapStateToProps: sheetlist:', state.cellTypeWork.sheetList)
     setTimeout(() => getSheetListData() )
     return {
         id: 'cell_type_work_sheet',

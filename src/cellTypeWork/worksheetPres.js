@@ -9,6 +9,9 @@ import Bubbles from 'cellTypeWork/bubbles'
 import Genes from 'cellTypeWork/genes'
 
 const Legends = ({ data, dims }) => {
+    if (data.genes.length < 1) {
+        return null
+    }
     const { colorRange, legendWidth, sizeRange } = dims
     const { colorBy, sizeBy } = data
     return (

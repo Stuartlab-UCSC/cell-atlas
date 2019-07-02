@@ -48,7 +48,7 @@ const fetchTestData = (id, url, receiveFx) => {
 }
 
 const getPostWorksheetData = (worksheet, options) => {
-    // Request the data from the server.
+    // Request the data from, or save the data to the server.
     rxSet('cellTypeWork.showChart.toRequestStatus')
     const url =
         '/user/' + rxGet('auth.user').name +

@@ -23,7 +23,7 @@ const Presentation = (props) => {
             <Typography inline={true} style={{
                 fontSize: '1.1rem',
                 verticalAlign: 'bottom',
-                marginRight: '1rem',
+                marginRight: '1.5rem',
             }}>
                 Cluster <b>{cluster}</b>: <b>{dataLength}</b> genes found
             </Typography>

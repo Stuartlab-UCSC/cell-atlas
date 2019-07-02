@@ -31,7 +31,13 @@ const buildClusters = (data) => {
             cellCount: parseFloat(line[2]),
         }
         cellTypes[line[0]] = line[4]
-        colorBar[line[0]] = line[3]
+        // If a color column is not given for a segment of the colorBar,
+        // use the column position.
+        if (line[3] === null || line[3] === undefined) {
+            colorBar[line[0]] = i
+        } else {
+            colorBar[line[0]] = line[3]
+        }
     })
 
     return {colorBar, clusters, cellTypes }
