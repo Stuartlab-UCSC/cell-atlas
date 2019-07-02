@@ -161,6 +161,16 @@ class NavBarPres extends React.Component {
         return comp
     }
     
+    cellType = (roles, link) => {
+        // The link to the admin page.
+        let comp = null
+        console.log('roles:', roles)
+        if (roles && (roles.includes('worksheet') || roles.includes('admin'))) {
+            comp = this.linkItem('Cell Type Mock-up', link)
+        }
+        return comp
+    }
+
     username = (username, changePasswordUrl) => {
         // The logged in username.
         if (!username) {
@@ -249,7 +259,7 @@ class NavBarPres extends React.Component {
                     {this.linkItem('SQL Query', '/sql-query')}
                     {this.linkItem('Pipeline', '/pipeline')}
                     {this.linkItem('Data Model', '/data-model')}
-                    {this.linkItem('Cell Type Mock-up', '/cell-type')}
+                    {this.cellType(this.props.user.roles, '/cell-type')}
                     {this.externalLinkItem('API', this.props.apiUrl)}
                     {this.admin(this.props.user.roles, this.props.adminUrl)}
                     {this.username(username, this.props.changePasswordUrl)}

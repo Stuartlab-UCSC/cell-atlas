@@ -112,7 +112,6 @@ const transformToServerStore = () => {
     let data = dataStore.get()
     let { colors, sizes } = buildColorsAndSizes(data)
     let payload = {
-        user: 'someUser',
         role: 'worksheet',
         worksheet_name: rxGet('cellTypeWork.sheetSelected'),
         dataset_name: data.dataset,
@@ -126,6 +125,10 @@ const transformToServerStore = () => {
         genes: buildGenes(data),
         colors,
         sizes,
+    }
+    let user = rxGet('auth.user')
+    if (user && user.name) {
+        payload.user = user.name
     }
     return payload
 }

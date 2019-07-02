@@ -13,6 +13,7 @@ const defaultDims = {
     colorRange:{},
     colWidth: 14,
     clusterMarginTop: 10,
+    initialPageLoaded: false,
     fontFamily,
     fontSize: 11,
     geneWidth: 100,
@@ -23,8 +24,6 @@ const defaultDims = {
     worksheetSelected: null,
 }
 export const defaultSheetList = [
-    { value:'heart of cells 1', name: 'heart of cells 1' },
-    { value:'22', name: '22' },
 ]
 
 const State = (
@@ -130,6 +129,11 @@ const State = (
             return {
                 ...state,
                 fetchStatus: 'quiet'
+            }
+        case 'cellTypeWork.initialPageLoaded.true':
+            return {
+                ...state,
+                initialPageLoaded: true
             }
         case 'cellTypeWork.geneMenu.close':
             return {

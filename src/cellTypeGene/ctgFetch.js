@@ -1,7 +1,7 @@
 
 // The fetch for the cell type worksheet gene table.
 
-import { set as rxSet } from 'state/rx'
+import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { receiveTableData } from 'fetch/tableData'
 import { stringToPrecision } from 'app/util'
@@ -75,8 +75,9 @@ const receiveDataFromServer = (data) => {
 }
 
 const buildGeneTableUrl = (cluster, includeHost) => {
-    let url = '/user/elie' +
-        '/worksheet/worksheetName' +
+    let url =
+        '/user/' + rxGet('auth.user').name +
+        '/worksheet/' + rxGet('cellTypeWork.sheetSelected') +
         '/cluster/' + cluster
     if (includeHost) {
         url = process.env.REACT_APP_DATA_URL + url
@@ -85,7 +86,6 @@ const buildGeneTableUrl = (cluster, includeHost) => {
 }
 
 const getGeneTableData = (cluster) => {
-    console.log('getGeneTableData: cluster:', cluster)
     // Request the data from the server.
     const url = buildGeneTableUrl(cluster)
     if (USE_TEST_DATA) {

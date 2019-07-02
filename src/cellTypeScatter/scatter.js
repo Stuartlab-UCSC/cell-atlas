@@ -33,10 +33,12 @@ const fetchTestData = (id, url, receiveFx, options) => {
 }
 
 const buildScatterPlotUrl = (gene, includeHost) => {
-    let url = '/user/someUser/worksheet/someWorksheet/scatterplot/umap'
+    let url =
+        '/user/' + rxGet('auth.user').name +
+        '/worksheet/' + rxGet('cellTypeWork.selectedSheet') +
+        '/scatterplot/umap'
     if (gene) {
-         url = '/user/someUser/worksheet/someWorksheet/scatterplot/umap/gene/'
-            + gene
+         url += '/gene/' + gene
     }
     if (includeHost) {
         url = process.env.REACT_APP_DATA_URL + url

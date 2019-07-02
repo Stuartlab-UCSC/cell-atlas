@@ -5,17 +5,18 @@
 import { get as rxGet, set as rxSet } from 'state/rx'
 import { receiveTableData } from 'fetch/tableData'
 
-const receiveData = (id, data, callback, options) => {
+const receiveData = (id, data, callback, optionsIn) => {
     // Receive the data from the fetch.
     // @param id: ID of the table instance, used as part of the state name
     // @param data: data received from the server; for table data this is a text
     //              value containing TSV, otherwise an object
     // @param callback: function to call after receiving the data; optional for
     //                   table data, otherwise required
-    // @param options: the same as that for fetchData()
+    // @param options: the same as that for fetchData().
+    let options = optionsIn || {}
 
     // If this is a POST and the data is null, that's fine, we're done.
-    const post = (options && options.payload)
+    const post = (options.payload)
     if (post && data === null && callback) {
         setTimeout(() => { callback(data) })
     }
@@ -94,7 +95,9 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
             url = urlPath
         }
 
-        const encodedUrl = encodeURI(url)
+        // TODO encode the url as soon as it is decodable on the server.
+        const encodedUrl = url
+        //const encodedUrl = encodeURI(url)
         let fetchOpts = {}
         if (options.payload) {
             // Any request with a payload is assumed to be a POST request.

@@ -47,11 +47,12 @@ const fetchTestData = (id, url, receiveFx) => {
     //}, 1000)
 }
 
-const getPostWorksheetData = (worksheetIn, options) => {
+const getPostWorksheetData = (worksheet, options) => {
     // Request the data from the server.
     rxSet('cellTypeWork.showChart.toRequestStatus')
-    const worksheet = worksheetIn || rxGet('cellTypeWork.sheetSelected')
-    const url = '/user/someUser/worksheet/' + worksheet
+    const url =
+        '/user/' + rxGet('auth.user').name +
+        '/worksheet/' + worksheet || rxGet('cellTypeWork.sheetSelected')
     if (USE_TEST_DATA && !options) {
         fetchTestData('cellTypeWork', url, receiveDataFromServer, options)
     } else {

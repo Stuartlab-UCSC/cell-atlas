@@ -2,8 +2,8 @@
 // Global authentication/authorization (auth) state.
 const defaultRedirectPage = '/'
 const defaultUser = {
-    name: null,
-    roles: null,
+    name: 'swat@soe.ucsc.edu',
+    roles: ['worksheet', 'admin'],
 }
 
 const auth = (
