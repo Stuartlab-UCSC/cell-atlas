@@ -18,10 +18,10 @@ const buttonStyle = {
     marginTop: '1rem',
 }
 
-/*
 const Upload = ({ onClick} ) => {
     return (
         <Button
+            disabled
             variant='contained'
             component='span'
             size='small'
@@ -33,7 +33,6 @@ const Upload = ({ onClick} ) => {
         </Button>
     )
 }
-*/
 
 const Save = ({ label, show, onClick }) => {
     if (!show) {
@@ -73,58 +72,82 @@ const ClusterSolution = ({ show, solution }) => {
         </Typography>
     )
 }
-/*
-                    <Upload onClick={onUploadClick} />
-*/
-const Presentation = (props) => {
-    const { bubbleTooltip, clusterSolution, dataset, showEditables,
-        onSaveAsClick, onSaveClick, /*onUploadClick*/ } = props
+
+const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
     return (
-        <div>
-            <Grid container spacing={8} style={{background: 'transparent'}}>
-                <Grid item xs={3}>
-                    <Typography variant='h6'>
-                        Cell Type Worksheet
-                    </Typography>
-                </Grid>
-                <Grid item xs={5} >
-                    <SheetList />
-                </Grid>
-                <Grid item xs={2}>
-                </Grid>
-                <Grid item xs={1}>
-                    <Save
-                        label='Save'
-                        show={showEditables}
-                        onClick={onSaveClick}
-                    />
-                </Grid>
-                <Grid item xs={1}>
-                    <Save
-                        label='Save as'
-                        show={showEditables}
-                        onClick={onSaveAsClick}
-                    />
-                </Grid>
+        <div style={{
+            width: '8rem',
+            position: 'absolute',
+            top: 0,
+            right: -20,
+        }}>
+            <Upload onClick={onUploadClick} />
+            <Save
+                label='Save'
+                show={show}
+                onClick={onSaveClick}
+            />
+            <Save
+                label='Save as'
+                show={show}
+                onClick={onSaveAsClick}
+            />
+        </div>
+    )
+}
+
+const Left = ({ props }) => {
+    const { clusterSolution, dataset, showEditables } = props
+    return (
+        <Grid container spacing={8}>
+            <Grid item xs={6}>
+                <Typography variant='h6'>
+                    Cell Type Worksheet
+                </Typography>
+            </Grid>
+            <Grid item xs={6} style={{width: '70%'}} >
+                <SheetList />
+            </Grid>
             
-                <Grid item xs={4} style={{zIndex: 1}}>
-                    <Dataset dataset={dataset} show={showEditables} />
-                    <ClusterSolution solution={clusterSolution} show={showEditables} />
-                </Grid>
-               <Grid item xs={8} />
-     
+            <Grid item xs={6}>
+            </Grid>
+            <Grid item xs={6} style={{zIndex: 1}}>
+                <Dataset dataset={dataset} show={showEditables} />
+                <ClusterSolution solution={clusterSolution} show={showEditables} />
+            </Grid>
+
+            <Grid item xs={12}>
+                <ScatterPlot show={showEditables} />
+            </Grid>
+        </Grid>
+    )
+}
+
+const Presentation = (props) => {
+    const { bubbleTooltip, showEditables, onSaveAsClick, onSaveClick,
+        onUploadClick } = props
+    return (
+        <div style={{position: 'relative'}}>
+            <Buttons
+                show={showEditables}
+                onSaveAsClick={onSaveAsClick}
+                onSaveClick={onSaveClick}
+                onUploadClick={onUploadClick}
+            />
+            <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
+            <Grid container spacing={16} style={{background: 'transparent'}}>
+            
                 <Grid item xs={5}>
-                    <ScatterPlot show={showEditables} />
+                    <Left props={props} />
                 </Grid>
-                    <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
-                <Grid item xs={7} style={{marginTop: -70}}>
+                <Grid item xs={7}>
                     <Worksheet />
                 </Grid>
-
+            
                 <Grid item xs={12}>
                     <GeneTable/>
                 </Grid>
-
+            
             </Grid>
             <BubbleTooltip data={bubbleTooltip} id='cellTypeWork' />
         </div>

@@ -47,14 +47,13 @@ const PickList = ({id, helperText, label, list, placeholder, selected,
         )
     }
     return (
-        <FormControl>
+        <FormControl style={{width: '100%'}}>
             <Label label={label} />
             <Select
                 value={selected}
                 onChange={onChange}
                 name={label}
                 displayEmpty
-                style={{width: '100%'}}
             >
                 {Placeholder}
                 {list.map((item, i) => (

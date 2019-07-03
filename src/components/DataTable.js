@@ -56,7 +56,7 @@ const formatHttpColumns = (columns) => {
             colObj = { name: col, options: { setCellProps: setCellPropsFx } }
         } else if (col.options === undefined) {
             colObj.options = {setCellProps: setCellPropsFx}
-        } else if (col.options.setcellProps === undefined) {
+        } else if (col.options.setCellProps === undefined) {
             colObj.options.setCellProps = setCellPropsFx
         }
         return colObj
