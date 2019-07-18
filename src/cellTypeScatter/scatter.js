@@ -55,6 +55,7 @@ const getClusterAssignmentScatterPlot =
     let options = optionsIn || {}
     options.responseType = 'png'
     options.method = 'POST'
+    options.credentials = true
     options.payload = {
         colors: colormap,
         "cluster-name": clusters.map(cluster => {
@@ -73,6 +74,7 @@ const getGeneScatterPlot = (gene, urlIn, optionsIn) => {
     // Request a gene plot from the server.
     let url = urlIn || buildScatterPlotUrl(gene)
     let options = optionsIn || {}
+    options.credentials = true
     options.responseType = 'png'
     // Save the gene.
     rxSet('cellTypeScatter.gene.set', { value: gene })

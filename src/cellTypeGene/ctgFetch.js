@@ -88,10 +88,12 @@ const buildGeneTableUrl = (cluster, includeHost) => {
 const getGeneTableData = (cluster) => {
     // Request the data from the server.
     const url = buildGeneTableUrl(cluster)
+    let options = { credentials: true }
+
     if (USE_TEST_DATA) {
-        receiveData(DOMAIN, testData, receiveDataFromServer)
+        receiveData(DOMAIN, testData, receiveDataFromServer, options)
     } else {
-        fetchData(DOMAIN, url, receiveDataFromServer)
+        fetchData(DOMAIN, url, receiveDataFromServer, options)
     }
 }
 
@@ -100,11 +102,11 @@ const getInitalGeneTableData = (url) => {
     if (!url) {
         return
     }
+    let options = { fullUrl: true, credentials: true }
     if (USE_TEST_DATA) {
-        receiveData(DOMAIN, testData, receiveDataFromServer)
+        receiveData(DOMAIN, testData, receiveDataFromServer, options)
     } else {
-        fetchData(DOMAIN, url, receiveDataFromServer,
-            { fullUrl: true })
+        fetchData(DOMAIN, url, receiveDataFromServer, options)
     }
 }
 

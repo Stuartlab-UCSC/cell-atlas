@@ -42,11 +42,12 @@ const getDataForAllClusters = (gene) => {
         gene +
         '/color/' + colorBy +
         '/size/' + sizeBy
+    let options = { credentials: true, responseType: 'text' }
     if (USE_TEST_DATA) {
         fetchTestData('cellTypeGeneClusters', url, receiveDataFromServer)
     } else {
         fetchData('cellTypeGeneClusters', url, receiveDataFromServer,
-            { responseType: 'text' })
+            options)
     }
     // Save the gene selected.
     rxSet('cellTypeGene.geneSelected.uiSet', { value: gene })
