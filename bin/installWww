@@ -8,6 +8,7 @@ scp $FROMTAR $LOCALTAR
 
 cd $CELL
 echo "moving old code go build.old"
+rm -rf build.old
 mv build build.old
 echo "untarring..."
 tar -xf $LOCALTAR -C $CELL
