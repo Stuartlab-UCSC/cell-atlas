@@ -205,7 +205,7 @@ class NavBarPres extends React.Component {
 
     logOut = (link, username) => {
         // The log out function.
-         if (!username) {
+        if (!username) {
             return null
         }
         return (

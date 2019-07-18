@@ -106,17 +106,21 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
         // TODO encode the url when the decode is implemented on the server.
         const encodedUrl = url
         //const encodedUrl = encodeURI(url)
+        
         let fetchOpts = {}
         if (options.payload) {
-            // Any request with a payload is assumed to be a POST request.
-            // TODO handle other requests that may have a payload, such as PUT.
+            // Any request with a payload is assumed to have a method supplied.
             fetchOpts = {
-                method: 'POST',
+                method: options.method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(options.payload),
             }
+        }
+        if (options.credentials) {
+            // Include credentials.
+            fetchOpts.credentials = 'include'
         }
 
         fetch(encodedUrl, fetchOpts)

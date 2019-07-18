@@ -54,6 +54,7 @@ const getClusterAssignmentScatterPlot =
     let url = urlIn || buildScatterPlotUrl()
     let options = optionsIn || {}
     options.responseType = 'png'
+    options.method = 'POST'
     options.payload = {
         colors: colormap,
         "cluster-name": clusters.map(cluster => {

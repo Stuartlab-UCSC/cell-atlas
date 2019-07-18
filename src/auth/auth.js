@@ -24,7 +24,6 @@ const checkUrlSearch = () => {
 
 const Auth = () => {
     checkUrlSearch()
-    console.log('Auth redirectPage:', rxGet('auth.redirectPage'))
     return (
         <Redirect to={rxGet('auth.redirectPage')} />
     )

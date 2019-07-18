@@ -15,7 +15,8 @@ const onSaveSubmit = (name, dispatch) => {
         value: name
     })
     // Save the worksheet on the server.
-    getPostWorksheetData(null, { payload: transformToServerStore() })
+    getPostWorksheetData(null,
+        { method: 'POST', payload: transformToServerStore() })
 }
 
 const onSaveAsSubmit = (name, dispatch) => {

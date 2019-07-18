@@ -47,13 +47,16 @@ const fetchTestData = (id, url, receiveFx) => {
     //}, 1000)
 }
 
-const getPostWorksheetData = (worksheet, options) => {
+const getPostWorksheetData = (worksheet, optionsIn) => {
     // Request the data from, or save the data to the server.
+    let options = optionsIn || {}
+    options.credentials = true
     rxSet('cellTypeWork.showChart.toRequestStatus')
     const url =
         '/user/' + rxGet('auth.user').name +
         '/worksheet/' + worksheet || rxGet('cellTypeWork.sheetSelected')
-    if (USE_TEST_DATA && !options) {
+    if (USE_TEST_DATA && !options.method) {
+        // This is only for GETS.
         fetchTestData('cellTypeWork', url, receiveDataFromServer, options)
     } else {
         // Only GET test data, but always POST real data.
