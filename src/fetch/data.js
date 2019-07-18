@@ -14,15 +14,19 @@ const receiveData = (id, data, callback, optionsIn) => {
     //                   table data, otherwise required
     // @param options: the same as that for fetchData().
     let options = optionsIn || {}
+    const post = (options.payload)
+
+    // Check for authorization.
+    if (data === '403' && callback) {
+        callback(null, data)
 
     // If this is a POST and the data is null, that's fine, we're done.
-    const post = (options.payload)
-    if (post && data === null && callback) {
+    // TODO handle other requests that may have a payload, such as PUT.
+    } else if (post && data === null && callback) {
         setTimeout(() => { callback(data) })
-    }
     
     // If the data contains a message, set the fetch message to that error.
-    if (data !== null && typeof data === 'object' && data.message) {
+    } else if (data !== null && typeof data === 'object' && data.message) {
         rxSet(id + '.fetchMessage.set', { value: data.message })
         console.error('fetch error:', data.message)
         if (callback) {
@@ -90,17 +94,22 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
     
     // Allow the state to be recorded.
     setTimeout(() => {
+        
+        // Prepend the data server URL to the given url.
         let url = process.env.REACT_APP_DATA_URL + urlPath
+        
+        // If the full url is supplied use that instead.
         if (options.fullUrl) {
             url = urlPath
         }
 
-        // TODO encode the url as soon as it is decodable on the server.
+        // TODO encode the url when the decode is implemented on the server.
         const encodedUrl = url
         //const encodedUrl = encodeURI(url)
         let fetchOpts = {}
         if (options.payload) {
             // Any request with a payload is assumed to be a POST request.
+            // TODO handle other requests that may have a payload, such as PUT.
             fetchOpts = {
                 method: 'POST',
                 headers: {
@@ -124,7 +133,11 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
                     return response.json()
                 }
             } else {
-                error(id, response.statusText)
+                if (response.status === 403) {
+                    error(id, 'Unauthorized, maybe you need to sign in.')
+                } else {
+                    error(id, response.statusText)
+                }
                 return response.json()
             }
         })

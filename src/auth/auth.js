@@ -24,13 +24,9 @@ const checkUrlSearch = () => {
 
 const Auth = () => {
     checkUrlSearch()
-    let page = rxGet('auth.redirectPage')
-
-    // If the user is no longer allowed access to the redirect page,
-    // redirect to the home page. So far we don't have any pages like this.
-    
+    console.log('Auth redirectPage:', rxGet('auth.redirectPage'))
     return (
-        <Redirect to={page} />
+        <Redirect to={rxGet('auth.redirectPage')} />
     )
 }
 export default Auth
