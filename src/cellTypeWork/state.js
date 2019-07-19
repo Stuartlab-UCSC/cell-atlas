@@ -238,4 +238,37 @@ const State = (
         }
     }
 
+const cellTypeSheetState = (
+    state = {
+        fetchMessage: ' ',
+        fetchStatus: 'initial',
+    }, action) => {
+        switch (action.type) {
+        case 'cellTypeSheet.fetchMessage.set':
+            return {
+                ...state,
+                fetchMessage: action.value
+            }
+        case 'cellTypeSheet.fetchMessage.clear':
+            return {
+                ...state,
+                fetchMessage: null
+            }
+        case 'cellTypeSheet.fetchStatus.waiting':
+            return {
+                ...state,
+                fetchStatus: 'waiting'
+            }
+        case 'cellTypeSheet.fetchStatus.quiet':
+            return {
+                ...state,
+                fetchStatus: 'quiet'
+            }
+        default:
+            return state
+        }
+    }
+
+
 export default State
+export { cellTypeSheetState }

@@ -7,6 +7,7 @@ import auth from 'auth/state'
 import bubble from 'bubble/state'
 import { cellTypeGeneClusters, cellTypeGene } from 'cellTypeGene/state'
 import cellTypeScatter from 'cellTypeScatter/state'
+import { cellTypeSheetState as cellTypeSheet } from  'cellTypeWork/state'
 import cellTypeWork from 'cellTypeWork/state'
 import database from 'database/databaseState'
 import dataset from 'dataset/datasetState'
@@ -63,6 +64,7 @@ export const init = () => {
         cellTypeGene,
         cellTypeGeneClusters,
         cellTypeScatter,
+        cellTypeSheet,
         cellTypeWork,
         database,
         dataset,
