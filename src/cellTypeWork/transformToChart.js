@@ -81,7 +81,7 @@ const transfromToChart = (data) => {
     getInitialScatterPlot(clusters, colormap, data.scatterplot_url)
 
     // Load an initial gene table if a URL is provided.
-    getInitalGeneTableData(data.gene_table_url)
+    getInitalGeneTableData(clusters, data.gene_table_url)
 
     // Update the chart data.
     dataStore.load({

@@ -9,7 +9,7 @@ import { getPostWorksheetData } from 'cellTypeWork/worksheet'
 
 const DOMAIN = 'cellTypeSheet'
 
-const USE_TEST_DATA = true
+const USE_TEST_DATA = false
 const testData = [
     'pbmc',  // as admin@replace.me
     // test@test.com/test
@@ -30,12 +30,7 @@ const receiveDataFromServer = (data, error) => {
 
 const getSheetListData = () => {
     // Load a new sheetList when the user changes or on initial page load.
-    if (rxGet('cellTypeWork.initialPageLoaded')) {
-        return
-    }
-    rxSet('cellTypeWork.initialPageLoaded.true')
-
-    /* TODO this is not needed until we want to include a user in the URL.
+    const initialPageLoaded = rxGet('cellTypeWork.initialPageLoaded')
     let user = rxGet('auth.user').name
     if (user === lastUser && initialPageLoaded) {
         return
@@ -43,10 +38,8 @@ const getSheetListData = () => {
     if (!initialPageLoaded) {
         rxSet('cellTypeWork.initialPageLoaded.true')
     }
-    if (user !== lastUser) {
-        lastUser = user
-    }
-    */
+    lastUser = user
+    
     // Now get the data.
     const url = '/user/worksheets'
     let options = { credentials: true }
