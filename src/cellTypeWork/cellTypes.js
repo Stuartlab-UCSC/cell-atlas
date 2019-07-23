@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeWork/cellTypesPres'
 import dataStore from 'cellTypeWork/dataStore'
-import { clearContextElements } from 'cellTypeWork/worksheet'
 
 const DOMAIN = 'cellTypeWorkCellTypes'
 
@@ -28,32 +27,8 @@ const reorder = (start, end) => {
     rxSet('cellTypeWork.render.now')
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onMouseOver: ev => {
-            // On hover over a cellType, save that position.
-            dispatch({
-                type: 'cellTypeWork.cellTypeInput.show',
-                value: ev.target.dataset.position
-            })
-            // Clear any leftover context elements.
-            clearContextElements(DOMAIN)
-            
-            // Set focus to the input component.
-            setTimeout(() => {
-                try {
-                    document.getElementById(
-                        'cellTypeWorkCellTypeEditInput').focus()
-                } catch(e) {
-                }
-            }, 10)
-
-        },
-    }
-}
-
 const CellTypes = connect(
-    mapStateToProps, mapDispatchToProps
+    mapStateToProps
 )(Presentation)
 
 export default CellTypes

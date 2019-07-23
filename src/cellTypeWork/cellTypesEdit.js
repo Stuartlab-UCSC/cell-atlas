@@ -4,6 +4,8 @@
 import { connect } from 'react-redux'
 import dataStore from 'cellTypeWork/dataStore'
 import Presentation from 'cellTypeWork/cellTypesEditPres'
+import { clearContextElements } from 'cellTypeWork/worksheet'
+import { DOMAIN } from 'cellTypeWork/cellTypes'
 
 const mapStateToProps = (state) => {
     return {
@@ -26,6 +28,24 @@ const mapDispatchToProps = (dispatch) => {
             dataStore.changeCellType(
                 ev.target.value, ev.target.dataset.position)
             dispatch({ type: 'cellTypeWork.render.now' })
+        },
+        onMouseOver: ev => {
+            // On hover over a cellType, save that position.
+            dispatch({
+                type: 'cellTypeWork.cellTypeInput.show',
+                value: ev.target.dataset.position
+            })
+            // Clear any leftover context elements.
+            clearContextElements(DOMAIN)
+
+            // Set focus to the input component.
+            setTimeout(() => {
+                try {
+                    document.getElementById(
+                        'cellTypeWorkCellTypeEditInput').focus()
+                } catch(e) {
+                }
+            }, 10)
         },
         /*
         // This need a component ref to set the focus to the new component.

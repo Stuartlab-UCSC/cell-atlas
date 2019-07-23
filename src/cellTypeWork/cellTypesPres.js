@@ -6,7 +6,6 @@ import { DOMAIN } from 'cellTypeWork/cellTypes'
 
 const CellType = ({ i, color, value, props }) => {
     // A cell type text area.
-    const { onMouseOver } = props
     const { cellTypesHeight, colWidth, fontSize, geneWidth } = props.dims
     const x = geneWidth + colWidth * i
     const y = cellTypesHeight
@@ -26,7 +25,6 @@ const CellType = ({ i, color, value, props }) => {
                     cursor: 'grab',
                     zIndex: 3,
                 }}
-                onMouseOver={onMouseOver}
             >
                 {value}
             </text>

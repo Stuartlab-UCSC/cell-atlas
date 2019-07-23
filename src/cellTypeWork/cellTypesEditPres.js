@@ -7,27 +7,37 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 
 const Input = ({ i, value, props }) => {
     // Only show the hovered-upon cell type input.
-    const { showInput, onInputChange } = props
-    if (showInput !== i) {
-        return (null)
-    }
+    const { showInput, onInputChange, onMouseOver } = props
     const { cellTypesHeight, cellTypeLength, colWidth, fontSize, geneWidth }
         = props.dims
+    const style = {
+        position: 'absolute',
+        top: cellTypesHeight - 56,
+        left: geneWidth + (colWidth * i) - 13,
+        height: 15,
+        transform: 'rotate(-45deg)',
+        width: cellTypeLength,
+        fontSize: fontSize + 'px',
+    }
+
+    // If the mouse is over the field, show an input field.
+    if (showInput === i) {
+        return (
+            <input
+                id='cellTypeWorkCellTypeEditInput'
+                defaultValue={value}
+                data-position={i}
+                style={style}
+                onChange={onInputChange}
+            />
+        )
+    }
+    // If the mouse is not over the field, just show a mouse-over target.
     return (
-        <input
-            id='cellTypeWorkCellTypeEditInput'
-            defaultValue={value}
+        <div
             data-position={i}
-            style={{
-                position: 'absolute',
-                top: cellTypesHeight - 56,
-                left: geneWidth + (colWidth * i) - 13,
-                height: 15,
-                transform: 'rotate(-45deg)',
-                width: cellTypeLength,
-                fontSize: fontSize + 'px',
-            }}
-            onChange={onInputChange}
+            style={style}
+            onMouseOver={onMouseOver}
         />
     )
 }
