@@ -2,7 +2,7 @@
 // The logic to get a gene's values for all clusters to add to the
 // cell type worksheet.
 
-import { set as rxSet } from 'state/rx'
+import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
 import { addGeneBubbles } from 'cellTypeWork/transformToBubbles'
 import dataStore from 'cellTypeWork/dataStore'
@@ -36,10 +36,10 @@ const getDataForAllClusters = (gene) => {
     // Request the data from the server.
     const colorBy = dataStore.getColorBy()
     const sizeBy = dataStore.getSizeBy()
-
     let url =
-        '/user/myUser/worksheet/myWorksheet/gene/' +
-        gene +
+        '/user/' + rxGet('auth.user').name +
+        '/worksheet/' + rxGet('cellTypeWork.sheetSelected') +
+        '/gene/' + gene +
         '/color/' + colorBy +
         '/size/' + sizeBy
     let options = { credentials: true, responseType: 'text' }

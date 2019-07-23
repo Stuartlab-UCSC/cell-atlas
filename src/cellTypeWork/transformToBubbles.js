@@ -119,15 +119,23 @@ const addGeneBubbles = (data) => {
     let bubbles = []
     let lines = tsvToArrays(data)
 
-    // TODO: don't rely on position; check the label at lines[0][0] & lines[1][0]
+    // Find the clusters in the header.
     let clusters = lines[0].slice(1)
     const gene = rxGet('cellTypeGene.geneSelected')
     
+    // Find the colorBy and sizeBy lines.
+    let colorByLine = 1
+    let sizeByLine = 2
+    if (lines[2][0] === dataStore.getColorBy()) {
+        colorByLine = 2
+        sizeByLine = 1
+    }
+
     // Save colorBy values.
-    setBubbleColorBy(gene, bubbles, lines[1], clusters)
+    setBubbleColorBy(gene, bubbles, lines[colorByLine], clusters)
 
     // Save sizeBy values.
-    setBubbleSizeBy(gene, bubbles, lines[2], clusters)
+    setBubbleSizeBy(gene, bubbles, lines[sizeByLine], clusters)
 
     // Add these bubbles to the existing bubbles.
     bubbles = dataStore.getBubbles().concat(bubbles)
