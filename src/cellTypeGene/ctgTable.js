@@ -29,14 +29,23 @@ const Presentation = (props) => {
 }
 
 const onCellClick = (colData, cellMeta) => {
+    // Handle a click on any cell.
     const { colIndex } = cellMeta
-    const gene = colData.props['data-gene']
+    
+    // Handle a non-clickable cell.
+    if (colIndex > 2) {
+        return
+    }
+
+    // Handle scatterplot button click.
     if (colIndex === 0) {
-        // Scatterplot button clicked.
+        const gene = colData.props['data-gene']
         getGeneScatterPlot(gene)
+        
+    // Handle add button click.
     } else if (colIndex === 1) {
-        // Add gene button clicked.
         // Don't add a gene that is already there.
+        const gene = colData.props['data-gene']
         const geneAlreadyThere = sheetDataStore.getGenes().find(
             geneInWorksheet => {
                 return gene === geneInWorksheet
@@ -47,6 +56,12 @@ const onCellClick = (colData, cellMeta) => {
         } else {
             getDataForAllClusters(gene)
         }
+    
+    // Handle gene name click.
+    } else if (colIndex === 2) {
+        const link =
+            'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' + colData
+        window.open(link, '_blank')
     }
 }
 
