@@ -74,7 +74,6 @@ const nameIt = (dispatch, name, error, helperText) => {
 
 const mapStateToProps = (state) => {
     return {
-        geneOrClusters: state.cellTypeGene.geneOrClusters,
         bubbleTooltip: state.bubble.tooltip,
         clusterSolution: dataStore.getClusterSolution(),
         dataset: dataStore.getDataset(),

@@ -68,10 +68,11 @@ const cellTypeGeneClusters = (
     state = {
         fetchMessage: ' ',
         fetchStatus: 'quiet',
+        genePaste: '',
         newData: newDataSeq,
     }, action) => {
         switch(action.type) {
-       case 'cellTypeGeneClusters.fetchMessage.clear':
+        case 'cellTypeGeneClusters.fetchMessage.clear':
             return {
                 ...state,
                 fetchMessage: null
@@ -90,6 +91,22 @@ const cellTypeGeneClusters = (
             return {
                 ...state,
                 fetchStatus: 'waiting'
+            }
+        case 'cellTypeGeneClusters.genePaste.shift':
+            // Remove the first gene of the list.
+            let genes = ''
+            const index = state.genePaste.indexOf('\n')
+            if (index > -1) {
+                genes = state.genePaste.slice(index + 1)
+            }
+            return {
+                ...state,
+                genePaste: genes
+            }
+        case 'cellTypeGeneClusters.genePaste.uiSet':
+            return {
+                ...state,
+                genePaste: action.value
             }
         default:
             return state

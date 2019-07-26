@@ -9,12 +9,12 @@ import BubbleTooltip from 'bubble/tooltip'
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
 import ScatterPlot from 'cellTypeScatter/scatter'
+import GenePaste from 'cellTypeGene/ctgGenePaste'
 import GeneTable from 'cellTypeGene/ctgMain'
 import MockUp from 'components/MockUp'
 
 const buttonStyle = {
-    width: '90%',
-    marginLeft: '1rem',
+    width: '100%',
     marginTop: '1rem',
 }
 
@@ -76,7 +76,7 @@ const ClusterSolution = ({ show, solution }) => {
 const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
     return (
         <div style={{
-            width: '8rem',
+            width: '7rem',
             position: 'absolute',
             top: 0,
             right: -20,
@@ -89,9 +89,10 @@ const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
             />
             <Save
                 label='Save as'
-                show={show}
+                show={false}
                 onClick={onSaveAsClick}
             />
+            <GenePaste />
         </div>
     )
 }

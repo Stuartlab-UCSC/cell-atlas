@@ -7,7 +7,7 @@ import DataTable from 'components/DataTable'
 import sheetDataStore from 'cellTypeWork/dataStore'
 import dataStore from 'cellTypeGene/ctgDataStore'
 import { optionOverrideFx, themeOverrideFx } from 'cellTypeGene/tableOverrides'
-import { getDataForAllClusters } from 'cellTypeGene/addGene'
+import { getGeneForAllClusters } from 'cellTypeGene/addGene'
 import { getGeneScatterPlot } from 'cellTypeScatter/scatter'
 
 const Presentation = (props) => {
@@ -28,6 +28,18 @@ const Presentation = (props) => {
     )
 }
 
+const geneAlreadyThere = (gene) => {
+    const isThere = sheetDataStore.getGenes().find(
+        geneInWorksheet => {
+            return gene === geneInWorksheet
+        })
+    const boolIsThere = (isThere !== undefined)
+    if (boolIsThere) {
+        alert(gene + ' is already in the worksheet.')
+    }
+    return boolIsThere
+}
+
 const onCellClick = (colData, cellMeta) => {
     // Handle a click on any cell.
     const { colIndex } = cellMeta
@@ -46,15 +58,9 @@ const onCellClick = (colData, cellMeta) => {
     } else if (colIndex === 1) {
         // Don't add a gene that is already there.
         const gene = colData.props['data-gene']
-        const geneAlreadyThere = sheetDataStore.getGenes().find(
-            geneInWorksheet => {
-                return gene === geneInWorksheet
-            }
-        )
-        if (geneAlreadyThere) {
-            alert(gene + ' is already in the worksheet.')
-        } else {
-            getDataForAllClusters(gene)
+
+        if (!geneAlreadyThere(gene)) {
+            getGeneForAllClusters(gene)
         }
     
     // Handle gene name click.
@@ -83,4 +89,4 @@ const CtgTable = connect(
 )(Presentation)
 
 export default CtgTable
-export { onCellClick }
+export { geneAlreadyThere, onCellClick }

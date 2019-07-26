@@ -5,6 +5,7 @@
 import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData from 'fetch/data'
 import { addGeneBubbles } from 'cellTypeWork/transformToBubbles'
+import { geneAlreadyThere } from 'cellTypeGene/ctgTable'
 import dataStore from 'cellTypeWork/dataStore'
 
 const USE_TEST_DATA = false
@@ -19,6 +20,8 @@ const receiveDataFromServer = (data, error) => {
     } else {
         addGeneBubbles(data)
     }
+    // Get the next gene in the list.
+    getGenesForAllClusters()
 }
 
 // A test stub in place of server query.
@@ -32,8 +35,8 @@ const fetchTestData = (id, url, receiveFx) => {
     }, 1000)
 }
 
-const getDataForAllClusters = (gene) => {
-    // Request the data from the server.
+const getGeneForAllClusters = (gene) => {
+    // Request one gene's data for all clusters.
     const colorBy = dataStore.getColorBy()
     const sizeBy = dataStore.getSizeBy()
     let url =
@@ -51,7 +54,30 @@ const getDataForAllClusters = (gene) => {
     }
     // Save the gene selected.
     rxSet('cellTypeGene.geneSelected.uiSet', { value: gene })
-
 }
 
-export { getDataForAllClusters }
+const getGenesForAllClusters = () => {
+    // Request the data for a list of genes for all clusters.
+    const genes = rxGet('cellTypeGeneClusters.genePaste')
+    if (genes.length < 1) {
+        return
+    }
+    // Pull the first gene out of the genes string.
+    let gene = genes
+    const index = genes.indexOf('\n')
+    if (index > -1) {
+        gene = genes.slice(0, index)
+    }
+    // Get the gene data if it is not in the worksheet.
+    if (!geneAlreadyThere(gene)) {
+        // We can only track one fetch at a time for a gene add,
+        // so request the data in multiple fetches, one per gene.
+        // Fetch the first gene only. The receiveDataFromServer function will
+        // call this again.
+        getGeneForAllClusters(gene)
+    }
+    // Remove this gene from the list.
+    rxSet('cellTypeGeneClusters.genePaste.shift')
+}
+
+export { getGeneForAllClusters, getGenesForAllClusters }
