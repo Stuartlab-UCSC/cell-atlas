@@ -19,17 +19,21 @@ const receiveData = (id, data, callback, optionsIn) => {
     // there is a payload, but we expect data returned. How to handle that?
     // a PUT?
 
-    // Check for authorization.
-    if (data === '403' && callback) {
-        callback(null, data)
+    if (rxGet(id + '.fetchStatus') === 'quiet') {
+        // This means there was an error detected and already recorded
+        // in state: ...fetchMessage.
+        if (callback) {
+            // Use a timeout so we have good debugging available.
+            setTimeout(() => { callback(null) })
+        }
+        return
 
     // If the data contains a message, set the fetch message to that error.
     } else if (data !== null && typeof data === 'object' && data.message) {
-        rxSet(id + '.fetchMessage.set', { value: data.message })
-        console.error('fetch error:', data.message)
+        error(id, data.message)
         if (callback) {
             setTimeout(() => {
-                callback(null, data.message)
+                callback(null)
             })
         }
 
@@ -67,7 +71,7 @@ const receiveData = (id, data, callback, optionsIn) => {
 }
 
 const error = (id, message) => {
-    console.error('fetch error:', message)
+    console.error('fetch error 1:', message)
     rxSet(id + '.fetchMessage.set', { value: message })
     rxSet(id + '.fetchStatus.quiet')
 }
@@ -124,6 +128,7 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
         fetch(encodedUrl, fetchOpts)
         .then((response) => {
             if (response.ok) {
+
                 switch(options.responseType) {
                 case 'text':
                     return response.text()

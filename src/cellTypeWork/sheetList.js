@@ -16,8 +16,9 @@ const testData = [
 ]
 let lastUser = null
 
-const receiveDataFromServer = (data, error) => {
-    if (error) {
+const receiveDataFromServer = (data) => {
+    const error = rxGet(DOMAIN + '.fetchMessage')
+    if (error !== null) {
         alert(error)
     } else if (data) {
         // Transform data from server and save it.

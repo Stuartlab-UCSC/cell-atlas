@@ -10,6 +10,7 @@ import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 
 const USE_TEST_DATA = false
+const DOMAIN = 'cellTypeWork'
 
 const clearContextElements = (except) => {
     // All context-specific element will be hidden except for the one specified.
@@ -28,9 +29,10 @@ const clearContextElements = (except) => {
     }
 }
 
-const receiveDataFromServer = (data, error) => {
+const receiveDataFromServer = (data) => {
     // Handle the data received from the server.
-    if (!error && data !== null) {
+    const error = rxGet(DOMAIN +'.fetchMessage')
+    if (error === null && data !== null) {
         transformToChart(data)
     }
     rxSet('cellTypeWork.showChart.toQuietStatus')

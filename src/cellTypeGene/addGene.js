@@ -9,13 +9,15 @@ import { geneAlreadyThere } from 'cellTypeGene/ctgTable'
 import dataStore from 'cellTypeWork/dataStore'
 
 const USE_TEST_DATA = false
+const DOMAIN = 'cellTypeGeneClusters'
 const testData =
 `stat	1	2	3
 color_by	0	0.6357	-0.4
 size_by	0.8606	0.74	0.4`
 
-const receiveDataFromServer = (data, error) => {
-    if (error) {
+const receiveDataFromServer = (data) => {
+    const error = rxGet(DOMAIN + '.fetchMessage')
+    if (error !== null) {
         alert(error)
     } else {
         addGeneBubbles(data)
