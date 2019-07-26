@@ -23,7 +23,7 @@ const Presentation = ({ show, genes, onChange, onClick }) => {
         >
             <TextField
                 label="Add Genes"
-                placeholder="Paste genes, one per line"
+                placeholder="Enter genes, one per line"
                 multiline
                 rows={2}
                 margin="normal"

@@ -15,16 +15,14 @@ const receiveData = (id, data, callback, optionsIn) => {
     // @param options: the same as that for fetchData().
     let options = optionsIn || {}
     const post = (options.payload)
+    // TODO we are using a POST to get a cluster assignment scatterplot, so
+    // there is a payload, but we expect data returned. How to handle that?
+    // a PUT?
 
     // Check for authorization.
     if (data === '403' && callback) {
         callback(null, data)
 
-    // If this is a POST and the data is null, that's fine, we're done.
-    // TODO handle other requests that may have a payload, such as PUT.
-    } else if (post && data === null && callback) {
-        setTimeout(() => { callback(data) })
-    
     // If the data contains a message, set the fetch message to that error.
     } else if (data !== null && typeof data === 'object' && data.message) {
         rxSet(id + '.fetchMessage.set', { value: data.message })
