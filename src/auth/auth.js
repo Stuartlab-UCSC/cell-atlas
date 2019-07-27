@@ -4,6 +4,12 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { get as rxGet, set as rxSet } from 'state/rx'
 
+const resetOnLogout = () => {
+    // There is probably a better place to do this, but for now
+    // reset some user data when she logs out.
+    rxSet('cellTypeWork.sheetList.userChange')
+}
+
 const checkUrlSearch = () => {
     let parms = new URLSearchParams(window.location.search)
     if (parms.toString()) {
@@ -16,6 +22,7 @@ const checkUrlSearch = () => {
                 })
             } else {
                 rxSet('auth.user.logout')
+                resetOnLogout()
             }
         }
     }

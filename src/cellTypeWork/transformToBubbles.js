@@ -72,7 +72,7 @@ const setDimsAndColor = (bubbles, clusterCount, geneCount) => {
     return bubbles
 }
 
-const setBubbleColorBy = (gene, bubbles, line, clusters) => {
+const addBubblesWithColorBy = (gene, bubbles, line, clusters) => {
     // Set the primary and colorBy properties of the bubble.
     line.splice(1).forEach((color,j) => {
         bubbles.push({
@@ -95,12 +95,12 @@ const findBubbleData = (bubbles, cluster, gene) => {
     return bubbles[findBubbleIndex(bubbles, cluster, gene)]
 }
 
-const setBubbleSizeBy = (gene, bubbles, line, clusters) => {
-    // Set the sizeBy properties of the bubble.
-    line.splice(1).forEach((size,j) => {
+const setBubbleValue = (gene, bubbles, line, clusters, type) => {
+    // Set the colorBy or sizeBy values of the bubble.
+    line.splice(1).forEach((value, j) => {
         const cluster = clusters[j]
         const bubble = findBubbleData(bubbles, cluster, gene)
-        bubble.size = parseFloat(size)
+        bubble[type] = parseFloat(value)
     })
 }
 
@@ -132,10 +132,10 @@ const addGeneBubbles = (data) => {
     }
 
     // Save colorBy values.
-    setBubbleColorBy(gene, bubbles, lines[colorByLine], clusters)
+    addBubblesWithColorBy(gene, bubbles, lines[colorByLine], clusters)
 
     // Save sizeBy values.
-    setBubbleSizeBy(gene, bubbles, lines[sizeByLine], clusters)
+    setBubbleValue(gene, bubbles, lines[sizeByLine], clusters, 'sizeBy')
 
     // Add these bubbles to the existing bubbles.
     bubbles = dataStore.getBubbles().concat(bubbles)
@@ -147,6 +147,35 @@ const addGeneBubbles = (data) => {
 
     // Save the new genes and bubbles
     dataStore.addGene(gene, bubbles)
+
+    // Notify to re-render worksheet.
+    rxSet('cellTypeWork.render.now')
+}
+
+const bubbleVariableChange = (data, type) => {
+    // When a new variable is selected apply the values to the bubbles.
+    // @param data: received as:
+    //      Gene    0   1   2  …
+    //      ALK     .5  .3  .2 …
+    //      TP53    .5  .3  .2 …
+    //      …
+    // @param type: one of color, size
+    
+    // Find the clusters in the header.
+    const lines = tsvToArrays(data)
+    const clusters = lines[0].slice(1)
+
+    const genes = dataStore.getGenes()
+    let bubbles = dataStore.getBubbles()
+    
+    // Save the values for each bubble.
+    lines.slice(1).forEach((line, i) => {
+        setBubbleValue(line[0], bubbles, line, clusters, type)
+    })
+    
+    // Find the dimensions and add the colors and sizes to the bubbles.
+    bubbles = setDimsAndColor(bubbles, clusters.length, genes.length - 1)
+    dataStore.setBubbles(bubbles)
 
     // Notify to re-render worksheet.
     rxSet('cellTypeWork.render.now')
@@ -181,11 +210,12 @@ const buildBubblesOnLoad = (data, clusterCount, geneCount) => {
     // Find the color and size values and store them with
     // cluster and gene names.
     // Save the color values along with their gene and cluster.
-    // @param data: received as:
+    // @param data.colors: received as:
     //      Gene    0   1   2  …
     //      ALK     .5  .3  .2 …
     //      TP53    .5  .3  .2 …
     //      …
+    // @param data.sizes: in the same format as above.
     if (!data || !data.colors || !data.sizes) {
         return
     }
@@ -195,17 +225,17 @@ const buildBubblesOnLoad = (data, clusterCount, geneCount) => {
 
     // Handle the colorBy values.
     lines.slice(1).forEach((line, i) => {
-        setBubbleColorBy(line[0], bubbles, line, clusters)
+        addBubblesWithColorBy(line[0], bubbles, line, clusters)
     })
     // Size values are received in the same format as color values.
     lines = tsvToArrays(data.sizes)
     clusters = lines[0].slice(1)
     lines.slice(1).forEach((line) => {
-        setBubbleSizeBy(line[0], bubbles, line, clusters)
+        setBubbleValue(line[0], bubbles, line, clusters, 'size')
     })
     // Find the dimensions and add the colors and sizes to the bubbles.
     return setDimsAndColor(bubbles, clusterCount, geneCount)
 }
 
-export { addGeneBubbles, buildBubblesOnLoad, findBubbleIndex, findBubbleData,
-    removeGeneBubbles }
+export { addGeneBubbles, bubbleVariableChange, buildBubblesOnLoad,
+    findBubbleIndex, findBubbleData, removeGeneBubbles }

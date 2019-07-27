@@ -21,7 +21,6 @@ const defaultDims = {
     legendWidth: 100,
     rowHeight: 14,
     sizeRange:{},
-    worksheetSelected: null,
 }
 export const defaultSheetList = [
 ]
@@ -38,13 +37,11 @@ const State = (
         fetchStatus: 'initial',
         geneMenu: null,
         render: renderSeq++,
+        sheetList: defaultSheetList,
         sheetSaveAs: '',
+        sheetSelected: null,
         showChart: false,
         showEditables: false,
-        sheetList: defaultSheetList,
-        sheetSelected: null,
-        tableColumn: [],
-        tableData: [],
     }, action) => {
         switch(action.type) {
         case 'cellTypeWork.cellTypeInput.show':
@@ -172,6 +169,12 @@ const State = (
                 sheetList,
                 sheetSelected: value,
             }
+        case 'cellTypeWork.sheetList.userChange':
+            return {
+                ...state,
+                sheetList: defaultSheetList,
+                sheetSelected: null,
+            }
         case 'cellTypeWork.sheetSaveAs.clear':
             return {
                 ...state,
@@ -222,16 +225,6 @@ const State = (
             return {
                 ...state,
                 showEditables: true
-            }
-        case 'cellTypeWork.tableColumn.load':
-            return {
-                ...state,
-                tableColumn: action.value
-            }
-        case 'cellTypeWork.tableData.load':
-            return {
-                ...state,
-                tableData: action.data
             }
         default:
             return state

@@ -2,7 +2,6 @@
 // A simple pick list, no search.
 
 import React from 'react'
-import FormControl from '@material-ui/core/FormControl/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -47,12 +46,13 @@ const PickList = ({id, helperText, label, list, placeholder, selected,
         )
     }
     return (
-        <FormControl style={{width: '100%'}}>
+        <div
+            style={{width: '100%', marginLeft: 10}}>
             <Label label={label} />
             <Select
                 value={selected}
                 onChange={onChange}
-                name={label}
+                name={id}
                 displayEmpty
             >
                 {Placeholder}
@@ -66,7 +66,7 @@ const PickList = ({id, helperText, label, list, placeholder, selected,
                 ))}
             </Select>
             <HelperText helperText={helperText} />
-        </FormControl>
+        </div>
     )
 }
 

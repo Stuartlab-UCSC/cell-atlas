@@ -98,6 +98,10 @@ class DataStore {
     reorderGenes(genes) {
         this.data.genes = genes
     }
+    
+    setBubbles(bubbles) {
+        this.data.bubbles = bubbles
+    }
 
     setColorBar(position, color, colormap) {
         const index = colormap.findIndex(ccolor => {
@@ -105,11 +109,18 @@ class DataStore {
         })
         this.data.colorBar[position] = index
     }
+    
+    setColorBy = (value) => {
+        this.data.colorBy = value
+    }
 
     setDefaults() {
         this.data = defaultData
     }
 
+    setSizeBy = (value) => {
+        this.data.sizeBy = value
+    }
 }
 
 let dataStore = new DataStore(defaultData)

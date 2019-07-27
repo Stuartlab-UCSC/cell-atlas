@@ -7,26 +7,22 @@ import Legend from 'components/legend'
 import Clusters from 'cellTypeWork/clusters'
 import Bubbles from 'cellTypeWork/bubbles'
 import Genes from 'cellTypeWork/genes'
+import { ColorSelect, SizeSelect } from 'cellTypeGene/variableSelect'
 
 const Legends = ({ data, dims }) => {
     if (data.genes.length < 1) {
         return null
     }
     const { colorRange, legendWidth, sizeRange } = dims
-    const { colorBy, sizeBy } = data
     return (
         <div style={{display: 'inline-block', width: legendWidth, marginTop: -20}} >
-            <Typography align='center'>
-                {colorBy}
-            </Typography>
+            <ColorSelect />
             <Legend
                 flavor='colorBubble'
                 min={colorRange.min}
                 max={colorRange.max}
             />
-            <Typography align='center' style={{marginTop: 10}}>
-                {sizeBy}
-            </Typography>
+            <SizeSelect />
             <Legend
                 flavor='sizeBubble'
                 min={sizeRange.min}

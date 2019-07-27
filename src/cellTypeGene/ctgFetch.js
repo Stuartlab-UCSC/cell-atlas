@@ -24,7 +24,14 @@ IL6    2.7195    -0.3674    0.54`
 const receiveTableDataFromServer = (columns, data) => {
     // Receive the table column and body data
     // derived from the original data from the server.
-
+    
+    // Save all of the variable names in the table.
+    // Variable names start in column index 1.
+    const list = columns.slice(1).map(column => {
+        return { value: column.name,  name: column.name }
+    })
+    rxSet('cellTypeGene.variableList.load', { value: list })
+    
     // Shorten the values to 4 significant digits.
     let cleanData =
         data.map(row => {
@@ -49,6 +56,7 @@ const receiveTableDataFromServer = (columns, data) => {
     // Save the columns and data then render.
     dataStore.load(columns, cleanData)
     /*
+    TODO The scrolling is not working to scroll down to the gene table.
     setTimeout(() => { window.scrollTo(0, 100) }, 1000)
 
     window.scroll({

@@ -1,5 +1,7 @@
 
 let renderSeq = 0
+export const defaultVariableList = [
+]
 
 const cellTypeGene = (
     state = {
@@ -11,6 +13,7 @@ const cellTypeGene = (
         geneSelected: null,
         render: renderSeq,
         statsNames: [],
+        variableList: defaultVariableList,
     }, action) => {
         switch(action.type) {
         case 'cellTypeGene.cluster.load':
@@ -58,18 +61,21 @@ const cellTypeGene = (
                 ...state,
                 render: renderSeq++
             }
+        case 'cellTypeGene.variableList.load':
+            return {
+                ...state,
+                variableList: action.value
+            }
         default:
             return state
         }
     }
 
-let newDataSeq = 0
 const cellTypeGeneClusters = (
     state = {
         fetchMessage: ' ',
         fetchStatus: 'quiet',
         genePaste: '',
-        newData: newDataSeq,
     }, action) => {
         switch(action.type) {
         case 'cellTypeGeneClusters.fetchMessage.clear':
@@ -113,4 +119,45 @@ const cellTypeGeneClusters = (
         }
     }
 
-export { cellTypeGene, cellTypeGeneClusters}
+const ctgVariable = (
+    state = {
+        fetchMessage: ' ',
+        fetchStatus: 'quiet',
+    }, action) => {
+        switch(action.type) {
+       case 'ctgVariable.fetchMessage.clear':
+            return {
+                ...state,
+                fetchMessage: null
+            }
+        case 'ctgVariable.fetchMessage.set':
+            return {
+                ...state,
+                fetchMessage: action.value
+            }
+        case 'ctgVariable.fetchStatus.quiet':
+            return {
+                ...state,
+                fetchStatus: 'quiet'
+            }
+        case 'ctgVariable.fetchStatus.waiting':
+            return {
+                ...state,
+                fetchStatus: 'waiting'
+            }
+        case 'ctgVariable.type.color':
+            return {
+                ...state,
+                type: 'color'
+            }
+        case 'ctgVariable.type.size':
+            return {
+                ...state,
+                type: 'size'
+            }
+        default:
+            return state
+        }
+    }
+
+export { cellTypeGene, cellTypeGeneClusters, ctgVariable}
