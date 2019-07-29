@@ -15,7 +15,12 @@ const Legends = ({ data, dims }) => {
     }
     const { colorRange, legendWidth, sizeRange } = dims
     return (
-        <div style={{display: 'inline-block', width: legendWidth, marginTop: -20}} >
+        <div style={{
+            display: 'inline-block',
+            width: legendWidth - 10,
+            marginTop: -20,
+            marginLeft: 10,
+        }} >
             <ColorSelect />
             <Legend
                 flavor='colorBubble'

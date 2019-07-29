@@ -61,6 +61,11 @@ const cellTypeGene = (
                 ...state,
                 render: renderSeq++
             }
+        case 'cellTypeGene.variableList.initialSelect':
+            return {
+                ...state,
+                variableList: action.value
+            }
         case 'cellTypeGene.variableList.load':
             return {
                 ...state,
@@ -123,6 +128,7 @@ const ctgVariable = (
     state = {
         fetchMessage: ' ',
         fetchStatus: 'quiet',
+        type: null,
     }, action) => {
         switch(action.type) {
        case 'ctgVariable.fetchMessage.clear':

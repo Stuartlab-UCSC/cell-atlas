@@ -69,20 +69,6 @@ const transfromToChart = (data) => {
     const genes = buildGenes(data)
     const bubbles = buildBubblesOnLoad(data, clusters.length, genes.length)
 
-    // Create the colormap which will be static for this data load.
-    let clusterCount = 0
-    if (clusters) {
-        clusterCount = clusters.length
-    }
-    const colormap = getCatColormap('elie', clusterCount)
-    rxSet('cellTypeWork.colormap.create', { value: colormap })
-    
-    // Load an initial scatter plot if a URL is provided.
-    getInitialScatterPlot(clusters, colormap, data.scatterplot_url)
-
-    // Load an initial gene table if a URL is provided.
-    getInitalGeneTableData(clusters, data.gene_table_url)
-
     // Update the chart data.
     dataStore.load({
         dataset:         data.dataset_name,
@@ -98,8 +84,34 @@ const transfromToChart = (data) => {
         genes,
     })
     
+    // Create and update the colormap which will be static for this data load.
+    let clusterCount = 0
+    if (clusters) {
+        clusterCount = clusters.length
+    }
+    const colormap = getCatColormap('elie', clusterCount)
+    rxSet('cellTypeWork.colormap.create', { value: colormap })
+    
+    // Initialize the variable selection list to include just those selected.
+    rxSet('cellTypeGene.variableList.initialSelect', {
+        value: [
+            {
+                value: data.color_by,
+                name: data.color_by,
+            },
+            {
+                value: data.size_by,
+                name: data.size_by,
+            }
+        ]
+    })
+
     // Notify to re-render worksheet.
     rxSet('cellTypeWork.render.now')
+
+    // Load the initial scatterplot and gene table.
+    getInitialScatterPlot(clusters, colormap, data.scatterplot_url)
+    getInitalGeneTableData(clusters, data.gene_table_url)
 }
 
 export default transfromToChart
