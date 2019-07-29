@@ -174,7 +174,7 @@ const bubbleVariableChange = (data, type) => {
     })
     
     // Find the dimensions and add the colors and sizes to the bubbles.
-    bubbles = setDimsAndColor(bubbles, clusters.length, genes.length - 1)
+    bubbles = setDimsAndColor(bubbles, clusters.length, genes.length)
     dataStore.setBubbles(bubbles)
 
     // Notify to re-render worksheet.
