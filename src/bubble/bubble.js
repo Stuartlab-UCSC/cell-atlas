@@ -45,9 +45,9 @@ const Circle = ({ props }) => {
             strokeWidth={0}
             fill={colorRgb}
             {...opt}
-            data-color={color}
+            data-color={color.toString()}
             data-color_by={colorBy}
-            data-size={size}
+            data-size={size.toString()}
             data-size_by={sizeBy}
             onMouseOver={onMouseOver}
             onMouseOut={onMouseOut}

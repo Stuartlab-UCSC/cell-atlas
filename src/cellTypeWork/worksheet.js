@@ -43,9 +43,9 @@ const fetchTestData = (id, url, receiveFx) => {
     rxSet('cellTypeWork.fetchStatus.waiting')
     rxSet('cellTypeWork.fetchMessage.set', { value: 'waiting for data...' })
     //setTimeout(() => {
-        receiveFx(testData)
         rxSet('cellTypeWork.fetchMessage.clear')
         rxSet('cellTypeWork.fetchStatus.quiet')
+        receiveFx(testData)
     //}, 1000)
 }
 

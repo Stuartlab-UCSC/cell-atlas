@@ -7,6 +7,8 @@ import { sizeToRadius } from 'bubble/util'
 import { tsvToArrays } from 'app/util'
 import dataStore from 'cellTypeWork/dataStore'
 
+const NAN_COLOR = '#ddd'  // color to give bubbles with NaN colorBy value.
+
 // colorScale is the array of colors for the bubbles.
 let colorScale = []
 
@@ -43,10 +45,17 @@ const setDimsAndColor = (bubbles, clusterCount, geneCount) => {
     // Find the color and size ranges.
     let colorRange = { min: 0, max: 0 }
     let sizeRange = { min: 0, max: 0 }
+    let NaNcolor = false
     bubbles.forEach(bubble => {
-        colorRange.max = Math.max(bubble.color, colorRange.max)
-        colorRange.min = Math.min(bubble.color, colorRange.min)
-        sizeRange.max = Math.max(bubble.size, sizeRange.max)
+        if (isNaN(bubble.color)) {
+            NaNcolor = NAN_COLOR
+        } else {
+            colorRange.max = Math.max(bubble.color, colorRange.max)
+            colorRange.min = Math.min(bubble.color, colorRange.min)
+        }
+        if (!isNaN(bubble.size)) {
+            sizeRange.max = Math.max(bubble.size, sizeRange.max)
+        }
     })
 
     // Update the dimensions state.
@@ -56,6 +65,7 @@ const setDimsAndColor = (bubbles, clusterCount, geneCount) => {
         bubblesHeight: (geneCount * rowHeight) + (colWidth / 4),
         colorRange,
         sizeRange,
+        NaNcolor,
     })
     
     // Build the color scale colormap from the color range.
@@ -64,9 +74,12 @@ const setDimsAndColor = (bubbles, clusterCount, geneCount) => {
     // Set the color and radius of each bubble
     for (let i = 0; i < bubbles.length; i++) {
         let bubble = bubbles[i]
-        bubble.colorRgb = getRangeColor(bubble.color, colorRange.min,
-            colorRange.max)
-        bubble.radius = sizeToRadius(bubble.size, sizeRange.min, sizeRange.max)
+        bubble.colorRgb = (isNaN(bubble.color))
+            ? NaNcolor
+            : getRangeColor(bubble.color, colorRange.min, colorRange.max)
+        bubble.radius = (isNaN(bubble.size))
+            ? sizeToRadius(sizeRange.min, sizeRange.min, sizeRange.max)
+            : sizeToRadius(bubble.size, sizeRange.min, sizeRange.max)
     }
 
     return bubbles

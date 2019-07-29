@@ -11,7 +11,6 @@ import Worksheet from 'cellTypeWork/worksheet'
 import ScatterPlot from 'cellTypeScatter/scatter'
 import GenePaste from 'cellTypeGene/ctgGenePaste'
 import GeneTable from 'cellTypeGene/ctgMain'
-import MockUp from 'components/MockUp'
 
 const buttonStyle = {
     width: '100%',
@@ -135,7 +134,6 @@ const Presentation = (props) => {
                 onSaveClick={onSaveClick}
                 onUploadClick={onUploadClick}
             />
-            <MockUp zIndex={-1} style={{marginTop: -80, position: 'absolute'}} />
             <Grid container spacing={16} style={{background: 'transparent'}}>
             
                 <Grid item xs={5}>

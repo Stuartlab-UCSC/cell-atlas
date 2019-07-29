@@ -13,7 +13,7 @@ const Legends = ({ data, dims }) => {
     if (data.genes.length < 1) {
         return null
     }
-    const { colorRange, legendWidth, sizeRange } = dims
+    const { colorRange, NaNcolor, legendWidth, sizeRange } = dims
     return (
         <div style={{
             display: 'inline-block',
@@ -26,6 +26,7 @@ const Legends = ({ data, dims }) => {
                 flavor='colorBubble'
                 min={colorRange.min}
                 max={colorRange.max}
+                NaNcolor={NaNcolor}
             />
             <SizeSelect />
             <Legend

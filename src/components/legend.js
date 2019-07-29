@@ -8,7 +8,7 @@ import { stringToPrecision } from 'app/util'
 import { getRangeColor } from 'color/range'
 import { maxDiameter, sizeToRadius } from 'bubble/util'
 
-const rangeColorInfo = (min, max) => {
+const rangeColorInfo = (min, max, NaNcolor) => {
     let labels = (min < 0)
         ? [
             stringToPrecision(max, 2),
@@ -23,6 +23,11 @@ const rangeColorInfo = (min, max) => {
     let colors = labels.map(label => {
         return getRangeColor(parseFloat(label), min, max)
     })
+    // Add the NaN mapping if there are NaN values.
+    if (NaNcolor) {
+        labels.push('NaN')
+        colors.push(NaNcolor)
+    }
 
     return { labels, values:colors}
 }
@@ -117,14 +122,16 @@ const Shape = ({ i, flavor, values }) => {
     }
 }
 
-const Legend = ({ flavor, min, max }) => {
+const Legend = ({ flavor, min, max, NaNcolor }) => {
     if (min === 0 && max === 0) {
         return null
     }
     let info
     let shapeStyle
     if (flavor === 'colorBubble') {
-        info = rangeColorInfo(min, max)
+        info = (NaNcolor)
+            ? rangeColorInfo(min, max, NaNcolor)
+            : rangeColorInfo(min, max)
         shapeStyle = {
             marginBottom: -1,
             textAlign: 'right',

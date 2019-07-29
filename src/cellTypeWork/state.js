@@ -17,6 +17,7 @@ const defaultDims = {
     fontFamily,
     fontSize: 11,
     geneWidth: 100,
+    NaNcolor: false,
     labelFontSize: 16,
     legendWidth: 100,
     rowHeight: 14,
@@ -105,6 +106,7 @@ const State = (
                     bubblesHeight: action.bubblesHeight,
                     colorRange: action.colorRange,
                     sizeRange: action.sizeRange,
+                    NaNcolor: action.NaNcolor,
                 }
             }
         case 'cellTypeWork.fetchMessage.set':
