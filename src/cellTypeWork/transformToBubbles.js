@@ -132,10 +132,10 @@ const addGeneBubbles = (data) => {
     }
 
     // Save colorBy values.
-    addBubblesWithColorBy(gene, bubbles, lines[colorByLine], clusters)
+    addBubblesWithColorBy(gene, bubbles, lines[colorByLine], clusters, 'color')
 
     // Save sizeBy values.
-    setBubbleValue(gene, bubbles, lines[sizeByLine], clusters, 'sizeBy')
+    setBubbleValue(gene, bubbles, lines[sizeByLine], clusters, 'size')
 
     // Add these bubbles to the existing bubbles.
     bubbles = dataStore.getBubbles().concat(bubbles)
