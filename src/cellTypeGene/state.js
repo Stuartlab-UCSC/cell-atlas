@@ -80,7 +80,8 @@ const cellTypeGeneClusters = (
     state = {
         fetchMessage: ' ',
         fetchStatus: 'quiet',
-        genePaste: '',
+        filterList: [],
+        filterText: '',
     }, action) => {
         switch(action.type) {
         case 'cellTypeGeneClusters.fetchMessage.clear':
@@ -103,21 +104,17 @@ const cellTypeGeneClusters = (
                 ...state,
                 fetchStatus: 'waiting'
             }
-        case 'cellTypeGeneClusters.genePaste.shift':
-            // Remove the first gene of the list.
-            let genes = ''
-            const index = state.genePaste.indexOf('\n')
-            if (index > -1) {
-                genes = state.genePaste.slice(index + 1)
-            }
+        case 'cellTypeGeneClusters.filterList.set':
+            // The list of valid filtering genes.
             return {
                 ...state,
-                genePaste: genes
+                filterList: action.value
             }
-        case 'cellTypeGeneClusters.genePaste.uiSet':
+        case 'cellTypeGeneClusters.filterText.uiSet':
+            // The filtering genes text as entered by user.
             return {
                 ...state,
-                genePaste: action.value
+                filterText: action.value
             }
         default:
             return state

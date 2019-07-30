@@ -65,8 +65,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const GenePaste = connect(
+const Filter = connect(
     mapStateToProps, mapDispatchToProps
 )(Presentation)
 
-export default GenePaste
+export default Filter

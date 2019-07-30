@@ -60,7 +60,7 @@ const getGeneForAllClusters = (gene) => {
 
 const getGenesForAllClusters = () => {
     // Request the data for a list of genes for all clusters.
-    const genes = rxGet('cellTypeGeneClusters.genePaste')
+    const genes = rxGet('cellTypeGeneClusters.filterText')
     if (genes.length < 1) {
         return
     }
@@ -79,7 +79,7 @@ const getGenesForAllClusters = () => {
         getGeneForAllClusters(gene)
     }
     // Remove this gene from the list.
-    rxSet('cellTypeGeneClusters.genePaste.shift')
+    rxSet('cellTypeGeneClusters.filterText.shift')
 }
 
 export { getGeneForAllClusters, getGenesForAllClusters }
