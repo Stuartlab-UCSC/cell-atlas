@@ -166,7 +166,7 @@ class NavBarPres extends React.Component {
         let comp = null
         //console.log('roles:', roles)
         //if (roles && (roles.includes('worksheet') || roles.includes('admin'))) {
-            comp = this.linkItem('Cell Type Mock-up', link)
+            comp = this.linkItem('Cell Type Worksheet', link)
         //}
         return comp
     }

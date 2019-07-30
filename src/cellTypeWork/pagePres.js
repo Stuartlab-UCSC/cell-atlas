@@ -74,12 +74,7 @@ const ClusterSolution = ({ show, solution }) => {
 
 const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
     return (
-        <div style={{
-            width: '7rem',
-            position: 'absolute',
-            top: 0,
-            right: -20,
-        }}>
+        <div style={{marginLeft: '1rem'}} >
             <Upload onClick={onUploadClick} />
             <Save
                 label='Save'
@@ -91,29 +86,27 @@ const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
                 show={false}
                 onClick={onSaveAsClick}
             />
-            <GenePaste />
         </div>
     )
 }
 
 const Left = ({ props }) => {
-    const { clusterSolution, dataset, showEditables } = props
+    const { clusterSolution, dataset, showEditables, onSaveAsClick, onSaveClick,
+        onUploadClick } = props
     return (
         <Grid container spacing={8}>
-            <Grid item xs={6}>
-                <Typography variant='h6'>
-                    Cell Type Worksheet
-                </Typography>
-            </Grid>
-            <Grid item xs={6} style={{width: '70%'}} >
+            <Grid item xs={8} style={{width: '70%'}} >
                 <SheetList />
-            </Grid>
-            
-            <Grid item xs={6}>
-            </Grid>
-            <Grid item xs={6} style={{zIndex: 1}}>
                 <Dataset dataset={dataset} show={showEditables} />
                 <ClusterSolution solution={clusterSolution} show={showEditables} />
+            </Grid>
+            <Grid item xs={4}>
+                <Buttons
+                    show={showEditables}
+                    onSaveAsClick={onSaveAsClick}
+                    onSaveClick={onSaveClick}
+                    onUploadClick={onUploadClick}
+                />
             </Grid>
 
             <Grid item xs={12}>
@@ -128,12 +121,6 @@ const Presentation = (props) => {
         onUploadClick } = props
     return (
         <div style={{position: 'relative'}}>
-            <Buttons
-                show={showEditables}
-                onSaveAsClick={onSaveAsClick}
-                onSaveClick={onSaveClick}
-                onUploadClick={onUploadClick}
-            />
             <Grid container spacing={16} style={{background: 'transparent'}}>
             
                 <Grid item xs={5}>
@@ -142,12 +129,19 @@ const Presentation = (props) => {
                 <Grid item xs={7}>
                     <Worksheet />
                 </Grid>
-            
+
                 <Grid item xs={12}>
                     <GeneTable/>
                 </Grid>
-            
             </Grid>
+            <div style={{
+                width: '7rem',
+                position: 'absolute',
+                top: -20,
+                right: -20,
+            }}>
+                <GenePaste />
+            </div>
             <BubbleTooltip data={bubbleTooltip} id='cellTypeWork' />
         </div>
     )

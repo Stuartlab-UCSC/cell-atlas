@@ -35,7 +35,7 @@ const Presentation = ({ show, genes, onChange, onClick }) => {
                 component='span'
                 size='small'
                 onClick={onClick}
-                style={{width: '100%', marginTop: '1rem' }}
+                style={{width: '100%' }}
             >
                 Add Genes
             </Button>

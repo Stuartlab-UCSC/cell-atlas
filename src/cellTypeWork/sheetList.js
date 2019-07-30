@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
     setTimeout(() => getSheetListData() )
     return {
         id: 'cell_type_work_sheet',
-        label: 'Worksheet',
+        label: 'Cell Type Worksheet',
         list: state.cellTypeWork.sheetList,
         placeholder: 'Select a worksheet',
         selected: state.cellTypeWork.sheetSelected,
