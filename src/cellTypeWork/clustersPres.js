@@ -6,9 +6,8 @@ import CellTypes from 'cellTypeWork/cellTypes'
 import CellTypesEdit from 'cellTypeWork/cellTypesEdit'
 import ClusterNames from 'cellTypeWork/clusterNames'
 import ColorBar from 'cellTypeWork/colorBar'
-const labelFontSize = 16
 
-const CellCounts = ({ clusters, topStyle, labelStyle }) => {
+const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
     let tds = []
     clusters.forEach((cluster, i) => {
         tds.push(
@@ -40,7 +39,7 @@ const CellCounts = ({ clusters, topStyle, labelStyle }) => {
 const Presentation = (props) => {
     const { clusters, colormap, dims, menuPosition, sorting, onMenuClickAway,
         onGeneStatsClick, onMouseDown, onMouseLeave, onMouseOver} = props
-    const { colWidth, geneWidth } = props.dims
+    const { colWidth, geneWidth, labelFontSize } = props.dims
     if (!clusters) {
         return (null)
     }
@@ -80,9 +79,10 @@ const Presentation = (props) => {
                 onMouseLeave={onMouseLeave}
                 onMouseOver={onMouseOver}
              />
-                 <CellCounts
+            <CellCounts
                 clusters={clusters}
                 topStyle={topStyle}
+                labelFontSize={labelFontSize}
                 labelStyle={labelStyle}
             />
         </React.Fragment>

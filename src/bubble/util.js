@@ -1,8 +1,8 @@
 
 // The name to label, tooltip translations.
 
-const maxDiameter = 16 // pixel width
-const minDiameter = 5  // pixel width
+const maxDiameter = 18 // pixel width
+const minDiameter = 6  // pixel width
 
 const areaFromRadius = (radius) => {
     // Return area given a radius.

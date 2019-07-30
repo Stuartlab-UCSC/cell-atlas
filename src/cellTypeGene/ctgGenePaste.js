@@ -25,7 +25,7 @@ const Presentation = ({ show, genes, onChange, onClick }) => {
                 label="Add Genes"
                 placeholder="Enter genes, one per line"
                 multiline
-                rows={2}
+                rows={4}
                 margin="normal"
                 value={genes}
                 onChange={onChange}

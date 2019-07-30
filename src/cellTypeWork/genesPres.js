@@ -20,8 +20,8 @@ const Menu = ({ gene, i, props }) => {
             className='popover_genes'
             style={{
                 position: 'absolute',
-                top: -10,
-                left: geneWidth - 8,
+                top: -8,
+                left: geneWidth - 10,
                 width: '120px',
             }}
         >

@@ -12,9 +12,9 @@ const Input = ({ i, value, props }) => {
         = props.dims
     const style = {
         position: 'absolute',
-        top: cellTypesHeight - 56,
-        left: geneWidth + (colWidth * i) - 13,
-        height: 15,
+        top: cellTypesHeight - 63,
+        left: geneWidth + (colWidth * i) - 22,
+        height: fontSize + 4,
         transform: 'rotate(-45deg)',
         width: cellTypeLength,
         fontSize: fontSize + 'px',

@@ -11,7 +11,7 @@ const CellType = ({ i, color, value, props }) => {
     const y = cellTypesHeight
     return (
         <g
-            transform={'rotate(-45,' + x + ',' + (y-10) + ')'}
+            transform={'rotate(-45,' + (x+6) + ',' + (y-9) + ')'}
         >
             <text
                 data-position={i}
@@ -56,8 +56,8 @@ const CellTypes = (props) => {
             width={geneWidth + bubblesWidth + legendWidth}
         >
             <text
-                x='0'
-                y='70'
+                x='24'
+                y='120'
                 fontSize={labelFontSize}
             >
                 Cell Types
