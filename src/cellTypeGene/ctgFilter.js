@@ -45,7 +45,7 @@ const Presentation = ({ show, genes, onChange, onClick }) => {
 
 const mapStateToProps = (state) => {
     return {
-        genes: state.cellTypeGeneClusters.genePaste,
+        genes: state.cellTypeGeneClusters.filterText,
         show: state.cellTypeWork.showEditables,
     }
 }
@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onChange: ev => {
             dispatch({
-                type: 'cellTypeGeneClusters.genePaste.uiSet',
+                type: 'cellTypeGeneClusters.filterText.uiSet',
                 value: ev.target.value
             })
         },

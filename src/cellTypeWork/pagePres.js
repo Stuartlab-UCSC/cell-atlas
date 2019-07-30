@@ -117,8 +117,7 @@ const Left = ({ props }) => {
 }
 
 const Presentation = (props) => {
-    const { bubbleTooltip, showEditables, onSaveAsClick, onSaveClick,
-        onUploadClick } = props
+    const { bubbleTooltip } = props
     return (
         <div style={{position: 'relative'}}>
             <Grid container spacing={16} style={{background: 'transparent'}}>
