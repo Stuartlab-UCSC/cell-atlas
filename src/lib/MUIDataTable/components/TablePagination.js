@@ -44,7 +44,6 @@ class TablePagination extends React.Component {
   };
 
   handlePageChange = (_, page) => {
-    // eslint-disable-next-line
     const { options } = this.props;
     this.props.changePage(page);
   };
@@ -69,10 +68,20 @@ class TablePagination extends React.Component {
             labelRowsPerPage={textLabels.rowsPerPage}
             labelDisplayedRows={({ from, to, count }) => `${from}-${to} ${textLabels.displayRows} ${count}`}
             backIconButtonProps={{
+              id: 'pagination-back',
               'aria-label': textLabels.previous,
             }}
             nextIconButtonProps={{
+              id: 'pagination-next',
               'aria-label': textLabels.next,
+            }}
+            SelectProps={{
+              id: 'pagination-input',
+              SelectDisplayProps: { id: 'pagination-rows' },
+              MenuProps: {
+                id: 'pagination-menu',
+                MenuListProps: { id: 'pagination-menu-list' },
+              },
             }}
             rowsPerPageOptions={options.rowsPerPageOptions}
             onChangePage={this.handlePageChange}

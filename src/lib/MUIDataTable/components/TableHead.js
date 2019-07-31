@@ -30,7 +30,6 @@ class TableHead extends React.Component {
   };
 
   render() {
-    // eslint-disable-next-line
     const { classes, columns, count, options, data, page, setCellRef, selectedRows } = this.props;
 
     const numSelected = (selectedRows && selectedRows.data.length) || 0;

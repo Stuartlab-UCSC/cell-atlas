@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line
 import PropTypes from 'prop-types';
 import MuiPopover from '@material-ui/core/Popover';
 import { findDOMNode } from 'react-dom';
@@ -58,7 +57,7 @@ class Popover extends React.Component {
       horizontal: 'center',
     };
 
-    const triggerEl = React.cloneElement(trigger, {
+    const triggerEl = React.cloneElement(<span>{trigger}</span>, {
       key: 'content',
       ref: el => (this.anchorEl = el),
       onClick: () => {

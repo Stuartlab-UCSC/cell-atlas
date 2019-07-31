@@ -69,7 +69,6 @@ class TableResize extends React.Component {
       const elStyle = window.getComputedStyle(item, null);
       const left = resizeCoords[key] !== undefined ? resizeCoords[key].left : undefined;
       const oldLeft = priorPosition[key] || 0;
-      // eslint-disable-next-line
       let newLeft = elRect.left + item.offsetWidth - parseInt(elStyle.paddingLeft) / 2;
 
       if (left === oldLeft) return;
@@ -129,7 +128,6 @@ class TableResize extends React.Component {
               onMouseMove={this.onResizeMove.bind(null, key)}
               onMouseUp={this.onResizeEnd.bind(null, key)}
               style={{
-                // eslint-disable-next-line
                 width: isResize && id == key ? tableWidth : 'auto',
                 position: 'absolute',
                 height: tableHeight,

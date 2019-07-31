@@ -12,25 +12,18 @@ const defaultToolbarSelectStyles = theme => ({
     backgroundColor: theme.palette.background.default,
     flex: '1 1 100%',
     display: 'flex',
-    height: '64px',
     position: 'relative',
     zIndex: 120,
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingTop: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
   },
   title: {
     paddingLeft: '26px',
-    top: '50%',
-    position: 'relative',
-    transform: 'translateY(-50%)',
   },
   iconButton: {
     marginRight: '24px',
-    top: '50%',
-    display: 'block',
-    position: 'relative',
-    transform: 'translateY(-50%)',
   },
   deleteIcon: {},
 });
@@ -59,6 +52,10 @@ class TableToolbarSelect extends React.Component {
       throw new TypeError(`Array "selectedRows" must contain only numbers`);
     }
 
+    const { options } = this.props;
+    if (selectedRows.length > 1 && options.selectableRows === 'single') {
+      throw new Error('Can not select more than one row when "selectableRows" is "single"');
+    }
     this.props.selectRowUpdate('custom', selectedRows);
   };
 
