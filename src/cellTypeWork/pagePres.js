@@ -9,7 +9,6 @@ import BubbleTooltip from 'bubble/tooltip'
 import SheetList from 'cellTypeWork/sheetList'
 import Worksheet from 'cellTypeWork/worksheet'
 import ScatterPlot from 'cellTypeScatter/scatter'
-import GeneFilter from 'cellTypeGene/ctgFilter'
 import GeneTable from 'cellTypeGene/ctgMain'
 
 const buttonStyle = {
@@ -133,14 +132,6 @@ const Presentation = (props) => {
                     <GeneTable/>
                 </Grid>
             </Grid>
-            <div style={{
-                width: '7rem',
-                position: 'absolute',
-                top: -20,
-                right: -20,
-            }}>
-                <GeneFilter />
-            </div>
             <BubbleTooltip data={bubbleTooltip} id='cellTypeWork' />
         </div>
     )

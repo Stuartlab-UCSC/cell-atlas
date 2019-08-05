@@ -7,6 +7,7 @@ const testData = {
     cluster_solution_name: 'solution 1',
     size_by: 'sensitivity',
     color_by: 'z_stat',
+    gene_table_url: 'localhost:5000',
     clusters:
         'column	cluster	cell_count	bar_color	cell_type\n' +
         '0	2	2643	1	Arterial CMs\n' +

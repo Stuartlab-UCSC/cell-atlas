@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react'
 
 import Typography from "@material-ui/core/Typography/Typography";
-import MUIDataTable from 'lib/MUIDataTable/MUIDataTable'
+import MUIDataTable from 'mui-datatables'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 import { integerToCommaInteger } from 'app/util'

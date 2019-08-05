@@ -3,6 +3,7 @@
 // These are added to the existing overrides in dataTable.
 
 import { onCellClick } from 'cellTypeGene/ctgTable'
+import { set as rxSet } from 'state/rx'
 
 const customSort = (data, col, dir) => {
     if (col > 1) {
@@ -27,10 +28,17 @@ const customSort = (data, col, dir) => {
     return data
 }
 
+const onFilterChange = (changedColumn, filterList) => {
+    // changedColumn: string, filterList: array
+    // TODO this should not be done on every change, but it works for now.
+    rxSet('cellTypeGene.filterText.reset')
+}
+
 const optionOverrideFx = (options) => {
-    options.filter = false
     options.customSort = customSort
     options.onCellClick = onCellClick
+    options.onFilterChange = onFilterChange
+    options.sortFilterList = false
     return options
 }
 

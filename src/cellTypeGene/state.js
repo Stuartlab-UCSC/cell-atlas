@@ -8,6 +8,7 @@ const cellTypeGene = (
         cluster: null,
         fetchMessage: ' ',
         fetchStatus: 'quiet',
+        filter: '',
         firstTableDisplayed: false,
         geneOrCluster: null,
         geneSelected: null,
@@ -40,6 +41,16 @@ const cellTypeGene = (
             return {
                 ...state,
                 fetchStatus: 'waiting'
+            }
+        case 'cellTypeGene.filterText.reset':
+            return {
+                ...state,
+                filterText: []
+            }
+        case 'cellTypeGene.filterText.uiSet':
+            return {
+                ...state,
+                filterText: action.value
             }
         case 'cellTypeGene.firstTableDisplayed.set':
             return {

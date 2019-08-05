@@ -65,7 +65,7 @@ const makeAbutton = (columns, data, name) => {
 
 const makeButtons = (columns, data) => {
     // Make the gene link look like a link.
-    columns[0].options = { setCellProps: setGeneLinkProps }
+    columns[0].options.setCellProps = setGeneLinkProps
     
     makeAbutton(columns, data, 'Add')
     makeAbutton(columns, data, 'Map')

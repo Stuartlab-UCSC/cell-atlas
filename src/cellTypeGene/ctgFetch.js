@@ -7,18 +7,19 @@ import { receiveTableData } from 'fetch/tableData'
 import { stringToPrecision } from 'app/util'
 import dataStore from 'cellTypeGene/ctgDataStore'
 import makeButtons from 'cellTypeGene/buttons'
+import geneFilter from 'cellTypeGene/geneFilter'
 import { DOMAIN } from 'cellTypeGene/ctgMain'
 
 const USE_TEST_DATA = false
 
 const testData = {
-    cluster_name: 'cluster-name',
-    gene_table:
-`gene    log2 fold change vs next    support
-EGFR    0    0.1333333    0.6357
-VEGFA    -1.8606666    0.2378    0.74
-APOE    -2.4382    -0.234    0.94
-IL6    2.7195    -0.3674    0.54`
+	cluster_name: 'cluster-name',
+	gene_table:
+`gene	log2	fold change vs next	support
+EGFR	0	0.1333333	0.6357
+VEGFA	-1.8606666	0.2378	0.74
+APOE	-2.4382	-0.234	0.94
+IL6	2.7195	-0.3674	0.54`
 }
 
 const receiveTableDataFromServer = (columns, data) => {
@@ -28,9 +29,17 @@ const receiveTableDataFromServer = (columns, data) => {
     // Save all of the variable names in the table.
     // Variable names start in column index 1.
     const list = columns.slice(1).map(column => {
-        return { value: column.name,  name: column.name }
+        column.options = {filter: false}
+        return {
+            value: column.name,
+            name: column.name,
+        }
     })
     rxSet('cellTypeGene.variableList.load', { value: list })
+    
+    // Filtering by gene name.
+    rxSet('cellTypeGene.filterText.reset')
+    columns[0].options = geneFilter()
     
     // Shorten the values to 4 significant digits.
     let cleanData =
@@ -99,6 +108,7 @@ const getGeneTableData = (cluster) => {
     let options = { credentials: true }
 
     if (USE_TEST_DATA) {
+        rxSet(DOMAIN + '.fetchStatus.waiting')
         receiveData(DOMAIN, testData, receiveDataFromServer, options)
     } else {
         fetchData(DOMAIN, url, receiveDataFromServer, options)
@@ -111,6 +121,7 @@ const getInitalGeneTableData = (clusters, url) => {
     if (url) {
         options.fullUrl = true
         if (USE_TEST_DATA) {
+            rxSet(DOMAIN + '.fetchStatus.waiting')
             receiveData(DOMAIN, testData, receiveDataFromServer, options)
         } else {
             fetchData(DOMAIN, url, receiveDataFromServer, options)
