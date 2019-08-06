@@ -65,7 +65,7 @@ const geneFilter = (filterText) => {
         filter: true,
         filterList: filterText,
         filterType: 'custom',
-        customFilterListRender: v => 'Filter On',
+        customFilterListRender: v => 'Filter',
         filterOptions: {
             names: filterText,
             logic: filterOut,
