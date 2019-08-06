@@ -8,14 +8,13 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 const filterOut = (gene, filters) => {
     // This determines whether a gene name is filtered out.
     // So returns true when the name doesn't pass the filter.
-    if (filters.length < 1) {
+    if (filters.length < 1 || filters[0] === '') {
         return false
     }
     let index = filters.findIndex(listGene => {
         return listGene.toUpperCase() === gene.toUpperCase()
     })
     return index === -1
-    //return !filters.includes(gene)
 }
 
 const parse = (list, value) => {
