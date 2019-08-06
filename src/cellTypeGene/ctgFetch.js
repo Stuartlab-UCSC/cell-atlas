@@ -7,7 +7,7 @@ import { receiveTableData } from 'fetch/tableData'
 import { stringToPrecision } from 'app/util'
 import dataStore from 'cellTypeGene/ctgDataStore'
 import makeButtons from 'cellTypeGene/buttons'
-import geneFilter from 'cellTypeGene/geneFilter'
+import ctgFilter from 'cellTypeGene/ctgFilter'
 import { DOMAIN } from 'cellTypeGene/ctgMain'
 
 const USE_TEST_DATA = false
@@ -39,7 +39,7 @@ const receiveTableDataFromServer = (columns, data) => {
     
     // Filtering by gene name.
     rxSet('cellTypeGene.filterText.reset')
-    columns[0].options = geneFilter()
+    columns[0].options = ctgFilter()
     
     // Shorten the values to 4 significant digits.
     let cleanData =

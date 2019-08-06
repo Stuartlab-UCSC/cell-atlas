@@ -4,7 +4,7 @@
 
 import { onCellClick } from 'cellTypeGene/ctgTable'
 import { set as rxSet } from 'state/rx'
-import { filterOn } from 'cellTypeGene/geneFilter'
+import { filterOn } from 'cellTypeGene/ctgFilter'
 
 const customSort = (data, col, dir) => {
     if (col > 1) {
