@@ -9,6 +9,7 @@ const cellTypeGene = (
         fetchMessage: ' ',
         fetchStatus: 'quiet',
         filter: '',
+        filterText: '',
         firstTableDisplayed: false,
         geneOrCluster: null,
         geneSelected: null,
@@ -43,9 +44,10 @@ const cellTypeGene = (
                 fetchStatus: 'waiting'
             }
         case 'cellTypeGene.filterText.reset':
+        case 'cellTypeGene.filterText.uiResetPressed':
             return {
                 ...state,
-                filterText: []
+                filterText: ''
             }
         case 'cellTypeGene.filterText.uiSet':
             return {

@@ -4,6 +4,7 @@
 
 import { onCellClick } from 'cellTypeGene/ctgTable'
 import { set as rxSet } from 'state/rx'
+import { filterOn } from 'cellTypeGene/geneFilter'
 
 const customSort = (data, col, dir) => {
     if (col > 1) {
@@ -28,10 +29,16 @@ const customSort = (data, col, dir) => {
     return data
 }
 
-const onFilterChange = (changedColumn, filterList) => {
-    // changedColumn: string, filterList: array
-    // TODO this should not be done on every change, but it works for now.
-    rxSet('cellTypeGene.filterText.reset')
+const onFilterChange = (changedColumn, filterArray) => {
+    // Called on any filter change, including via reset button and reset chip.
+    // @param changedColumn: the column name
+    // @param filterArray: gene filter as an array of genes within an array of
+    //                     columns
+    
+    // If the gene filter array is empty, clear the text field in state.
+    if (!filterOn(filterArray[2])) {
+        rxSet('cellTypeGene.filterText.uiResetPressed')
+    }
 }
 
 const optionOverrideFx = (options) => {
