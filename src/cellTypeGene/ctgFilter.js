@@ -40,10 +40,10 @@ const Display = (filterArray, onDTchange, index, column) => {
     // On each change of the text field...
     const onChange = (ev) => {
         // Update the text field value in state.
-        const value = ev.target.value.toUpperCase()
+        const value = ev.target.value
         rxSet('cellTypeGene.filterText.uiSet', { value })
         // Tell datatables there is a filter change
-        onDTchange([value], index, column);
+        onDTchange([value.toUpperCase()], index, column);
     }
     
     // 'Genes within free-form text'
