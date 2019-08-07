@@ -20,27 +20,13 @@ const filterOut = (gene, filterArray) => {
     // @param gene: a gene name
     // @param filterArray: gene filter as an array of genes
     
-    // If the filter has at least one element, return false.
+    // If the filter is empty, every value passes the filter.
     if (!filterOn(filterArray)) {
         return false
     }
     
-    // Return false when the gene is in the filter list.
-    const index = filterArray.findIndex(listGene => {
-        return listGene.toUpperCase() === gene.toUpperCase()
-    })
-    return index === -1
-}
-
-const parse = (filterText) => {
-    // Parse the new value of the text field into any array of gene names.
-    // TODO allow free-form text.
-    // @param filterText: the new value of the text field
-    
-    // Update the text field value in state.
-    rxSet('cellTypeGene.filterText.uiSet', { value: filterText })
-    // Return as an array.
-    return filterText.split('\n')
+    // Return false when the gene is in the filter.
+    return (filterArray[0].search(gene.toUpperCase()) === -1)
 }
 
 const Display = (filterArray, onDTchange, index, column) => {
@@ -53,16 +39,20 @@ const Display = (filterArray, onDTchange, index, column) => {
     
     // On each change of the text field...
     const onChange = (ev) => {
-        const newArray = parse(ev.target.value)
-        onDTchange(newArray, index, column);
+        // Update the text field value in state.
+        const value = ev.target.value.toUpperCase()
+        rxSet('cellTypeGene.filterText.uiSet', { value })
+        // Tell datatables there is a filter change
+        onDTchange([value], index, column);
     }
     
     // 'Genes within free-form text'
     return (
         <div>
             <TextField
-                label='One gene per line'
+                label='Genes'
                 multiline
+                placeholder='free-form text'
                 rows={4}
                 value={rxGet('cellTypeGene.filterText')}
                 margin='dense'
