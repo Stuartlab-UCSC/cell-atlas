@@ -82,7 +82,7 @@ const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
             />
             <Save
                 label='Save as'
-                show={false}
+                show={show}
                 onClick={onSaveAsClick}
             />
         </div>
