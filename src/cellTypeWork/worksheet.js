@@ -49,12 +49,12 @@ const fetchTestData = (id, url, receiveFx) => {
     //}, 1000)
 }
 
-const getPostWorksheetData = (worksheetIn, optionsIn) => {
+const getOrPostWorksheetData = (worksheetIn, optionsIn) => {
     // Request the data from, or save the data to the server.
     rxSet('cellTypeWork.showChart.toRequestStatus')
-    const worksheet = (worksheetIn === null)
-        ? rxGet('cellTypeWork.sheetSelected')
-        : worksheetIn
+    
+    // A worksheet name is supplied if this is a 'save as'.
+    const worksheet = worksheetIn || rxGet('cellTypeWork.sheetSelected')
     const url =
         '/user/' + rxGet('auth.user').name +
         '/worksheet/' + worksheet
@@ -101,4 +101,4 @@ const Worksheet = connect(
 
 export default Worksheet
 
-export { clearContextElements, getPostWorksheetData }
+export { clearContextElements, getOrPostWorksheetData }

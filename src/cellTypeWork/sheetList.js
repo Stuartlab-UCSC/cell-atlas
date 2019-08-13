@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import PickList from 'components/PickList'
 import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
-import { getPostWorksheetData } from 'cellTypeWork/worksheet'
+import { getOrPostWorksheetData } from 'cellTypeWork/worksheet'
 
 const DOMAIN = 'cellTypeSheet'
 
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => {
                 value: sheet,
             })
             dispatch({ type: 'cellTypeWork.showEditables.show' })
-            getPostWorksheetData(sheet)
+            getOrPostWorksheetData(sheet)
         },
     }
 }

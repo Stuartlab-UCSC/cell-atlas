@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { get as rxGet } from 'state/rx'
 import { cleanName } from 'app/util'
 import Presentation from 'cellTypeWork/pagePres'
-import { getPostWorksheetData } from 'cellTypeWork/worksheet'
+import { getOrPostWorksheetData } from 'cellTypeWork/worksheet'
 import dataStore from 'cellTypeWork/dataStore'
 import transformToServerStore from 'cellTypeWork/transformToServerStore'
 
@@ -15,7 +15,7 @@ const onSaveSubmit = (name, dispatch) => {
         value: name
     })
     // Save the worksheet on the server.
-    getPostWorksheetData(null,
+    getOrPostWorksheetData(name,
         { method: 'POST', payload: transformToServerStore() })
 }
 
@@ -34,7 +34,7 @@ const onSaveAsSubmit = (name, dispatch) => {
     } else if (name !== cleanedName) {
         onSaveSubmit(cleanedName, dispatch)
         /*
-        // The name in the dialog it not changing to the clean name, so skip.
+        // The name in the dialog won't change to the clean name, so skip.
         nameIt(dispatch, cleanedName, true,
             'Unacceptable characters were replaced with "_"')
         */
