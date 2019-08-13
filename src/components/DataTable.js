@@ -80,7 +80,7 @@ const buildOptions = (data, header, optionOverrideFx) => {
         responsive: 'scroll',
         rowsPerPage: 50,
         rowsPerPageOptions: [25, 50, 100],
-        selectableRows: false,
+        selectableRows: 'none',
         textLabels: {
             toolbar: {
                 downloadCsv: 'Download TSV',
