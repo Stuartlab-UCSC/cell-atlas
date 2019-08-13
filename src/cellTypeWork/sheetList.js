@@ -17,14 +17,34 @@ const testData = [
 let lastUser = null
 
 const receiveDataFromServer = (data) => {
+    // Transform data from server into that needed for the pick list.
     const error = rxGet(DOMAIN + '.fetchMessage')
     if (error !== null) {
         alert(error)
     } else if (data) {
-        // Transform data from server and save it.
-        let sheets = data.map(worksheet => {
-            return { value: worksheet, name: worksheet }
+        const user = rxGet('auth.user').name
+        // Find the worksheets owned by the user.
+        let userSheets = data.filter(sheet => {
+            const i = sheet.indexOf('/')
+            return (i < 0 || sheet.slice(0, i) === user)
         })
+        userSheets.sort()
+        // Find the worksheets owned by others.
+        let otherSheets = data.filter(sheet => {
+            const i = sheet.indexOf('/')
+            return (i > -1 && sheet.slice(0, i) !== user)
+        })
+        otherSheets.sort()
+        // Transform the sheets owned by the user, stripping off the user name.
+        let sheets = userSheets.map(sheet => {
+            const i = sheet.indexOf('/')
+            const name = sheet.slice(i+1)
+            return { value: name, name: name }
+        })
+        // Transform the sheets owned by others.
+        sheets.push(otherSheets.map(name => {
+            return { value: name, name: name }
+        }))
         rxSet('cellTypeWork.sheetList.load', { value: sheets })
     }
 }
