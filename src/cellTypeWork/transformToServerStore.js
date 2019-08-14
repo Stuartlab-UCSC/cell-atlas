@@ -107,22 +107,13 @@ const buildColorsAndSizes = (data) => {
     return { colors: colors.join('\n'), sizes: sizes.join('\n') }
 }
 
-const findSource = () => {
-    // Find the source worksheet name and user if there is one.
-    let source = rxGet('cellTypeWork.sheetSelected')
-    const i = source.indexOf('/')
-    if (i < 0) {
-        // The user owns this worksheet because there is no user segment.
-        return { user: null }
-    }
-    // Return the source of the worksheet as { user, worksheetName }.
-    return { user: source.slice(0, i), worksheet: source.slice(i + 1)}
-}
-
 const transformToServerStore = () => {
     let data = dataStore.get()
     let { colors, sizes } = buildColorsAndSizes(data)
     let payload = {
+        source_user: data.sourceUser || rxGet('auth.user').name,
+        source_worksheet_name:
+            data.sourceWorksheet || rxGet('cellTypeWork.sheetSelected'),
         role: 'worksheet',
         dataset_name: data.dataset,
         cluster_solution: data.clusterSolution,
@@ -135,15 +126,6 @@ const transformToServerStore = () => {
         genes: buildGenes(data),
         colors,
         sizes,
-    }
-    let { user, worksheet } = findSource()
-    if (user !== null) {
-        payload.source_user = user
-        payload.source_worksheet_name = worksheet
-    }
-    user = rxGet('auth.user')
-    if (user && user.name) {
-        payload.user = user.name
     }
     return payload
 }

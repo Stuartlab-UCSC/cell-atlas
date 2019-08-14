@@ -76,6 +76,8 @@ const transfromToChart = (data) => {
         sizeBy:          data.size_by,
         geneTableUrl:    data.gene_table_url,
         scatterplotUrl:  data.scatterplot_url,
+        sourceUser:      data.source_user,
+        sourceWorksheet: data.source_worksheet_name,
         bubbles,
         cellTypes,
         clusters,

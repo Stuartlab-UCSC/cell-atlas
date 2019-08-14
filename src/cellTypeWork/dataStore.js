@@ -25,7 +25,6 @@ class DataStore {
 
     changeCellType(cellType, position) {
         this.data.cellTypes[position] = cellType
-
     }
 
     changeColorBarSegment(barPosition, color, colormap) {
@@ -79,6 +78,10 @@ class DataStore {
     
     getSizeBy() {
         return this.data.sizeBy
+    }
+    
+    getSourceWorksheet() {
+        return this.data.getSourceWorksheet
     }
     
     load(data) {

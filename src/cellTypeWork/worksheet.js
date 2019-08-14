@@ -54,7 +54,8 @@ const getOrPostWorksheetData = (worksheetIn, optionsIn) => {
     rxSet('cellTypeWork.showChart.toRequestStatus')
     
     // A worksheet name is supplied if this is a 'save as'.
-    const worksheet = worksheetIn || rxGet('cellTypeWork.sheetSelected')
+    const worksheet = worksheetIn // from a 'save as'
+        || dataStore.getSourceWorksheet() // dataStore from load
     const url =
         '/user/' + rxGet('auth.user').name +
         '/worksheet/' + worksheet
