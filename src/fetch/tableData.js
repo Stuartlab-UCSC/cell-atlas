@@ -93,4 +93,4 @@ const fetchTableData = (id, urlPath, callback) => {
 
 export default fetchTableData
 
-export { receiveTableData } // for testing
+export { receiveTableData }

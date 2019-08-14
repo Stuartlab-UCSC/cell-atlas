@@ -7,6 +7,7 @@ import dataStore from 'cellTypeWork/dataStore'
 import ScatterPlotPres from 'cellTypeScatter/scatterPres'
 import fetchData from 'fetch/data'
 import testScatterPlot from 'cellTypeScatter/scatterPlot.png'
+import { getInitalGeneTableData } from 'cellTypeGene/ctgFetch'
 
 const USE_TEST_DATA = false
 const DOMAIN = 'cellTypeScatter'
@@ -19,6 +20,13 @@ const receiveDataFromServer = (data) => {
     scatterStore = data
     rxSet('cellTypeScatter.showChart.toQuietStatus')
     rxSet('cellTypeScatter.render.now')
+}
+
+const receiveInitialDataFromServer = (data) => {
+    // Request the initial gene table.
+    getInitalGeneTableData()
+    // Receive the scatter plot.
+    receiveDataFromServer(data)
 }
 
 // A test stub in place of server query.
@@ -47,7 +55,7 @@ const buildScatterPlotUrl = (gene, includeHost) => {
 }
 
 const getClusterAssignmentScatterPlot =
-    (clustersIn, colormapIn, urlIn, optionsIn) => {
+    (clustersIn, colormapIn, urlIn, optionsIn, callback) => {
     // Request a cluster assignment plot from the server.
     let clusters = clustersIn || dataStore.getClusters()
     let colormap = colormapIn || rxGet('cellTypeWork.colormap')
@@ -64,13 +72,13 @@ const getClusterAssignmentScatterPlot =
     }
     rxSet('cellTypeScatter.gene.clear')
     if (USE_TEST_DATA) {
-        fetchTestData(DOMAIN, url, receiveDataFromServer, options)
+        fetchTestData(DOMAIN, url, callback || receiveDataFromServer, options)
     } else {
-        fetchData(DOMAIN, url, receiveDataFromServer, options)
+        fetchData(DOMAIN, url, callback || receiveDataFromServer, options)
     }
 }
 
-const getGeneScatterPlot = (gene, urlIn, optionsIn) => {
+const getGeneScatterPlot = (gene, urlIn, optionsIn, callback) => {
     // Request a gene plot from the server.
     let url = urlIn || buildScatterPlotUrl(gene)
     let options = optionsIn || {}
@@ -79,9 +87,9 @@ const getGeneScatterPlot = (gene, urlIn, optionsIn) => {
     // Save the gene.
     rxSet('cellTypeScatter.gene.set', { value: gene })
     if (USE_TEST_DATA) {
-        fetchTestData(DOMAIN, url, receiveDataFromServer, options)
+        fetchTestData(DOMAIN, url, callback || receiveDataFromServer, options)
     } else {
-        fetchData(DOMAIN, url, receiveDataFromServer, options)
+        fetchData(DOMAIN, url, callback || receiveDataFromServer, options)
     }
 }
 
@@ -92,13 +100,16 @@ const getInitialScatterPlot = (clusters, colormap, url) => {
         let options = { fullUrl: true }
         const split = url.split('/')
         if (split.slice(-2,-1)[0] === 'gene') {
-            getGeneScatterPlot(split.slice(-1)[0], url, options)
+            getGeneScatterPlot(
+                split.slice(-1)[0], url, options, receiveInitialDataFromServer)
         } else {
-            getClusterAssignmentScatterPlot(clusters, colormap, url, options)
+            getClusterAssignmentScatterPlot(
+                clusters, colormap, url, options, receiveInitialDataFromServer)
         }
     } else {
         // By default get a cluster assignment scatterplot.
-        getClusterAssignmentScatterPlot(clusters, colormap, null)
+        getClusterAssignmentScatterPlot(
+            clusters, colormap, null, receiveInitialDataFromServer)
     }
 }
 

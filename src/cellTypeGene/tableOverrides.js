@@ -45,6 +45,10 @@ const optionOverrideFx = (options) => {
     options.customSort = customSort
     options.onCellClick = onCellClick
     options.onFilterChange = onFilterChange
+    //options.responsive = 'scroll'
+    //options.responsive = 'stacked' // default, really only for mobile devices
+    options.rowsPerPage = 15
+    options.rowsPerPageOptions = []
     options.sortFilterList = false
     return options
 }
@@ -52,6 +56,14 @@ const optionOverrideFx = (options) => {
 const themeOverrideFx = (theme) => {
     theme.overrides.MuiTableCell.root.paddingLeft = 3
     theme.overrides.MuiTableCell.root.paddingRight = 3
+    theme.overrides.MUIDataTable = {
+        responsiveStacked: {
+            overflowY: 'hidden'
+        },
+        responsiveScroll: {
+            overflowY: 'hidden'
+        }
+    }
     return theme
 }
 

@@ -73,12 +73,11 @@ const onCellClick = (colData, cellMeta) => {
 
 const mapStateToProps = (state) => {
     const table = dataStore.get()
-    const cluster = state.cellTypeGene.cluster
     return {
-        cluster,
         columns: table.columns,
         data: table.data,
-        fetchMessage: state.cellTypeGene.fetchMessage,
+        //fetchMessage: state.cellTypeGene.fetchMessage,
+        render: state.cellTypeGene.render,
         optionOverrideFx,
         themeOverrideFx,
     }

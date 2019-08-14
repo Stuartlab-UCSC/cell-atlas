@@ -115,9 +115,10 @@ const getGeneTableData = (cluster) => {
     }
 }
 
-const getInitalGeneTableData = (clusters, url) => {
+const getInitalGeneTableData = () => {
     // Request the initial data from the server.
     let options = { credentials: true }
+    let url = ctwDataStore.getGeneTableUrl()
     if (url) {
         options.fullUrl = true
         if (USE_TEST_DATA) {
@@ -127,7 +128,8 @@ const getInitalGeneTableData = (clusters, url) => {
             fetchData(DOMAIN, url, receiveDataFromServer, options)
         }
     } else {
-        const url = buildGeneTableUrl(clusters[0].name)
+        let clusters = ctwDataStore.getClusters()
+        url = buildGeneTableUrl(clusters[0].name)
         fetchData(DOMAIN, url, receiveDataFromServer, options)
     }
 }

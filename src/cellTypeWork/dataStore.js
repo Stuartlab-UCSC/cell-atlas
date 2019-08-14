@@ -73,6 +73,10 @@ class DataStore {
         return this.data.genes
     }
     
+    getGeneTableUrl() {
+        return this.data.geneTableUrl
+    }
+    
     getSizeBy() {
         return this.data.sizeBy
     }
