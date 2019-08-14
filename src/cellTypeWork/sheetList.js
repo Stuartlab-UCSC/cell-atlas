@@ -42,7 +42,7 @@ const receiveDataFromServer = (data) => {
             return { value: name, name: name }
         })
         // Transform the sheets owned by others.
-        sheets.push(otherSheets.map(name => {
+        sheets.push(...otherSheets.map(name => {
             return { value: name, name: name }
         }))
         rxSet('cellTypeWork.sheetList.load', { value: sheets })
