@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
+import { CircularProgress, Typography } from '@material-ui/core'
 import ClusterNames from 'cellTypeWork/clusterNames'
 import ctwDataStore from 'cellTypeWork/dataStore'
 import dataStore from 'cellTypeGene/ctgDataStore'
@@ -14,10 +14,20 @@ const DOMAIN = 'cellTypeGene'
 
 const Presentation = (props) => {
     // Rendering of the gene table.
-    const { cluster, dataLength, dims, fetchMessage, onClick } = props
+    const { cluster, dataLength, dims, fetchMessage, fetchStatus, onClick }
+        = props
     const { colWidth } = props.dims
     let Counts = null
     let ClusterBar = null
+    if (fetchStatus !== 'quiet') {
+        // TODO we should use a webworker here to keep the ui active.
+        return (
+            <CircularProgress
+                size={40}
+                style={{position: 'fixed', left: 550, top: 300}}
+            />
+        )
+    }
     if (!fetchMessage) {
         Counts = (
             <Typography inline={true} style={{
@@ -70,6 +80,7 @@ const mapStateToProps = (state) => {
         dataLength: dataStore.getData().length,
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeGene.fetchMessage,
+        fetchStatus: state.cellTypeGene.fetchStatus,
         menuPosition: null,
     }
 }
