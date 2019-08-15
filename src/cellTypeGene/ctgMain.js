@@ -21,6 +21,7 @@ const Presentation = (props) => {
     let ClusterBar = null
     if (fetchStatus !== 'quiet') {
         // TODO we should use a webworker here to keep the ui active.
+        // Then we may or may not need the snake.
         return (
             <CircularProgress
                 size={40}

@@ -67,7 +67,12 @@ const receiveData = (id, data, callback, optionsIn) => {
         rxSet(id + '.fetchMessage.clear')
     }
     // Quiet the fetch status, no matter if data is valid or not.
-    rxSet(id + '.fetchStatus.quiet')
+    // TODO change all callers to set this to quiet like we do for cellTypeGene.
+    if (id === 'cellTypeGene') {
+        rxSet(id + '.fetchStatus.loading')
+    } else {
+        rxSet(id + '.fetchStatus.quiet')
+    }
 }
 
 const error = (id, message) => {

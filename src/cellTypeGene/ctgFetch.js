@@ -75,6 +75,7 @@ const receiveTableDataFromServer = (columns, data) => {
         behavior: 'smooth'
     })
     */
+    rxSet('cellTypeGene.fetchStatus.quiet')
     rxSet('cellTypeGene.render.now')
 }
 
