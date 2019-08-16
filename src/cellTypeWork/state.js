@@ -42,6 +42,7 @@ const State = (
         sheetList: defaultSheetList,
         sheetSaveAs: '',
         sheetSelected: null,
+        sheetOwnedByUser: false,
         showChart: false,
         showEditables: false,
     }, action) => {
@@ -178,17 +179,22 @@ const State = (
                 sheetList: defaultSheetList,
                 sheetSelected: null,
             }
+        case 'cellTypeWork.sheetOwnedByUser.set':
+            return {
+                ...state,
+                sheetOwnedByUser: action.value,
+            }
         case 'cellTypeWork.sheetSaveAs.clear':
             return {
                 ...state,
                 sheetSaveAs: ''
             }
+        case 'cellTypeWork.sheetSaveAs.cleanedNameSet':
         case 'cellTypeWork.sheetSaveAs.uiSet':
             return {
                 ...state,
                 sheetSaveAs: action.value
             }
-        case 'cellTypeWork.sheetSelected.loadPersist':
         case 'cellTypeWork.sheetSelected.uiSelect':
             return {
                 ...state,
@@ -236,7 +242,7 @@ const State = (
 
 const cellTypeSheetState = (
     state = {
-        fetchMessage: ' ',
+        fetchMessage: null,
         fetchStatus: 'initial',
     }, action) => {
         switch (action.type) {

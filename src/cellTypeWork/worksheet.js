@@ -8,6 +8,7 @@ import dataStore from 'cellTypeWork/dataStore'
 import WorksheetPresentation from 'cellTypeWork/worksheetPres'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
+import transformToServerStore from 'cellTypeWork/transformToServerStore'
 
 const USE_TEST_DATA = false
 const DOMAIN = 'cellTypeWork'
@@ -26,6 +27,20 @@ const clearContextElements = (except) => {
     }
     if (except !== 'cellTypeWorkGenes') {
          rxSet('cellTypeWork.geneMenu.close')
+    }
+}
+const receivePostConfirmFromServer = () => {
+    // Handle the post results received from the server.
+    const error = rxGet(DOMAIN + '.fetchMessage')
+    if (error === null) {
+        // Look for the worksheet name in the 'save as' state.
+        let worksheet = rxGet('cellTypeWork.sheetSaveAs')
+        console.log('receivePostConfirmFromServer: worksheet:', worksheet)
+        if (worksheet) {
+            // Add the worksheet name to the pick-list.
+            rxSet('cellTypeWork.sheetList.new', { value: worksheet })
+            rxSet('cellTypeWork.sheetSaveAs.clear')
+        }
     }
 }
 
@@ -49,25 +64,40 @@ const fetchTestData = (id, url, receiveFx) => {
     //}, 1000)
 }
 
-const getOrPostWorksheetData = (worksheetIn, optionsIn) => {
-    // Request the data from, or save the data to the server.
+const getWorksheetData = (worksheetIn) => {
+    // Request the data from the server.
     rxSet('cellTypeWork.showChart.toRequestStatus')
-    
-    // A worksheet name is supplied if this is a 'save as'.
-    const worksheet = worksheetIn // from a 'save as'
-        || dataStore.getSourceWorksheet() // dataStore from load
+    // Initialize the variables as if the user owns the worksheet.
+    let user = rxGet('auth.user').name
+    let worksheet = worksheetIn
+    const i = worksheetIn.indexOf('/')
+    if (i > -1) {
+        // The current user owns the worksheet
+        user = worksheetIn.slice(0, i)
+        worksheet = worksheetIn.slice(i + 1)
+    }
+    const url =
+        '/user/' + user +
+        '/worksheet/' + worksheet
+    let options = { credentials: true }
+    if (USE_TEST_DATA) {
+        fetchTestData('cellTypeWork', url, receiveDataFromServer, options)
+    } else {
+        fetchData('cellTypeWork', url, receiveDataFromServer, options)
+    }
+}
+
+const postWorksheetData = (worksheet) => {
+    // Save the data to the server.
     const url =
         '/user/' + rxGet('auth.user').name +
         '/worksheet/' + worksheet
-    let options = optionsIn || {}
-    options.credentials = true
-    if (USE_TEST_DATA && !options.method) {
-        // This is only for GETS.
-        fetchTestData('cellTypeWork', url, receiveDataFromServer, options)
-    } else {
-        // We can only GET test data, so a POST is always to the server.
-        fetchData('cellTypeWork', url, receiveDataFromServer, options)
+    const options = {
+        credentials: true,
+        method: 'POST',
+        payload: transformToServerStore()
     }
+    fetchData('cellTypeWork', url, receivePostConfirmFromServer, options)
 }
 
 const mapStateToProps = (state) => {
@@ -102,4 +132,4 @@ const Worksheet = connect(
 
 export default Worksheet
 
-export { clearContextElements, getOrPostWorksheetData }
+export { clearContextElements, getWorksheetData, postWorksheetData }

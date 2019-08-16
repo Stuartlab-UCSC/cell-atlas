@@ -32,7 +32,7 @@ const Upload = ({ onClick} ) => {
     )
 }
 
-const Save = ({ label, show, onClick }) => {
+const Save = ({ label, show, disabled, onClick }) => {
     if (!show) {
         return null
     }
@@ -41,6 +41,7 @@ const Save = ({ label, show, onClick }) => {
             variant='contained'
             component='span'
             size='small'
+            disabled={disabled}
             onClick={onClick}
             style={buttonStyle}
         >
@@ -71,13 +72,16 @@ const ClusterSolution = ({ show, solution }) => {
     )
 }
 
-const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
+const Buttons = (props) => {
+    const { sheetOwnedByUser, show, onSaveAsClick, onSaveClick, onUploadClick }
+        = props
     return (
         <div style={{marginLeft: '1rem'}} >
             <Upload onClick={onUploadClick} />
             <Save
                 label='Save'
                 show={show}
+                disabled = {!sheetOwnedByUser}
                 onClick={onSaveClick}
             />
             <Save
@@ -90,8 +94,8 @@ const Buttons = ({ show, onSaveAsClick, onSaveClick, onUploadClick }) => {
 }
 
 const Left = ({ props }) => {
-    const { clusterSolution, dataset, showEditables, onSaveAsClick, onSaveClick,
-        onUploadClick } = props
+    const { clusterSolution, dataset, sheetOwnedByUser, showEditables,
+        onSaveAsClick, onSaveClick, onUploadClick } = props
     return (
         <Grid container spacing={8}>
             <Grid item xs={8} style={{width: '70%'}} >
@@ -101,6 +105,7 @@ const Left = ({ props }) => {
             </Grid>
             <Grid item xs={4}>
                 <Buttons
+                    sheetOwnedByUser={sheetOwnedByUser}
                     show={showEditables}
                     onSaveAsClick={onSaveAsClick}
                     onSaveClick={onSaveClick}

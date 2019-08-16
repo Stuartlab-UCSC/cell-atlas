@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import PickList from 'components/PickList'
 import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
-import { getOrPostWorksheetData } from 'cellTypeWork/worksheet'
+import { getWorksheetData } from 'cellTypeWork/worksheet'
 
 const DOMAIN = 'cellTypeSheet'
 
@@ -14,7 +14,7 @@ const testData = [
     'pbmc',  // as admin@replace.me
     // test@test.com/test
 ]
-let lastUser = null
+let prevUser = null
 
 const receiveDataFromServer = (data) => {
     // Transform data from server into that needed for the pick list.
@@ -53,13 +53,13 @@ const getSheetListData = () => {
     // Load a new sheetList when the user changes or on initial page load.
     const initialPageLoaded = rxGet('cellTypeWork.initialPageLoaded')
     let user = rxGet('auth.user').name
-    if (user === lastUser && initialPageLoaded) {
+    if (user === prevUser && initialPageLoaded) {
         return
     }
     if (!initialPageLoaded) {
         rxSet('cellTypeWork.initialPageLoaded.true')
     }
-    lastUser = user
+    prevUser = user
     
     // Now get the data.
     const url = '/user/worksheets'
@@ -90,8 +90,12 @@ const mapDispatchToProps = (dispatch) => {
                 type: 'cellTypeWork.sheetSelected.uiSelect',
                 value: sheet,
             })
+            dispatch({
+                type: 'cellTypeWork.sheetOwnedByUser.set',
+                value: (sheet.indexOf('/') < 0),
+            })
             dispatch({ type: 'cellTypeWork.showEditables.show' })
-            getOrPostWorksheetData(sheet)
+            getWorksheetData(sheet)
         },
     }
 }
@@ -101,4 +105,3 @@ const SheetList = connect(
 )(PickList)
 
 export default SheetList
-export { getSheetListData }
