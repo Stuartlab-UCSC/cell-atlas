@@ -157,20 +157,34 @@ const State = (
                 sheetList: action.value
             }
         case 'cellTypeWork.sheetList.new':
-            // Remove the sheet from the list if it is there.
+            // If the sheet is already in the list we're done.
             const value = action.value
-            let sheetList = [...state.sheetList]
-            const foundIndex = sheetList.findIndex(sheet => {
+            const i = state.sheetList.findIndex(sheet => {
                 return sheet.value === value
             })
-            if (foundIndex > -1) {
-                sheetList.splice(foundIndex, 1)
+            if (i > -1) {
+                return state
             }
-            // Add a new sheet to the list then select it.
-            sheetList.unshift({value, name: value})
+            // Insert the new sheet into those owned by the current user,
+            // alphabetically. Note that the user's sheets are listed above
+            // sheets owned by others.
+            let newList = []
+            let added = false
+            state.sheetList.forEach(sheet => {
+                if (!added) {
+                    const j = sheet.value.indexOf('/')
+                    if ( j > -1 || value < sheet.value) {
+                        // We've reached the sheets owned by others or
+                        // the new is lexographically less than this sheet.
+                        newList.push({ value, name: value })
+                        added = true
+                    }
+                }
+                newList.push(sheet)
+            })
             return {
                 ...state,
-                sheetList,
+                sheetList: newList,
                 sheetSelected: value,
             }
         case 'cellTypeWork.sheetList.userChange':
