@@ -12,8 +12,8 @@ import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
     from 'color/colorCat'
 import Presentation from 'gene/pagePres'
 import { tableNewData } from 'gene/table'
+import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
 
-const USE_TEST_DATA = false
 let data // the store for data outside of redux state
 
 const findDerivedData = (solutions) => {

@@ -10,8 +10,7 @@ import ctwDataStore from 'cellTypeWork/dataStore'
 import makeButtons from 'cellTypeGene/buttons'
 import ctgFilter from 'cellTypeGene/ctgFilter'
 import { DOMAIN } from 'cellTypeGene/ctgMain'
-
-const USE_TEST_DATA = false
+import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
 
 const testData = {
 	cluster_name: 'cluster-name',

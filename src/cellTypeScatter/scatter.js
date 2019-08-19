@@ -8,8 +8,8 @@ import ScatterPlotPres from 'cellTypeScatter/scatterPres'
 import fetchData from 'fetch/data'
 import testScatterPlot from 'cellTypeScatter/scatterPlot.png'
 import { getInitalGeneTableData } from 'cellTypeGene/ctgFetch'
+import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
 
-const USE_TEST_DATA = false
 const DOMAIN = 'cellTypeScatter'
 const testData = testScatterPlot
 let scatterStore // the png from the data server.

@@ -7,10 +7,10 @@ import { get as rxGet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import worksheetDataStore from 'cellTypeWork/dataStore'
 import { bubbleVariableChange } from 'cellTypeWork/transformToBubbles'
+import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
 
 const DOMAIN = 'ctgVariable'
 
-const USE_TEST_DATA = false
 const testData =
 `gene 1 2 3
 gene1 .5 .3 .6`

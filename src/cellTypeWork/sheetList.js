@@ -7,9 +7,9 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { getWorksheetData } from 'cellTypeWork/worksheet'
 
+const USE_TEST_DATA = true
 const DOMAIN = 'cellTypeSheet'
 
-const USE_TEST_DATA = false
 const testData = [
     'pbmc',  // as admin@replace.me
     // test@test.com/test
@@ -105,3 +105,4 @@ const SheetList = connect(
 )(PickList)
 
 export default SheetList
+export { getSheetListData, USE_TEST_DATA }

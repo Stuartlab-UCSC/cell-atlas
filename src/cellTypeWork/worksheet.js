@@ -9,8 +9,8 @@ import WorksheetPresentation from 'cellTypeWork/worksheetPres'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 import transformToServerStore from 'cellTypeWork/transformToServerStore'
+import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
 
-const USE_TEST_DATA = false
 const DOMAIN = 'cellTypeWork'
 
 const clearContextElements = (except) => {
