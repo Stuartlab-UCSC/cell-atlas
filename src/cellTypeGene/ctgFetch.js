@@ -1,7 +1,7 @@
 
 // The fetch for the cell type worksheet gene table.
 
-import { get as rxGet, set as rxSet } from 'state/rx'
+import { set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { receiveTableData } from 'fetch/tableData'
 import { stringToPrecision } from 'app/util'
@@ -92,12 +92,15 @@ const receiveDataFromServer = (data) => {
     receiveTableData(DOMAIN, data.gene_table, receiveTableDataFromServer)
 }
 
-const buildGeneTableUrl = (cluster, includeHost) => {
+const buildGeneTableUrl = (cluster, toServerStore) => {
+    // @param toServerStore: true: the url is to be written to the server state
+    // so it needs the data server prefix.
     let url =
-        '/user/' + rxGet('auth.user').name +
-        '/worksheet/' + rxGet('cellTypeWork.sheetSelected') +
+        '/user/' + ctwDataStore.getSourceUser() +
+        '/worksheet/' + ctwDataStore.getSourceWorksheet() +
         '/cluster/' + cluster
-    if (includeHost) {
+    if (toServerStore) {
+        // Prefix the url with the data server host name.
         url = process.env.REACT_APP_DATA_URL + url
     }
     return url

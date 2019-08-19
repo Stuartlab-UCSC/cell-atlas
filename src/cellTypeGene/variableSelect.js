@@ -28,8 +28,8 @@ const receiveDataFromServer = (data) => {
 const getData = (varName) => {
     // Load a new gene variable.
     const url =
-        '/user/' + rxGet('auth.user').name +
-        '/worksheet/' + rxGet('cellTypeWork.sheetSelected') +
+        '/user/' + worksheetDataStore.getSourceUser() +
+        '/worksheet/' + worksheetDataStore.getSourceWorksheet() +
         '/var_name/' + varName +
         '/genes/' + worksheetDataStore.getGenes().join()
     const options = { responseType: 'text', credentials: true }

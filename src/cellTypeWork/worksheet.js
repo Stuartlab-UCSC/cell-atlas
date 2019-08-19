@@ -35,13 +35,13 @@ const receivePostConfirmFromServer = () => {
     if (error === null) {
         // Look for the worksheet name in the 'save as' state.
         let worksheet = rxGet('cellTypeWork.sheetSaveAs')
-        console.log('receivePostConfirmFromServer: worksheet:', worksheet)
         if (worksheet) {
             // Add the worksheet name to the pick-list.
             rxSet('cellTypeWork.sheetList.new', { value: worksheet })
-            rxSet('cellTypeWork.sheetSaveAs.clear')
         }
     }
+    // Clear the saveAs text on success or error.
+    rxSet('cellTypeWork.sheetSaveAs.clear')
 }
 
 const receiveDataFromServer = (data) => {
@@ -72,7 +72,7 @@ const getWorksheetData = (worksheetIn) => {
     let worksheet = worksheetIn
     const i = worksheetIn.indexOf('/')
     if (i > -1) {
-        // The current user owns the worksheet
+        // The another user owns the worksheet
         user = worksheetIn.slice(0, i)
         worksheet = worksheetIn.slice(i + 1)
     }

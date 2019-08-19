@@ -80,8 +80,12 @@ class DataStore {
         return this.data.sizeBy
     }
     
+    getSourceUser() {
+        return this.data.sourceUser
+    }
+    
     getSourceWorksheet() {
-        return this.data.getSourceWorksheet
+        return this.data.sourceWorksheet
     }
     
     load(data) {

@@ -42,8 +42,8 @@ const getGeneForAllClusters = (gene) => {
     const colorBy = dataStore.getColorBy()
     const sizeBy = dataStore.getSizeBy()
     let url =
-        '/user/' + rxGet('auth.user').name +
-        '/worksheet/' + rxGet('cellTypeWork.sheetSelected') +
+        '/user/' + dataStore.getSourceUser() +
+        '/worksheet/' + dataStore.getSourceWorksheet() +
         '/gene/' + gene +
         '/color/' + colorBy +
         '/size/' + sizeBy

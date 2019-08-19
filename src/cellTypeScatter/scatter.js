@@ -41,9 +41,10 @@ const fetchTestData = (id, url, receiveFx, options) => {
 }
 
 const buildScatterPlotUrl = (gene, includeHost) => {
+    console.log('dataStore:', dataStore)
     let url =
-        '/user/' + rxGet('auth.user').name +
-        '/worksheet/' + rxGet('cellTypeWork.sheetSelected') +
+        '/user/' + dataStore.getSourceUser() +
+        '/worksheet/' + dataStore.getSourceWorksheet() +
         '/scatterplot/umap'
     if (gene) {
          url += '/gene/' + gene

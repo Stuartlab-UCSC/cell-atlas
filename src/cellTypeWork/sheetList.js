@@ -7,7 +7,7 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { getWorksheetData } from 'cellTypeWork/worksheet'
 
-const USE_TEST_DATA = true
+const USE_TEST_DATA = false
 const DOMAIN = 'cellTypeSheet'
 
 const testData = [
