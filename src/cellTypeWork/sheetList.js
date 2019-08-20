@@ -91,8 +91,8 @@ const mapDispatchToProps = (dispatch) => {
                 value: sheet,
             })
             dispatch({
-                type: 'cellTypeWork.sheetOwnedByUser.set',
-                value: (sheet.indexOf('/') < 0),
+                type: 'cellTypeWork.sheetOwnedByUser.uiSelect',
+                value: sheet
             })
             dispatch({ type: 'cellTypeWork.showEditables.show' })
             getWorksheetData(sheet)

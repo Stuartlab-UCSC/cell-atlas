@@ -8,6 +8,7 @@ const resetOnLogout = () => {
     // There is probably a better place to do this, but for now
     // reset some user data when she logs out.
     rxSet('cellTypeWork.sheetList.userChange')
+    rxSet('cellTypeWork.sheetSelected.userChange')
 }
 
 const checkUrlSearch = () => {

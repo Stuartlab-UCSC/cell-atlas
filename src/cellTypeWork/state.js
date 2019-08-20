@@ -156,7 +156,7 @@ const State = (
                 ...state,
                 sheetList: action.value
             }
-        case 'cellTypeWork.sheetList.new':
+        case 'cellTypeWork.sheetList.saveAsWorksheetLoaded':
             // If the sheet is already in the list we're done.
             const value = action.value
             const i = state.sheetList.findIndex(sheet => {
@@ -185,18 +185,17 @@ const State = (
             return {
                 ...state,
                 sheetList: newList,
-                sheetSelected: value,
             }
         case 'cellTypeWork.sheetList.userChange':
             return {
                 ...state,
                 sheetList: defaultSheetList,
-                sheetSelected: null,
             }
-        case 'cellTypeWork.sheetOwnedByUser.set':
+        case 'cellTypeWork.sheetOwnedByUser.saveAsWorksheetLoaded':
+        case 'cellTypeWork.sheetOwnedByUser.uiSelect':
             return {
                 ...state,
-                sheetOwnedByUser: action.value,
+                sheetOwnedByUser: (action.value.indexOf('/') < 0),
             }
         case 'cellTypeWork.sheetSaveAs.clear':
             return {
@@ -209,6 +208,12 @@ const State = (
                 ...state,
                 sheetSaveAs: action.value
             }
+        case 'cellTypeWork.sheetSelected.userChange':
+            return {
+                ...state,
+                sheetSelected: null
+            }
+        case 'cellTypeWork.sheetSelected.saveAsWorksheetLoaded':
         case 'cellTypeWork.sheetSelected.uiSelect':
             return {
                 ...state,

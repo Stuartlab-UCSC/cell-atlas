@@ -37,7 +37,12 @@ const receivePostConfirmFromServer = () => {
         let worksheet = rxGet('cellTypeWork.sheetSaveAs')
         if (worksheet) {
             // Add the worksheet name to the pick-list.
-            rxSet('cellTypeWork.sheetList.new', { value: worksheet })
+            rxSet('cellTypeWork.sheetList.saveAsWorksheetLoaded',
+                { value: worksheet })
+            rxSet('cellTypeWork.sheetSelected.saveAsWorksheetLoaded',
+                { value: worksheet })
+            rxSet('cellTypeWork.sheetOwnedByUser.saveAsWorksheetLoaded',
+                { value: worksheet })
         }
     }
     // Clear the saveAs text on success or error.
