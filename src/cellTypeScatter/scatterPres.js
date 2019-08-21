@@ -47,42 +47,50 @@ const AssignmentsButton = ({ gene, onClick }) => {
 }
 
 const ScatterPlotPres = ({ fetchMessage, gene, plot, onClick }) => {
+    let paperHeight = imageHeight - 20
+    let viz = null
     if (fetchMessage) {
-        return (
+        viz = (
             <Typography style={{marginTop: 40}}>
                 {fetchMessage}
             </Typography>
         )
+    } else {
+        viz = (
+            <Paper style={{
+                position: 'relative',
+                height: paperHeight,
+                width: paperWidth
+            }}>
+                <img
+                    src={plot}
+                    alt='scatterPlot'
+                    height={imageHeight}
+                    style={{
+                        position: 'absolute',
+                        top: 10,
+                        left: -65,
+                        zIndex: -1,
+                    }}
+                />
+                <div style={{
+                    position: 'absolute',
+                    top: '1rem',
+                    left: '0.8rem',
+                }} >
+                    <Label gene={gene} />
+                </div>
+                <AssignmentsButton
+                    gene={gene}
+                    onClick={onClick}
+                />
+            </Paper>
+        )
     }
     return (
-        <Paper style={{
-            position: 'relative',
-            height: imageHeight - 20,
-            width: paperWidth
-        }}>
-            <img
-                src={plot}
-                alt='scatterPlot'
-                height={imageHeight}
-                style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: -65,
-                    zIndex: -1,
-                }}
-            />
-            <div style={{
-                position: 'absolute',
-                top: '1rem',
-                left: '0.8rem',
-            }} >
-                <Label gene={gene} />
-            </div>
-            <AssignmentsButton
-                gene={gene}
-                onClick={onClick}
-            />
-        </Paper>
+        <div style={{minHeight: paperHeight - 40}} >
+            {viz}
+        </div>
     )
 }
 
