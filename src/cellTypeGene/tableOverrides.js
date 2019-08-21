@@ -18,6 +18,7 @@ const optionOverrideFx = (options) => {
     //options.responsive = 'stacked' // default, really only for mobile devices
     options.rowsPerPage = 15
     options.rowsPerPageOptions = []
+    options.search = false
     options.serverSide = true
     options.sortFilterList = false
     return options

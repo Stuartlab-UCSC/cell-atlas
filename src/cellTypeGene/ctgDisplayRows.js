@@ -31,7 +31,6 @@
 import { set as rxSet } from 'state/rx'
 import dataStore from 'cellTypeGene/ctgDataStore'
 import { filterOn } from 'cellTypeGene/ctgFilter'
-import { DOMAIN } from 'cellTypeGene/ctgMain'
 
 const rowsPerPage = 15
 const col = 2  // the index of the gene name column
@@ -166,22 +165,16 @@ const onFilterChange = (changedColumn, filterArrays) => {
     //                     columns
 
     // Pull out the filters just for gene name.
-    const filterArray = filterArrays[col]
+    // We only use the first element of the geneName filterArray.
+    const filterText = filterArrays[col][0]
     const prevFilterEnabled = filterEnabled
-    filterEnabled = filterOn(filterArray)
+    filterEnabled = (filterText.length > 0)
 
     filtered = []
     if (filterEnabled) {
         // Find all of the row indices passing the filter.
         dataStore.getData().forEach((row, i) => {
-            const gene = row[col]
-            const passed = filterArray.find(filter => {
-                // The filter array has already been converted to upper case,
-                // so compare that to the gene name in the data.
-                return (filter === gene.toUpperCase())
-            })
-            // Add the row index to the filtered list.
-            if (passed) {
+            if (filterText.indexOf(row[col]) > -1) {
                 filtered.push(i)
             }
         })
@@ -191,7 +184,7 @@ const onFilterChange = (changedColumn, filterArrays) => {
         rxSet('cellTypeGene.filterText.reset')
 
     } else {
-        // The filter is disabled and was previously, so there is nothing to do.
+        // The filter is disabled now and previously, so there is nothing to do.
         // Probably the filter reset was clicked while the text field was empty.
         return
     }
@@ -203,13 +196,10 @@ const onTableChange = (action, t) => {
     // @param t: the table state
     //console.log('onTableChange', action, t);
     switch (action) {
-    case 'resetFilters':
-        // Handled in onFilterChange().
-        break
-    case 'filterChange':
-        break
-    case 'changePage':
-        // Handled directly.
+    case 'resetFilters': // handled in onFilterChange
+    case 'filterChange': // handled in onFilterChange
+    case 'changePage':   // handled in onChangePage
+    case 'search':       // handled in onSearchChange
         break
     default:
         //console.log('info: unhandled mui-datatables event:', action)
