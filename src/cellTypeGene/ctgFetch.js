@@ -10,17 +10,9 @@ import ctwDataStore from 'cellTypeWork/dataStore'
 import makeButtons from 'cellTypeGene/buttons'
 import ctgFilter from 'cellTypeGene/ctgFilter'
 import { DOMAIN } from 'cellTypeGene/ctgMain'
+import { newDataReceived } from 'cellTypeGene/ctgDisplayRows'
+import testData from 'cellTypeGene/ctgTestData'
 import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
-
-const testData = {
-	cluster_name: 'cluster-name',
-	gene_table:
-`gene	log2	fold change vs next	support
-EGFR	0	0.1333333	0.6357
-VEGFA	-1.8606666	0.2378	0.74
-APOE	-2.4382	-0.234	0.94
-IL6	2.7195	-0.3674	0.54`
-}
 
 const receiveTableDataFromServer = (columns, data) => {
     // Receive the table column and body data
@@ -38,7 +30,7 @@ const receiveTableDataFromServer = (columns, data) => {
     rxSet('cellTypeGene.variableList.load', { value: list })
     
     // Filtering by gene name.
-    rxSet('cellTypeGene.filterText.reset')
+    rxSet('cellTypeGene.filterText.init')
     columns[0].options = ctgFilter()
     
     // Shorten the values to 4 significant digits.
@@ -64,18 +56,7 @@ const receiveTableDataFromServer = (columns, data) => {
 
     // Save the columns and data then render.
     dataStore.load(columns, cleanData)
-    /*
-    TODO The scrolling is not working to scroll down to the gene table.
-    setTimeout(() => { window.scrollTo(0, 100) }, 1000)
-
-    window.scroll({
-        top: 300,
-        left: 0,
-        behavior: 'smooth'
-    })
-    */
-    rxSet('cellTypeGene.fetchStatus.quiet')
-    rxSet('cellTypeGene.render.now')
+    newDataReceived()
 }
 
 const receiveDataFromServer = (data) => {
@@ -110,7 +91,7 @@ const getGeneTableData = (cluster) => {
     // Request the data from the server.
     const url = buildGeneTableUrl(cluster)
     let options = { credentials: true }
-
+    rxSet('cellTypeGene.show.hide')
     if (USE_TEST_DATA) {
         rxSet(DOMAIN + '.fetchStatus.waiting')
         receiveData(DOMAIN, testData, receiveDataFromServer, options)
@@ -123,6 +104,7 @@ const getInitalGeneTableData = () => {
     // Request the initial data from the server.
     let options = { credentials: true }
     let url = ctwDataStore.getGeneTableUrl()
+    rxSet('cellTypeGene.show.hide')
     if (url) {
         options.fullUrl = true
         if (USE_TEST_DATA) {

@@ -3,52 +3,22 @@
 // These are added to the existing overrides in dataTable.
 
 import { onCellClick } from 'cellTypeGene/ctgTable'
-import { set as rxSet } from 'state/rx'
-import { filterOn } from 'cellTypeGene/ctgFilter'
-
-const customSort = (data, col, dir) => {
-    if (col > 1) {
-        // Numeric sort.
-        if (dir === 'asc') {
-            data.sort(((a, b) => { return a.data[col] - b.data[col] }))
-        } else {
-            data.sort(((a, b) => { return b.data[col] - a.data[col] }))
-        }
-    } else {
-        // Alphabetical sort for the gene name.
-        if (dir === 'asc') {
-            data.sort(((a, b) => {
-                return (a.data[col] < b.data[col]) ? 1 : -1
-            }))
-        } else {
-            data.sort(((a, b) => {
-                return (a.data[col] > b.data[col]) ? 1 : -1
-            }))
-        }
-    }
-    return data
-}
-
-const onFilterChange = (changedColumn, filterArray) => {
-    // Called on any filter change, including via reset button and reset chip.
-    // @param changedColumn: the column name
-    // @param filterArray: gene filter as an array of genes within an array of
-    //                     columns
-    
-    // If the gene filter array is empty, clear the text field in state.
-    if (!filterOn(filterArray[2])) {
-        rxSet('cellTypeGene.filterText.uiResetPressed')
-    }
-}
+import dataStore from 'cellTypeGene/ctgDataStore'
+import { customSort, onChangePage, onFilterChange, onTableChange }
+    from 'cellTypeGene/ctgDisplayRows'
 
 const optionOverrideFx = (options) => {
+    options.count = dataStore.getCount()
     options.customSort = customSort
     options.onCellClick = onCellClick
+    options.onChangePage = onChangePage
     options.onFilterChange = onFilterChange
+    options.onTableChange = onTableChange
     //options.responsive = 'scroll'
     //options.responsive = 'stacked' // default, really only for mobile devices
     options.rowsPerPage = 15
     options.rowsPerPageOptions = []
+    options.serverSide = true
     options.sortFilterList = false
     return options
 }

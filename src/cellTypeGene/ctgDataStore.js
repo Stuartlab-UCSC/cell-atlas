@@ -3,38 +3,56 @@
 
 const defaultColumns = []
 const defaultData = []
+const defaultDisplay = []
 
 class DataStore {
-    constructor(columns, data) {
-        this.tableData = {
-            columns,
-            data,
+    constructor(columns, data, display) {
+        this.table = {
+            columns, // metadata about the columns
+            data,    // all of the data received from the server
+            display, // those rows to be displayed on one page
         }
     }
 
     get() {
-        return this.tableData
+        return this.table
+    }
+    
+    getCount() {
+        return (this.table && this.table.display)
+            ? this.table.display.length
+            : 0
     }
     
     getData() {
-        return this.tableData.data
+        return this.table.data
+    }
+    
+    getDisplay() {
+        return this.table.display
     }
     
     load(columns, data) {
-        this.tableData = {
+        this.table = {
             columns,
             data,
         }
     }
 
     setDefaults() {
-        this.tableData = {
+        this.table = {
             columns: defaultColumns,
             data: defaultData,
+            display: defaultDisplay,
         }
     }
+    
+    setDisplay(display) {
+        this.table.display = display
+    }
+    
 }
 
-let dataStore = new DataStore(defaultColumns, defaultData)
+let dataStore = new DataStore(defaultColumns, defaultData, defaultDisplay)
 
 export default dataStore

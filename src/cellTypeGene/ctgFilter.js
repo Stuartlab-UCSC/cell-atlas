@@ -5,16 +5,20 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField'
 import { get as rxGet, set as rxSet } from 'state/rx'
 
-const filterOn = (filterText) => {
-    // This works with the filter as text or as an array.
-    return (filterText !== undefined
-        && filterText.length > 0
-        && filterText[0] !== '')
+const filterOn = (filter) => {
+    // The function called by datatables when the gene filter box is opened.
+    // This works with the filter as text or as an array. Datatables puts an
+    // empty string in the first element of the array when the filter is not on.
+    return (filter !== undefined
+        && filter.length > 0
+        && filter[0] !== '')
         ? 'Filtering by gene'
         : false
 }
 
+/*
 const filterOut = (gene, filterArray) => {
+    // This doesn't seem to work with serverSide and custom filtering.
     // This determines whether a gene is filtered out.
     // So returns true when the name doesn't pass the filter.
     // @param gene: a gene name
@@ -28,6 +32,7 @@ const filterOut = (gene, filterArray) => {
     // Return false when the gene is in the filter.
     return (filterArray[0].search(gene.toUpperCase()) === -1)
 }
+*/
 
 const Display = (filterArray, onDTchange, index, column) => {
     // Render the gene filter area.
@@ -67,12 +72,12 @@ const ctgFilter = (filterText) => {
     // Define the dataTable options for filtering the genes.
     const options = {
         filter: true,
-        filterList: filterText,
+        //filterList: filterText,
         filterType: 'custom',
         customFilterListRender: v => { return filterOn(v) },
         filterOptions: {
-            names: filterText,
-            logic: filterOut,
+            //names: filterText,
+            //logic: filterOut,
             display: Display,
         },
         sort: false,

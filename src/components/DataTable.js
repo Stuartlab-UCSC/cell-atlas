@@ -146,8 +146,7 @@ const Table = ({ header, props }) => {
 }
 
 const DataTable = (props) => {
-    const { data, header, message, show, themeOverrides, themeOverrideFx }
-        = props
+    const { header, message, themeOverrides, show, themeOverrideFx } = props
     // If we should not show, then don't.
     if (!show) {
         return null
@@ -162,28 +161,22 @@ const DataTable = (props) => {
         )
     }
         
-    // If there is data, render the table.
-    if (data.length > 0) {
- 
-        let getMuiTheme
-        if (themeOverrides) {
-            // Render the table with the custom styling.
-            getMuiTheme = () => createMuiTheme(themeOverrides)
-        } else {
-            // Render the table with our default styling.
-            getMuiTheme = () => createMuiTheme(buildThemeOverrides(themeOverrideFx))
-        }
-        return (
-            <MuiThemeProvider theme={getMuiTheme()}>
-                <Table
-                    header={header}
-                    props={props}
-                />
-            </MuiThemeProvider>
-        )
+    let getMuiTheme
+    if (themeOverrides) {
+        // Render the table with the custom styling.
+        getMuiTheme = () => createMuiTheme(themeOverrides)
+    } else {
+        // Render the table with our default styling.
+        getMuiTheme = () => createMuiTheme(buildThemeOverrides(themeOverrideFx))
     }
-    // Otherwise render nothing.
-    return null
+    return (
+        <MuiThemeProvider theme={getMuiTheme()}>
+            <Table
+                header={header}
+                props={props}
+            />
+        </MuiThemeProvider>
+    )
 }
 
 DataTable.propTypes = {

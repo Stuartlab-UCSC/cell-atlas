@@ -14,29 +14,30 @@ const DOMAIN = 'cellTypeGene'
 
 const Presentation = (props) => {
     // Rendering of the gene table.
-    const { cluster, dataLength, dims, fetchMessage, fetchStatus, onClick }
-        = props
+    const { cluster, count, data, dims, fetchMessage, fetchStatus, withFilter,
+        onClick } = props
     const { colWidth } = props.dims
     let Counts = null
     let ClusterBar = null
-    if (fetchStatus !== 'quiet') {
-        // TODO we should use a webworker here to keep the ui active.
-        // Then we may or may not need the snake.
-        return (
+    if (data === undefined) {
+        return (null)
+    }
+    if (fetchStatus !== 'quiet' || data === undefined) {
+        Counts = (
             <CircularProgress
                 size={40}
                 style={{position: 'fixed', left: 550, top: 300}}
             />
         )
-    }
-    if (!fetchMessage) {
+    } else if (!fetchMessage) {
         Counts = (
             <Typography inline={true} style={{
                 fontSize: '1.1rem',
                 verticalAlign: 'bottom',
                 marginRight: '1.5rem',
             }}>
-                Cluster <b>{cluster}</b>: <b>{dataLength}</b> genes found
+                Cluster <b>{cluster}</b>: <b>{count}</b> genes found
+                    {withFilter}
             </Typography>
         )
         const {clusters, colormap } = props
@@ -78,10 +79,13 @@ const mapStateToProps = (state) => {
         cluster: state.cellTypeGene.cluster,
         clusters: ctwDataStore.getClusters(),
         colormap: state.cellTypeWork.colormap,
-        dataLength: dataStore.getData().length,
+        data: dataStore.getDisplay(),
+        count: dataStore.getCount(),
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeGene.fetchMessage,
         fetchStatus: state.cellTypeGene.fetchStatus,
+        withFilter: (state.cellTypeGene.filterText.length)
+            ? ' with filter' : '',
         menuPosition: null,
     }
 }

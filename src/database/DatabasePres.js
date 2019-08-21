@@ -139,6 +139,7 @@ const DatabasePres = (props) => {
             />
             <Grid item xs={12} style={{marginBottom: '2.5rem'}}>
                 <DataTable
+                    show={true}
                     header={table.header}
                     data={table.data}
                     columns={table.columns}

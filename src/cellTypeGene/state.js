@@ -14,6 +14,7 @@ const cellTypeGene = (
         geneOrCluster: null,
         geneSelected: null,
         render: renderSeq,
+        show: false,
         statsNames: [],
         variableList: defaultVariableList,
     }, action) => {
@@ -43,6 +44,7 @@ const cellTypeGene = (
                 ...state,
                 fetchStatus: 'waiting'
             }
+        case 'cellTypeGene.filterText.init':
         case 'cellTypeGene.filterText.reset':
         case 'cellTypeGene.filterText.uiResetPressed':
             return {
@@ -73,6 +75,16 @@ const cellTypeGene = (
             return {
                 ...state,
                 render: renderSeq++
+            }
+        case 'cellTypeGene.show.now':
+            return {
+                ...state,
+                show: true
+            }
+        case 'cellTypeGene.show.hide':
+            return {
+                ...state,
+                show: false
             }
         case 'cellTypeGene.variableList.initialSelect':
             return {

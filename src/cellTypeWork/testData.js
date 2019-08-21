@@ -5,8 +5,8 @@
 const testData = {
     dataset_name: 'dataset 1',
     cluster_solution_name: 'solution 1',
-    size_by: 'sensitivity',
-    color_by: 'z_stat',
+    size_by: 'fold change vs next',
+    color_by: 'log2',
     gene_table_url: 'localhost:5000',
     clusters:
         'column	cluster	cell_count	bar_color	cell_type\n' +

@@ -35,6 +35,7 @@ const DatasetPres = ({ title, header, columns, data, message }) => {
     return (
         <div style={tableStyle}>
             <DataTable
+                show={true}
                 title={title}
                 header={header}
                 columns={columns}

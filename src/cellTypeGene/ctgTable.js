@@ -12,11 +12,13 @@ import { getGeneScatterPlot } from 'cellTypeScatter/scatter'
 
 const Presentation = (props) => {
     // Rendering of the gene table.
-    const { columns, data, header, fetchMessage, optionOverrideFx, themeOverrideFx }
-        = props
-    return (
-        <div>
+    const { columns, data, header, fetchMessage, optionOverrideFx, show,
+        themeOverrideFx } = props
+    let table = (null)
+    if (show) {
+        table = (
             <DataTable
+                show={show}
                 header={header}
                 data={data}
                 columns={columns}
@@ -24,6 +26,12 @@ const Presentation = (props) => {
                 optionOverrideFx={optionOverrideFx}
                 themeOverrideFx={themeOverrideFx}
             />
+        )
+    }
+    const muiDataTablesMaxHeight = 599
+    return (
+        <div style={{minHeight: muiDataTablesMaxHeight}}>
+            {table}
         </div>
     )
 }
@@ -75,7 +83,8 @@ const mapStateToProps = (state) => {
     const table = dataStore.get()
     return {
         columns: table.columns,
-        data: table.data,
+        data: table.display,
+        show: state.cellTypeGene.show,
         //fetchMessage: state.cellTypeGene.fetchMessage,
         render: state.cellTypeGene.render,
         optionOverrideFx,
