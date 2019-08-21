@@ -12,27 +12,9 @@ const filterOn = (filter) => {
     return (filter !== undefined
         && filter.length > 0
         && filter[0] !== '')
-        ? 'Filtering by gene'
+        ? 'filtering by gene'
         : false
 }
-
-/*
-const filterOut = (gene, filterArray) => {
-    // This doesn't seem to work with serverSide and custom filtering.
-    // This determines whether a gene is filtered out.
-    // So returns true when the name doesn't pass the filter.
-    // @param gene: a gene name
-    // @param filterArray: gene filter as an array of genes
-    
-    // If the filter is empty, every value passes the filter.
-    if (!filterOn(filterArray)) {
-        return false
-    }
-    
-    // Return false when the gene is in the filter.
-    return (filterArray[0].search(gene.toUpperCase()) === -1)
-}
-*/
 
 const Display = (filterArray, onDTchange, index, column) => {
     // Render the gene filter area.
@@ -68,22 +50,31 @@ const Display = (filterArray, onDTchange, index, column) => {
     )
 }
 
+const customFilterListRender = v => {
+    return filterOn(v)
+}
+
 const ctgFilter = (filterText) => {
-    // Define the dataTable options for filtering the genes.
+    // Define the dataTable column options for filtering the genes.
     const options = {
-        filter: true,
-        //filterList: filterText,
+        filter: true,  // enable filtering for this column
+        // filterList causes chip to display when text.length, but the actual
+        // text is not used anywhere visible.
+        filterList: filterText,
         filterType: 'custom',
-        customFilterListRender: v => { return filterOn(v) },
+        // customFilterListRender makes chip not display if there is no
+        // filterList above.
+        customFilterListRender: customFilterListRender,
         filterOptions: {
             //names: filterText,
             //logic: filterOut,
-            display: Display,
+            display: Display,  // the rendering method of filter box
         },
         sort: false,
+        viewColumns: false,
     }
+
     return options
 }
 
 export default ctgFilter
-export { filterOn }

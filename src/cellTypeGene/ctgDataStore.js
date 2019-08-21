@@ -38,6 +38,10 @@ class DataStore {
             data,
         }
     }
+    
+    setColumnOptions(col, options) {
+        this.table.columns[col].options = options
+    }
 
     setDefaults() {
         this.table = {

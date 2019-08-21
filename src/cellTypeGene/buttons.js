@@ -22,12 +22,6 @@ const setScatterProps = (cellValue, rowIndex, columnIndex) => {
 const makeAbutton = (columns, data, name) => {
     // Insert a new column with a button.
     
-    // Don't show the gene in the columns selector.
-    if (!columns[0].options) {
-        columns[0].options = {}
-    }
-    columns[0].options.viewColumns = false
-    
     // Add a duplicate of the gene to the beginning of each row that gets
     // converted to a button.
     for (let i = 0; i < data.length; i++) {

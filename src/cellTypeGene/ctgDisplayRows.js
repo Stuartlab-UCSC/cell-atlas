@@ -30,7 +30,7 @@
 
 import { set as rxSet } from 'state/rx'
 import dataStore from 'cellTypeGene/ctgDataStore'
-import { filterOn } from 'cellTypeGene/ctgFilter'
+import ctgFilter from 'cellTypeGene/ctgFilter'
 
 const rowsPerPage = 15
 const col = 2  // the index of the gene name column
@@ -161,12 +161,12 @@ const onFilterChange = (changedColumn, filterArrays) => {
     // Called on any filter change, including via reset button and reset chip.
     // The only filtering supported is by gene name.
     // @param changedColumn: the column name
-    // @param filterArray: gene filter as an array of genes within an array of
-    //                     columns
+    // @param filterArray: filters as an array of arrays, one for each column
 
     // Pull out the filters just for gene name.
     // We only use the first element of the geneName filterArray.
-    const filterText = filterArrays[col][0]
+    // The gene name filter array[0] will be undefined on a chip X click.
+    let filterText = filterArrays[col][0] || ''
     const prevFilterEnabled = filterEnabled
     filterEnabled = (filterText.length > 0)
 
@@ -179,16 +179,18 @@ const onFilterChange = (changedColumn, filterArrays) => {
             }
         })
 
-    } else if (prevFilterEnabled) {
+    } else if (prevFilterEnabled) { // filter is newly disabled
         // The filter reset button was pressed, so clear the text field.
         rxSet('cellTypeGene.filterText.reset')
 
     } else {
-        // The filter is disabled now and previously, so there is nothing to do.
-        // Probably the filter reset was clicked while the text field was empty.
+        // The filter is disabled now and previously, so there is nothing to
+        // do. Probably the filter reset was clicked while the text field
+        // was empty.
         return
     }
 
+    dataStore.setColumnOptions(col, ctgFilter(filterText))
     findAvailable()
 }
 

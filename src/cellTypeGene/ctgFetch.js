@@ -31,7 +31,7 @@ const receiveTableDataFromServer = (columns, data) => {
     
     // Filtering by gene name.
     rxSet('cellTypeGene.filterText.init')
-    columns[0].options = ctgFilter()
+    columns[0].options = ctgFilter('')
     
     // Shorten the values to 4 significant digits.
     let cleanData =
