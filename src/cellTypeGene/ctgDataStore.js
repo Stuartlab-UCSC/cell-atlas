@@ -1,6 +1,8 @@
 
 // Store the gene table data and handle all updates to it.
 
+import { captureStackTrace } from 'app/util'
+
 const defaultColumns = []
 const defaultData = []
 const defaultDisplay = []
@@ -60,13 +62,13 @@ class DataStore {
     }
     
     updateColumnOption(colIndex, name, value) {
-        if (this.table.columns[colIndex]) {
+        try {
             this.table.columns[colIndex].options[name] = value
-        } else {
-            console.error('updateColumnOption: colIndex:', colIndex)
+        } catch (error) {
+            const trace = captureStackTrace(error)
+            alert('Please send this text to swat@soe.ucsc.edu.\n' + trace)
         }
     }
-    
 }
 
 let dataStore = new DataStore(

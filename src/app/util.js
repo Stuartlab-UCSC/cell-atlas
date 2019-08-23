@@ -5,6 +5,13 @@ const integerToCommaInteger = x => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const captureStackTrace = (error) => {
+    // Given an error caught with a catch, return the stack trace as a string.
+    let stack = error.stack || ''
+    stack = stack.split('\n').map(function (line) { return line.trim(); });
+    return stack.splice(stack[0] == 'Error' ? 2 : 1);
+}
+
 const cleanName = (dirty) => {
     
     // Make a name out of some string that will be safe for file and directory
@@ -60,5 +67,5 @@ const tsvToArrays = (tsv) => {
     return arrays
 }
 
-export { cleanName, integerToCommaInteger, isoToday, stringToPrecision,
-    stringToPrecisionNumber, tsvToArrays }
+export { captureStackTrace, cleanName, integerToCommaInteger, isoToday,
+    stringToPrecision, stringToPrecisionNumber, tsvToArrays }
