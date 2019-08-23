@@ -5,15 +5,6 @@ import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import { Add, ScatterPlot } from '@material-ui/icons'
 
-const setGeneLinkProps = (cellValue, rowIndex, columnIndex) => {
-    // Make the gene name look like a link.
-    return { style: {
-            textDecoration: 'underline',
-            cursor: 'pointer',
-            color: '#3f51b5',  // same as the icons in the table
-        }}
-}
-
 const setScatterProps = (cellValue, rowIndex, columnIndex) => {
     // Center the scatter plot icon in the column.
     return { style: { marginLeft: 10 }}
@@ -58,9 +49,6 @@ const makeAbutton = (columns, data, name) => {
 }
 
 const makeButtons = (columns, data) => {
-    // Make the gene link look like a link.
-    columns[0].options.setCellProps = setGeneLinkProps
-    
     makeAbutton(columns, data, 'Add')
     makeAbutton(columns, data, 'Map')
     

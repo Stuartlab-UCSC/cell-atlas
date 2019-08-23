@@ -60,7 +60,11 @@ class DataStore {
     }
     
     updateColumnOption(colIndex, name, value) {
-        this.table.columns[colIndex].options[name] = value
+        if (this.table.columns[colIndex]) {
+            this.table.columns[colIndex].options[name] = value
+        } else {
+            console.error('updateColumnOption: colIndex:', colIndex)
+        }
     }
     
 }

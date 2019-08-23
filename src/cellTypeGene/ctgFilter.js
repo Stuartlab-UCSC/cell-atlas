@@ -5,6 +5,15 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField'
 import { get as rxGet, set as rxSet } from 'state/rx'
 
+const setGeneLinkProps = (cellValue, rowIndex, columnIndex) => {
+    // Make the gene name look like a link.
+    return { style: {
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            color: '#3f51b5',  // same as the icons in the table
+        }}
+}
+
 const filterOn = (filter) => {
     // The function called by datatables when the gene filter box is opened.
     // This works with the filter as text or as an array. Datatables puts an
@@ -57,19 +66,24 @@ const customFilterListRender = v => {
 const ctgFilter = () => {
     // Define the dataTable column options for filtering the genes.
     const options = {
-        filter: true,  // enable filtering for this column
-        // filterList causes chip to display when text.length, but the actual
-        // text is not used anywhere visible.
-        filterList: '',
-        filterType: 'custom',
+        // The rendering of the gene filter box.
         // customFilterListRender makes chip not display if there is no
         // filterList option.
         customFilterListRender: customFilterListRender,
+        
+        filter: true,  // enable filtering for this column
+        
+        // filterList causes chip to display when text.length, but the actual
+        // text is not used anywhere visible.
+        filterList: '',
+        
         filterOptions: {
             //names: filterText,
             //logic: filterOut,
             display: Display,  // the rendering method of filter box
         },
+        filterType: 'custom',
+        setCellProps: setGeneLinkProps,
         sort: true,
         viewColumns: false,
     }
