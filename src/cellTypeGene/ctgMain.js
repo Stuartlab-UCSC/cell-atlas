@@ -14,8 +14,8 @@ const DOMAIN = 'cellTypeGene'
 
 const Presentation = (props) => {
     // Rendering of the gene table.
-    const { cluster, count, data, dims, fetchMessage, fetchStatus, withFilter,
-        onClick } = props
+    const { cluster, count, data, dims, fetchMessage, fetchStatus, onClick }
+        = props
     const { colWidth } = props.dims
     let Counts = null
     let ClusterBar = null
@@ -37,7 +37,6 @@ const Presentation = (props) => {
                 marginRight: '1.5rem',
             }}>
                 Cluster <b>{cluster}</b>: <b>{count}</b> genes found
-                    {withFilter}
             </Typography>
         )
         const {clusters, colormap } = props
@@ -80,12 +79,10 @@ const mapStateToProps = (state) => {
         clusters: ctwDataStore.getClusters(),
         colormap: state.cellTypeWork.colormap,
         data: dataStore.getDisplay(),
-        count: dataStore.getCount(),
+        count: dataStore.getAvailableCount(),
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeGene.fetchMessage,
         fetchStatus: state.cellTypeGene.fetchStatus,
-        withFilter: (state.cellTypeGene.filterText.length)
-            ? ' with filter' : '',
         menuPosition: null,
     }
 }

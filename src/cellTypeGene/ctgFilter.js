@@ -54,23 +54,23 @@ const customFilterListRender = v => {
     return filterOn(v)
 }
 
-const ctgFilter = (filterText) => {
+const ctgFilter = () => {
     // Define the dataTable column options for filtering the genes.
     const options = {
         filter: true,  // enable filtering for this column
         // filterList causes chip to display when text.length, but the actual
         // text is not used anywhere visible.
-        filterList: filterText,
+        filterList: '',
         filterType: 'custom',
         // customFilterListRender makes chip not display if there is no
-        // filterList above.
+        // filterList option.
         customFilterListRender: customFilterListRender,
         filterOptions: {
             //names: filterText,
             //logic: filterOut,
             display: Display,  // the rendering method of filter box
         },
-        sort: false,
+        sort: true,
         viewColumns: false,
     }
 

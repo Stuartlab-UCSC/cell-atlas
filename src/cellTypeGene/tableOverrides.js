@@ -4,15 +4,16 @@
 
 import { onCellClick } from 'cellTypeGene/ctgTable'
 import dataStore from 'cellTypeGene/ctgDataStore'
-import { customSort, onChangePage, onFilterChange, onTableChange }
-    from 'cellTypeGene/ctgDisplayRows'
+import { onChangePage, onColumnSortChange, onFilterChange,
+    onTableChange } from 'cellTypeGene/ctgDisplayRows'
 
 const optionOverrideFx = (options) => {
-    options.count = dataStore.getCount()
-    options.customSort = customSort
+    options.count = dataStore.getAvailableCount()
+    //options.customSort = customSort
     options.onCellClick = onCellClick
     options.onChangePage = onChangePage
     options.onFilterChange = onFilterChange
+    options.onColumnSortChange = onColumnSortChange
     options.onTableChange = onTableChange
     //options.responsive = 'scroll'
     //options.responsive = 'stacked' // default, really only for mobile devices

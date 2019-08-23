@@ -29,10 +29,18 @@ const isoToday = () => {
 }
 
 const stringToPrecision = (x, p) => {
-    // Given a string number, return a string number
+    // Given a string number, return a number of type string
     // with the precision, p, which defaults to 3.
     p = p || 3
     return parseFloat(x).toPrecision(p)
+}
+
+const stringToPrecisionNumber = (x, p) => {
+    // Given a string number, return a numeric number
+    // with the precision, p, which defaults to 3.
+    p = p || 3
+    const multiplier = Math.pow(10, p);
+    return Math.round( parseFloat(x) * multiplier ) / multiplier;
 }
 
 const tsvToArrays = (tsv) => {
@@ -53,4 +61,4 @@ const tsvToArrays = (tsv) => {
 }
 
 export { cleanName, integerToCommaInteger, isoToday, stringToPrecision,
-    tsvToArrays }
+    stringToPrecisionNumber, tsvToArrays }

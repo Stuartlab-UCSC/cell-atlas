@@ -41,7 +41,7 @@ const fetchTestData = (id, url, receiveFx, options) => {
 }
 
 const buildScatterPlotUrl = (gene, includeHost) => {
-    console.log('dataStore:', dataStore)
+    //console.log('dataStore:', dataStore)
     let url =
         '/user/' + dataStore.getSourceUser() +
         '/worksheet/' + dataStore.getSourceWorksheet() +

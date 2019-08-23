@@ -4,13 +4,15 @@
 const defaultColumns = []
 const defaultData = []
 const defaultDisplay = []
+const defaultAvailableCount = 0
 
 class DataStore {
-    constructor(columns, data, display) {
+    constructor(columns, data, display, availableCount) {
         this.table = {
             columns, // metadata about the columns
             data,    // all of the data received from the server
             display, // those rows to be displayed on one page
+            availableCount, // the count of available rows for display
         }
     }
 
@@ -18,10 +20,8 @@ class DataStore {
         return this.table
     }
     
-    getCount() {
-        return (this.table && this.table.display)
-            ? this.table.display.length
-            : 0
+    getAvailableCount() {
+        return this.table.availableCount
     }
     
     getData() {
@@ -39,8 +39,12 @@ class DataStore {
         }
     }
     
-    setColumnOptions(col, options) {
-        this.table.columns[col].options = options
+    setAvailableCount(count) {
+        this.table.availableCount = count
+    }
+    
+    setColumnOptions(colIndex, options) {
+        this.table.columns[colIndex].options = options
     }
 
     setDefaults() {
@@ -55,8 +59,13 @@ class DataStore {
         this.table.display = display
     }
     
+    updateColumnOption(colIndex, name, value) {
+        this.table.columns[colIndex].options[name] = value
+    }
+    
 }
 
-let dataStore = new DataStore(defaultColumns, defaultData, defaultDisplay)
+let dataStore = new DataStore(
+    defaultColumns, defaultData, defaultDisplay, defaultAvailableCount)
 
 export default dataStore

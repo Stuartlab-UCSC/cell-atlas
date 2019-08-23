@@ -4,11 +4,10 @@
 import { set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { receiveTableData } from 'fetch/tableData'
-import { stringToPrecision } from 'app/util'
+import { stringToPrecisionNumber } from 'app/util'
 import dataStore from 'cellTypeGene/ctgDataStore'
 import ctwDataStore from 'cellTypeWork/dataStore'
 import makeButtons from 'cellTypeGene/buttons'
-import ctgFilter from 'cellTypeGene/ctgFilter'
 import { DOMAIN } from 'cellTypeGene/ctgMain'
 import { newDataReceived } from 'cellTypeGene/ctgDisplayRows'
 import testData from 'cellTypeGene/ctgTestData'
@@ -17,7 +16,10 @@ import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
 const receiveTableDataFromServer = (columns, data) => {
     // Receive the table column and body data
     // derived from the original data from the server.
-    
+
+    // initialize the gene name column options.
+    columns[0].options = {}
+
     // Save all of the variable names in the table.
     // Variable names start in column index 1.
     const list = columns.slice(1).map(column => {
@@ -29,10 +31,6 @@ const receiveTableDataFromServer = (columns, data) => {
     })
     rxSet('cellTypeGene.variableList.load', { value: list })
     
-    // Filtering by gene name.
-    rxSet('cellTypeGene.filterText.init')
-    columns[0].options = ctgFilter('')
-    
     // Shorten the values to 4 significant digits.
     let cleanData =
         data.map(row => {
@@ -40,16 +38,9 @@ const receiveTableDataFromServer = (columns, data) => {
                 if (i < 1) {
                     return col
                 }
-                return stringToPrecision(col, 4)
+                return stringToPrecisionNumber(col, 4)
             })
         })
-
-    // Set the initial sort to the most likely column.
-    let likely = columns[1]
-    if (!likely.options) {
-        likely.options = {}
-    }
-    likely.options.sortDirection = 'desc'
     
     // Build the buttons for each row.
     makeButtons(columns, cleanData)
