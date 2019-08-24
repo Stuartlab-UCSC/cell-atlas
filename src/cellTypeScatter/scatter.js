@@ -41,7 +41,6 @@ const fetchTestData = (id, url, receiveFx, options) => {
 }
 
 const buildScatterPlotUrl = (gene, includeHost) => {
-    //console.log('dataStore:', dataStore)
     let url =
         '/user/' + dataStore.getSourceUser() +
         '/worksheet/' + dataStore.getSourceWorksheet() +
@@ -110,7 +109,7 @@ const getInitialScatterPlot = (clusters, colormap, url) => {
     } else {
         // By default get a cluster assignment scatterplot.
         getClusterAssignmentScatterPlot(
-            clusters, colormap, null, receiveInitialDataFromServer)
+            clusters, colormap, null, null, receiveInitialDataFromServer)
     }
 }
 
