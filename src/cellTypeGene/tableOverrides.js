@@ -4,25 +4,25 @@
 
 import { onCellClick } from 'cellTypeGene/ctgTable'
 import dataStore from 'cellTypeGene/ctgDataStore'
-import { onChangePage, onColumnSortChange, onFilterChange,
-    onTableChange } from 'cellTypeGene/ctgDisplayRows'
+import { onChangePage, onColumnSortChange, onFilterChange, onSearchChange,
+    /*onTableChange*/ } from 'cellTypeGene/ctgDisplayRows'
 
 const optionOverrideFx = (options) => {
-    options.count = dataStore.getAvailableCount()
-    //options.customSort = customSort
-    options.onCellClick = onCellClick
-    options.onChangePage = onChangePage
-    options.onFilterChange = onFilterChange
-    options.onColumnSortChange = onColumnSortChange
-    options.onTableChange = onTableChange
-    //options.responsive = 'scroll'
-    //options.responsive = 'stacked' // default, really only for mobile devices
-    options.rowsPerPage = 15
-    options.rowsPerPageOptions = []
-    options.search = false
-    options.serverSide = true
-    options.sortFilterList = false
-    return options
+    return {
+        ...options,
+        count: dataStore.getAvailableCount(),
+        onCellClick: onCellClick,
+        onChangePage: onChangePage,
+        onFilterChange: onFilterChange,
+        onColumnSortChange: onColumnSortChange,
+        onSearchChange: onSearchChange,
+        //onTableChange: onTableChange,
+        rowsPerPage: 15,
+        rowsPerPageOptions: [],
+        searchText: dataStore.getSearchText(),
+        serverSide: true,
+        sortFilterList: false,
+    }
 }
 
 const themeOverrideFx = (theme) => {

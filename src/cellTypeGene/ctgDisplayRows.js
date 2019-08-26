@@ -40,7 +40,6 @@ let data // full data from dataStore upon new data received from server
 
 let filterEnabled = false
 let searchEnabled = false
-let searchStr = ''
 let sortDir = null // the sort direction
 let sortCol = null // the sort column index
 
@@ -53,8 +52,8 @@ const onChangePage = (page) => {
     })
     
     dataStore.setDisplay(display)
-    // TODO do we need all three of these ?
     rxSet('cellTypeGene.fetchStatus.quiet')
+    // TODO do we need both of these ?
     rxSet('cellTypeGene.show.now')
     rxSet('cellTypeGene.render.now')
 }
@@ -123,12 +122,18 @@ const findAvailable = () => {
     // This is called for every change of filter or search or new data received.
     
     // Find the available indices from the searched and filtered indices.
+    available = []
     if (filterEnabled) {
         if (searchEnabled) {
-            // With both enabled, find the intersection of the two sets.
-            available = filtered.forEach(fi => {
-                return (data[fi][col].includes(searchStr))
-            })
+            // Both are enabled
+            if (filtered.length > 0 && searched.length > 0) {
+                // Both have rows that passed,
+                // so find the intersection of the two sets.
+                available = filtered.filter(fi => {
+                    return (searched.includes(fi))
+                })
+            }
+            
         } else {  // filter is enabled, search is not
             available = filtered
         }
@@ -152,12 +157,35 @@ const findAvailable = () => {
     onChangePage(0)
 }
 
-/*
-const onSearchChange = () => {
-    searchEnabled = (filterText.length > 0)
-    // TODO
+const onSearchChange = (text) => {
+    dataStore.setSearchText(text)
+    const searchText = text.toUpperCase()
+    const prevSearchEnabled = searchEnabled
+    searchEnabled = (text.length > 0)
+    searched = []
+    if (searchEnabled) {
+        // Find all of the row indices matching the search.
+        data.forEach((row, i) => {
+            if (row[col].toUpperCase().indexOf(searchText) > -1) {
+                searched.push(i)
+            }
+        })
+    } else if (prevSearchEnabled) { // search is newly disabled
+        // The search reset button was pressed, so clear the text field.
+        rxSet('cellTypeGene.searchText.reset')
+
+    } else {
+        // The search is disabled now and previously, so there is nothing to
+        // do. Probably the search reset was clicked while the text field
+        // was empty.
+        return
+    }
+
+    // Update the filterText in the gene name column options.
+    //dataStore.updateColumnOption(col, 'filterList', filterText)
+    
+    findAvailable()
 }
-*/
 
 const onFilterChange = (changedColumn, filterArrays) => {
     // Called on any filter change, including via reset button and reset chip.
@@ -197,11 +225,11 @@ const onFilterChange = (changedColumn, filterArrays) => {
     
     findAvailable()
 }
-
+/*
 const onTableChange = (action, t) => {
     // Just for debugging.
     // @param t: the table state
-    //console.log('onTableChange', action, t);
+    console.log('onTableChange', action, t);
     switch (action) {
     case 'resetFilters': // handled in onFilterChange
     case 'filterChange': // handled in onFilterChange
@@ -210,10 +238,10 @@ const onTableChange = (action, t) => {
     case 'sort':         // handled in onColumnSortChange
         break
     default:
-        //console.log('info: unhandled mui-datatables event:', action)
+        console.log('info: unhandled mui-datatables event:', action)
     }
 }
-
+*/
 const newDataReceived = () => {
     // Reset the tracking variables.
     // TODO do we want to carry search or filter over to newly-received data?
@@ -242,4 +270,4 @@ const newDataReceived = () => {
 }
 
 export { newDataReceived, onChangePage, onColumnSortChange,
-    onFilterChange, onTableChange }
+    onFilterChange, onSearchChange, /*onTableChange*/ }

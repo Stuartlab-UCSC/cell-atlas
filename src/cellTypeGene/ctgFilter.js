@@ -1,5 +1,5 @@
 
-// Cell type worksheet gene filter.
+// Cell type worksheet gene filter render.
 
 import React from 'react';
 import TextField from '@material-ui/core/TextField'

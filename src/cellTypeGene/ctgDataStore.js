@@ -34,6 +34,10 @@ class DataStore {
         return this.table.display
     }
     
+    getSearchText() {
+        return this.table.searchText
+    }
+    
     load(columns, data) {
         this.table = {
             columns,
@@ -59,6 +63,10 @@ class DataStore {
     
     setDisplay(display) {
         this.table.display = display
+    }
+    
+    setSearchText(text) {
+        this.table.searchText = text
     }
     
     updateColumnOption(colIndex, name, value) {

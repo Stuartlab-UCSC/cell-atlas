@@ -61,8 +61,8 @@ const Presentation = (props) => {
         <div style={{position: 'relative' }}>
             <div style={{
                 position: 'absolute',
-                top: 18,
-                left: 245,
+                top: 21,
+                right: 250,
                 zIndex: 1,
             }} >
                 {Counts}
