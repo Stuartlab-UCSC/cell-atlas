@@ -1,11 +1,10 @@
-// Cell type worksheet page logic.
+// Logic component of the Main menu of the cell type worksheet page.
 
 import { connect } from 'react-redux'
 import { get as rxGet } from 'state/rx'
 import { cleanName } from 'app/util'
-import Presentation from 'cellTypeWork/pagePres'
 import { postWorksheetData } from 'cellTypeWork/worksheet'
-import dataStore from 'cellTypeWork/dataStore'
+import CtwMenuPres from 'cellTypeWork/ctwMenuPres'
 
 const onSaveAsSubmit = (name, dispatch) => {
     // Is the name empty?
@@ -69,15 +68,32 @@ const nameIt = (dispatch, name, error, helperText) => {
 
 const mapStateToProps = (state) => {
     return {
-        bubbleTooltip: state.bubble.tooltip,
-        clusterSolution: dataStore.getClusterSolution(),
-        dataset: dataStore.getDataset(),
-        showEditables: state.cellTypeWork.showEditables,
+        menuShow: state.cellTypeWork.menu,
+        sheetOwnedByUser: state.cellTypeWork.sheetOwnedByUser,
     }
 }
 
-const Page = connect(
-    mapStateToProps
-)(Presentation)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onClickAway: ev => {
+            dispatch({ type: 'cellTypeWork.menu.hide'})
+        },
+        onMenuClick: ev => {
+            dispatch({ type: 'cellTypeWork.menu.show' })
+        },
+        onSaveAsClick: ev => {
+            // Name the worksheet.
+            nameIt(dispatch)
+        },
+        onSaveClick: ev => {
+            postWorksheetData(rxGet('cellTypeWork.sheetSelected'))
+        },
+        onUploadClick: ev => {
+        },
+    }
+}
+const CtwMenu = connect(
+    mapStateToProps, mapDispatchToProps
+)(CtwMenuPres)
 
-export default Page
+export default CtwMenu

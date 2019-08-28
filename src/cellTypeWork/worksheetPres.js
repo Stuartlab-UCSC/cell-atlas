@@ -60,15 +60,15 @@ const WorksheetPresentation = ({ data, dims, fetchMessage, show }) => {
         width: bubblesWidth,
         verticalAlign: 'top',
     }
-    const tableStyle = {
+    const chartStyle = {
         width: geneWidth + bubblesWidth + legendWidth,
         fontFamily,
         fontSize,
         position: 'relative',
-        marginTop: -15,
+        marginTop: -160,
     }
     return (
-        <div id='worksheetPres' style={tableStyle}>
+        <div id='worksheetPres' style={chartStyle}>
             <Clusters />
             <Genes/>
             <div style={bubbleStyle} >

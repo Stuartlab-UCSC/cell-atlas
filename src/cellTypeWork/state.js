@@ -38,6 +38,7 @@ const State = (
         fetchMessage: ' ',
         fetchStatus: 'initial',
         geneMenu: null,
+        menu: false,
         render: renderSeq++,
         sheetList: defaultSheetList,
         sheetSaveAs: '',
@@ -145,6 +146,17 @@ const State = (
             return {
                 ...state,
                 geneMenu: parseInt(action.position, 10),
+            }
+        case 'cellTypeWork.menu.show':
+            // The colorBar position is saved here.
+            return {
+                ...state,
+                menu: true
+            }
+        case 'cellTypeWork.menu.hide':
+            return {
+                ...state,
+                menu: false
             }
         case 'cellTypeWork.render.now':
             return {

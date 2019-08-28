@@ -266,7 +266,9 @@ const newDataReceived = () => {
 
     // Show the table.
     findAvailable()
-    document.getElementById('ctgTableScroller').scrollIntoView()
+    document.getElementById('ctgTableScroller').scrollIntoView({
+        behavior: 'smooth',
+    })
 }
 
 export { newDataReceived, onChangePage, onColumnSortChange,
