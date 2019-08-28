@@ -28,7 +28,7 @@ const columnInfo = (id, name) => {
             },
         },
         cluster_solution_name: {
-            name: 'cluster solution',
+            name: 'clustering',
             options: {},
         },
         color: {
@@ -102,7 +102,7 @@ const tableTransform = (id, data, colorRef, sizeRef, state) => {
     // into the structure needed for a dataTable.
     const color = state ? state[id].colorRange : rxGet(id + '.colorRange')
     let maxClusterCount = 0
-    // Outer loop handles each cluster solution.
+    // Outer loop handles each clustering.
     const solutions = (id === 'cellType')
         ? data.cluster_similarities
         : data.cluster_solutions

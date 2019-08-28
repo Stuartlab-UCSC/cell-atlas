@@ -28,7 +28,7 @@ const ClusterSolution = ({ show, solution }) => {
     }
     return (
         <Typography>
-            Cluster Solution: {<b>{solution}</b>}
+            Clustering: {<b>{solution}</b>}
         </Typography>
     )
 }

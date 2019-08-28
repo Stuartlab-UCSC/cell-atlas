@@ -32,7 +32,7 @@ const SameValueMessage = ({ name, same }) => {
     if (same[name]) {
         const labels = {
             datasetName: 'dataset',
-            cluster_solution_name: 'cluster solution',
+            cluster_solution_name: 'clustering',
             species: 'species',
             organ: 'organ',
             study: 'study',

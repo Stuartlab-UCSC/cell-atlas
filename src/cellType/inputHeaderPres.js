@@ -18,7 +18,7 @@ const UploadButton = ({ onClick }) => {
             style={{width: '13rem'}}
             onClick={onClick}
         >
-            Upload Cluster Solution
+            Upload Clustering
         </Button>
     return comp
 }

@@ -2,9 +2,9 @@
 
 export const defaultFavoriteList = [
     { name: 'mouse datasets', value: 'SELECT * FROM dataset where species="Mus musculus"' },
-    { name: 'all cluster solutions', value: 'SELECT * FROM cluster_solution' },
+    { name: 'all clustering', value: 'SELECT * FROM cluster_solution' },
     { name: 'all gene sets', value: 'SELECT * FROM gene_set' },
-    { name: 'cluster solutions by name', value:
+    { name: 'clustering by name', value:
 `SELECT cluster_solution.id as cluster_solution_id,
 cluster_solution.name as solution_name,
 dataset.id as dataset_id,
@@ -12,7 +12,7 @@ dataset.name as dataset_name
 FROM cluster_solution
 INNER JOIN dataset on dataset.id = cluster_solution.dataset_id
 WHERE cluster_solution.name = 'louvain100pcs'` },
-    { name: 'cell assignments for a cluster solution', value:
+    { name: 'cell assignments for a clustering', value:
 `SELECT cluster.name as cluster_name,
 cell_of_cluster.name as cell_name,
 cluster_solution.name as solution_name,
