@@ -1,77 +1,93 @@
 // Cell type worksheet page logic.
 
 import { connect } from 'react-redux'
-import { get as rxGet } from 'state/rx'
-import { cleanName } from 'app/util'
-import Presentation from 'cellTypeWork/pagePres'
-import { postWorksheetData } from 'cellTypeWork/worksheet'
-import dataStore from 'cellTypeWork/dataStore'
+import React from 'react';
+import Grid from '@material-ui/core/Grid'
+import IconButton from '@material-ui/core/IconButton'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import MenuIcon from '@material-ui/icons/Menu'
 
-const onSaveAsSubmit = (name, dispatch) => {
-    // Is the name empty?
-    const cleanedName = cleanName(name)
-    if (name === undefined || name === '') {
-        nameIt(dispatch, name, true, 'A name is required to save.')
-        
-    // Did the user confirm to overwrite an existing worksheet?
-    } else if (name === rxGet('cellTypeWork.sheetSaveAs')) {
-        postWorksheetData(name)
-        
-    // Does the name have any dirty characters it it?
-    } else if (name !== cleanedName) {
-        // Save this name for later.
-        alert(
-            'Invalid characters were replaced and the worksheet was saved as: '
-            + cleanedName)
-        dispatch({
-            type: 'cellTypeWork.sheetSaveAs.cleanedNameSet',
-            value: cleanedName
-        })
-        postWorksheetData(cleanedName)
-        /*
-        // The name in the dialog won't change to the clean name, so skip this.
-        nameIt(dispatch, cleanedName, true,
-            'Unacceptable characters were replaced with "_"')
-        */
+import BubbleTooltip from 'bubble/tooltip'
+import Worksheet from 'cellTypeWork/worksheet'
+import CtwTopDrawer from 'cellTypeWork/ctwTopDrawer'
+import CtwMenu from 'cellTypeWork/ctwMenu'
+import ScatterPlot from 'cellTypeScatter/scatter'
+import GeneTable from 'cellTypeGene/ctgMain'
 
-    // The usual situation, this is not a confirmation.
-    } else {
-        // Save this name for later.
-        dispatch({
-            type: 'cellTypeWork.sheetSaveAs.uiSet',
-            value: name
-        })
-        // Check for the worksheet already existing.
-        const found = rxGet('cellTypeWork.sheetList').find(sheet => {
-            return (name === sheet.value)
-        })
-        if (found) {
-            // Ask the user to confirm overwrite of an existing worksheet.
-            nameIt(dispatch, name, true,
-                'A worksheet by that name already exists, overwrite it?')
-        } else {
-            // Save the new worksheet.
-            postWorksheetData(name)
-        }
+const DrawerIcons = ({props}) => {
+    const { worksheet, onMenuClick, onTopDrawerClick } = props
+    const menuIconStyle = {
+        marginTop: -32,
+        marginLeft: -50,
     }
+    const topDrawerIconStyle = {
+        ...menuIconStyle,
+        marginLeft: '43%',
+        fontSize: '1.1rem',
+        color: 'black',
+        zIndex: 1,
+    }
+    return (
+        <React.Fragment>
+            <CtwMenu />
+            <IconButton
+                style={menuIconStyle}
+                onClick={onMenuClick}
+            >
+                <MenuIcon color='primary' />
+            </IconButton>
+
+            <CtwTopDrawer />
+            <IconButton
+                style={topDrawerIconStyle}
+                onClick={onTopDrawerClick}
+            >
+                {worksheet}
+                <KeyboardArrowDownIcon color='primary' />
+            </IconButton>
+        </React.Fragment>
+    )
 }
 
-const nameIt = (dispatch, name, error, helperText) => {
-    dispatch({
-        type: 'namerDialog.useNow',
-        error,
-        helperText,
-        name,
-        message: 'Save worksheet as:',
-        onSubmit: onSaveAsSubmit,
-    })
+const Presentation = (props) => {
+    const { bubbleTooltip } = props
+    const gridStyle = {
+        marginTop: -10,
+        marginLeft: 0,
+        width: '100%'
+    }
+    return (
+        <div>
+            <DrawerIcons props={props} />
+            <div style={gridStyle}>
+                <Grid container spacing={8} style={{background: 'transparent'}}>
+            
+                    <Grid item xs={12}>
+                        <CtwTopDrawer />
+                    </Grid>
+            
+                    <Grid item xs={5}>
+                        <ScatterPlot />
+                    </Grid>
+                    <Grid item xs={7}>
+                        <Worksheet />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <GeneTable/>
+                    </Grid>
+            
+                </Grid>
+            </div>
+            <BubbleTooltip data={bubbleTooltip} id='cellTypeWork' />
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => {
     return {
         bubbleTooltip: state.bubble.tooltip,
-        clusterSolution: dataStore.getClusterSolution(),
-        dataset: dataStore.getDataset(),
+        worksheet: state.cellTypeWork.sheetSelected,
     }
 }
 
@@ -79,6 +95,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onMenuClick: ev => {
             dispatch({ type: 'cellTypeWork.menu.show' })
+        },
+        onTopDrawerClick: ev => {
+            dispatch({ type: 'cellTypeWork.topDrawer.open' })
         },
     }
 }

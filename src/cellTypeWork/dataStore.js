@@ -3,6 +3,7 @@
 
 const defaultData = {
     dataset: '',
+    description: '',
     clusterSolution: '',
     colorBy: '',
     sizeBy: '',
@@ -49,7 +50,7 @@ class DataStore {
     }
     
     getClusterSolution() {
-        return this.data.clusterSolution
+        return this.data.clusterSolution || ''
     }
     
     getClusters() {
@@ -65,7 +66,11 @@ class DataStore {
     }
     
     getDataset() {
-        return this.data.dataset
+        return this.data.dataset  || ''
+    }
+    
+    getDescription() {
+        return this.data.description || ''
     }
     
     getGenes() {

@@ -62,7 +62,7 @@ const WorksheetPresentation = ({ data, dims, fetchMessage }) => {
         fontFamily,
         fontSize,
         position: 'relative',
-        marginTop: -30,
+        marginTop: -55,
     }
     return (
         <div id='worksheetPres' style={chartStyle}>

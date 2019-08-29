@@ -45,6 +45,7 @@ const State = (
         sheetSelected: null,
         sheetOwnedByUser: false,
         showChart: false,
+        topDrawer: true,
     }, action) => {
         switch(action.type) {
         case 'cellTypeWork.cellTypeInput.show':
@@ -255,6 +256,16 @@ const State = (
             return {
                 ...state,
                 showColorPicker: null,
+            }
+        case 'cellTypeWork.topDrawer.open':
+            return {
+                ...state,
+                topDrawer: true
+            }
+        case 'cellTypeWork.topDrawer.close':
+            return {
+                ...state,
+                topDrawer: false
             }
         default:
             return state
