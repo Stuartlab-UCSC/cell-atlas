@@ -56,6 +56,9 @@ const receiveDataFromServer = (data) => {
         transformToChart(data)
     }
     rxSet('cellTypeWork.showChart.toQuietStatus')
+    
+    // Indicate the first gene table for this worksheet has not displayed.
+    rxSet('cellTypeGene.firstTableDisplayed.reset')
 }
 
 // A test stub in place of server query.
@@ -71,6 +74,9 @@ const fetchTestData = (id, url, receiveFx) => {
 
 const getWorksheetData = (worksheetIn) => {
     // Request the data from the server.
+    if (!worksheetIn) {
+        return
+    }
     rxSet('cellTypeWork.showChart.toRequestStatus')
     // Initialize the variables as if the user owns the worksheet.
     let user = rxGet('auth.user').name
@@ -111,7 +117,6 @@ const mapStateToProps = (state) => {
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeWork.fetchMessage,
         render: state.cellTypeWork.render,
-        show: state.cellTypeWork.showEditables,
     }
 }
 

@@ -266,9 +266,13 @@ const newDataReceived = () => {
 
     // Show the table.
     findAvailable()
-    document.getElementById('ctgTableScroller').scrollIntoView({
-        behavior: 'smooth',
-    })
+    if (rxGet('cellTypeGene.firstTableDisplayed')) {
+        document.getElementById('ctgTableScroller').scrollIntoView({
+            behavior: 'smooth',
+        })
+    } else {
+        rxSet('cellTypeGene.firstTableDisplayed.set')
+    }
 }
 
 export { newDataReceived, onChangePage, onColumnSortChange,

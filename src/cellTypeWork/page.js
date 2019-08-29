@@ -72,14 +72,12 @@ const mapStateToProps = (state) => {
         bubbleTooltip: state.bubble.tooltip,
         clusterSolution: dataStore.getClusterSolution(),
         dataset: dataStore.getDataset(),
-        showEditables: state.cellTypeWork.showEditables,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onMenuClick: ev => {
-            console.log('onMenuClick')
             dispatch({ type: 'cellTypeWork.menu.show' })
         },
     }

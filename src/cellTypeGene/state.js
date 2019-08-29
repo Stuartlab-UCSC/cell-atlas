@@ -10,7 +10,7 @@ const cellTypeGene = (
         fetchStatus: 'quiet',
         filter: '',
         filterText: '',
-        firstTableDisplayed: false,
+        firstTableDisplayed: false, // the first gene table for this worksheet
         geneOrCluster: null,
         geneSelected: null,
         render: renderSeq,
@@ -55,6 +55,11 @@ const cellTypeGene = (
             return {
                 ...state,
                 filterText: action.value
+            }
+        case 'cellTypeGene.firstTableDisplayed.reset':
+            return {
+                ...state,
+                firstTableDisplayed: false
             }
         case 'cellTypeGene.firstTableDisplayed.set':
             return {

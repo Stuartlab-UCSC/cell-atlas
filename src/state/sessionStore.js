@@ -10,6 +10,7 @@
 import { get as rxGet, set as rxSet } from 'state/rx'
 import auth from 'auth/state'
 import database from 'database/databaseState'
+import cellTypeWork from 'cellTypeWork/state'
 
 let LOGGING = false  // true means log the state and store on save and load
 let storageSupported
@@ -22,9 +23,10 @@ let storeName
 const stateKeys = {
     'auth.redirectPage': auth.defaultRedirectPage,
     'auth.user': auth.defaultUser,
-    'database.query': database.defaultQuery,
+    'cellTypeWork.sheetSelected': cellTypeWork.defaultSheetSelected,
     'database.favoriteList': database.defaultFavoriteList,
     'database.favoriteSelected': database.defaultFavoriteSelected,
+    'database.query': database.defaultQuery,
 }
 
 // TODO: need routines to determine equality with default for a single-level

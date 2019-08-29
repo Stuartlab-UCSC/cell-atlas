@@ -24,8 +24,8 @@ const defaultDims = {
     rowHeight: 18,
     sizeRange:{},
 }
-export const defaultSheetList = [
-]
+const defaultSheetList = []
+const defaultSheetSelected = null
 
 const State = (
     state = {
@@ -45,7 +45,6 @@ const State = (
         sheetSelected: null,
         sheetOwnedByUser: false,
         showChart: false,
-        showEditables: false,
     }, action) => {
         switch(action.type) {
         case 'cellTypeWork.cellTypeInput.show':
@@ -132,11 +131,6 @@ const State = (
                 ...state,
                 fetchStatus: 'quiet'
             }
-        case 'cellTypeWork.initialPageLoaded.true':
-            return {
-                ...state,
-                initialPageLoaded: true
-            }
         case 'cellTypeWork.geneMenu.close':
             return {
                 ...state,
@@ -147,8 +141,12 @@ const State = (
                 ...state,
                 geneMenu: parseInt(action.position, 10),
             }
+        case 'cellTypeWork.initialPageLoaded.true':
+            return {
+                ...state,
+                initialPageLoaded: true
+            }
         case 'cellTypeWork.menu.show':
-            // The colorBar position is saved here.
             return {
                 ...state,
                 menu: true
@@ -220,16 +218,18 @@ const State = (
                 ...state,
                 sheetSaveAs: action.value
             }
+        case 'cellTypeWork.sheetSelected.loadPersist':
+        case 'cellTypeWork.sheetSelected.saveAsWorksheetLoaded':
+        case 'cellTypeWork.sheetSelected.firstSheet':
+        case 'cellTypeWork.sheetSelected.uiSelect':
+            return {
+                ...state,
+                sheetSelected: action.value,
+            }
         case 'cellTypeWork.sheetSelected.userChange':
             return {
                 ...state,
                 sheetSelected: null
-            }
-        case 'cellTypeWork.sheetSelected.saveAsWorksheetLoaded':
-        case 'cellTypeWork.sheetSelected.uiSelect':
-            return {
-                ...state,
-                sheetSelected: action.value
             }
         case 'cellTypeWork.showChart.loading':
             return {
@@ -255,16 +255,6 @@ const State = (
             return {
                 ...state,
                 showColorPicker: null,
-            }
-        case 'cellTypeWork.showEditables.hide':
-            return {
-                ...state,
-                showEditables: false
-            }
-        case 'cellTypeWork.showEditables.show':
-            return {
-                ...state,
-                showEditables: true
             }
         default:
             return state
@@ -304,4 +294,4 @@ const cellTypeSheetState = (
 
 
 export default State
-export { cellTypeSheetState }
+export { cellTypeSheetState, defaultSheetList, defaultSheetSelected }

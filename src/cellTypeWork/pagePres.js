@@ -13,10 +13,7 @@ import CtwMenu from 'cellTypeWork/ctwMenu'
 import ScatterPlot from 'cellTypeScatter/scatter'
 import GeneTable from 'cellTypeGene/ctgMain'
 
-const Dataset = ({ show, dataset }) => {
-    if (!show) {
-        return null
-    }
+const Dataset = ({ dataset }) => {
     return (
         <Typography>
             Dataset: {<b>{dataset}</b>}
@@ -24,10 +21,7 @@ const Dataset = ({ show, dataset }) => {
     )
 }
 
-const ClusterSolution = ({ show, solution }) => {
-    if (!show) {
-        return null
-    }
+const ClusterSolution = ({ solution }) => {
     return (
         <Typography>
             Clustering: {<b>{solution}</b>}
@@ -36,20 +30,20 @@ const ClusterSolution = ({ show, solution }) => {
 }
 
 const Left = ({ props }) => {
-    const { clusterSolution, dataset, showEditables } = props
+    const { clusterSolution, dataset } = props
     return (
         <Grid container spacing={8}>
             <Grid item xs={12} style={{width: '70%'}} >
                 <SheetList />
-                <Dataset dataset={dataset} show={showEditables} />
-                <ClusterSolution solution={clusterSolution} show={showEditables} />
+                <Dataset dataset={dataset} />
+                <ClusterSolution solution={clusterSolution} />
             </Grid>
         </Grid>
     )
 }
 
 const Presentation = (props) => {
-    const { bubbleTooltip, showEditables, onMenuClick } = props
+    const { bubbleTooltip, onMenuClick } = props
     const style = {
         position: 'relative',
     }
@@ -79,10 +73,9 @@ const Presentation = (props) => {
                     <Grid item xs={12}>
                         <Left props={props} />
                     </Grid>
-                    <Grid item xs={7} />
 
                     <Grid item xs={5}>
-                        <ScatterPlot show={showEditables} />
+                        <ScatterPlot />
                     </Grid>
                     <Grid item xs={7}>
                         <Worksheet />

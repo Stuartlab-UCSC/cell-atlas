@@ -38,10 +38,7 @@ const Legends = ({ data, dims }) => {
     )
 }
 
-const WorksheetPresentation = ({ data, dims, fetchMessage, show }) => {
-    if (!show) {
-        return (null)
-    }
+const WorksheetPresentation = ({ data, dims, fetchMessage }) => {
     if (fetchMessage) {
         return (
             <Typography style={{marginTop: 40}}>
@@ -65,7 +62,7 @@ const WorksheetPresentation = ({ data, dims, fetchMessage, show }) => {
         fontFamily,
         fontSize,
         position: 'relative',
-        marginTop: -160,
+        marginTop: -30,
     }
     return (
         <div id='worksheetPres' style={chartStyle}>
