@@ -68,6 +68,7 @@ const nameIt = (dispatch, name, error, helperText) => {
 
 const mapStateToProps = (state) => {
     return {
+        background: 'white',
         menuShow: state.cellTypeWork.menu,
         sheetOwnedByUser: state.cellTypeWork.sheetOwnedByUser,
     }
@@ -75,11 +76,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClickAway: ev => {
+        onMenuClose: ev => {
             dispatch({ type: 'cellTypeWork.menu.hide'})
-        },
-        onMenuClick: ev => {
-            dispatch({ type: 'cellTypeWork.menu.show' })
         },
         onSaveAsClick: ev => {
             // Name the worksheet.

@@ -76,8 +76,17 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onMenuClick: ev => {
+            console.log('onMenuClick')
+            dispatch({ type: 'cellTypeWork.menu.show' })
+        },
+    }
+}
+
 const Page = connect(
-    mapStateToProps
+    mapStateToProps, mapDispatchToProps
 )(Presentation)
 
 export default Page
