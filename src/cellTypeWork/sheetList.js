@@ -11,18 +11,18 @@ const USE_TEST_DATA = false
 const DOMAIN = 'cellTypeSheet'
 
 const testData = [
-    'pbmc',  // as admin@replace.me
-    // test@test.com/test
+    'public/publicDataset',
+    'other/testDataOther',
+    'admin@replace.me/pbmc',
 ]
 let prevUser = null
 
-const getSelected = (sheets) => {
+const findSelected = (sheets) => {
     // Get the most recently used worksheet, or the first in the list.
     let selected = rxGet('cellTypeWork.sheetSelected')
     if (!selected) {
         if (sheets.length) {
             selected = sheets[0].name
-            rxSet('cellTypeWork.sheetSelected.load', { value: selected })
         }
         rxSet('cellTypeWork.sheetSelected.firstSheet', { value: selected })
     }
@@ -38,36 +38,53 @@ const receiveDataFromServer = (data) => {
     if (error !== null) {
         alert(error)
         return
-    } else if (data === null || data.length < 1) {
-        alert('No worksheet names were receive from the server.')
+    } else if (!data || data.length < 1) {
+        alert('No worksheet names were received from the server.')
         return
     }
     const user = rxGet('auth.user').name
-    // Find the worksheets owned by the user.
-    let userSheets = data.filter(sheet => {
+    
+    // Bin the sheets into one of user, other, or public so they may be sorted
+    // within each group, and rendered as groups.
+    let names = {
+        user: [],
+        other: [],
+        public: []
+    }
+    data.forEach(sheet => {
         const i = sheet.indexOf('/')
-        return (i < 0 || sheet.slice(0, i) === user)
+        if (i < 0) {
+            // An old way to store worksheet names is without the slash.
+            names.user.push(sheet.slice(i+1))
+        } else {
+            const userPart = sheet.slice(0, i)
+            if (userPart === user) {
+                // Strip the user name from those owned by the user.
+                names.user.push(sheet.slice(i+1))
+            } else if (userPart === 'public') {
+                names.public.push(sheet)
+            } else {
+                names.other.push(sheet)
+            }
+        }
     })
-    userSheets.sort()
-    // Find the worksheets owned by others.
-    let otherSheets = data.filter(sheet => {
-        const i = sheet.indexOf('/')
-        return (i > -1 && sheet.slice(0, i) !== user)
+    
+    // Sort each list and transform into the form wanted by the widget.
+    let sheets = []
+    const lists = ['user', 'other', 'public']
+    lists.forEach(list => {
+        names[list].sort()
+        console.log('list, names[list]:', list, names[list])
+        sheets.push(...names[list].map(name => {
+            return { value: name, name: name }
+        }))
     })
-    otherSheets.sort()
-    // Transform the sheets owned by the user, stripping off the user name.
-    let sheets = userSheets.map(sheet => {
-        const i = sheet.indexOf('/')
-        const name = sheet.slice(i+1)
-        return { value: name, name: name }
-    })
-    // Transform the sheets owned by others.
-    sheets.push(...otherSheets.map(name => {
-        return { value: name, name: name }
-    }))
+    
+    // Save to state
     rxSet('cellTypeWork.sheetList.load', { value: sheets })
-    // Get the most recently used worksheet, or the first in the list.
-    getSelected(sheets)
+
+    // Get the selected sheet.
+    findSelected(sheets)
 }
 
 const getSheetListData = () => {
@@ -99,7 +116,7 @@ const mapStateToProps = (state) => {
 
     return {
         id: 'cell_type_work_sheet',
-        label: 'Cell Type Worksheet',
+        label: 'Open a Worksheet',
         list: state.cellTypeWork.sheetList,
         selected: state.cellTypeWork.sheetSelected,
     }
@@ -108,15 +125,23 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onChange: ev => {
+            // Close the menu.
+            dispatch({ type: 'cellTypeWork.menu.hide' })
+            
+            // Save the sheet selected.
             const sheet = ev.target.value
             dispatch({
                 type: 'cellTypeWork.sheetSelected.uiSelect',
                 value: sheet,
             })
+            
+            // Send the sheet name to state and let it decide if it
+            // is owned by the current user.
             dispatch({
                 type: 'cellTypeWork.sheetOwnedByUser.uiSelect',
                 value: sheet
             })
+            
             getWorksheetData(sheet)
         },
     }
