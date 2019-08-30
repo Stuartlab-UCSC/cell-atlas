@@ -82,7 +82,7 @@ const getGeneTableData = (cluster) => {
     // Request the data from the server.
     const url = buildGeneTableUrl(cluster)
     let options = { credentials: true }
-    rxSet('cellTypeGene.show.hide')
+    rxSet('cellTypeGene.show.getGeneTable')
     if (USE_TEST_DATA) {
         rxSet(DOMAIN + '.fetchStatus.waiting')
         receiveData(DOMAIN, testData, receiveDataFromServer, options)
@@ -95,7 +95,7 @@ const getInitalGeneTableData = () => {
     // Request the initial data from the server.
     let options = { credentials: true }
     let url = ctwDataStore.getGeneTableUrl()
-    rxSet('cellTypeGene.show.hide')
+    rxSet('cellTypeGene.show.getInitialGeneTable')
     if (url) {
         options.fullUrl = true
         if (USE_TEST_DATA) {

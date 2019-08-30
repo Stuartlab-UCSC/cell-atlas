@@ -77,6 +77,12 @@ const getWorksheetData = (worksheetIn) => {
     if (!worksheetIn) {
         return
     }
+    
+    // Clear the old scatterplot and gene table.
+    rxSet('cellTypeScatter.showChart.getNewWorksheet')
+    rxSet('cellTypeGene.show.getNewWorksheet')
+    
+    
     rxSet('cellTypeWork.showChart.toRequestStatus')
     // Initialize the variables as if the user owns the worksheet.
     let user = rxGet('auth.user').name

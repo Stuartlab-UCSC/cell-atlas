@@ -16,7 +16,6 @@ let scatterStore // the png from the data server.
 
 const receiveDataFromServer = (data) => {
     // Handle the data received from the server.
-    rxSet('cellTypeScatter.showChart.loading')
     scatterStore = data
     rxSet('cellTypeScatter.showChart.toQuietStatus')
     rxSet('cellTypeScatter.render.now')
@@ -57,6 +56,10 @@ const buildScatterPlotUrl = (gene, includeHost) => {
 const getClusterAssignmentScatterPlot =
     (clustersIn, colormapIn, urlIn, optionsIn, callback) => {
     // Request a cluster assignment plot from the server.
+    
+    // Clear the old scatterplot.
+    rxSet('cellTypeScatter.showChart.getNewAssignmentPlot')
+
     let clusters = clustersIn || dataStore.getClusters()
     let colormap = colormapIn || rxGet('cellTypeWork.colormap')
     let url = urlIn || buildScatterPlotUrl()
@@ -80,6 +83,10 @@ const getClusterAssignmentScatterPlot =
 
 const getGeneScatterPlot = (gene, urlIn, optionsIn, callback) => {
     // Request a gene plot from the server.
+    
+    // Clear the old scatterplot.
+    rxSet('cellTypeScatter.showChart.getNewGenePlot')
+
     let url = urlIn || buildScatterPlotUrl(gene)
     let options = optionsIn || {}
     options.credentials = true

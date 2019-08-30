@@ -46,7 +46,9 @@ const State = (
                 ...state,
                 render: renderSeq++
             }
-        case 'cellTypeScatter.showChart.loading':
+        case 'cellTypeScatter.showChart.getNewAssignmentPlot':
+        case 'cellTypeScatter.showChart.getNewGenePlot':
+        case 'cellTypeScatter.showChart.getNewWorksheet':
             return {
                 ...state,
                 showChart: false

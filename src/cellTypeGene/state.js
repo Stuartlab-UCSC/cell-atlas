@@ -86,7 +86,9 @@ const cellTypeGene = (
                 ...state,
                 show: true
             }
-        case 'cellTypeGene.show.hide':
+        case 'cellTypeGene.show.getInitialGeneTable':
+        case 'cellTypeGene.show.getGeneTable':
+        case 'cellTypeGene.show.getNewWorksheet':
             return {
                 ...state,
                 show: false
