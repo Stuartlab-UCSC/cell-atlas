@@ -76,17 +76,26 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onBackdropClick: ev => {
+            dispatch({ type: 'cellTypeWork.menu.hide' })
+        },
         onMenuClose: ev => {
             dispatch({ type: 'cellTypeWork.menu.hide'})
         },
         onSaveAsClick: ev => {
             // Name the worksheet.
+            dispatch({ type: 'cellTypeWork.menu.hide' })
             nameIt(dispatch)
         },
         onSaveClick: ev => {
+            dispatch({ type: 'cellTypeWork.menu.hide' })
             postWorksheetData(rxGet('cellTypeWork.sheetSelected'))
         },
         onUploadClick: ev => {
+            dispatch({ type: 'cellTypeWork.menu.hide' })
+        },
+        onUploadInfoClick: ev => {
+            dispatch({ type: 'cellTypeWork.menu.hide' })
         },
     }
 }
