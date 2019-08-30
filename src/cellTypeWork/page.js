@@ -22,7 +22,7 @@ const DrawerIcons = ({props}) => {
     }
     const topDrawerIconStyle = {
         ...menuIconStyle,
-        marginLeft: '43%',
+        marginLeft: 50,
         fontSize: '1.1rem',
         color: 'black',
         zIndex: 1,
@@ -42,8 +42,8 @@ const DrawerIcons = ({props}) => {
                 style={topDrawerIconStyle}
                 onClick={onTopDrawerClick}
             >
-                {worksheet}
                 <KeyboardArrowDownIcon color='primary' />
+                {worksheet}
             </IconButton>
         </React.Fragment>
     )

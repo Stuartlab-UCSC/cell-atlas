@@ -36,7 +36,7 @@ const Body = ({props}) => {
         <Grid container spacing={16} >
             <Grid item xs={4} >
                 <div style={{width: '90%', margin: 'auto'}} >
-                    <SheetList props={props} />
+                    <SheetList />
                 </div>
             </Grid>
             <Grid item xs={8} style={{marginTop: '1.5rem'}}>
@@ -81,7 +81,7 @@ const CtwTopDrawerPres = (props) => {
                 <Body props={props} />
                 <div style={{
                     marginTop: -16,
-                    marginLeft: '40%',
+                    marginLeft: 50,
                 }} >
                     <IconButton
                         onClick={onClose}
