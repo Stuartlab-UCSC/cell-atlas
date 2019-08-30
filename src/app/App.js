@@ -9,6 +9,7 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import Auth from 'auth/auth'
+import CheckMail from 'auth/checkMail'
 import CellTypeWork from 'cellTypeWork/page'
 import Database from 'database/Database'
 import DataModel from 'dataModel/DataModel'
@@ -54,6 +55,7 @@ const App = ({store}) => {
                             <Route component={PageNotFound} />
                         </Switch>
                     </div>
+                    <CheckMail />
                     <NamerDialog />
                     <SortableMarker />
                 </div>

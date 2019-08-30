@@ -16,22 +16,24 @@ const checkUrlSearch = () => {
     if (parms.toString()) {
         const u = parms.get('u')
         if (u) {
-            if (u !== 'logout') {
+            if (u === 'check-email') {
+                rxSet('auth.checkEmail.now')
+            } else if (u === 'logout') {
+                rxSet('auth.user.logout')
+                resetOnLogout()
+            } else { // a login
                 rxSet('auth.user.login', {
                     username: u,
                     roles: parms.get('r'),
                 })
-            } else {
-                rxSet('auth.user.logout')
-                resetOnLogout()
             }
         }
     }
-    return '/'
 }
 
 const Auth = () => {
     checkUrlSearch()
+    console.log('Auth: auth.redirectPage:', rxGet('auth.redirectPage'))
     return (
         <Redirect to={rxGet('auth.redirectPage')} />
     )

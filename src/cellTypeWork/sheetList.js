@@ -74,7 +74,6 @@ const receiveDataFromServer = (data) => {
     const lists = ['user', 'other', 'public']
     lists.forEach(list => {
         names[list].sort()
-        console.log('list, names[list]:', list, names[list])
         sheets.push(...names[list].map(name => {
             return { value: name, name: name }
         }))
