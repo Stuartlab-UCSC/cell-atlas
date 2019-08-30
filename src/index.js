@@ -6,6 +6,9 @@ import { init as rxInit } from 'state/rxInternals'
 
 const rootEl = document.getElementById('root')
 
+
+// TODO pull redux into this with:
+// https://medium.com/@brianhan/hot-reloading-cra-without-eject-b54af352c642
 ReactDOM.render(
     <App store={rxInit()} />,
     rootEl
