@@ -10,32 +10,58 @@ import { getInitialScatterPlot } from 'cellTypeScatter/scatter'
 
 const buildClusters = (data) => {
     // Find the clusters and sort them by column position.
+    // Clusters are received in tsv format as:
+    //      column  cluster cell_count  bar_color  hide_cell_type   cell_type
+    //      0       2       321         0                           Ventricular CMs
+    //      1       0       456         2          x                Ventricular CMs
+    //      2       1       344         1          x                Atrial CMs
+    
     if (!data || !data.clusters) {
         return
     }
-    // Clusters are received with positional columns,
-    // cluster names, cell counts, cell type colorbar and cell type:
-    //      column  cluster cell_count  bar_color   cell_type
-    //      0       2       321         0           Ventricular CMs
-    //      1       0       456         4
-    //      2       1       344         3           Atrial CMs
+    
+    // Initialize the rendering arrays for the clusters, cellTypes and colorBar.
     const lines = tsvToArrays(data.clusters)
     let clusterCount = lines.length - 1
     let clusters = Array.from(clusterCount)
     let cellTypes = Array.from(clusterCount)
     let colorBar = Array.from(clusterCount)
-    lines.slice(1).forEach((line,i) => {
-        clusters[line[0]] = {
-            name: line[1],
-            cellCount: parseFloat(line[2]),
+
+    // Find the data column indices.
+    const head = lines[0]
+    const iColumn = head.indexOf('column')
+    const iName = head.indexOf('cluster')
+    const iCellCount = head.indexOf('cell_count')
+    const iColorBar = head.indexOf('bar_color')
+    const iHideCellType = head.indexOf('hide_cell_type')
+    const iCellType = head.indexOf('cell_type')
+    
+    lines.slice(1).forEach((line, i) => {
+        const I               = line[iColumn]
+        const inName          = line[iName]
+        const inCellCount     = line[iCellCount]
+        const inColorBar      = line[iColorBar]
+        const inHideCellType  = line[iHideCellType]
+        const inCellType      = line[iCellType]
+        
+        clusters[I] = {
+            name: inName,
+            cellCount: parseFloat(inCellCount),
         }
-        cellTypes[line[0]] = line[4]
-        // If a color column is not given for a segment of the colorBar,
-        // use the column position.
-        if (line[3] === null || line[3] === undefined) {
-            colorBar[line[0]] = i
+        
+        // If this column's cell type is to be hidden, set the label to null.
+        if (inHideCellType) {
+            cellTypes[I] = null
         } else {
-            colorBar[line[0]] = line[3]
+            cellTypes[I] = inCellType
+        }
+
+        // If a color is not given for a segment of the colorBar,
+        // use the column position's color.
+        if (inColorBar === null || inColorBar === undefined) {
+            colorBar[I] = I
+        } else {
+            colorBar[I] = parseFloat(inColorBar)
         }
     })
 

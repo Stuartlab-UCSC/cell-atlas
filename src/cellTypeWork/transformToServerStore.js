@@ -7,8 +7,64 @@ import { buildGeneTableUrl } from 'cellTypeGene/ctgFetch'
 import { buildScatterPlotUrl } from 'cellTypeScatter/scatter'
 import { findBubbleData } from  'cellTypeWork/transformToBubbles'
 
+const buildClusterLines = (data) => {
+    // Pull all of the cluster data together with one line per cluster.
+    const { clusters, cellTypes, colorBar } = data
+    
+    let prevColor = null
+    let label = null
+    let group = []
+    let lines = []
+    // Walk through the clusters, looking for a change in the colorBar to
+    // delineate cell type groups belonging to one cell type.
+    // Note the clusters, cellTypes and colorBar are in order of columns.
+    clusters.forEach((cluster, i) => {
+        // Save all of this cluster's data except for the cell type and the
+        // hide flag.
+        lines.push([i, cluster.name, cluster.cellCount, colorBar[i]])
+        
+        if (colorBar[i] !== prevColor) {
+            // The colorBar has changed color, so we've captured all of the
+            // clusters for the group. So set the cell type for each cluster
+            // in the group.
+            group.forEach(columnIndex => {
+                lines[columnIndex].push(label)
+            })
+            // Reset our accumulators.
+            prevColor = colorBar[i]
+            group = []
+            label = null
+        }
+        
+        // Save this cluster's column index in the group list.
+        group.push(i)
+        
+        // Find hideCellType flag and save it to the line.
+        if (cellTypes[i]) {
+            if (label) {
+                alert('there may only be one cell type label in the same ' +
+                    'cell type group')
+                // TODO should we bail from the save?
+                // TODO should we tell user the competing labels?
+            } else {
+                // Hang onto the cell type label for this group.
+                label = cellTypes[i]
+            }
+            lines[i].push(null)  // don't hide the cell type label
+        } else {
+            // With no cell type label, mark this label as hidden.
+            lines[i].push('x')
+        }
+    })
+    // Save the labels for the last cell type group.
+    group.forEach(columnIndex => {
+        lines[columnIndex].push(label)
+    })
+    return lines
+}
+
 const buildClusters = (data) => {
-    // This transforms this form:
+    // The transformation is from the chart form of:
     //  clusters: [
     //      {
     //          name: 'someName',
@@ -25,17 +81,21 @@ const buildClusters = (data) => {
     //
     // to this tsv form:
     //  clusters:
-    //      column   cluster  cell_count  bar_color  cell_type
+    //      column   cluster  cell_count  bar_color  cell_type        hide_cell_type
     //      0        2        321         0          Ventricular CMs
-    //      1        0        456         4
-    //      2        1        344         3          Atrial CMs
-    const { clusters, cellTypes, colorBar } = data
-    let tsvLines = clusters.map((cluster, i) => {
-        return [i, cluster.name, cluster.cellCount, colorBar[i],
-            cellTypes[i]].join('\t')
+    //      1        0        456         4          Ventricular CMs  x
+    //      2        1        344         3          Atrial CMs       x
+    // Gather the column, cluster, cellCount, colorBar, and cellTypes.
+    const clusterLines = buildClusterLines(data)
+    
+    // Build the cluster tsv lines.
+    let tsvLines = clusterLines.map((cluster, i) => {
+        return [cluster].join('\t')
     })
+    
     // The header.
-    tsvLines.unshift(['column\tcluster\tcell_count\tbar_color\tcell_type'])
+    tsvLines.unshift(
+        ['column\tcluster\tcell_count\tbar_color\thide_cell_type\t,cell_type'])
     // Transform the lines to tsv.
     return tsvLines.join('\n')
 }
