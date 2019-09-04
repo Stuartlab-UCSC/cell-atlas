@@ -2,6 +2,7 @@
 // Store the chart data and handle all updates to it.
 
 const defaultData = {
+    group: null,
     dataset: '',
     description: '',
     clusterSolution: '',

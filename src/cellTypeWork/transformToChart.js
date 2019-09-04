@@ -96,6 +96,7 @@ const transfromToChart = (data) => {
 
     // Update the chart data.
     dataStore.load({
+        group:           data.group,
         dataset:         data.dataset_name,
         description:     data.description,
         clusterSolution: data.cluster_solution_name,

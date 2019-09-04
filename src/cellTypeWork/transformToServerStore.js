@@ -171,6 +171,7 @@ const transformToServerStore = () => {
     let data = dataStore.get()
     let { colors, sizes } = buildColorsAndSizes(data)
     let payload = {
+        group: data.group,
         source_user: data.sourceUser || rxGet('auth.user').name,
         source_worksheet_name:
             data.sourceWorksheet || rxGet('cellTypeWork.sheetSelected'),
