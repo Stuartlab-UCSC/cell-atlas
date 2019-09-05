@@ -17,7 +17,7 @@ const checkUrlSearch = () => {
         const u = parms.get('u')
         if (u) {
             if (u === 'check-email') {
-                rxSet('auth.checkEmail.now')
+                rxSet('auth.checkMail.now')
             } else if (u === 'logout') {
                 rxSet('auth.user.logout')
                 resetOnLogout()
