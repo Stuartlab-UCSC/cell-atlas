@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux'
 import { get as rxGet, set as rxSet } from 'state/rx'
-import Presentation from 'cellTypeWork/colorBarPres'
+import Presentation from 'cellTypeBar/colorBarPres'
 import dataStore from 'cellTypeWork/dataStore'
 import { clearContextElements } from 'cellTypeWork/worksheet'
 

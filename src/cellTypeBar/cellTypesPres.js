@@ -2,7 +2,7 @@
 // on the cell type worksheet page.
 
 import React from 'react'
-import { DOMAIN } from 'cellTypeWork/cellTypes'
+import { DOMAIN } from 'cellTypeBar/cellTypes'
 
 const CellType = ({ i, color, value, props }) => {
     // A cell type text area.

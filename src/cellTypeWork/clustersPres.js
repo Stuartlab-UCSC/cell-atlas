@@ -2,10 +2,10 @@
 // on the cell type worksheet.
 
 import React from 'react';
-import CellTypes from 'cellTypeWork/cellTypes'
-import CellTypesEdit from 'cellTypeWork/cellTypesEdit'
+import CellTypes from 'cellTypeBar/cellTypes'
+import CellTypesEdit from 'cellTypeBar/cellTypesEdit'
 import ClusterNames from 'cellTypeWork/clusterNames'
-import ColorBar from 'cellTypeWork/colorBar'
+import ColorBar from 'cellTypeBar/colorBar'
 
 const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
     let tds = []

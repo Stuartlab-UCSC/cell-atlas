@@ -3,9 +3,9 @@
 
 import { connect } from 'react-redux'
 import dataStore from 'cellTypeWork/dataStore'
-import Presentation from 'cellTypeWork/cellTypesEditPres'
+import Presentation from 'cellTypeBar/cellTypesEditPres'
 import { clearContextElements } from 'cellTypeWork/worksheet'
-import { DOMAIN } from 'cellTypeWork/cellTypes'
+import { DOMAIN } from 'cellTypeBar/cellTypes'
 
 const mapStateToProps = (state) => {
     return {
