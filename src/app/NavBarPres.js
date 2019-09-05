@@ -146,7 +146,7 @@ class NavBarPres extends React.Component {
         const list =
             <MenuList>
                 {this.listItem(
-                    'Cell Type Worksheet', '/prototypes/cellTypeWorksheet')}
+                    'Cell Type Workbench', '/prototypes/cellTypeWorksheet')}
                 {this.listItem('Cell Type Psychic', '/prototypes/cellType')}
             </MenuList>
         const comp =
