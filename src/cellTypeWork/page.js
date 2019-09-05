@@ -34,7 +34,7 @@ const DrawerIcons = ({props}) => {
                 style={menuIconStyle}
                 onClick={onMenuClick}
             >
-                <MenuIcon color='primary' />
+                <MenuIcon color='primary' style={{height: 36, width: 36}}/>
             </IconButton>
 
             <CtwTopDrawer />
