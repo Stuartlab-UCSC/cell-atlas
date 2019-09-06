@@ -23,12 +23,12 @@ const mapStateToProps = (state) => {
 }
 
 const reorder = (start, end) => {
-    // Remove and insert the gene row in its new place in the list.
-    const genes = dataStore.getGenes()
-    const gene = genes[start]
-    genes.splice(start, 1)
-    genes.splice(end, 0, gene)
-    dataStore.reorderGenes(genes)
+    // Remove and insert the item in its new place in the list.
+    const sortee = dataStore.getGenes()
+    const item = sortee[start]
+    sortee.splice(start, 1)
+    sortee.splice(end, 0, item)
+    dataStore.reorderGenes(sortee)
     rxSet('cellTypeWork.render.now')
 }
 
@@ -45,24 +45,14 @@ const mapDispatchToProps = (dispatch) => {
             clearContextElements(DOMAIN)
         },
         onMouseOver: ev => {
-            // Clear any context elements not belonging to genes.
+            // Clear any context elements not belonging to this domain.
             clearContextElements(DOMAIN)
-            
-            // If we're sorting, handle the drag event.
-            if (rxGet('sortable.drag').count !== null) {
-                sortableOnMouseOver(ev)
-            } else {
-                // The elements are not being sorted, so show the context menu.
-                dispatch({
-                    type: 'cellTypeWork.geneMenu.open',
-                    position: ev.target.dataset.position
-                })
-            }
+            sortableOnMouseOver(ev, dispatch, 'cellTypeWork.geneMenu.open')
         },
         onMouseDown: ev => {
-            // Close the context menu.
+            // Close the usual hover items.
             clearContextElements()
-            // Save the info for this gene for sortable drag and drop.
+            // Save the info for this item for sortable drag and drop.
             const { geneWidth, rowHeight } = rxGet('cellTypeWork.dims')
             const marker = {
                 width: '20px',

@@ -120,15 +120,29 @@ const sortableOnMouseLeave = (ev) => {
     resetMarker()
 }
 
-const sortableOnMouseOver = (ev) => {
-    const drag = rxGet('sortable.drag')
-    if (drag.count === null) {
-        // The mouse is not down.
-        return
+const sortableOnMouseOver = (ev, dispatch, hoverStateType) => {
+
+    // If we're sorting, handle the drag event.
+    if (rxGet('sortable.drag').count !== null) {
+        const drag = rxGet('sortable.drag')
+        /*
+        if (drag.count === null) {
+            // The mouse is not down.
+            return
+        }
+        */
+        // Set the dimensions of the drag marker.
+        const bounds = ev.target.getBoundingClientRect()
+        showMarker(bounds.bottom, bounds.left, drag.marker)
+        
+    // If there is a usual hover state ...
+    } else if (hoverStateType) {
+        // The items are not being sorted, so show the usual hover item.
+        dispatch({
+            type: hoverStateType,
+            position: ev.target.dataset.position
+        })
     }
-    // Set the dimensions of the drag marker.
-    const bounds = ev.target.getBoundingClientRect()
-    showMarker(bounds.bottom, bounds.left, drag.marker)
 }
 
 // State.

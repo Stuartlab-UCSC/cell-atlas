@@ -25,13 +25,12 @@ const mapStateToProps = (state) => {
 }
 
 const reorder = (start, end) => {
-    // Remove the cluster data from it's current position.
-    const clusters = dataStore.getClusters()
-    const cluster = clusters[start]
-    clusters.splice(start, 1)
-    // Insert the cluster data into its new position.
-    clusters.splice(end, 0, cluster)
-    dataStore.reorderClusters(clusters)
+    // Remove and insert the item in its new place in the list.
+    const sortee = dataStore.getClusters()
+    const item = sortee[start]
+    sortee.splice(start, 1)
+    sortee.splice(end, 0, item)
+    dataStore.reorderClusters(sortee)
     // Also reorder the cell types the same.
     cellTypeReorder(start, end)
     // Update the scatter plot to the new colors.
@@ -51,9 +50,10 @@ const mapDispatchToProps = (dispatch) => {
             clearContextElements(DOMAIN)
         },
         onMouseOver: ev => {
-            // Clear any context elements not belonging to cluster names.
+            // Clear any context elements not belonging to this domain.
             clearContextElements(DOMAIN)
-            
+            sortableOnMouseOver(ev, dispatch, 'cellTypeWork.clusterMenu.open')
+            /*
             // If we're sorting, handle the drag event.
             if (rxGet('sortable.drag').count !== null) {
                 sortableOnMouseOver(ev)
@@ -64,13 +64,14 @@ const mapDispatchToProps = (dispatch) => {
                     position: ev.target.dataset.position
                 })
             }
+            */
         },
         onMouseDown: ev => {
-            // Close the context menu.
+            // Close the usual hover items.
             dispatch({ type: 'cellTypeWork.clusterMenu.hide' })
             clearContextElements()
-            // Save the info for this cluster for sortable drag and drop.
             const marker = {
+            // Save the info for this item for sortable drag and drop.            const marker = {
                 width: '2px',
                 height: '20px',
                 topOffset: 0,
