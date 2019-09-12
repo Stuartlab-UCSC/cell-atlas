@@ -124,6 +124,11 @@ const buildThemeOverrides = (themeOverrideFx) => {
                     marginBottom: -15,
                 },
             },
+            MUIDataTableToolbar: {
+                left: {
+                    background: 'white',
+                },
+            },
         }
     }
     if (themeOverrideFx) {

@@ -63,7 +63,6 @@ const Presentation = (props) => {
                 position: 'absolute',
                 top: 21,
                 right: 250,
-                zIndex: 1,
             }} >
                 {Counts}
                 {ClusterBar}
