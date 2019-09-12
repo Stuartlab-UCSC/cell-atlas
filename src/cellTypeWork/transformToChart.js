@@ -11,10 +11,27 @@ import { getInitialScatterPlot } from 'cellTypeScatter/scatter'
 const buildClusters = (data) => {
     // Find the clusters and sort them by column position.
     // Clusters are received in tsv format as:
-    //      column  cluster cell_count  bar_color  hide_cell_type   cell_type
-    //      0       2       321         0                           Ventricular CMs
-    //      1       0       456         2          x                Ventricular CMs
-    //      2       1       344         1          x                Atrial CMs
+    //      column  cluster cell_count  bar_color  cell_type        hide_cell_type
+    //      0       2       321         0          Ventricular CMs
+    //      1       0       456         0          Ventricular CMs  x
+    //      2       1       344         2          Atrial CMs       x
+    // Clusters are saved as:
+    //  clusters: [
+    //      {
+    //          name: 'someName',
+    //          cellCount: 101,
+    //      },
+    //      ...
+    //  ]
+    //  cellTypes: [
+    //      {
+    //          cellType: 'someCellType',
+    //          hideCellType: 'x',
+    //      }, ...
+    //  ]
+    //  colorBar: [
+    //      '#444444', ...
+    //  ]
     
     if (!data || !data.clusters) {
         return
@@ -37,24 +54,20 @@ const buildClusters = (data) => {
     const iCellType = head.indexOf('cell_type')
     
     lines.slice(1).forEach((line, i) => {
-        const I               = line[iColumn]
-        const inName          = line[iName]
-        const inCellCount     = line[iCellCount]
-        const inColorBar      = line[iColorBar]
-        const inHideCellType  = line[iHideCellType]
-        const inCellType      = line[iCellType]
-        
+        const I             = line[iColumn]
+        const name          = line[iName]
+        const cellCount     = line[iCellCount]
+        const inColorBar    = line[iColorBar]
+        const cellType      = line[iCellType]
+        const hideCellType  = line[iHideCellType]
+
         clusters[I] = {
-            name: inName,
-            cellCount: parseFloat(inCellCount),
+            name: name,
+            cellCount: parseFloat(cellCount),
         }
         
-        // If this column's cell type is to be hidden, set the label to null.
-        if (inHideCellType) {
-            cellTypes[I] = null
-        } else {
-            cellTypes[I] = inCellType
-        }
+        // Save the cell type label and hide flag.
+        cellTypes[i] = { label: cellType, hide: hideCellType }
 
         // If a color is not given for a segment of the colorBar,
         // use the column position's color.

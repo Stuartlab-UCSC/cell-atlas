@@ -44,7 +44,7 @@ const CellTypes = (props) => {
                 key={i}
                 i={i}
                 color={colormap[i]}
-                value={cellType}
+                value={cellType.hide ? null : cellType.label}
                 props={props}
             />
         )

@@ -1,7 +1,6 @@
 // The logic for the clusters and their info on the cell type worksheet.
 
 import { connect } from 'react-redux'
-import { get as rxGet } from 'state/rx'
 import Presentation from 'cellTypeWork/clustersPres'
 import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
 import getGeneTableData from 'cellTypeGene/ctgFetch'
