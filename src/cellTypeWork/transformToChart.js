@@ -8,13 +8,46 @@ import { tsvToArrays } from 'app/util'
 import dataStore from 'cellTypeWork/dataStore'
 import { getInitialScatterPlot } from 'cellTypeScatter/scatter'
 
+const buildTypeGroups = (cellTypes) => {
+    // Find the cell type groups by looking at contiguous duplicate cell types.
+    // The groups contain the begin and end column positions of each group and
+    // look something like: [[1,1], [2,3], [4,6]]
+    
+    // Build the groups.
+    let groups = []
+    let prevLabel
+    let begin
+    cellTypes.forEach((type, i) => {
+        if (i === 0) {
+            begin = i
+        } else if (type.label !== prevLabel) {
+            // Save the previous group.
+            groups.push([begin, i - 1])
+            begin = i
+        }
+        prevLabel = type.label
+    })
+    // Save the last group.
+    groups.push([begin, cellTypes.length - 1])
+    
+    // Determine which column should display the label.
+    groups.forEach(group => {
+        // Find the middle column index.
+        const i = Math.round((group[1] - group[0]) / 2) + group[0]
+
+        cellTypes[i].show = true
+    })
+    
+    return groups
+}
+
 const buildClusters = (data) => {
     // Find the clusters and sort them by column position.
     // Clusters are received in tsv format as:
-    //      column  cluster cell_count  bar_color  cell_type        hide_cell_type
+    //      column  cluster cell_count  bar_color  cell_type
     //      0       2       321         0          Ventricular CMs
-    //      1       0       456         0          Ventricular CMs  x
-    //      2       1       344         2          Atrial CMs       x
+    //      1       0       456         0          Ventricular CMs
+    //      2       1       344         2          Atrial CMs
     // Clusters are saved as:
     //  clusters: [
     //      {
@@ -25,8 +58,8 @@ const buildClusters = (data) => {
     //  ]
     //  cellTypes: [
     //      {
-    //          cellType: 'someCellType',
-    //          hideCellType: 'x',
+    //          label: 'someCellType',
+    //          show: true,
     //      }, ...
     //  ]
     //  colorBar: [
@@ -37,48 +70,36 @@ const buildClusters = (data) => {
         return
     }
     
-    // Initialize the rendering arrays for the clusters, cellTypes and colorBar.
+    // Initialize the rendering arrays for the clusters.
     const lines = tsvToArrays(data.clusters)
     let clusterCount = lines.length - 1
     let clusters = Array.from(clusterCount)
     let cellTypes = Array.from(clusterCount)
-    let colorBar = Array.from(clusterCount)
 
     // Find the data column indices.
     const head = lines[0]
     const iColumn = head.indexOf('column')
     const iName = head.indexOf('cluster')
     const iCellCount = head.indexOf('cell_count')
-    const iColorBar = head.indexOf('bar_color')
-    const iHideCellType = head.indexOf('hide_cell_type')
     const iCellType = head.indexOf('cell_type')
     
     lines.slice(1).forEach((line, i) => {
         const I             = line[iColumn]
         const name          = line[iName]
         const cellCount     = line[iCellCount]
-        const inColorBar    = line[iColorBar]
         const cellType      = line[iCellType]
-        const hideCellType  = line[iHideCellType]
 
         clusters[I] = {
             name: name,
             cellCount: parseFloat(cellCount),
         }
         
-        // Save the cell type label and hide flag.
-        cellTypes[i] = { label: cellType, hide: hideCellType }
-
-        // If a color is not given for a segment of the colorBar,
-        // use the column position's color.
-        if (inColorBar === null || inColorBar === undefined) {
-            colorBar[I] = I
-        } else {
-            colorBar[I] = parseFloat(inColorBar)
-        }
+        // Save the cell type label.
+        cellTypes[I] = { label: cellType }
     })
 
-    return {colorBar, clusters, cellTypes }
+    const typeGroups = buildTypeGroups(cellTypes)
+    return { clusters, cellTypes, typeGroups }
 }
 
 const buildGenes = (data) => {
@@ -103,7 +124,7 @@ const buildGenes = (data) => {
 const transfromToChart = (data) => {
     // Transform the format from the server response to worksheet chart.
     rxSet('cellTypeWork.dims.default')
-    const { colorBar, clusters, cellTypes } = buildClusters(data)
+    const { clusters, cellTypes, typeGroups } = buildClusters(data)
     const genes = buildGenes(data)
     const bubbles = buildBubblesOnLoad(data, clusters.length, genes.length)
 
@@ -121,8 +142,8 @@ const transfromToChart = (data) => {
         sourceWorksheet: data.source_worksheet_name,
         bubbles,
         cellTypes,
+        typeGroups,
         clusters,
-        colorBar,
         genes,
     })
     

@@ -1,75 +1,74 @@
-// The logic for the clusters and their info on the cell type worksheet.
+// The logic for the cell type colorBar
+// on the cell type worksheet.
 
 import { connect } from 'react-redux'
-import { get as rxGet, set as rxSet } from 'state/rx'
-import Presentation from 'cellTypeBar/colorBarPres'
+import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
 import dataStore from 'cellTypeWork/dataStore'
+import { scatterColumnsReordered } from 'cellTypeScatter/scatter'
 import { clearContextElements } from 'cellTypeWork/worksheet'
+import { reorder as cellTypeReorder } from 'cellTypeBar/cellTypes'
+import Presentation from 'cellTypeBar/colorBarPres'
 
-const DOMAIN = 'cellTypeWorkColorBar'
+const DOMAIN = 'cellTypeBar'
 
 const mapStateToProps = (state) => {
-    // Find the position stored in the colormapPicker state.
-    const showPicker = state.cellTypeWork.colormapPicker
-    let startColor = null
-    // Set the starting colorPicker color to that at colormap[index].
-    const colorBar = dataStore.getColorBar()
-    if (showPicker !== null) {
-        startColor = colorBar[showPicker]
-    }
     return {
-        showPicker,
-        colorBar,
+        cellTypes: dataStore.getCellTypes(),
         colormap: state.cellTypeWork.colormap,
         dims: state.cellTypeWork.dims,
+        domain: DOMAIN,
         render: state.cellTypeWork.render,
-        startColor,
+        sorting: (state.sortable.drag.active),
+        typeGroups: dataStore.getTypeGroups(),
     }
 }
 
-const onColorChange = (ev, color) => {
-    // Update the colormap index of the colorBar segment.
-    // This event is propagated from the body onMouseUp handler, rather than
-    // directly from the color picker's onColorChangeComplete event.
-    dataStore.setColorBar(
-        rxGet('cellTypeWork.colormapPicker'),
-        color.hex,
-        rxGet('cellTypeWork.colormap'),
-    )
-    rxSet('cellTypeWork.render.now')
-    // Hide the color picker.
-    rxSet('cellTypeWork.colormapPicker.hide')
-}
-
-const onMouseUp = (ev) => {
-    document.body.removeEventListener('mouseup', onMouseUp)
-    // If the mouse is let up over a color in the color Picker, call the color
-    // picker handler. The color picker conveniently sets the title of the
-    // picker color element to the color picked in hex format.
-    let title = ev.target.title
-    if (title && title.slice(0, 1) === '#') {
-        onColorChange(ev, {hex: title})
-    } else {
-        // Hide the color picker.
-        rxSet('cellTypeWork.colormapPicker.hide')
-    }
+const reorder = (start, end) => {
+    // Remove and insert the item in its new place in the list.
+    const sortee = dataStore.getTypeGroups()
+    const item = sortee[start]
+    sortee.splice(start, 1)
+    sortee.splice(end, 0, item)
+    dataStore.reorderTypeGroups(sortee)
+    // TODO update the cluster order.
+    // TODO update the cell type labels for groups greater than one
+    cellTypeReorder(start, end)
+    // Update the scatter plot to the new colors.
+    scatterColumnsReordered()
+    //rxSet('cellTypeWork.render.now')
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onMouseOver: ev => {
-            // Clear any leftover context elements.
+        onClick: ev => {
+        },
+        onMouseDown: ev => {
+            // Close all context elements.
+            clearContextElements()
+            // Save the info for this item for sortable drag and drop.
+                const marker = {
+                    width: '2px',
+                    height: '20px',
+                    topOffset: -10,
+                    leftOffset: -1,
+                }
+                sortableOnMouseDown(
+                    ev,
+                    dataStore.getTypeGroups().length,
+                    DOMAIN,
+                    marker,
+                    reorder,
+                    'x',
+                    dispatch,
+                )
+        },
+        onMouseLeave: ev => {
             clearContextElements(DOMAIN)
         },
-        onBarClick: ev => {
-            dispatch({
-                type: 'cellTypeWork.colormapPicker.show',
-                value: ev.target.dataset.position,
-            })
-            // Listen for a mouseUp event anywhere except on the color picker
-            // so that we can close the color picker if the user decides not
-            // to change the color.
-            document.body.addEventListener('mouseup', onMouseUp)
+        onMouseOver: ev => {
+            // Clear any context elements not belonging to this domain.
+            clearContextElements(DOMAIN)
+            sortableOnMouseOver(ev, dispatch)
         },
     }
 }
@@ -79,3 +78,4 @@ const ColorBar = connect(
 )(Presentation)
 
 export default ColorBar
+export { DOMAIN }

@@ -6,7 +6,7 @@ import { set as rxSet } from 'state/rx'
 import Presentation from 'cellTypeBar/cellTypesPres'
 import dataStore from 'cellTypeWork/dataStore'
 
-const DOMAIN = 'cellTypeWorkCellTypes'
+const DOMAIN = 'cellTypeBarLabels'
 
 const mapStateToProps = (state) => {
     return {

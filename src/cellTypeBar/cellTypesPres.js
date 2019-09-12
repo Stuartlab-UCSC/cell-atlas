@@ -2,6 +2,8 @@
 // on the cell type worksheet page.
 
 import React from 'react'
+import ColorBar from 'cellTypeBar/colorBar'
+import CellTypesEdit from 'cellTypeBar/cellTypesEdit'
 import { DOMAIN } from 'cellTypeBar/cellTypes'
 
 const CellType = ({ i, color, value, props }) => {
@@ -44,26 +46,30 @@ const CellTypes = (props) => {
                 key={i}
                 i={i}
                 color={colormap[i]}
-                value={cellType.hide ? null : cellType.label}
+                value={cellType.show ? cellType.label : null }
                 props={props}
             />
         )
     })
 
     return (
-        <svg
-            height={cellTypesHeight}
-            width={geneWidth + bubblesWidth + legendWidth}
-        >
-            <text
-                x='24'
-                y='120'
-                fontSize={labelFontSize}
+        <React.Fragment>
+            <svg
+                height={cellTypesHeight}
+                width={geneWidth + bubblesWidth + legendWidth}
             >
-                Cell Types
-            </text>
-            {types}
-        </svg>
+                <text
+                    x='24'
+                    y='120'
+                    fontSize={labelFontSize}
+                >
+                    Cell Types
+                </text>
+                {types}
+            </svg>
+            <CellTypesEdit />
+            <ColorBar />
+        </React.Fragment>
     )
 }
 

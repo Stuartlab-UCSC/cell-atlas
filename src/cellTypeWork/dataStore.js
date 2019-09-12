@@ -10,8 +10,8 @@ const defaultData = {
     sizeBy: '',
     bubbles: [],
     cellTypes: [],
+    typeGroups: [],
     clusters: [],
-    colorBar: [],
     genes: [],
 }
 
@@ -27,15 +27,6 @@ class DataStore {
 
     changeCellType(cellType, position) {
         this.data.cellTypes[position] = cellType
-    }
-
-    changeColorBarSegment(barPosition, color, colormap) {
-        // The colorbar segment takes on the index of the colormap member
-        // that matches the color of the picked color.
-        const index = colormap.findIndex(colorMapColor => {
-            return (color === colorMapColor)
-        })
-        this.data.colorBar[barPosition] = index
     }
 
     get() {
@@ -60,10 +51,6 @@ class DataStore {
     
     getColorBy() {
         return this.data.colorBy
-    }
-    
-    getColorBar() {
-        return this.data.colorBar
     }
     
     getDataset() {
@@ -94,20 +81,24 @@ class DataStore {
         return this.data.sourceWorksheet
     }
     
+    getTypeGroups = () => {
+        return this.data.typeGroups
+    }
+
     load(data) {
         this.data = data
     }
 
-    reorderCellTypes(cellTypes) {
-        this.data.cellTypes = cellTypes
-    }
-    
     removeGene(genePosition, bubbles) {
         // Remove the gene and replace the bubbles.
         this.data.genes.splice(genePosition, 1)
         this.bubbles = bubbles
     }
 
+    reorderCellTypes(cellTypes) {
+        this.data.cellTypes = cellTypes
+    }
+    
     reorderClusters(clusters) {
         this.data.clusters = clusters
     }
@@ -116,17 +107,14 @@ class DataStore {
         this.data.genes = genes
     }
     
+    reorderTypeGroups(value) {
+        this.data.typeGroups = value
+    }
+    
     setBubbles(bubbles) {
         this.data.bubbles = bubbles
     }
 
-    setColorBar(position, color, colormap) {
-        const index = colormap.findIndex(ccolor => {
-            return (ccolor === color)
-        })
-        this.data.colorBar[position] = index
-    }
-    
     setColorBy = (value) => {
         this.data.colorBy = value
     }
@@ -137,6 +125,10 @@ class DataStore {
 
     setSizeBy = (value) => {
         this.data.sizeBy = value
+    }
+    
+    setTypeGroups = (value) => {
+        this.data.typeGroups = value
     }
 }
 

@@ -10,7 +10,7 @@ const defaultDims = {
     cellTypesHeight: 130,
     cellTypeLength: 156,
     clusterBarHeight: 22,
-    colorBarHeight: 10,
+    colorBarHeight: 18,
     colorRange:{},
     colWidth: 18,
     clusterMarginTop: 10,
@@ -29,11 +29,8 @@ const defaultSheetSelected = null
 
 const State = (
     state = {
-        cellTypeInput: null,
-        cellTypeMode: 'readOnly',
         clusterMenu: null,
         colormap: [],
-        colormapPicker: null,
         dims: defaultDims,
         fetchMessage: ' ',
         fetchStatus: 'initial',
@@ -48,27 +45,6 @@ const State = (
         topDrawer: true,
     }, action) => {
         switch(action.type) {
-        case 'cellTypeWork.cellTypeInput.show':
-            // The cellType position is saved here.
-            return {
-                ...state,
-                cellTypeInput: parseInt(action.value, 10)
-            }
-        case 'cellTypeWork.cellTypeInput.hide':
-            return {
-                ...state,
-                cellTypeInput: null
-            }
-        case 'cellTypeWork.cellTypeMode.select':
-            return {
-                ...state,
-                cellTypeMode: 'select'
-            }
-        case 'cellTypeWork.cellTypeMode.readOnly':
-            return {
-                ...state,
-                cellTypeMode: 'readOnly'
-            }
         case 'cellTypeWork.clusterMenu.close':
             return {
                 ...state,
@@ -83,17 +59,6 @@ const State = (
             return {
                 ...state,
                 colormap: action.value
-            }
-        case 'cellTypeWork.colormapPicker.show':
-            // The colorBar position is saved here.
-            return {
-                ...state,
-                colormapPicker: action.value
-            }
-        case 'cellTypeWork.colormapPicker.hide':
-            return {
-                ...state,
-                colormapPicker: null
             }
         case 'cellTypeWork.dims.default':
             return {
@@ -246,16 +211,6 @@ const State = (
             return {
                 ...state,
                 showChart: false
-            }
-        case 'cellTypeWork.showColorPicker.show':
-            return {
-                ...state,
-                showColorPicker: action.value
-            }
-        case 'cellTypeWork.showColorPicker.hide':
-            return {
-                ...state,
-                showColorPicker: null,
             }
         case 'cellTypeWork.topDrawer.open':
             return {

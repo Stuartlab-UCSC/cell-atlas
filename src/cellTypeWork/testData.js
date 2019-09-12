@@ -18,10 +18,10 @@ gaslkgf klsjlkhjl ha lkj;lk slkfjal lkja;sfg lkjls alskjlfk aslkjlg sssss`,
     color_by: 'log2',
     gene_table_url: 'localhost:5000',
     clusters:
-        'column	cluster	cell_count	bar_color	hide_cell_type	cell_type\n' +
-        '0	2	2643	0		Arterial CMs\n' +
-        '2	3	13962	2		Vascular Endothelial\n' +
-        '1	1	3322	1	x	Arterial CMs',
+        'column	cluster	cell_count	bar_color	cell_type	hide_cell_type\n' +
+        '0	2	2643	0	A	\n' +
+        '2	3	13962	2	B\n' +
+        '1	1	3322	1	A	x',
     genes:
         'row	gene\n' +
         '1	ALK\n' +

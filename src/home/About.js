@@ -19,8 +19,8 @@ const Detail = () => {
             seq experiments. We aim to augment research by providing an
             intuitive web interface for browsing single cell mRNA seq
             experiments and a seamless connection from browsing to analysis
-            through a RESTful API. We are also currently developing a cell type
-            labeling app geared to ease the burden of manual annotation and
+            through a RESTful API. The latest addition to the Cell Atlas is the
+            cell type workbench to ease the burden of manual annotation and
             creation of publication quality figures for newly generated data.
         </Typography>
     )

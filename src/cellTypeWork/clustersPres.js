@@ -3,9 +3,7 @@
 
 import React from 'react';
 import CellTypes from 'cellTypeBar/cellTypes'
-import CellTypesEdit from 'cellTypeBar/cellTypesEdit'
 import ClusterNames from 'cellTypeWork/clusterNames'
-import ColorBar from 'cellTypeBar/colorBar'
 
 const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
     let tds = []
@@ -57,8 +55,6 @@ const Presentation = (props) => {
    return (
         <React.Fragment>
             <CellTypes />
-            <CellTypesEdit />
-            <ColorBar />
             <div style={{
                 ...labelStyle,
                 height: 15,

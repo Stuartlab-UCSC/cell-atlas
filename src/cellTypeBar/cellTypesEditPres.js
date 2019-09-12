@@ -24,7 +24,7 @@ const Input = ({ i, value, props }) => {
     if (showInput === i) {
         return (
             <input
-                id='cellTypeWorkCellTypeEditInput'
+                id='cellTypeBarLabelInput'
                 defaultValue={value}
                 data-position={i}
                 style={style}

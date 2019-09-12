@@ -16,8 +16,8 @@ const DOMAIN = 'cellTypeWork'
 const clearContextElements = (except) => {
     // All context-specific element will be hidden except for the one specified.
     // @param except: a domain
-    if (except !== 'cellTypeWorkCellTypes') {
-        rxSet('cellTypeWork.cellTypeInput.hide')
+    if (except !== 'cellTypeBar') {
+        rxSet('cellTypeBar.menu.close')
     }
     if (except !== 'cellTypeWorkClusters') {
          rxSet('cellTypeWork.clusterMenu.close')

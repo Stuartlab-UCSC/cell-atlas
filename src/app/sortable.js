@@ -5,22 +5,20 @@
 // down the user experience when dragging the mouse.
 
 import React from 'react'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { get as rxGet, set as rxSet } from 'state/rx'
+import { clearContextElements } from 'cellTypeWork/worksheet'
 
 const SortableMarker = () => {
     return (
-        <ClickAwayListener onClickAway={onMenuClickAway}>
-            <div
-                id='sortable_drop_marker'
-                style = {{
-                    background: 'black',
-                    width: 0,
-                    height: 0,
-                    position: 'fixed',
-                }}
-            />
-        </ClickAwayListener>
+        <div
+            id='sortable_drop_marker'
+            style = {{
+                background: 'black',
+                width: 0,
+                height: 0,
+                position: 'fixed',
+            }}
+        />
     )
 }
 
@@ -69,10 +67,6 @@ const currentPosition = (ev) => {
     return { position, drag }
 }
 
-const onMenuClickAway = ev => {
-    resetMarker()
-}
-
 const onMouseUp = (ev) => {
     // End the dragging no matter where the mouse is.
     document.body.removeEventListener('mouseup', onMouseUp)
@@ -104,6 +98,7 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
     dispatch({
         type: 'sortable.drag.mouseDown',
         value: {
+            active: (count > 0),
             count,
             domain,
             marker,
@@ -115,29 +110,21 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
     })
 }
 
-// TODO remove use of this everywhere because it is not hit.
-const sortableOnMouseLeave = (ev) => {
-    resetMarker()
-}
-
 const sortableOnMouseOver = (ev, dispatch, hoverStateType) => {
-
     // If we're sorting, handle the drag event.
-    if (rxGet('sortable.drag').count !== null) {
-        const drag = rxGet('sortable.drag')
-        /*
-        if (drag.count === null) {
-            // The mouse is not down.
-            return
-        }
-        */
-        // Set the dimensions of the drag marker.
+    const drag = rxGet('sortable.drag')
+    if (ev.buttons === 1 || ev.buttons === 3) {
+        // Let everyone know the mouse is being dragged while down
+        // and set the dimensions of the drag marker.
+        clearContextElements()
+        dispatch({ type: 'sortable.drag.active' })
         const bounds = ev.target.getBoundingClientRect()
         showMarker(bounds.bottom, bounds.left, drag.marker)
         
-    // If there is a usual hover state ...
+    // If there is something to handle a non-mouse drag...
     } else if (hoverStateType) {
-        // The items are not being sorted, so show the usual hover item.
+        // The items are not being sorted and there is an alternate handling
+        // for a mouseOver, so handle this with the alternate.
         dispatch({
             type: hoverStateType,
             position: ev.target.dataset.position
@@ -147,6 +134,7 @@ const sortableOnMouseOver = (ev, dispatch, hoverStateType) => {
 
 // State.
 const defaultDrag = {
+    active: false,  // set when there is a mouseOver with the mouse down
     count: null, // the number of elements in the domain
     domain: null, // the domain of the elements being reordered
     pageCoord: null, // the X or Y page coordinate of the mouseDown
@@ -160,6 +148,12 @@ const State = (
         drag: defaultDrag,
     }, action) => {
         switch(action.type) {
+        case 'sortable.drag.active':
+            let drag = {...state.drag, active: true}
+            return {
+                ...state,
+                drag
+            }
         case 'sortable.drag.mouseUp':
             return {
                 ...state,
@@ -175,5 +169,4 @@ const State = (
         }
     }
 
-export { SortableMarker, sortableOnMouseDown, sortableOnMouseLeave,
-    sortableOnMouseOver, State }
+export { SortableMarker, sortableOnMouseDown, sortableOnMouseOver, State }

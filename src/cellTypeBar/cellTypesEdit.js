@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
         clusterCount: dataStore.getClusters().length,
         dims: state.cellTypeWork.dims,
         render: state.cellTypeWork.render,
-        showInput: state.cellTypeWork.cellTypeInput,
+        showInput: state.cellTypeBar.labelInput,
     }
 }
 
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onClickAway: ev => {
             // Clear the hover cell type saved.
-            dispatch({ type: 'cellTypeWork.cellTypeInput.hide' })
+            dispatch({ type: 'cellTypeBar.labelInput.hide' })
         },
         onInputChange: ev => {
             // On change of the value update the value in state.
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) => {
         onMouseOver: ev => {
             // On hover over a cellType, save that position.
             dispatch({
-                type: 'cellTypeWork.cellTypeInput.show',
+                type: 'cellTypeBar.labelInput.show',
                 value: ev.target.dataset.position
             })
             // Clear any leftover context elements.
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
             setTimeout(() => {
                 try {
                     document.getElementById(
-                        'cellTypeWorkCellTypeEditInput').focus()
+                        'cellTypeBarLabelInput').focus()
                 } catch(e) {
                 }
             }, 10)
@@ -56,15 +56,15 @@ const mapDispatchToProps = (dispatch) => {
             console.log('position:', position)
             if (position === count - 1) {
                 // We're on the last cluster, so hide all cell type inputs.
-                dispatch({ type: 'cellTypeWork.cellTypeInput.hide' })
+                dispatch({ type: 'cellTypeBar.labelInput.hide' })
             } else {
                 dispatch({
-                    type: 'cellTypeWork.cellTypeInput.show',
+                    type: 'cellTypeBar.labelInput.show',
                     value: position + 1,
                 })
                 // use a component ref?
                 //setTimeout( () => { document.getElementById(
-                //    'cellTypeWorkCellTypeEditInput').focus() })
+                //    'cellTypeBarLabelInput').focus() })
             }
         },
         */

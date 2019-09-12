@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
         dims: state.cellTypeWork.dims,
         menuPosition: state.cellTypeWork.geneMenu,
         render: state.cellTypeWork.render,
-        sorting: (state.sortable.drag.count !== null),
+        sorting: (state.sortable.drag.active),
         onMenuClickAway: clearContextElements,
     }
 }
@@ -34,21 +34,6 @@ const reorder = (start, end) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRemoveClick: ev => {
-            // Close the context menu.
-            clearContextElements()
-
-            // Remove the gene's row from the worksheet.
-            removeGeneBubbles(ev.target.dataset.position)
-        },
-        onMouseLeave: ev => {
-            clearContextElements(DOMAIN)
-        },
-        onMouseOver: ev => {
-            // Clear any context elements not belonging to this domain.
-            clearContextElements(DOMAIN)
-            sortableOnMouseOver(ev, dispatch, 'cellTypeWork.geneMenu.open')
-        },
         onMouseDown: ev => {
             // Close the usual hover items.
             clearContextElements()
@@ -69,6 +54,21 @@ const mapDispatchToProps = (dispatch) => {
                 'y',
                 dispatch,
             )
+        },
+        onMouseLeave: ev => {
+            clearContextElements(DOMAIN)
+        },
+        onMouseOver: ev => {
+            // Clear any context elements not belonging to this domain.
+            clearContextElements(DOMAIN)
+            sortableOnMouseOver(ev, dispatch, 'cellTypeWork.geneMenu.open')
+        },
+        onRemoveClick: ev => {
+            // Close the context menu.
+            clearContextElements()
+
+            // Remove the gene's row from the worksheet.
+            removeGeneBubbles(ev.target.dataset.position)
         },
         onScatterClick: ev => {
             getGeneScatterPlot(ev.target.dataset.gene)

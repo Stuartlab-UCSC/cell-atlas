@@ -10,7 +10,7 @@ export const chipBackgrounds = {
 export let background
 export let altBackground
 export let altForeground
-export const accentColor = '#03a9f4'
+export const primaryColor = '#03a9f4'
 export const fontFamily = [
     "Myriad Set Pro",
     "Helvetica Neue",
@@ -48,11 +48,11 @@ export const themeData = themeType => {
                 default: background,
             },
             primary: {
-                main: accentColor,
+                main: primaryColor,
                 contrastText: buttonTextColor
             },
             secondary: {
-                main: accentColor,
+                main: primaryColor,
                 contrastText: buttonTextColor,
             },
         },

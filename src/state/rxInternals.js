@@ -5,6 +5,7 @@ import { createStore, combineReducers } from 'redux'
 import rx from 'state/rx'
 import auth from 'auth/state'
 import bubble from 'bubble/state'
+import cellTypeBar from 'cellTypeBar/state'
 import { cellTypeGeneClusters, cellTypeGene, ctgVariable }
     from 'cellTypeGene/state'
 import cellTypeScatter from 'cellTypeScatter/state'
@@ -62,6 +63,7 @@ export const init = () => {
         app,
         auth,
         bubble,
+        cellTypeBar,
         cellTypeGene,
         cellTypeGeneClusters,
         cellTypeScatter,

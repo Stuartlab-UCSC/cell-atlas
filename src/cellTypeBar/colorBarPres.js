@@ -1,54 +1,89 @@
-// The presentational component for the clusters and their info
+// The presentational component for the cell type colorBar
 // on the cell type worksheet.
 
 import React from 'react'
-import { GithubPicker } from 'react-color';
 
-const ColorPicker = ({props}) => {
-    const { showPicker, colormap, startColor} = props
-    if (showPicker === null) {
-        return (null)
+const findBorder = (select, i) => {
+    // If the segment is in the range of the selection, set its borders.
+    const sBorder = 'solid 1px #444'
+    let bTop = null
+    let bBottom = null
+    let bLeft = null
+    let bRight = null
+    if (select) {
+        if (select[0] <= select[1]) {
+            if (i >= select[0] && i <= select[1]) {
+                bTop = sBorder
+                bBottom = sBorder
+                if (i === select[0]) {
+                    bLeft = sBorder
+                }
+                if (i === select[1]) {
+                    bRight = sBorder
+                }
+            }
+        } else {
+            if (i >= select[1] && i <= select[0]) {
+                bTop = sBorder
+                bBottom = sBorder
+                if (i === select[1]) {
+                    bLeft = sBorder
+                }
+                if (i === select[0]) {
+                    bRight = sBorder
+                }
+            }
+        }
     }
-    return (
-        <GithubPicker
-            colors={colormap}
-            value={startColor}
-            triangle='hide'
-        />
-    )
+    return { bTop, bBottom, bLeft, bRight }
 }
 
 const ColorBarPres = (props) => {
-    const { colorBar, colormap, onBarClick, onMouseOver } = props
+    const { domain, typeGroups, colormap, select, sorting, onClick, onMouseDown,
+        onMouseLeave, onMouseOver, /*cellTypes*/ } = props
     const { colorBarHeight, colWidth, geneWidth } = props.dims
     let tds = []
-    colorBar.forEach((bar, i) => {
+    typeGroups.forEach((group, i) => {
+        const width = colWidth * (group[1] - group[0] + 1)
+        const { bTop, bBottom, bLeft, bRight } = findBorder(select, i)
+        // Find the middle color of the group.
+        const colorIndex = Math.round(((group[1] - group[0]) / 2) + group[0])
         tds.push(
             <div
                 key={i}
-                data-position={i}
                 style={{
-                    width: colWidth,
+                    position: 'relative',
+                    width,
                     display: 'inline-block',
-                    height: colorBarHeight,
-                    background: colormap[bar],
-                    cursor: 'pointer',
                 }}
-                onClick={onBarClick}
-                onMouseOver={onMouseOver}
-            />
+            >
+                <div
+                    data-position={i}
+                    data-domain={domain}
+                    style={{
+                        background: colormap[colorIndex],
+                        height: colorBarHeight,
+                        cursor: (sorting) ? 'grabbing' : 'grab',
+                        userSelect: 'none',
+                        borderTop: bTop,
+                        borderBottom: bBottom,
+                        borderLeft: bLeft,
+                        borderRight: bRight,
+                    }}
+                    onClick={onClick}
+                    onMouseDown={onMouseDown}
+                    onMouseLeave={onMouseLeave}
+                    onMouseOver={onMouseOver}
+                />
+            </div>
         )
     })
     return (
-        <div>
-            <div
-                style={{paddingLeft: geneWidth }}
-            >
-                {tds}
-            </div>
-            <ColorPicker props={props} />
+        <div style={{ paddingLeft: geneWidth }} >
+            {tds}
         </div>
     )
 }
 
 export default ColorBarPres
+
