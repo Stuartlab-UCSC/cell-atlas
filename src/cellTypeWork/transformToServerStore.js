@@ -90,7 +90,7 @@ const buildClusters = (data) => {
     
     // Build the cluster tsv lines.
     let tsvLines = clusterLines.map((cluster, i) => {
-        return [cluster].join('\t')
+        return cluster.join('\t')
     })
     
     // The header.
