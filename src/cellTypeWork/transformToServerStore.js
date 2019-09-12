@@ -43,7 +43,7 @@ const buildClusters = (data) => {
     
     // The header.
     tsvLines.unshift(
-        ['column\tcluster\tcell_count\tbar_color\t,cell_type\thide_cell_type'])
+        ['column\tcluster\tcell_count\tbar_color\tcell_type\thide_cell_type'])
     // Transform the lines to tsv.
     return tsvLines.join('\n')
 }

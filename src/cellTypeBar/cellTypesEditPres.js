@@ -47,7 +47,12 @@ const CellTypesEdit = (props) => {
     const { cellTypes, onClickAway } = props
     let inputs = []
     cellTypes.forEach((cellType, i) => {
-        inputs.push( <Input key={i} i={i} value={cellType} props={props} /> )
+        inputs.push(
+            <Input key={i}
+            i={i}
+            value={cellType.hide ? null : cellType.label}
+            props={props}
+        /> )
     })
     return (
         <ClickAwayListener onClickAway={onClickAway}>

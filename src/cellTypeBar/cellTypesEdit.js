@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
         onInputChange: ev => {
             // On change of the value update the value in state.
             dataStore.changeCellType(
-                ev.target.value, ev.target.dataset.position)
+                { label: ev.target.value }, ev.target.dataset.position)
             dispatch({ type: 'cellTypeWork.render.now' })
         },
         onMouseOver: ev => {
