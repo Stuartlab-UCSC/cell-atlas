@@ -28,7 +28,7 @@ const reorder = (start, end) => {
     const item = sortee[start]
     sortee.splice(start, 1)
     sortee.splice(end, 0, item)
-    dataStore.reorderGenes(sortee)
+    dataStore.setGenes(sortee)
     rxSet('cellTypeWork.render.now')
 }
 

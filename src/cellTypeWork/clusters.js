@@ -3,8 +3,9 @@
 import { connect } from 'react-redux'
 import Presentation from 'cellTypeWork/clustersPres'
 import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
+import { set as rxSet } from 'state/rx'
+import { buildTypeGroups } from 'cellTypeWork/transformToChart'
 import getGeneTableData from 'cellTypeGene/ctgFetch'
-import { reorder as cellTypeReorder } from 'cellTypeBar/cellTypes'
 import dataStore from 'cellTypeWork/dataStore'
 import { clearContextElements } from 'cellTypeWork/worksheet'
 import { scatterColumnsReordered } from 'cellTypeScatter/scatter'
@@ -23,18 +24,46 @@ const mapStateToProps = (state) => {
     }
 }
 
-const reorder = (start, end) => {
-    // Remove and insert the item in its new place in the list.
-    const sortee = dataStore.getClusters()
-    const item = sortee[start]
-    sortee.splice(start, 1)
-    sortee.splice(end, 0, item)
-    dataStore.reorderClusters(sortee)
-    // TODO Reorder the cell types the same.
-    cellTypeReorder(start, end)
-    // TODO update the cell type group order.
+const reorderColumns = (order) => {
+    // Reorder columns given an array of new positions indexed
+    // by the old positions.
+
+    // Reorder the clusters.
+    const oldClusters = dataStore.getClusters()
+    const newClusters = oldClusters.map((cluster, oldC) => {
+        return oldClusters[order[oldC]]
+    })
+    dataStore.setClusters(newClusters)
+
     // Update the scatter plot to the new colors.
     scatterColumnsReordered()
+
+    // Reorder the cell Types.
+    const oldCellTypes = dataStore.getCellTypes()
+    const newCellTypes = oldCellTypes.map((type, oldC) => {
+        return oldCellTypes[order[oldC]]
+    })
+    dataStore.setCellTypes(newCellTypes)
+
+    // Rebuild the cell type groups.
+    dataStore.setTypeGroups(buildTypeGroups(newCellTypes))
+    
+    // Re-render.
+    rxSet('cellTypeWork.render.now')
+}
+
+const reorder = (newC, oldC) => {
+    // Find the new order given a new and old column position.
+    
+    // Build an array of old column positions indexed by the new positions.
+    const clusters = dataStore.getClusters()
+    let order = [...Array(clusters.length).keys()]
+    
+    // Fix up the values in the array for the new column position.
+    order.splice(newC, 1)
+    order.splice(oldC, 0, newC)
+    
+    reorderColumns(order)
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -82,3 +111,4 @@ const CellTypes = connect(
 )(Presentation)
 
 export default CellTypes
+export { reorderColumns }

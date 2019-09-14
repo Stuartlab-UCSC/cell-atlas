@@ -95,24 +95,16 @@ class DataStore {
         this.bubbles = bubbles
     }
 
-    reorderCellTypes(cellTypes) {
+    setBubbles(bubbles) {
+        this.data.bubbles = bubbles
+    }
+
+    setCellTypes(cellTypes) {
         this.data.cellTypes = cellTypes
     }
     
-    reorderClusters(clusters) {
+    setClusters(clusters) {
         this.data.clusters = clusters
-    }
-
-    reorderGenes(genes) {
-        this.data.genes = genes
-    }
-    
-    reorderTypeGroups(value) {
-        this.data.typeGroups = value
-    }
-    
-    setBubbles(bubbles) {
-        this.data.bubbles = bubbles
     }
 
     setColorBy = (value) => {
@@ -123,6 +115,10 @@ class DataStore {
         this.data = defaultData
     }
 
+    setGenes(genes) {
+        this.data.genes = genes
+    }
+    
     setSizeBy = (value) => {
         this.data.sizeBy = value
     }

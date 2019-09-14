@@ -103,7 +103,7 @@ const sortableOnMouseDown = (ev, count, domain, marker, reorderFx, xOrY,
             domain,
             marker,
             pageCoord: xOrY === 'x' ? ev.pageX : ev.pageY,
-            position: ev.target.dataset.position,
+            position: parseInt(ev.target.dataset.position, 10),
             reorderFx,
             xOrY,
         }

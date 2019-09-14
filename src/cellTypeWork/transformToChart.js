@@ -25,6 +25,8 @@ const buildTypeGroups = (cellTypes) => {
             groups.push([begin, i - 1])
             begin = i
         }
+        // Clear any old show flag.
+        delete cellTypes[i].show
         prevLabel = type.label
     })
     // Save the last group.
@@ -33,7 +35,7 @@ const buildTypeGroups = (cellTypes) => {
     // Determine which column should display the label.
     groups.forEach(group => {
         // Find the middle column index.
-        const i = Math.round((group[1] - group[0]) / 2) + group[0]
+        const i = Math.floor((group[1] - group[0]) / 2) + group[0]
 
         cellTypes[i].show = true
     })
@@ -178,3 +180,4 @@ const transfromToChart = (data) => {
 }
 
 export default transfromToChart
+export { buildTypeGroups }

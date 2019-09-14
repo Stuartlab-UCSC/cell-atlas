@@ -4,9 +4,8 @@
 import { connect } from 'react-redux'
 import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
 import dataStore from 'cellTypeWork/dataStore'
-import { scatterColumnsReordered } from 'cellTypeScatter/scatter'
+import { reorderColumns } from 'cellTypeWork/clusters'
 import { clearContextElements } from 'cellTypeWork/worksheet'
-import { reorder as cellTypeReorder } from 'cellTypeBar/cellTypes'
 import Presentation from 'cellTypeBar/colorBarPres'
 
 const DOMAIN = 'cellTypeBar'
@@ -23,19 +22,32 @@ const mapStateToProps = (state) => {
     }
 }
 
-const reorder = (start, end) => {
-    // Remove and insert the item in its new place in the list.
-    const sortee = dataStore.getTypeGroups()
-    const item = sortee[start]
-    sortee.splice(start, 1)
-    sortee.splice(end, 0, item)
-    dataStore.reorderTypeGroups(sortee)
-    // TODO update the cluster order.
-    // TODO update the cell type labels for groups greater than one
-    cellTypeReorder(start, end)
-    // Update the scatter plot to the new colors.
-    scatterColumnsReordered()
-    //rxSet('cellTypeWork.render.now')
+const reorder = (newG, oldG) => {
+    // Find the new order given a new and old group position.
+    
+    // Find the number of columns in the moved group.
+    const oldGroups = dataStore.getTypeGroups()
+
+    // Build an array of the old group positions indexed by the new positions.
+    let order = [...Array(oldGroups.length).keys()]
+    order.splice(newG, 1)
+    order.splice(oldG, 0, newG)
+    
+    // Find the new groups with each group still containing its old
+    // column range.
+    const newGroups = oldGroups.map((group, oldG) => {
+        return oldGroups[order[oldG]]
+    })
+    
+    // Build an array of the old column positions indexed by the new positions.
+    order = []
+    newGroups.forEach(group => {
+        for (let j = group[0]; j <= group[1]; j++) {
+            order.push(j)
+        }
+    })
+    // Reorder the columns given the new column order.
+    reorderColumns(order)
 }
 
 const mapDispatchToProps = (dispatch) => {
