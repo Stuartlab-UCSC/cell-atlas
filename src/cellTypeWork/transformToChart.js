@@ -34,10 +34,7 @@ const buildTypeGroups = (cellTypes) => {
     
     // Determine which column should display the label.
     groups.forEach(group => {
-        // Find the middle column index.
-        const i = Math.floor((group[1] - group[0]) / 2) + group[0]
-
-        cellTypes[i].show = true
+        cellTypes[group[0]].show = true
     })
     
     return groups

@@ -18,12 +18,12 @@ gaslkgf klsjlkhjl ha lkj;lk slkfjal lkja;sfg lkjls alskjlfk aslkjlg sssss`,
     color_by: 'log2',
     gene_table_url: 'localhost:5000',
     clusters:
-        'column	cluster	cell_count	bar_color	cell_type	hide_cell_type\n' +
-        '0	01	2643	0	A\n' +
-        '1	11	13962	2	A\n' +
-        '2	22	3322	1	B\n' +
-        '3	33	3322	1	B\n' +
-        '4	44	3322	1	C',
+        'column	cluster	cell_count	cell_type\n' +
+        '0	01	2643	A\n' +
+        '1	11	13962	A\n' +
+        '2	22	3322	B\n' +
+        '3	33	3322	B\n' +
+        '4	44	3322	C',
     genes:
         'row	gene\n' +
         '1	ALK\n' +

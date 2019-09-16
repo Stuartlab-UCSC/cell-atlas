@@ -47,7 +47,7 @@ const ColorBarPres = (props) => {
         const width = colWidth * (group[1] - group[0] + 1)
         const { bTop, bBottom, bLeft, bRight } = findBorder(select, i)
         // Find the middle color of the group.
-        const colorIndex = Math.floor(((group[1] - group[0]) / 2) + group[0])
+        //const colorIndex = Math.floor(((group[1] - group[0]) / 2) + group[0])
         tds.push(
             <div
                 key={i}
@@ -61,7 +61,7 @@ const ColorBarPres = (props) => {
                     data-position={i}
                     data-domain={domain}
                     style={{
-                        background: colormap[colorIndex],
+                        background: colormap[group[0]],
                         height: colorBarHeight,
                         cursor: (sorting) ? 'grabbing' : 'grab',
                         userSelect: 'none',
