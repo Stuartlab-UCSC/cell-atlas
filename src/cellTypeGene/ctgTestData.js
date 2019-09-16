@@ -2,7 +2,7 @@
 const testData = {
 	cluster_name: 'X',
 	gene_table:
-`gene	log2	fold change vs next	support
+`gene	t.pval	avg.exp.scaled	t-statistic
 EGFR	0	0.1333333	0.6357
 VEGFA	-1.8606666	0.2378	0.74
 APOE	-2.4382	-0.234	0.94
