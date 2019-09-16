@@ -13,6 +13,24 @@ import { newDataReceived } from 'cellTypeGene/ctgDisplayRows'
 import testData from 'cellTypeGene/ctgTestData'
 import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
 
+const tooltips = {
+    'pct.exp': "The percent of cells in the cluster expressing a gene.",
+    'avg.exp.scaled': "The average expression of a gene in the cluster " +
+        "scaled to unit variance with maxium values of plus and minus 2.5.",
+    't-statistic': "The student's t-test statistic for cells in the cluster " +
+        "vs all other cells.",
+    't.pval': "The uncorrected pvalue for the student's t-test."
+}
+
+const findColumnTooltip = (name) => {
+    console.log('Object.keys(tooltips)', Object.keys(tooltips))
+    const varName = Object.keys(tooltips).find(key => {
+        console.log('name, key##:' + name + '##' + key + '##')
+        return (key === name)
+    })
+    return (varName) ? tooltips[varName] : null
+}
+
 const receiveTableDataFromServer = (columns, data) => {
     // Receive the table column and body data
     // derived from the original data from the server.
@@ -24,6 +42,10 @@ const receiveTableDataFromServer = (columns, data) => {
     // Variable names start in column index 1.
     const list = columns.slice(1).map(column => {
         column.options = {filter: false}
+        const hint = findColumnTooltip(column.name)
+        if (hint) {
+            column.options.hint = hint
+        }
         return {
             value: column.name,
             name: column.name,
