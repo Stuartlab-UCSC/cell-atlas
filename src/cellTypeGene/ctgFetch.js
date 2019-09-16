@@ -23,9 +23,7 @@ const tooltips = {
 }
 
 const findColumnTooltip = (name) => {
-    console.log('Object.keys(tooltips)', Object.keys(tooltips))
     const varName = Object.keys(tooltips).find(key => {
-        console.log('name, key##:' + name + '##' + key + '##')
         return (key === name)
     })
     return (varName) ? tooltips[varName] : null
