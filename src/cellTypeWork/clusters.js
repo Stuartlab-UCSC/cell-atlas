@@ -2,8 +2,8 @@
 
 import { connect } from 'react-redux'
 import Presentation from 'cellTypeWork/clustersPres'
-import { sortableOnMouseDown, sortableOnMouseOver } from 'app/sortable'
-import { set as rxSet } from 'state/rx'
+import { sortableOnMouseMove, sortableOnMouseOver } from 'app/sortable'
+import { get as rxGet, set as rxSet } from 'state/rx'
 import { buildTypeGroups } from 'cellTypeWork/transformToChart'
 import getGeneTableData from 'cellTypeGene/ctgFetch'
 import dataStore from 'cellTypeWork/dataStore'
@@ -68,40 +68,47 @@ const reorder = (newC, oldC) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onMouseDown: ev => {
-            // Close all context elements.
-            clearContextElements()
-            // Save the info for this item for sortable drag and drop.
-            const marker = {
-                width: '2px',
-                height: '20px',
-                topOffset: 0,
-                leftOffset: -1,
+        onMouseMove: ev => {
+            // On a mouse drag, if sorting is not active,
+            // initialize this sortable.
+            if (!rxGet('sortable.drag').active
+                && (ev.buttons === 1 || ev.buttons === 3)) {
+                const marker = {
+                    width: '2px',
+                    height: '20px',
+                    topOffset: 0,
+                    leftOffset: -1,
+                }
+                sortableOnMouseMove(
+                    ev,
+                    dataStore.getClusters().length,
+                    DOMAIN,
+                    marker,
+                    reorder,
+                    'x',
+                    dispatch,
+                )
             }
-            sortableOnMouseDown(
-                ev,
-                dataStore.getClusters().length,
-                DOMAIN,
-                marker,
-                reorder,
-                'x',
-                dispatch,
-            )
         },
         onGeneStatsClick: ev => {
             // Get the cluster's gene stats.
             const cluster = dataStore.getClusters()[ev.target.dataset.position]
             getGeneTableData(cluster.name)
             // Close the context menu.
-            clearContextElements()
-        },
-        onMouseLeave: ev => {
-            clearContextElements(DOMAIN)
+            dispatch({ type: 'cellTypeWork.clusterMenu.geneStats' })
         },
         onMouseOver: ev => {
             // Clear any context elements not belonging to this domain.
             clearContextElements(DOMAIN)
-            sortableOnMouseOver(ev, dispatch, 'cellTypeWork.clusterMenu.open')
+            // If dragging, let the sortable know. Otherwise open the menu.
+            if (rxGet('sortable.drag').active) {
+                sortableOnMouseOver(ev, dispatch)
+            } else {
+                dispatch({
+                    type: 'cellTypeWork.clusterMenu.open',
+                    value: ev.target.dataset.position,
+                })
+            }
         },
     }
 }

@@ -36,6 +36,8 @@ export const get = (statePiece) => {
     //return reduxStore.getState()[seg[0]][seg[1]]
 }
 
+export const rxGet = (statePiece) => get(statePiece)
+
 export const set = (stateAction, optsIn) => {
     // Set the state using an state action type.
     // @param stateAction: the action type required for any operation
@@ -47,6 +49,8 @@ export const set = (stateAction, optsIn) => {
     opts.type = stateAction
     return reduxStore.dispatch(opts)
 }
+
+export const rxSet = (stateAction, optsIn) => set(stateAction, optsIn)
 
 export const dispatch = (stateAction) => {
     // Dispatch an action.

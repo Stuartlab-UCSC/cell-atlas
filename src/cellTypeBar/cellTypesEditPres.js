@@ -21,6 +21,7 @@ const Input = ({ i, value, props }) => {
     }
 
     // If the mouse is over the field, show an input field.
+    /*
     if (showInput === i) {
         return (
             <input
@@ -31,7 +32,8 @@ const Input = ({ i, value, props }) => {
                 onChange={onInputChange}
             />
         )
-    }
+    }*/
+    
     // If the mouse is not over the field, just show a mouse-over target.
     return (
         <div

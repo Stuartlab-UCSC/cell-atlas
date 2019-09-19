@@ -9,23 +9,19 @@
     height: 0;
     border-style: solid;
     z-index:9998;
-}
-.popover_type_group::before,
-.popover_clusters::before {
     border-width: 0 8px 8px 8px;
     border-color: transparent transparent #888 transparent;
 }
-.popover_type_group::before{
-    left: 45px !important;
+.popover_type_group::before {
+    left: 38px !important;
     top: 1px;
 }
-.popover_clusters::before{
+.popover_clusters::before {
     left: 45px !important;
-    top: 1px;
+    top: 9px;
 }
-/* Popover menu arrow for genes */
 .popover_genes::before{
-    top: 8px !important;
+    top: 28px !important;
     left: 0;
     border-width: 8px 8px 8px 0;
     border-color: transparent #888 transparent transparent;

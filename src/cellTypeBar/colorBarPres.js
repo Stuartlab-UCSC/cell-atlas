@@ -2,10 +2,11 @@
 // on the cell type worksheet.
 
 import React from 'react'
+import Menu from 'cellTypeBar/colorBarMenu'
 
 const findBorder = (select, i) => {
     // If the segment is in the range of the selection, set its borders.
-    const sBorder = 'solid 1px #444'
+    const sBorder = 'solid 2px #000'
     let bTop = null
     let bBottom = null
     let bLeft = null
@@ -40,14 +41,12 @@ const findBorder = (select, i) => {
 
 const ColorBarPres = (props) => {
     const { domain, typeGroups, colormap, select, sorting, onClick, onMouseDown,
-        onMouseLeave, onMouseOver, /*cellTypes*/ } = props
+        onMouseMove, onMouseOver } = props
     const { colorBarHeight, colWidth, geneWidth } = props.dims
     let tds = []
     typeGroups.forEach((group, i) => {
         const width = colWidth * (group[1] - group[0] + 1)
         const { bTop, bBottom, bLeft, bRight } = findBorder(select, i)
-        // Find the middle color of the group.
-        //const colorIndex = Math.floor(((group[1] - group[0]) / 2) + group[0])
         tds.push(
             <div
                 key={i}
@@ -72,15 +71,21 @@ const ColorBarPres = (props) => {
                     }}
                     onClick={onClick}
                     onMouseDown={onMouseDown}
-                    onMouseLeave={onMouseLeave}
+                    onMouseMove={onMouseMove}
                     onMouseOver={onMouseOver}
                 />
             </div>
         )
     })
     return (
-        <div style={{ paddingLeft: geneWidth }} >
-            {tds}
+        <div style={{
+            position: 'relative',
+            marginLeft: geneWidth,
+        }}>
+            <div>
+                {tds}
+            </div>
+            <Menu />
         </div>
     )
 }

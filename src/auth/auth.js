@@ -17,7 +17,9 @@ const checkUrlSearch = () => {
         const u = parms.get('u')
         if (u) {
             if (u === 'check-email') {
-                rxSet('auth.checkMail.now')
+                rxSet('app.snackbar.open', { action:
+                    'Check your email for a verification link to sign on.',
+                })
             } else if (u === 'logout') {
                 rxSet('auth.user.logout')
                 resetOnLogout()

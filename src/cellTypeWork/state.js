@@ -45,7 +45,8 @@ const State = (
         topDrawer: true,
     }, action) => {
         switch(action.type) {
-        case 'cellTypeWork.clusterMenu.close':
+        case 'cellTypeWork.clusterMenu.geneStats':
+        case 'cellTypeWork.clusterMenu.irrelevant':
             return {
                 ...state,
                 clusterMenu: null
@@ -53,7 +54,7 @@ const State = (
         case 'cellTypeWork.clusterMenu.open':
             return {
                 ...state,
-                clusterMenu: parseInt(action.position, 10)
+                clusterMenu: parseInt(action.value, 10)
             }
         case 'cellTypeWork.colormap.create':
             return {
@@ -97,7 +98,10 @@ const State = (
                 ...state,
                 fetchStatus: 'quiet'
             }
-        case 'cellTypeWork.geneMenu.close':
+        case 'cellTypeWork.geneMenu.irrelevant':
+        case 'cellTypeWork.geneMenu.remove':
+        case 'cellTypeWork.geneMenu.scatter':
+        case 'cellTypeWork.geneMenu.sorting':
             return {
                 ...state,
                 geneMenu: null
@@ -105,7 +109,7 @@ const State = (
         case 'cellTypeWork.geneMenu.open':
             return {
                 ...state,
-                geneMenu: parseInt(action.position, 10),
+                geneMenu: parseInt(action.value, 10),
             }
         case 'cellTypeWork.initialPageLoaded.true':
             return {

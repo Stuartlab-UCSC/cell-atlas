@@ -9,7 +9,6 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import Auth from 'auth/auth'
-import CheckMail from 'auth/checkMail'
 import CellTypeWork from 'cellTypeWork/page'
 import Database from 'database/Database'
 import DataModel from 'dataModel/DataModel'
@@ -22,6 +21,7 @@ import NavBar from 'app/NavBar'
 import PageNotFound from 'home/PageNotFound'
 import Pipeline from 'pipeline/page'
 import sessionStoreInit from 'state/sessionStore'
+import Snackbar from 'components/snackbar'
 import { SortableMarker } from 'app/sortable'
 import Theme from 'app/Theme'
 
@@ -55,7 +55,7 @@ const App = ({store}) => {
                             <Route component={PageNotFound} />
                         </Switch>
                     </div>
-                    <CheckMail />
+                    <Snackbar />
                     <NamerDialog />
                     <SortableMarker />
                 </div>

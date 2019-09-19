@@ -9,19 +9,20 @@ import dataStore from 'cellTypeWork/dataStore'
 import { getInitialScatterPlot } from 'cellTypeScatter/scatter'
 
 const buildTypeGroups = (cellTypes) => {
-    // Find the cell type groups by looking at contiguous duplicate cell types.
-    // The groups contain the begin and end column positions of each group and
-    // look something like: [[1,1], [2,3], [4,6]]
-    
-    // Build the groups.
+    // Find the cell type groups. A groups is defined by contiguous duplicate
+    // cell types. The groups will contain the begin and end column positions of
+    // each group and look something like: [[1,1], [2,3], [4,6]]
     let groups = []
     let prevLabel
     let begin
     cellTypes.forEach((type, i) => {
         if (i === 0) {
-            begin = i
-        } else if (type.label !== prevLabel) {
-            // Save the previous group.
+            begin = 0
+            
+        // If the label is different from the previous label,
+        // or if there is no label...
+        } else if (type.label !== prevLabel || !type.label) {
+            // The previous group is complete, so save it.
             groups.push([begin, i - 1])
             begin = i
         }

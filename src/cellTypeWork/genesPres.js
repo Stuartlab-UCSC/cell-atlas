@@ -20,9 +20,9 @@ const Menu = ({ gene, i, props }) => {
             className='popover_genes'
             style={{
                 position: 'absolute',
-                top: -8,
-                left: geneWidth - 10,
-                width: '120px',
+                top: -28,
+                left: geneWidth - 7,
+                width: '7rem',
             }}
         >
             <ClickAwayListener onClickAway={onMenuClickAway}>
@@ -59,7 +59,7 @@ const Menu = ({ gene, i, props }) => {
 }
 
 const GeneList = ({ props }) => {
-    const { genes, sorting, onMouseDown, onMouseLeave, onMouseOver } = props
+    const { genes, sorting, onMouseMove, onMouseOver } = props
     const { geneWidth, rowHeight } = props.dims
     
     // Build the labels.
@@ -79,8 +79,7 @@ const GeneList = ({ props }) => {
                         cursor: (sorting) ? 'grabbing' : 'grab',
                         userSelect: 'none',
                     }}
-                    onMouseDown={onMouseDown}
-                    onMouseLeave={onMouseLeave}
+                    onMouseMove={onMouseMove}
                     onMouseOver={onMouseOver}
                 >
                     {gene}

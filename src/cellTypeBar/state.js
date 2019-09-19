@@ -22,7 +22,7 @@ const State = (
                 ...state,
                 group: false
             }
-        case 'cellTypeBar.labelInput.hide':
+        case 'cellTypeBar.labelInput.irrelevant':
             return {
                 ...state,
                 labelInput: null
@@ -33,30 +33,31 @@ const State = (
                 ...state,
                 labelInput: parseInt(action.value, 10)
             }
-        /*
-        case 'cellTypeBar.menu.close':
+        case 'cellTypeBar.menu.deselected':
+        case 'cellTypeBar.menu.groupedUngrouped':
+        case 'cellTypeBar.menu.irrelevant':
+        case 'cellTypeBar.menu.noValidOptions':
+        case 'cellTypeBar.menu.sorting':
             return {
                 ...state,
                 menu: false
             }
         case 'cellTypeBar.menu.open':
-            // An array of true or false, one for each type group.
+            // Save the start and end groups and columns of the menu.
             return {
                 ...state,
                 menu: action.value
             }
         case 'cellTypeBar.select.begin':
+        case 'cellTypeBar.select.reorder':
+        case 'cellTypeBar.select.reselect':
+            let val = parseInt(action.value, 10)
             return {
                 ...state,
-                select: [parseInt(action.value, 10), parseInt(action.value,10)]
+                select: [val, val]
             }
-        case 'cellTypeBar.select.clickAway':
-            console.error('cellTypeBar.select.clickAway')
-            return {
-                ...state,
-                select: null
-            }
-        case 'cellTypeBar.select.hide':
+        case 'cellTypeBar.select.deselect':
+        case 'cellTypeBar.select.groupedUngrouped':
             return {
                 ...state,
                 select: null
@@ -66,7 +67,6 @@ const State = (
                 ...state,
                 select: [state.select[0], parseInt(action.value,10)]
             }
-        */
         case 'cellTypeBar.ungroup.enable':
             return {
                 ...state,

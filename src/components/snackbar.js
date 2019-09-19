@@ -1,9 +1,13 @@
 
 // Our wrapper around material-ui snackbar.
 
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, IconButton, Snackbar } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
+import { rxSet } from 'state/rx'
+
 
 const Action = ({ label, onClick }) => {
     if (!label || !onClick) {
@@ -20,7 +24,8 @@ const Action = ({ label, onClick }) => {
     )
 }
 
-const CaSnackbar = ({ actionLabel, message, open, onActionClick, onClose }) => {
+const CaSnackbarPres = (props) => {
+    const { actionLabel, message, open, onActionClick, onClose } = props
     return (
         <Snackbar
             open={open}
@@ -51,5 +56,36 @@ const CaSnackbar = ({ actionLabel, message, open, onActionClick, onClose }) => {
         />
     )
 }
+
+CaSnackbarPres.propTypes = {
+    open: PropTypes.bool.isRequired, // true means the open the snackbar
+    message: PropTypes.string.isRequired, // the message to the user
+
+    actionLabel: PropTypes.string, // the label on the optional action button
+    onActionClick: PropTypes.func, // the event handler for the action button
+    onClose: PropTypes.func, // the event handler for closing the snackbar
+}
+
+const onReallyClose = (reason, onClose) => {
+    if (reason === 'clickaway') {
+        return
+    }
+    if (onClose) {
+        onClose()
+    }
+    rxSet('app.snackbar.close')
+}
+
+const mapStateToProps = state => {
+    return {
+        ...state.app.snackbar,
+        onClose: (ev, reason) =>
+            onReallyClose(reason, state.app.snackbar.onClose),
+    }
+}
+
+const CaSnackbar = connect(
+    mapStateToProps
+)(CaSnackbarPres)
 
 export default CaSnackbar

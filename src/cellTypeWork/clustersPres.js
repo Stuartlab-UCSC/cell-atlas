@@ -36,7 +36,7 @@ const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
 
 const Presentation = (props) => {
     const { clusters, colormap, dims, menuPosition, sorting, onMenuClickAway,
-        onGeneStatsClick, onMouseDown, onMouseLeave, onMouseOver} = props
+        onGeneStatsClick, onMouseMove, onMouseOver} = props
     const { colWidth, geneWidth, labelFontSize } = props.dims
     if (!clusters) {
         return (null)
@@ -71,8 +71,7 @@ const Presentation = (props) => {
                 topStyle={topStyle}
                 onGeneStatsClick={onGeneStatsClick}
                 onMenuClickAway={onMenuClickAway}
-                onMouseDown={onMouseDown}
-                onMouseLeave={onMouseLeave}
+                onMouseMove={onMouseMove}
                 onMouseOver={onMouseOver}
              />
             <CellCounts

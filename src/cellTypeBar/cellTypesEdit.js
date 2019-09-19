@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
         dims: state.cellTypeWork.dims,
         render: state.cellTypeWork.render,
         showInput: state.cellTypeBar.labelInput,
+        onClickAway: () => {},//clearContextElements,
     }
 }
 

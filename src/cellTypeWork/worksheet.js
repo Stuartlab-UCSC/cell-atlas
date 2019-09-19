@@ -15,19 +15,23 @@ const DOMAIN = 'cellTypeWork'
 
 const clearContextElements = (except) => {
     // All context-specific element will be hidden except for the one specified.
-    // @param except: a domain
-    if (except !== 'cellTypeBar') {
-        rxSet('cellTypeBar.menu.close')
-    }
-    if (except !== 'cellTypeWorkClusters') {
-         rxSet('cellTypeWork.clusterMenu.close')
-    }
-    if (except !== 'cellTypeWorkColorBar') {
-        rxSet('cellTypeWork.colormapPicker.hide')
-    }
-    if (except !== 'cellTypeWorkGenes') {
-         rxSet('cellTypeWork.geneMenu.close')
-    }
+    // @param except: the only domain to not clear, optional
+    //console.error('clearContextElements: except:', except)
+    // Wait a bit so the previous domain has a chance to finish what it's doing.
+    setTimeout(() => {
+        if (except !== 'cellTypeBarLabels') {
+            rxSet('cellTypeBar.labelInput.irrelevant')
+        }
+        if (except !== 'cellTypeBar') {
+            rxSet('cellTypeBar.menu.irrelevant')
+        }
+        if (except !== 'cellTypeWorkClusters') {
+             rxSet('cellTypeWork.clusterMenu.irrelevant')
+        }
+        if (except !== 'cellTypeWorkGenes') {
+             rxSet('cellTypeWork.geneMenu.irrelevant')
+        }
+    }, 100)
 }
 const receivePostConfirmFromServer = () => {
     // Handle the post results received from the server.

@@ -19,12 +19,17 @@ import { namerDialogState as namerDialog } from 'components/NamerDialog'
 import { State as sortable } from 'app/sortable'
 
 // Global application state.
+const defaultSnackbar = {
+    open: false,
+    message: ' ',
+}
 const app = (
     state = {
         homeAboutOpen: false,
         homeRedirect: false,
         navBarActive: window.location.pathname,
         navBarTheme: 'light',
+        snackbar: defaultSnackbar,
     }, action) => {
         switch(action.type) {
         case 'app.homeAboutOpen.toggle':
@@ -52,6 +57,22 @@ const app = (
             return {
                 ...state,
                 navBarActive: '/gene'
+            }
+        case 'app.snackbar.close':
+            return {
+                ...state,
+                snackbar: defaultSnackbar
+            }
+        case 'app.snackbar.open':
+            // The action value may be a message string or an object
+            // containing the message an options.
+            let snackbar = { message: action.value, open: true }
+            if (typeof action.value === 'object') {
+                snackbar = { ...action.value, open: true }
+            }
+            return {
+                ...state,
+                snackbar
             }
         default:
             return state

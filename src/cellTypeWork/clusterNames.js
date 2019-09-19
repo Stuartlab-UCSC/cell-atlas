@@ -19,11 +19,12 @@ const Menu = ({i, props}) => {
             className='popover_clusters'
             style={{
                 position: 'absolute',
-                top: 16,
+                top: 8,
                 left: -44,
-                width: '105px',
+                width: '6.5rem',
             }}
         >
+            <div style={{height: '8px'}} />
             <ClickAwayListener onClickAway={onMenuClickAway}>
                 <MenuList
                     style={{
@@ -50,8 +51,8 @@ const Menu = ({i, props}) => {
 
 const ClusterNames = (props) => {
     // Render each cluster.
-    const { topStyle, clusters, colormap, sorting, onClick, onMouseDown,
-        onMouseLeave, onMouseOver } = props
+    const { topStyle, clusters, colormap, sorting, onClick, onMouseMove,
+        onMouseOver } = props
     const { clusterBarHeight, fontFamily, fontSize } = props.dims
     
     let cursor = (sorting) ? 'grabbing' : 'grab'
@@ -89,8 +90,7 @@ const ClusterNames = (props) => {
                         userSelect: 'none',
                     }}
                     onClick={onClick}
-                    onMouseDown={onMouseDown}
-                    onMouseLeave={onMouseLeave}
+                    onMouseMove={onMouseMove}
                     onMouseOver={onMouseOver}
                 >
                     {cluster.name}
