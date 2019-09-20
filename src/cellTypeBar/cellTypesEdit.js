@@ -2,6 +2,7 @@
 // The logic for the cell type editing on the cell type worksheet page.
 
 import { connect } from 'react-redux'
+import { rxGet } from 'state/rx'
 import dataStore from 'cellTypeWork/dataStore'
 import Presentation from 'cellTypeBar/cellTypesEditPres'
 import { clearContextElements } from 'cellTypeWork/worksheet'
@@ -13,7 +14,7 @@ const mapStateToProps = (state) => {
         clusterCount: dataStore.getClusters().length,
         dims: state.cellTypeWork.dims,
         render: state.cellTypeWork.render,
-        showInput: state.cellTypeBar.labelInput,
+        position: state.cellTypeBar.labelInput,
         onClickAway: () => {},//clearContextElements,
     }
 }
@@ -21,54 +22,46 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onClickAway: ev => {
-            // Clear the hover cell type saved.
-            dispatch({ type: 'cellTypeBar.labelInput.hide' })
+            // Close the cellType label input.
+            dispatch({ type: 'cellTypeBar.labelInput.close' })
         },
         onInputChange: ev => {
-            // On change of the value update the value in state.
+            // On change of the text value update the value in state.
             dataStore.changeCellType(
-                { label: ev.target.value }, ev.target.dataset.position)
+                ev.target.value, ev.target.dataset.position)
+        },
+        onMouseLeave: ev => {
+            // The mouse has left the text input.
+            // Render to show the new cell type under the input element.
             dispatch({ type: 'cellTypeWork.render.now' })
+            // Update all of the labels in this group.
+            const group = dataStore.getTypeGroups().find(group => {
+                return group[0] === rxGet('cellTypeBar.labelInput')
+            })
+            let cellTypes = dataStore.getCellTypes()
+            const label = cellTypes[group[0]].label
+            for (let c = group[0] + 1; c <= group[1]; c++) {
+                cellTypes[c].label = label
+            }
+            dataStore.setCellTypes(cellTypes)
         },
         onMouseOver: ev => {
             // On hover over a cellType, save that position.
             dispatch({
-                type: 'cellTypeBar.labelInput.show',
+                type: 'cellTypeBar.labelInput.open',
                 value: ev.target.dataset.position
             })
             // Clear any leftover context elements.
             clearContextElements(DOMAIN)
 
-            // Set focus to the input component.
+            // Try to set focus to the input component.
             setTimeout(() => {
-                try {
-                    document.getElementById(
-                        'cellTypeBarLabelInput').focus()
-                } catch(e) {
+                const el = document.getElementById('cellTypeBarLabelInput')
+                if (el) {
+                    el.focus()
                 }
-            }, 10)
+            }, 200)
         },
-        /*
-        // This need a component ref to set the focus to the new component.
-        onKeyDown: ev => {
-            console.log('onKeyDown, key:', ev.key)
-            const position = ev.target.dataset.position
-            const count = dataStore.getCellTypes().length
-            console.log('position:', position)
-            if (position === count - 1) {
-                // We're on the last cluster, so hide all cell type inputs.
-                dispatch({ type: 'cellTypeBar.labelInput.hide' })
-            } else {
-                dispatch({
-                    type: 'cellTypeBar.labelInput.show',
-                    value: position + 1,
-                })
-                // use a component ref?
-                //setTimeout( () => { document.getElementById(
-                //    'cellTypeBarLabelInput').focus() })
-            }
-        },
-        */
     }
 }
 

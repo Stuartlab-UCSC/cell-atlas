@@ -14,10 +14,11 @@ const buildTypeGroups = (cellTypes) => {
     // each group and look something like: [[1,1], [2,3], [4,6]]
     let groups = []
     let prevLabel
-    let begin
+    let begin = 0
     cellTypes.forEach((type, i) => {
         if (i === 0) {
-            begin = 0
+            // For the first cell type, just save its label.
+            prevLabel = type.label
             
         // If the label is different from the previous label,
         // or if there is no label...

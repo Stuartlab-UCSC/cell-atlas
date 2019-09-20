@@ -77,7 +77,7 @@ const buildOptions = (data, header, optionOverrideFx) => {
         },
         filterType: 'multiselect',
         print: false,
-        responsive: 'scroll',
+        responsive: 'scrollFullHeight',
         rowsPerPage: 50,
         rowsPerPageOptions: [25, 50, 100],
         selectableRows: 'none',

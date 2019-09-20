@@ -146,13 +146,13 @@ const mapDispatchToProps = (dispatch) => {
             const oldGs = dataStore.getTypeGroups()
             const { startCol, endCol } = findMenuApply(oldGs)
 
-            // Find all of the labels in the new group.
+            // Find all of the labels in the new group with a show flag.
             let cellTypes = dataStore.getCellTypes()
-            let typeWithLabel = cellTypes.filter((type, i) => {
+            let typesWithLabel = cellTypes.filter((type, i) => {
                 if (i < startCol || i > endCol) {
                     return false
                 }
-                if (type.label) {
+                if (type.label && type.label.length > 0 && type.show) {
                     return true
                 }
                 return false
@@ -160,10 +160,10 @@ const mapDispatchToProps = (dispatch) => {
             
             // Only one label can be saved for the new group.
             let label
-            if (typeWithLabel.length === 0) {
+            if (typesWithLabel.length === 0) {
                 label = placeholderLabel(cellTypes)
-            } else if (typeWithLabel.length === 1) {
-                label = typeWithLabel[0].label
+            } else if (typesWithLabel.length === 1) {
+                label = typesWithLabel[0].label
             } else {
                 dispatch({
                     type: 'app.snackbar.open',

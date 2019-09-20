@@ -85,7 +85,6 @@ const bubbleOptionOverrideFx = (options) => {
     // Override some standard DataTable options.
     options.elevation = 0
     options.download = false
-    options.responsive = 'scroll'
     options.viewColumns = false
     return options
 }

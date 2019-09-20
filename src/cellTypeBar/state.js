@@ -22,12 +22,13 @@ const State = (
                 ...state,
                 group: false
             }
+        case 'cellTypeBar.labelInput.close':
         case 'cellTypeBar.labelInput.irrelevant':
             return {
                 ...state,
                 labelInput: null
             }
-        case 'cellTypeBar.labelInput.show':
+        case 'cellTypeBar.labelInput.open':
             // The cellType position is saved here.
             return {
                 ...state,

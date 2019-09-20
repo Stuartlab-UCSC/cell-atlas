@@ -25,8 +25,8 @@ class DataStore {
         this.data.bubbles = bubbles
     }
 
-    changeCellType(cellType, position) {
-        this.data.cellTypes[position] = cellType
+    changeCellType(label, position) {
+        this.data.cellTypes[position].label = label
     }
 
     get() {

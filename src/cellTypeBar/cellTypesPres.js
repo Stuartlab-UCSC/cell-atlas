@@ -13,7 +13,7 @@ const CellType = ({ i, color, value, props }) => {
     const y = cellTypesHeight
     return (
         <g
-            transform={'rotate(-45,' + (x+6) + ',' + (y-9) + ')'}
+            transform={'rotate(-45,' + (x+3) + ',' + (y-12) + ')'}
         >
             <text
                 data-position={i}
