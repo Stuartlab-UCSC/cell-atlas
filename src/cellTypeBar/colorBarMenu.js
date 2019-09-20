@@ -139,6 +139,9 @@ const placeholderLabel = (cellTypes) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        onClickAway: ev => {
+            dispatch({ type: 'cellTypeBar.menu.clickAway' })
+        },
         onGroupClick: ev => {
             // "Group" was clicked on the menu, so group the selection.
             

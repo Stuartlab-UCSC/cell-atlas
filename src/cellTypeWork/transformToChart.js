@@ -16,20 +16,24 @@ const buildTypeGroups = (cellTypes) => {
     let prevLabel
     let begin = 0
     cellTypes.forEach((type, i) => {
+        let label = type.label
+        if (label) {
+            label = label.trim()
+        }
         if (i === 0) {
             // For the first cell type, just save its label.
-            prevLabel = type.label
+            prevLabel = label
             
         // If the label is different from the previous label,
         // or if there is no label...
-        } else if (type.label !== prevLabel || !type.label) {
+        } else if (label !== prevLabel || !label || label === '') {
             // The previous group is complete, so save it.
             groups.push([begin, i - 1])
             begin = i
         }
         // Clear any old show flag.
         delete cellTypes[i].show
-        prevLabel = type.label
+        prevLabel = label
     })
     // Save the last group.
     groups.push([begin, cellTypes.length - 1])

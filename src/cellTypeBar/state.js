@@ -34,6 +34,7 @@ const State = (
                 ...state,
                 labelInput: parseInt(action.value, 10)
             }
+        case 'cellTypeBar.menu.clickAway':
         case 'cellTypeBar.menu.deselected':
         case 'cellTypeBar.menu.groupedUngrouped':
         case 'cellTypeBar.menu.irrelevant':

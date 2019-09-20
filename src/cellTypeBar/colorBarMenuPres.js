@@ -2,8 +2,7 @@
 // on the cell type worksheet.
 
 import React from 'react'
-import MenuItem from '@material-ui/core/MenuItem'
-import MenuList from '@material-ui/core/MenuList'
+import { ClickAwayListener, MenuItem, MenuList } from '@material-ui/core'
 import 'cellTypeWork/style.css'
 
 const Body = ({props}) => {
@@ -38,7 +37,7 @@ const Body = ({props}) => {
 }
 
 const Presentation = (props) => {
-    const { menu } = props
+    const { menu, onClickAway } = props
     const { colWidth } = props.dims
     if (menu === false) {
         return (null)
@@ -56,10 +55,12 @@ const Presentation = (props) => {
                 width: '6rem',
             }}
         >
-            <div>
-                <div style={{height: '8px'}} />
-                <Body props={props} />
-            </div>
+            <ClickAwayListener onClickAway={onClickAway} >
+                <div>
+                    <div style={{height: '8px'}} />
+                    <Body props={props} />
+                </div>
+            </ClickAwayListener>
         </div>
     )
 }
