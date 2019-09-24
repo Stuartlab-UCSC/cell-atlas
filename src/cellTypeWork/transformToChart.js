@@ -17,9 +17,6 @@ const buildTypeGroups = (cellTypes) => {
     let begin = 0
     cellTypes.forEach((type, i) => {
         let label = type.label
-        if (label) {
-            label = label.trim()
-        }
         if (i === 0) {
             // For the first cell type, just save its label.
             prevLabel = label
@@ -92,7 +89,7 @@ const buildClusters = (data) => {
         const I             = line[iColumn]
         const name          = line[iName]
         const cellCount     = line[iCellCount]
-        const cellType      = line[iCellType]
+        let cellType        = line[iCellType]
 
         clusters[I] = {
             name: name,
@@ -100,6 +97,11 @@ const buildClusters = (data) => {
         }
         
         // Save the cell type label.
+        if (cellType) {
+            cellType = cellType.trim()
+        } else {
+            cellType = ''
+        }
         cellTypes[I] = { label: cellType }
     })
 

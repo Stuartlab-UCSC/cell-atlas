@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 import React from 'react'
 import { CircularProgress, Typography } from '@material-ui/core'
-import ClusterNames from 'cellTypeWork/clusterNames'
+import ClusterNames from 'cellTypeCluster/names'
 import ctwDataStore from 'cellTypeWork/dataStore'
 import dataStore from 'cellTypeGene/ctgDataStore'
 import CtgTable from 'cellTypeGene/ctgTable'

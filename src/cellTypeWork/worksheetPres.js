@@ -4,7 +4,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography'
 
 import Legend from 'components/legend'
-import Clusters from 'cellTypeWork/clusters'
+import Clusters from 'cellTypeCluster/clusters'
 import Bubbles from 'cellTypeWork/bubbles'
 import Genes from 'cellTypeWork/genes'
 import { ColorSelect, SizeSelect } from 'cellTypeGene/variableSelect'

@@ -3,7 +3,7 @@
 
 import React from 'react';
 import CellTypes from 'cellTypeBar/cellTypes'
-import ClusterNames from 'cellTypeWork/clusterNames'
+import Names from 'cellTypeCluster/names'
 
 const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
     let tds = []
@@ -62,7 +62,7 @@ const Presentation = (props) => {
             }} >
                 Cluster #
             </div>
-            <ClusterNames
+            <Names
                 clusters={clusters}
                 colormap={colormap}
                 dims={dims}

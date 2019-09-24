@@ -49,7 +49,7 @@ const Menu = ({i, props}) => {
     )
 }
 
-const ClusterNames = (props) => {
+const Names = (props) => {
     // Render each cluster.
     const { topStyle, clusters, colormap, sorting, onClick, onMouseMove,
         onMouseOver } = props
@@ -102,4 +102,4 @@ const ClusterNames = (props) => {
     return clusterList
 }
 
-export default ClusterNames
+export default Names
