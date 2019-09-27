@@ -2,7 +2,7 @@
 // on the cell type worksheet.
 
 import { connect } from 'react-redux'
-import { get as rxGet } from 'state/rx'
+import { rxGet } from 'state/rx'
 import { buildTypeGroups } from 'cellTypeWork/transformToChart'
 import Presentation from 'cellTypeBar/colorBarMenuPres'
 import dataStore from 'cellTypeWork/dataStore'
@@ -171,7 +171,7 @@ const mapDispatchToProps = (dispatch) => {
                 dispatch({
                     type: 'app.snackbar.open',
                     value: "Cannot group due to multiple labels. Remove " +
-                        "those not wanted then group."
+                        "all but one then group."
                 })
                 return
             }

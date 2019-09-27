@@ -19,23 +19,23 @@ gaslkgf klsjlkhjl ha lkj;lk slkfjal lkja;sfg lkjls alskjlfk aslkjlg sssss`,
     gene_table_url: 'localhost:5000',
     clusters:
         'column	cluster	cell_count	cell_type\n' +
-        '0	01	2643	A\n' +
-        '1	11	13962	A\n' +
-        '2	22	3322	B\n' +
-        '3	33	3322	B\n' +
-        '4	44	3322	C',
+        '0	1	2643	A\n' +
+        '1	3	13962	A\n' +
+        '2	2	3322	B\n' +
+        '3	0	3322	B\n' +
+        '4	4	3322	C',
     genes:
         'row	gene\n' +
         '1	ALK\n' +
         '2	TP53\n' +
         '0	TNF',
     colors:
-        'gene	11	22	33	44	01\n' +
+        'gene	0	1	2	3	4\n' +
         'ALK	-0.4	-0.3	-0.2	-0.3	-0.2\n' +
        'TP53	-0.1	0	0.4	0	0.4\n' +
         'TNF	0.3	0.2	0.1	0.2	0.1',
     sizes:
-        'gene	11	22	33	44	01\n' +
+        'gene	0	1	2	3	4\n' +
         'ALK	0.1	0.2	0.3	0.2	0.3\n' +
         'TP53	0.4	0.5	0.6	0.5	0.6\n' +
         'TNF	0.7	0.8	0.9	0.8	0.9',

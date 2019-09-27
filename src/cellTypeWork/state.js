@@ -29,7 +29,6 @@ const defaultSheetSelected = null
 
 const State = (
     state = {
-        clusterMenu: null,
         colormap: [],
         dims: defaultDims,
         fetchMessage: ' ',
@@ -45,17 +44,6 @@ const State = (
         topDrawer: true,
     }, action) => {
         switch(action.type) {
-        case 'cellTypeWork.clusterMenu.geneStats':
-        case 'cellTypeWork.clusterMenu.irrelevant':
-            return {
-                ...state,
-                clusterMenu: null
-            }
-        case 'cellTypeWork.clusterMenu.open':
-            return {
-                ...state,
-                clusterMenu: parseInt(action.value, 10)
-            }
         case 'cellTypeWork.colormap.create':
             return {
                 ...state,

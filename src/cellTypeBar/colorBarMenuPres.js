@@ -23,14 +23,14 @@ const Body = ({props}) => {
                 style={{ fontSize: 14 }}
                 onClick={onGroupClick}
             >
-                Group
+                Merge
             </MenuItem>
             <MenuItem
                 disabled={!ungroup}
                 style={{ fontSize: 14 }}
                 onClick={onUngroupClick}
             >
-                Ungroup
+                Unmerge
             </MenuItem>
         </MenuList>
     )
@@ -52,7 +52,7 @@ const Presentation = (props) => {
                 position: 'absolute',
                 top: 16, //8
                 left,
-                width: '6rem',
+                width: '5.5rem',
             }}
         >
             <ClickAwayListener onClickAway={onClickAway} >

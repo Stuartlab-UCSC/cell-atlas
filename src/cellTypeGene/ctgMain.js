@@ -4,7 +4,7 @@
 import { connect } from 'react-redux'
 import React from 'react'
 import { CircularProgress, Typography } from '@material-ui/core'
-import ClusterNames from 'cellTypeCluster/names'
+import ClusterBar from 'cellTypeCluster/clusterBarPres'
 import ctwDataStore from 'cellTypeWork/dataStore'
 import dataStore from 'cellTypeGene/ctgDataStore'
 import CtgTable from 'cellTypeGene/ctgTable'
@@ -16,7 +16,6 @@ const Presentation = (props) => {
     // Rendering of the gene table.
     const { cluster, count, data, dims, fetchMessage, fetchStatus, onClick }
         = props
-    const { colWidth } = props.dims
     let Counts = null
     let ClusterBar = null
     if (data === undefined) {
@@ -41,17 +40,15 @@ const Presentation = (props) => {
         )
         const {clusters, colormap } = props
         ClusterBar = (
-            <ClusterNames
+            <ClusterBar
                 clusters={clusters}
                 colormap={colormap}
                 dims={dims}
-                geneTable={true}
                 menuPosition={null}
                 topStyle={{
-                    display: 'inline-block',
-                    width: colWidth,
                     verticalAlign: 'bottom',
                     marginBottom: 5,
+                    zIndex: 1,
                 }}
                 onClick={onClick}
             />

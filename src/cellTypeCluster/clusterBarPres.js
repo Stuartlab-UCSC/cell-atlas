@@ -9,7 +9,9 @@ import 'cellTypeWork/style.css'
 
 const Menu = ({i, props}) => {
     const { menuPosition } = props
-    if (menuPosition === null || menuPosition !== i) {
+    //console.log('menuPosition:', menuPosition)
+    if (menuPosition === null || menuPosition === undefined
+        || menuPosition !== i) {
         return (null)
     }
     const { onGeneStatsClick, onMenuClickAway } = props
@@ -49,33 +51,35 @@ const Menu = ({i, props}) => {
     )
 }
 
-const Names = (props) => {
+const ColorBarPres= (props) => {
     // Render each cluster.
     const { topStyle, clusters, colormap, sorting, onClick, onMouseMove,
         onMouseOver } = props
-    const { clusterBarHeight, fontFamily, fontSize } = props.dims
+    const { colWidth, clusterBarHeight, fontFamily, fontSize } = props.dims
     
     let cursor = (sorting) ? 'grabbing' : 'grab'
     if (onClick) {
         // If we have an onClick handler, this is not sortable.
         cursor = 'pointer'
     }
-    
+    const topStyle1 = {
+        ...topStyle,
+        width: colWidth,
+        display: 'inline-block',
+        position: 'relative',
+    }
     let clusterList = []
     clusters.forEach((cluster, i) => {
         const color = (i % 2 === 0) ? 'black' : 'white'
         clusterList.push(
             <div
                 key={i}
-                style={{
-                    ...topStyle,
-                    position: 'relative',
-                }}
+                style={topStyle1}
             >
                 <div
                     data-position={i}
                     data-cluster={cluster.name}
-                    data-domain='cellTypeWorkClusters'
+                    data-domain='cellTypeCluster'
                     style={{
                         background: colormap[i],
                         color: color,
@@ -102,4 +106,4 @@ const Names = (props) => {
     return clusterList
 }
 
-export default Names
+export default ColorBarPres

@@ -25,8 +25,8 @@ const clearContextElements = (except) => {
         if (except !== 'cellTypeBar') {
             rxSet('cellTypeBar.menu.irrelevant')
         }
-        if (except !== 'cellTypeWorkClusters') {
-             rxSet('cellTypeWork.clusterMenu.irrelevant')
+        if (except !== 'cellTypeCluster') {
+            rxSet('cellTypeCluster.menu.irrelevant')
         }
         if (except !== 'cellTypeWorkGenes') {
              rxSet('cellTypeWork.geneMenu.irrelevant')

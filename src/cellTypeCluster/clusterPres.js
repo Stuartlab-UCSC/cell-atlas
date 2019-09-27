@@ -3,7 +3,7 @@
 
 import React from 'react';
 import CellTypes from 'cellTypeBar/cellTypes'
-import Names from 'cellTypeCluster/names'
+import ColorBar from 'cellTypeCluster/clusterBar'
 
 const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
     let tds = []
@@ -35,8 +35,7 @@ const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
 }
 
 const Presentation = (props) => {
-    const { clusters, colormap, dims, menuPosition, sorting, onMenuClickAway,
-        onGeneStatsClick, onMouseMove, onMouseOver} = props
+    const { clusters } = props
     const { colWidth, geneWidth, labelFontSize } = props.dims
     if (!clusters) {
         return (null)
@@ -62,18 +61,7 @@ const Presentation = (props) => {
             }} >
                 Cluster #
             </div>
-            <Names
-                clusters={clusters}
-                colormap={colormap}
-                dims={dims}
-                menuPosition={menuPosition}
-                sorting={sorting}
-                topStyle={topStyle}
-                onGeneStatsClick={onGeneStatsClick}
-                onMenuClickAway={onMenuClickAway}
-                onMouseMove={onMouseMove}
-                onMouseOver={onMouseOver}
-             />
+            <ColorBar />
             <CellCounts
                 clusters={clusters}
                 topStyle={topStyle}

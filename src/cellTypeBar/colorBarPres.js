@@ -13,7 +13,9 @@ const findBorder = (select, i) => {
     let bRight = null
     if (select) {
         if (select[0] <= select[1]) {
+        // The first index is the begin segment.
             if (i >= select[0] && i <= select[1]) {
+                // This segment is within the selection.
                 bTop = sBorder
                 bBottom = sBorder
                 if (i === select[0]) {
@@ -23,16 +25,16 @@ const findBorder = (select, i) => {
                     bRight = sBorder
                 }
             }
-        } else {
-            if (i >= select[1] && i <= select[0]) {
-                bTop = sBorder
-                bBottom = sBorder
-                if (i === select[1]) {
-                    bLeft = sBorder
-                }
-                if (i === select[0]) {
-                    bRight = sBorder
-                }
+        // The last index is the begin segment.
+        } else if (i >= select[1] && i <= select[0]) {
+            // This segment is within the selection.
+            bTop = sBorder
+            bBottom = sBorder
+            if (i === select[1]) {
+                bLeft = sBorder
+            }
+            if (i === select[0]) {
+                bRight = sBorder
             }
         }
     }
