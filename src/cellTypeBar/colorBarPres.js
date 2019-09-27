@@ -6,10 +6,11 @@ import Menu from 'cellTypeBar/colorBarMenu'
 
 const findBorder = (select, i) => {
     // If the segment is in the range of the selection, set its borders.
+    const border = 'solid 1px #888'
     const sBorder = 'solid 2px #000'
     let bTop = null
     let bBottom = null
-    let bLeft = null
+    let bLeft = (i > 0) ? border : null
     let bRight = null
     if (select) {
         if (select[0] <= select[1]) {

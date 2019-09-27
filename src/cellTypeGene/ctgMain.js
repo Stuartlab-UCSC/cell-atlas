@@ -17,7 +17,7 @@ const Presentation = (props) => {
     const { cluster, count, data, dims, fetchMessage, fetchStatus, onClick }
         = props
     let Counts = null
-    let ClusterBar = null
+    let clusterBar = null
     if (data === undefined) {
         return (null)
     }
@@ -39,7 +39,7 @@ const Presentation = (props) => {
             </Typography>
         )
         const {clusters, colormap } = props
-        ClusterBar = (
+        clusterBar = (
             <ClusterBar
                 clusters={clusters}
                 colormap={colormap}
@@ -62,7 +62,7 @@ const Presentation = (props) => {
                 right: 250,
             }} >
                 {Counts}
-                {ClusterBar}
+                {clusterBar}
             </div>
             <CtgTable />
         </div>
