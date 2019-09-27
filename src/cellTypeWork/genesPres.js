@@ -4,6 +4,7 @@ import React from 'react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
+import { DeleteOutline, ScatterPlot } from '@material-ui/icons'
 
 import 'cellTypeWork/style.css'
 
@@ -15,6 +16,7 @@ const Menu = ({ gene, i, props }) => {
     if (menuPosition === null || menuPosition !== i) {
         return (null)
     }
+    const iconStyle = { marginRight: '0.5rem' }
     return (
         <div
             className='popover_genes'
@@ -39,17 +41,21 @@ const Menu = ({ gene, i, props }) => {
                     <MenuItem
                         data-gene={gene}
                         data-position={menuPosition}
+                        disableGutters={true}
                         style={{ fontSize: 14 }}
                         onClick={onScatterClick}
                     >
-                        Show Map
+                        <ScatterPlot style={iconStyle} />
+                        Map
                     </MenuItem>
                     <MenuItem
                         data-gene={gene}
                         data-position={menuPosition}
+                        disableGutters={true}
                         style={{ fontSize: 14 }}
                         onClick={onRemoveClick}
                     >
+                        <DeleteOutline style={iconStyle} />
                         Remove
                     </MenuItem>
                 </MenuList>

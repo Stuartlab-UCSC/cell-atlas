@@ -3,11 +3,13 @@
 
 import React from 'react'
 import { ClickAwayListener, MenuItem, MenuList } from '@material-ui/core'
+import { CallMerge, CallSplit } from '@material-ui/icons'
 import 'cellTypeWork/style.css'
 
 const Body = ({props}) => {
     const { group, ungroup, onGroupClick, onUngroupClick } = props
     const { fontFamily } = props.dims
+    const iconStyle = { marginRight: '0.5rem' }
     return (
         <MenuList
             style={{
@@ -20,16 +22,20 @@ const Body = ({props}) => {
         >
             <MenuItem
                 disabled={!group}
+                disableGutters={true}
                 style={{ fontSize: 14 }}
                 onClick={onGroupClick}
             >
+                <CallMerge style={iconStyle} />
                 Merge
             </MenuItem>
             <MenuItem
                 disabled={!ungroup}
+                disableGutters={true}
                 style={{ fontSize: 14 }}
                 onClick={onUngroupClick}
             >
+                <CallSplit style={iconStyle} />
                 Unmerge
             </MenuItem>
         </MenuList>
@@ -52,12 +58,12 @@ const Presentation = (props) => {
                 position: 'absolute',
                 top: 16, //8
                 left,
-                width: '5.5rem',
+                width: '7rem',
             }}
         >
             <ClickAwayListener onClickAway={onClickAway} >
                 <div>
-                    <div style={{height: '8px'}} />
+                    <div style={{height: '9px'}} />
                     <Body props={props} />
                 </div>
             </ClickAwayListener>

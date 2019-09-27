@@ -5,6 +5,7 @@ import React from 'react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
+import { GridOn } from '@material-ui/icons'
 import 'cellTypeWork/style.css'
 
 const Menu = ({i, props}) => {
@@ -16,6 +17,7 @@ const Menu = ({i, props}) => {
     }
     const { onGeneStatsClick, onMenuClickAway } = props
     const { fontFamily } = props.dims
+    const iconStyle = { marginRight: '0.5rem' }
     return (
         <div
             className='popover_clusters'
@@ -23,7 +25,7 @@ const Menu = ({i, props}) => {
                 position: 'absolute',
                 top: 8,
                 left: -44,
-                width: '6.5rem',
+                width: '7.5rem',
             }}
         >
             <div style={{height: '8px'}} />
@@ -40,9 +42,11 @@ const Menu = ({i, props}) => {
                 >
                     <MenuItem
                         data-position={menuPosition}
+                        disableGutters={true}
                         style={{ fontSize: 14 }}
                         onClick={onGeneStatsClick}
                     >
+                        <GridOn style={iconStyle} />
                         Gene Stats
                     </MenuItem>
                 </MenuList>
