@@ -5,7 +5,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import { DeleteOutline, ScatterPlot } from '@material-ui/icons'
-
+import { primaryColor } from 'app/themeData'
 import 'cellTypeWork/style.css'
 
 const Menu = ({ gene, i, props }) => {
@@ -16,7 +16,7 @@ const Menu = ({ gene, i, props }) => {
     if (menuPosition === null || menuPosition !== i) {
         return (null)
     }
-    const iconStyle = { marginRight: '0.5rem' }
+    const iconStyle = { color: primaryColor, marginRight: '0.5rem' }
     return (
         <div
             className='popover_genes'

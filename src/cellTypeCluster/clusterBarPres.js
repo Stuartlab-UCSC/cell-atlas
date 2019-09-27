@@ -6,6 +6,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import { GridOn } from '@material-ui/icons'
+import { primaryColor } from 'app/themeData'
 import 'cellTypeWork/style.css'
 
 const Menu = ({i, props}) => {
@@ -17,7 +18,7 @@ const Menu = ({i, props}) => {
     }
     const { onGeneStatsClick, onMenuClickAway } = props
     const { fontFamily } = props.dims
-    const iconStyle = { marginRight: '0.5rem' }
+    const iconStyle = { marginRight: '0.5rem', color: primaryColor }
     return (
         <div
             className='popover_clusters'

@@ -4,6 +4,7 @@
 import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import { Add, ScatterPlot } from '@material-ui/icons'
+import { primaryColor } from 'app/themeData'
 
 const setScatterProps = (cellValue, rowIndex, columnIndex) => {
     // Center the scatter plot icon in the column.
@@ -32,10 +33,10 @@ const makeAbutton = (columns, data, name) => {
                     <IconButton
                         data-gene={value}
                         size='small'
-                        color='primary'
                         style={{
                             marginTop: -10,
                             marginLeft: -15,
+                            color: primaryColor,
                         }}
                     >
                         {(name === 'Add')

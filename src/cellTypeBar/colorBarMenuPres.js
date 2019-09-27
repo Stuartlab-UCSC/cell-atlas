@@ -4,12 +4,13 @@
 import React from 'react'
 import { ClickAwayListener, MenuItem, MenuList } from '@material-ui/core'
 import { CallMerge, CallSplit } from '@material-ui/icons'
+import { primaryColor } from 'app/themeData'
 import 'cellTypeWork/style.css'
 
 const Body = ({props}) => {
     const { group, ungroup, onGroupClick, onUngroupClick } = props
     const { fontFamily } = props.dims
-    const iconStyle = { marginRight: '0.5rem' }
+    const iconStyle = { color: primaryColor, marginRight: '0.5rem' }
     return (
         <MenuList
             style={{
