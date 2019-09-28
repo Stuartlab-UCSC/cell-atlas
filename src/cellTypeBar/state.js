@@ -4,7 +4,6 @@
 const State = (
     state = {
         group: false,
-        ungroup: false,
         labelInput: null,
         labelMode: 'readOnly',
         menu: false,
@@ -12,15 +11,10 @@ const State = (
         selecting: false,
     }, action) => {
         switch(action.type) {
-        case 'cellTypeBar.group.enable':
+        case 'cellTypeBar.group.set':
             return {
                 ...state,
-                group: true
-            }
-        case 'cellTypeBar.group.disable':
-            return {
-                ...state,
-                group: false
+                group: action.value
             }
         case 'cellTypeBar.labelInput.close':
         case 'cellTypeBar.labelInput.irrelevant':
@@ -36,7 +30,7 @@ const State = (
             }
         case 'cellTypeBar.menu.clickAway':
         case 'cellTypeBar.menu.deselected':
-        case 'cellTypeBar.menu.groupedUngrouped':
+        case 'cellTypeBar.menu.optionSelected':
         case 'cellTypeBar.menu.irrelevant':
         case 'cellTypeBar.menu.noValidOptions':
         case 'cellTypeBar.menu.sorting':
@@ -59,7 +53,7 @@ const State = (
                 select: [val, val]
             }
         case 'cellTypeBar.select.deselect':
-        case 'cellTypeBar.select.groupedUngrouped':
+        case 'cellTypeBar.select.optionSelected':
             return {
                 ...state,
                 select: null
@@ -68,16 +62,6 @@ const State = (
             return {
                 ...state,
                 select: [state.select[0], parseInt(action.value,10)]
-            }
-        case 'cellTypeBar.ungroup.enable':
-            return {
-                ...state,
-                ungroup: true
-            }
-        case 'cellTypeBar.ungroup.disable':
-            return {
-                ...state,
-                ungroup: false
             }
         default:
             return state

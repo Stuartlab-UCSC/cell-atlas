@@ -5,20 +5,41 @@ import React from 'react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
-import { GridOn } from '@material-ui/icons'
+import { Add, GridOn } from '@material-ui/icons'
 import { primaryColor } from 'app/themeData'
 import 'cellTypeWork/style.css'
 
 const Menu = ({i, props}) => {
-    const { menuPosition } = props
-    //console.log('menuPosition:', menuPosition)
+    const { typeGroups, menuPosition } = props
     if (menuPosition === null || menuPosition === undefined
         || menuPosition !== i) {
         return (null)
     }
-    const { onGeneStatsClick, onMenuClickAway } = props
+    const { onGeneStatsClick, onNewTypeClick, onMenuClickAway } = props
     const { fontFamily } = props.dims
     const iconStyle = { marginRight: '0.5rem', color: primaryColor }
+    
+    // Render the 'new cell type' if the cluster belongs to a cell type group
+    // with more than one cluster.
+    let newType = typeGroups.find(group => {
+        return (i >= group[0] && i <= group[1] && group[0] !== group[1])
+    })
+    if (newType === undefined) {
+        newType = null
+    } else {
+        newType = (
+            <MenuItem
+                data-position={menuPosition}
+                disableGutters={true}
+                style={{ fontSize: 14 }}
+                onClick={onNewTypeClick}
+            >
+                <Add style={iconStyle} />
+                New Cell Type
+            </MenuItem>
+        )
+    }
+    
     return (
         <div
             className='popover_clusters'
@@ -26,7 +47,7 @@ const Menu = ({i, props}) => {
                 position: 'absolute',
                 top: 8,
                 left: -44,
-                width: '7.5rem',
+                width: '9rem',
             }}
         >
             <div style={{height: '8px'}} />
@@ -50,6 +71,7 @@ const Menu = ({i, props}) => {
                         <GridOn style={iconStyle} />
                         Gene Stats
                     </MenuItem>
+                    {newType}
                 </MenuList>
             </ClickAwayListener>
         </div>

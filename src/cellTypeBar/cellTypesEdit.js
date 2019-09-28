@@ -6,6 +6,7 @@ import { rxGet } from 'state/rx'
 import dataStore from 'cellTypeWork/dataStore'
 import Presentation from 'cellTypeBar/cellTypesEditPres'
 import { clearContextElements } from 'cellTypeWork/worksheet'
+import { cellTypeChangeConclusion } from 'cellTypeBar/colorBarMenu'
 import { DOMAIN } from 'cellTypeBar/cellTypes'
 
 const mapStateToProps = (state) => {
@@ -27,8 +28,11 @@ const mapDispatchToProps = (dispatch) => {
         },
         onInputChange: ev => {
             // On change of the text value update the value in state.
-            dataStore.changeCellType(
-                ev.target.value, ev.target.dataset.position)
+            let label = ev.target.value
+            if (label === null || label === undefined) {
+                label = ''
+            }
+            dataStore.changeCellType(label, ev.target.dataset.position)
         },
         onMouseLeave: ev => {
             // The mouse has left the text input.
@@ -43,7 +47,7 @@ const mapDispatchToProps = (dispatch) => {
             for (let c = group[0] + 1; c <= group[1]; c++) {
                 cellTypes[c].label = label
             }
-            dataStore.setCellTypes(cellTypes)
+            cellTypeChangeConclusion(cellTypes, dispatch)
         },
         onMouseOver: ev => {
             // On hover over a cellType, save that position.

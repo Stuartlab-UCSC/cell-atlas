@@ -7,12 +7,14 @@ import { rxGet } from 'state/rx'
 import getGeneTableData from 'cellTypeGene/ctgFetch'
 import dataStore from 'cellTypeWork/dataStore'
 import { clearContextElements } from 'cellTypeWork/worksheet'
+import { onInsertGroup } from 'cellTypeBar/colorBarMenu'
 import { reorderColumns } from 'cellTypeCluster/cluster'
 
 const DOMAIN = 'cellTypeCluster'
 
 const mapStateToProps = (state) => {
     return {
+        typeGroups: dataStore.getTypeGroups(),
         clusters: dataStore.getClusters(),
         colormap: state.cellTypeWork.colormap,
         menuPosition: state.cellTypeCluster.menu,
@@ -45,6 +47,9 @@ const mapDispatchToProps = (dispatch) => {
             getGeneTableData(cluster.name)
             // Close the context menu.
             dispatch({ type: 'cellTypeCluster.menu.optionClicked' })
+        },
+        onNewTypeClick: ev => {
+            onInsertGroup(ev, dispatch)
         },
         onMouseMove: ev => {
             // If this is a mouse drag and sorting is not active,

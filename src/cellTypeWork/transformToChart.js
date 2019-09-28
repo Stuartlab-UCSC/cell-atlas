@@ -17,13 +17,16 @@ const buildTypeGroups = (cellTypes) => {
     let begin = 0
     cellTypes.forEach((type, i) => {
         let label = type.label
+        if (label === undefined || (label === null)) {
+            label = ''
+        }
         if (i === 0) {
             // For the first cell type, just save its label.
             prevLabel = label
             
         // If the label is different from the previous label,
         // or if there is no label...
-        } else if (label !== prevLabel || !label || label === '') {
+        } else if (label !== prevLabel) {
             // The previous group is complete, so save it.
             groups.push([begin, i - 1])
             begin = i
