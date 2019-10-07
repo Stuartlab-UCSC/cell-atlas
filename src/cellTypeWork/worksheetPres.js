@@ -54,7 +54,6 @@ const WorksheetPresentation = ({ data, dims, fetchMessage }) => {
     const bubbleStyle = {
         display: 'inline-block',
         height: bubblesHeight,
-        width: bubblesWidth,
         verticalAlign: 'top',
     }
     const chartStyle = {

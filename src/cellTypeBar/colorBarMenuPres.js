@@ -3,25 +3,14 @@
 
 import React from 'react'
 import { ClickAwayListener, MenuItem, MenuList } from '@material-ui/core'
-import { CallMerge } from '@material-ui/icons'
+import { ScatterPlot } from '@material-ui/icons'
 import { primaryColor } from 'app/themeData'
 import 'cellTypeWork/style.css'
 
 const Body = ({props}) => {
-    const { group, onGroupClick } = props
+    const { onMapClick } = props
     const { fontFamily } = props.dims
     const iconStyle = { color: primaryColor, marginRight: '0.5rem' }
-    const groupOption = (group) ? (
-        <MenuItem
-            disabled={!group}
-            disableGutters={true}
-            style={{ fontSize: 14 }}
-            onClick={onGroupClick}
-        >
-            <CallMerge style={iconStyle} />
-            Merge
-        </MenuItem>
-    ) : null
     return (
         <MenuList
             style={{
@@ -32,7 +21,14 @@ const Body = ({props}) => {
                 zIndex: 1,
             }}
         >
-            {groupOption}
+            <MenuItem
+                disableGutters={true}
+                style={{ fontSize: 14 }}
+                onClick={onMapClick}
+            >
+                <ScatterPlot style={iconStyle} />
+                Map
+            </MenuItem>
         </MenuList>
     )
 }
@@ -51,9 +47,9 @@ const Presentation = (props) => {
             className='popover_type_group'
             style={{
                 position: 'absolute',
-                top: 16, //8
+                top: 16,
                 left,
-                width: '7rem',
+                width: '5rem',
             }}
         >
             <ClickAwayListener onClickAway={onClickAway} >

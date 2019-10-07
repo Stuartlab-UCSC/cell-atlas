@@ -1,9 +1,9 @@
 
 // Our wrapper around material-ui snackbar.
 
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import React from 'react'
 import { Button, IconButton, Snackbar } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { rxSet } from 'state/rx'
@@ -24,20 +24,59 @@ const Action = ({ label, onClick }) => {
     )
 }
 
+/* BOOTSTRAP BANNER COLORS
+For colors use mui styles on a SnackbarContent component.
+#2B5E91  dk green, info  fg
+#D8EECE  lt green, info  bg
+#775B2A     brown, warn  fg
+#F9F5D9    yellow, warn  bg
+#993031       red, error fg
+#EDD4D5      pink, error bg
+*/
+
+const anchorOrigins = {
+    fromDirectRequest: { vertical: 'top', horizontal: 'center' },
+    info: { vertical: 'bottom', horizontal: 'center' },
+    warning: { vertical: 'bottom', horizontal: 'center' },
+    error: { vertical: 'top', horizontal: 'center' },
+}
+
+const prefix = {
+    fromDirectRequest: 'Information: ',
+    info: 'Information: ',
+    warning: 'Warning: ',
+    error: 'Error: ',
+}
+
 const CaSnackbarPres = (props) => {
-    const { actionLabel, message, open, onActionClick, onClose } = props
+    const { actionLabel, message, open, severity, onActionClick, onClose }
+        = props
+    let variant = severity || 'info'
+    let autoHideDuration = 6000
+    let marginTop = 0
+    let TransitionProps={
+        direction: 'up',
+        //style: { transformOrigin: '0 0 0' }
+    }
+    if (variant === 'error' || variant === 'fromDirectRequest') {
+        autoHideDuration = null
+        marginTop = '3rem'
+        TransitionProps={
+            direction: 'down',
+            //exit: false,
+            //style: { transformOrigin: 'center top 0' }
+        }
+    }
+
     return (
         <Snackbar
             open={open}
-            autoHideDuration={6000}
+            anchorOrigin={anchorOrigins[variant]}
+            autoHideDuration={autoHideDuration}
             onClose={onClose}
-            ContentProps={{
-                'aria-describedby': 'snackbar-id',
-            }}
-            style={{marginTop: '4rem'}}
-            message={<span id='snackbar-id'>
-                {message}
-            </span>}
+            message={prefix[variant] + message}
+            style={{marginTop}}
+            TransitionProps={TransitionProps}
             action={[
                 <Action
                     key='action'

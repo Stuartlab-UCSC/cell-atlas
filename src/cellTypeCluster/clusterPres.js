@@ -3,7 +3,7 @@
 
 import React from 'react';
 import CellTypes from 'cellTypeBar/cellTypes'
-import ColorBar from 'cellTypeCluster/clusterBar'
+import ClusterBar from 'cellTypeCluster/clusterBar'
 
 const CellCounts = ({ clusters, topStyle, labelFontSize, labelStyle }) => {
     let tds = []
@@ -61,7 +61,7 @@ const Presentation = (props) => {
             }} >
                 Cluster #
             </div>
-            <ColorBar />
+            <ClusterBar />
             <CellCounts
                 clusters={clusters}
                 topStyle={topStyle}

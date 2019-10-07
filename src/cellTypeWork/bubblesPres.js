@@ -52,7 +52,7 @@ const Presentation = ({ data, dims, geneCluster, onMouseOver }) => {
                 marginTop: '2rem',
                 color: 'red',
             }}>
-    Add a marker gene for cluster <b>{geneCluster}</b> from the table below
+                Add a marker gene from the table below
             </Typography>
         )
     }

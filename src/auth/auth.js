@@ -17,7 +17,7 @@ const checkUrlSearch = () => {
         const u = parms.get('u')
         if (u) {
             if (u === 'check-email') {
-                rxSet('app.snackbar.open', { action:
+                rxSet('app.snackbar.open', { value:
                     'Check your email for a verification link to sign on.',
                 })
             } else if (u === 'logout') {

@@ -4,24 +4,22 @@ import { connect } from 'react-redux'
 import Presentation from 'cellTypeCluster/clusterBarPres'
 import { sortableOnMouseMove, sortableOnMouseOver } from 'app/sortable'
 import { rxGet } from 'state/rx'
-import getGeneTableData from 'cellTypeGene/ctgFetch'
+import { onSelectClick } from 'helpers/select'
 import dataStore from 'cellTypeWork/dataStore'
 import { clearContextElements } from 'cellTypeWork/worksheet'
-import { onInsertGroup } from 'cellTypeBar/colorBarMenu'
 import { reorderColumns } from 'cellTypeCluster/cluster'
+import { setMenuOptions } from 'cellTypeCluster/clusterBarMenu'
 
 const DOMAIN = 'cellTypeCluster'
 
 const mapStateToProps = (state) => {
     return {
-        typeGroups: dataStore.getTypeGroups(),
         clusters: dataStore.getClusters(),
         colormap: state.cellTypeWork.colormap,
-        menuPosition: state.cellTypeCluster.menu,
-        sorting: (state.sortable.drag.active),
         dims: state.cellTypeWork.dims,
         render: state.cellTypeWork.render,
-        onMenuClickAway: clearContextElements,
+        select: state.cellTypeCluster.select,
+        sorting: (state.sortable.drag.active),
     }
 }
 
@@ -41,15 +39,14 @@ const reorder = (newC, oldC) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGeneStatsClick: ev => {
-            // Get the cluster's gene stats.
-            const cluster = dataStore.getClusters()[ev.target.dataset.position]
-            getGeneTableData(cluster.name)
-            // Close the context menu.
-            dispatch({ type: 'cellTypeCluster.menu.optionClicked' })
-        },
-        onNewTypeClick: ev => {
-            onInsertGroup(ev, dispatch)
+        onClick: ev => {
+            // This is a click to select/deselect clusters.
+            onSelectClick(ev, DOMAIN, dispatch)
+            const position = parseInt(ev.target.dataset.position, 10)
+            
+            // Allow time for the selection to be recorded in state
+            // before setting the menu options.
+            setTimeout(() => setMenuOptions(position, dispatch))
         },
         onMouseMove: ev => {
             // If this is a mouse drag and sorting is not active,
@@ -76,16 +73,15 @@ const mapDispatchToProps = (dispatch) => {
             }
         },
         onMouseOver: ev => {
+            // If sorting is active, update the display for this cluster.
+            // Otherwise set the menu options and display it.
             // Clear any context elements not belonging to this domain.
             clearContextElements(DOMAIN)
             // If dragging, let the sortable know. Otherwise open the menu.
             if (rxGet('sortable.drag').active) {
                 sortableOnMouseOver(ev, dispatch)
             } else {
-                dispatch({
-                    type: 'cellTypeCluster.menu.open',
-                    value: ev.target.dataset.position,
-                })
+                setMenuOptions(ev.target.dataset.position, dispatch)
             }
         },
     }

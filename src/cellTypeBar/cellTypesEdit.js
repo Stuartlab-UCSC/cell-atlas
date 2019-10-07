@@ -20,51 +20,53 @@ const mapStateToProps = (state) => {
     }
 }
 
+const setCellTypeInputFocus = (position, dispatch) => {
+    if (position === undefined) {
+        return
+    }
+    dispatch({
+        type: 'cellTypeBar.labelInput.open',
+        value: parseInt(position, 10)
+    })
+    // Try to set focus to the input component.
+    setTimeout(() => {
+        const el = document.getElementById('cell_type_label_input')
+        if (el) {
+            el.focus()
+        }
+    }, 200)
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        onClickAway: ev => {
-            // Close the cellType label input.
-            dispatch({ type: 'cellTypeBar.labelInput.close' })
-        },
         onInputChange: ev => {
             // On change of the text value update the value in state.
             let label = ev.target.value
             if (label === null || label === undefined) {
                 label = ''
             }
-            dataStore.changeCellType(label, ev.target.dataset.position)
-        },
-        onMouseLeave: ev => {
-            // The mouse has left the text input.
-            // Render to show the new cell type under the input element.
-            dispatch({ type: 'cellTypeWork.render.now' })
             // Update all of the labels in this group.
             const group = dataStore.getTypeGroups().find(group => {
                 return group[0] === rxGet('cellTypeBar.labelInput')
             })
             let cellTypes = dataStore.getCellTypes()
-            const label = cellTypes[group[0]].label
-            for (let c = group[0] + 1; c <= group[1]; c++) {
+            for (let c = group[0]; c <= group[1]; c++) {
                 cellTypes[c].label = label
             }
-            cellTypeChangeConclusion(cellTypes, dispatch)
+            dataStore.setCellTypes(cellTypes)
+            dispatch({ type: 'cellTypeWork.render.now' })
+        },
+        onMouseLeave: ev => {
+            // The mouse has left the text input.
+            dispatch({ type: 'cellTypeBar.labelInput.close' })
+            cellTypeChangeConclusion(dataStore.getCellTypes(), dispatch)
         },
         onMouseOver: ev => {
             // On hover over a cellType, save that position.
-            dispatch({
-                type: 'cellTypeBar.labelInput.open',
-                value: ev.target.dataset.position
-            })
             // Clear any leftover context elements.
             clearContextElements(DOMAIN)
 
-            // Try to set focus to the input component.
-            setTimeout(() => {
-                const el = document.getElementById('cellTypeBarLabelInput')
-                if (el) {
-                    el.focus()
-                }
-            }, 200)
+            setCellTypeInputFocus(ev.target.dataset.position, dispatch)
         },
     }
 }
@@ -74,3 +76,4 @@ const CellTypesEdit = connect(
 )(Presentation)
 
 export default CellTypesEdit
+export { setCellTypeInputFocus }

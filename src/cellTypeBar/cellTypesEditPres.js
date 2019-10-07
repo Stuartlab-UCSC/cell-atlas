@@ -3,7 +3,6 @@
 // on the cell type worksheet page.
 
 import React from 'react'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 
 const Input = ({ i, label, show, props }) => {
     // Only show the hovered-upon cell type input.
@@ -24,7 +23,7 @@ const Input = ({ i, label, show, props }) => {
     if (show && position === i) {
         return (
             <input
-                id='cellTypeBarLabelInput'
+                id='cell_type_label_input'
                 defaultValue={label}
                 data-position={i}
                 style={style}
@@ -47,23 +46,23 @@ const Input = ({ i, label, show, props }) => {
 
 const CellTypesEdit = (props) => {
     // Show the appropriate input component.
-    const { cellTypes, onClickAway } = props
+    const { cellTypes } = props
     let inputs = []
     cellTypes.forEach((cellType, i) => {
         inputs.push(
-            <Input key={i}
-            i={i}
-            label={cellType.label}
-            show={cellType.show}
-            props={props}
-        /> )
+            <Input
+                key={i}
+                i={i}
+                label={cellType.label}
+                show={cellType.show}
+                props={props}
+            />
+        )
     })
     return (
-        <ClickAwayListener onClickAway={onClickAway}>
-            <div>
-                {inputs}
-            </div>
-        </ClickAwayListener>
+        <div>
+            {inputs}
+        </div>
     )
 }
 

@@ -2,6 +2,7 @@
 // Store the gene table data and handle all updates to it.
 
 import { captureStackTrace } from 'app/util'
+import { rxSet } from 'state/rx'
 
 const defaultColumns = []
 const defaultData = []
@@ -74,7 +75,8 @@ class DataStore {
             this.table.columns[colIndex].options[name] = value
         } catch (error) {
             const trace = captureStackTrace(error)
-            alert('Please send this text to swat@soe.ucsc.edu.\n' + trace)
+            rxSet('error', { value: { severity: 'error',
+                message: 'Please send this text to hexmap@ucsc.edu.' + trace }})
         }
     }
 }
