@@ -158,31 +158,23 @@ const findAvailable = () => {
 }
 
 const onSearchChange = (text) => {
-    dataStore.setSearchText(text)
-    const searchText = text.toUpperCase()
-    const prevSearchEnabled = searchEnabled
-    searchEnabled = (text.length > 0)
     searched = []
-    if (searchEnabled) {
+    if (text) {
+        searchEnabled = true
+        dataStore.setSearchText(text)
+        const searchText = text.toUpperCase()
+
         // Find all of the row indices matching the search.
         data.forEach((row, i) => {
             if (row[col].toUpperCase().indexOf(searchText) > -1) {
                 searched.push(i)
             }
         })
-    } else if (prevSearchEnabled) { // search is newly disabled
-        // The search reset button was pressed, so clear the text field.
-        rxSet('cellTypeGene.searchText.reset')
-
     } else {
-        // The search is disabled now and previously, so there is nothing to
-        // do. Probably the search reset was clicked while the text field
-        // was empty.
-        return
+        // The search reset button was pressed, so clear the text field.
+        searchEnabled = false
+        dataStore.setSearchText('')
     }
-
-    // Update the filterText in the gene name column options.
-    //dataStore.updateColumnOption(col, 'filterList', filterText)
     
     findAvailable()
 }

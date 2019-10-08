@@ -33,6 +33,7 @@ const Presentation = (props) => {
             <Typography inline={true} style={{
                 fontSize: '1.1rem',
                 verticalAlign: 'bottom',
+                marginTop: 5,
                 marginRight: '1.5rem',
             }}>
                 Cluster <b>{cluster}</b>: <b>{count}</b> genes found
@@ -46,8 +47,6 @@ const Presentation = (props) => {
                 dims={dims}
                 menuPosition={null}
                 topStyle={{
-                    verticalAlign: 'bottom',
-                    marginBottom: 5,
                     zIndex: 1,
                 }}
                 onClick={onClick}
@@ -58,7 +57,7 @@ const Presentation = (props) => {
         <div style={{position: 'relative' }}>
             <div style={{
                 position: 'absolute',
-                top: 21,
+                top: 0,
                 right: 250,
             }} >
                 {Counts}

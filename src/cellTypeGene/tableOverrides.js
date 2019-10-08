@@ -4,8 +4,9 @@
 
 import { onCellClick } from 'cellTypeGene/ctgTable'
 import dataStore from 'cellTypeGene/ctgDataStore'
-import { onChangePage, onColumnSortChange, onFilterChange, onSearchChange,
-    /*onTableChange*/ } from 'cellTypeGene/ctgDisplayRows'
+import { onChangePage, onColumnSortChange, onFilterChange, onSearchChange }
+    from 'cellTypeGene/ctgDisplayRows'
+//import { onTableChange } from 'cellTypeGene/ctgDisplayRows'
 
 const optionOverrideFx = (options) => {
     return {
