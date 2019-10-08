@@ -2,7 +2,7 @@
 // on the cell type worksheet.
 
 import React from 'react'
-//import Menu from 'cellTypeBar/colorBarMenu'
+import Menu from 'cellTypeBar/colorBarMenu'
 
 const ColorBarPres = (props) => {
     const { domain, typeGroups, colormap, sorting, onClick, onMouseDown,
@@ -46,10 +46,10 @@ const ColorBarPres = (props) => {
         }}>
             <div>
                 {tds}
+                <Menu />
             </div>
         </div>
     )
 }
-//            <Menu />
 
 export default ColorBarPres

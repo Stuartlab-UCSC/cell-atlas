@@ -3,22 +3,24 @@
 .popover_type_group::before,
 .popover_clusters::before,
 .popover_genes::before {
-    content:"";
+    content: "";
     position: absolute;
     width: 0;
     height: 0;
     border-style: solid;
-    z-index:9998;
-    border-width: 0 8px 8px 8px;
-    border-color: transparent transparent #888 transparent;
+    z-index: 9998;
 }
 .popover_type_group::before {
-    left: 38px !important;
-    top: 1px;
+    left: 31px !important;
+    top: 45px;
+    border-width: 8px 8px 0 8px;
+    border-color: #888 transparent transparent transparent;
 }
 .popover_clusters::before {
     left: 68px !important;
     top: 1px;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent #888 transparent;
 }
 .popover_genes::before{
     top: 28px !important;

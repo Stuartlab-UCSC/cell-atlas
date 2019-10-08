@@ -22,6 +22,7 @@ const Body = ({props}) => {
             }}
         >
             <MenuItem
+                disabled={true}
                 disableGutters={true}
                 style={{ fontSize: 14 }}
                 onClick={onMapClick}
@@ -40,14 +41,14 @@ const Presentation = (props) => {
         return (null)
     }
     // Put the menu in the center of the columns to which it applies.
-    const left = -36 + (colWidth * menu.startCol)
+    const left = -30 + (colWidth * menu.startCol)
         + (colWidth * (menu.endCol - menu.startCol) / 2)
     return (
         <div
             className='popover_type_group'
             style={{
                 position: 'absolute',
-                top: 16,
+                top: -53,
                 left,
                 width: '5rem',
             }}

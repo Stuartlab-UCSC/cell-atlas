@@ -185,17 +185,14 @@ const mapDispatchToProps = (dispatch) => {
                     message:
                     'For a multi-column cell type: ' +
                     '(1) click on begin cluster, ' +
-                    '(2) shift-click on end cluster,' +
+                    '(2) shift-click on end cluster, ' +
                     '(3) select "Make Cell Type".',
-
                     severity: 'fromDirectRequest',
                 }
             })
         },
     }
 }
-/*
-*/
 
 const ColorBarMenu = connect(
     mapStateToProps, mapDispatchToProps

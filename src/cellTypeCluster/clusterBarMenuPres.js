@@ -81,7 +81,7 @@ const ClusterBarMenuPres = (props) => {
             className='popover_clusters'
             style={{
                 position: 'absolute',
-                top: 16,
+                top: 18,
                 left,
                 width: (selectInfo) ? '13rem' : '9.5rem',
             }}
