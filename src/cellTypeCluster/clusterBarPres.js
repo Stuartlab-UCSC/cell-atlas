@@ -22,6 +22,7 @@ const ClusterBarPres= (props) => {
         width: colWidth,
         display: 'inline-block',
         position: 'relative',
+        zIndex: 0,
     }
 
     let clusterList = []

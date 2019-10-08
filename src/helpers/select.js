@@ -8,11 +8,10 @@ const findBorder = (select, i) => {
     // A selection may be a single widget or a range of widgets.
     // @param select: the selected widgets in the form [beginIndex, endIndex]
     // @param i: the index of this widget in its list
-    const border = 'solid 1px #888'
     const sBorder = 'solid 2px #000'
     let bTop = null
     let bBottom = null
-    let bLeft = (i > 0) ? border : null
+    let bLeft = null
     let bRight = null
     if (select) {
         if (select[0] <= select[1]) {
