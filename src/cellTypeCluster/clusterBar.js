@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux'
 import Presentation from 'cellTypeCluster/clusterBarPres'
-import { sortableOnMouseMove, sortableOnMouseOver } from 'app/sortable'
+import { sortableOnMouseMove, sortableOnMouseOver } from 'helpers/sortable'
 import { rxGet } from 'state/rx'
 import { onSelectClick } from 'helpers/select'
 import dataStore from 'cellTypeWork/dataStore'

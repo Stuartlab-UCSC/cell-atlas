@@ -3,7 +3,7 @@
 
 import { connect } from 'react-redux'
 import { get as rxGet } from 'state/rx'
-import { sortableOnMouseMove, sortableOnMouseOver } from 'app/sortable'
+import { sortableOnMouseMove, sortableOnMouseOver } from 'helpers/sortable'
 import dataStore from 'cellTypeWork/dataStore'
 import { reorderColumns } from 'cellTypeCluster/clusterBar'
 import { clearContextElements } from 'cellTypeWork/worksheet'

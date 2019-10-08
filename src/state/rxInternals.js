@@ -17,7 +17,7 @@ import dataset from 'dataset/datasetState'
 import gene from 'gene/state'
 import geneName from 'components/geneNameState'
 import { namerDialogState as namerDialog } from 'components/NamerDialog'
-import { State as sortable } from 'app/sortable'
+import { State as sortable } from 'helpers/sortable'
 import { State as wish } from 'components/wish'
 
 // Global application state.

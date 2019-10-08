@@ -22,7 +22,7 @@ import PageNotFound from 'home/PageNotFound'
 import Pipeline from 'pipeline/page'
 import sessionStoreInit from 'state/sessionStore'
 import Snackbar from 'components/snackbar'
-import { SortableMarker } from 'app/sortable'
+import { SortableMarker } from 'helpers/sortable'
 import Theme from 'app/Theme'
 
 import 'app/App.css'
