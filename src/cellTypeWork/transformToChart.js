@@ -49,10 +49,10 @@ const buildTypeGroups = (cellTypes) => {
 const buildClusters = (data) => {
     // Find the clusters and sort them by column position.
     // Clusters are received in tsv format as:
-    //      column  cluster cell_count  bar_color  cell_type
-    //      0       2       321         0          Ventricular CMs
-    //      1       0       456         0          Ventricular CMs
-    //      2       1       344         2          Atrial CMs
+    //      column  cluster cell_count  cell_type
+    //      0       2       321         Ventricular CMs
+    //      1       0       456         Ventricular CMs
+    //      2       1       344         Atrial CMs
     // Clusters are saved as:
     //  clusters: [
     //      {
@@ -66,9 +66,6 @@ const buildClusters = (data) => {
     //          label: 'someCellType',
     //          show: true,
     //      }, ...
-    //  ]
-    //  colorBar: [
-    //      '#444444', ...
     //  ]
     
     if (!data || !data.clusters) {

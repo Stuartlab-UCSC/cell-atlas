@@ -28,16 +28,15 @@ const buildClusters = (data) => {
     //
     // Clusters are transformed to:
     //  clusters:
-    //      column   cluster  cell_count  bar_color  cell_type        hide_cell_type
-    //      0        2        321         0          Ventricular CMs
-    //      1        0        456         4          Ventricular CMs  x
-    //      2        1        344         3          Atrial CMs       x
+    //      column   cluster  cell_count  cell_type
+    //      0        2        321         Ventricular CMs
+    //      1        0        456         Ventricular CMs
+    //      2        1        344         Atrial CMs
 
     // Build the cluster tsv lines.
-    const { clusters, cellTypes, colorBar } = data
+    const { clusters, cellTypes } = data
     let tsvLines = clusters.map((cluster, i) => {
-        const line = [i, cluster.name, cluster.cellCount, colorBar[i],
-            cellTypes[i].label, cellTypes[i].hide ]
+        const line = [i, cluster.name, cluster.cellCount, cellTypes[i].label ]
         return line.join('\t')
     })
     
