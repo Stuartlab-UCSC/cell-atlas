@@ -19,6 +19,9 @@ const onMouseOver = (ev) => {
 const Circle = ({ props }) => {
     const { cellCount, color, colorBy, colorRgb, name, offsetX, offsetY,
         radius, size, sizeBy } = props
+    if (isNaN(radius)) {
+        return null
+    }
     const radiusStr = radius.toString()
     let cx = maxDiameter / 2 + 0.5
     let cy = cx
