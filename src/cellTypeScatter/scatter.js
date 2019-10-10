@@ -8,7 +8,7 @@ import ScatterPlotPres from 'cellTypeScatter/scatterPres'
 import fetchData from 'fetch/data'
 import testScatterPlot from 'cellTypeScatter/scatterPlot.png'
 import { getInitalGeneTableData } from 'cellTypeGene/ctgFetch'
-import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
+import { USE_TEST_DATA } from 'cellTypeSheet/sheetList'
 
 const DOMAIN = 'cellTypeScatter'
 const testData = testScatterPlot
@@ -136,6 +136,7 @@ const mapStateToProps = (state) => {
         gene: state.cellTypeScatter.gene,
         plot: scatterStore,
         render: state.cellTypeScatter.render,
+        show: state.cellTypeScatter.showChart,
     }
 }
 

@@ -9,7 +9,7 @@ import WorksheetPresentation from 'cellTypeWork/worksheetPres'
 import transformToChart from 'cellTypeWork/transformToChart'
 import testData from 'cellTypeWork/testData'
 import transformToServerStore from 'cellTypeWork/transformToServerStore'
-import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
+import { USE_TEST_DATA } from 'cellTypeSheet/sheetList'
 
 const DOMAIN = 'cellTypeWork'
 
@@ -38,19 +38,19 @@ const receivePostConfirmFromServer = () => {
     const error = rxGet(DOMAIN + '.fetchMessage')
     if (error === null) {
         // Look for the worksheet name in the 'save as' state.
-        let worksheet = rxGet('cellTypeWork.sheetSaveAs')
+        let worksheet = rxGet('cellTypeSheet.saveAs')
         if (worksheet) {
             // Add the worksheet name to the pick-list.
-            rxSet('cellTypeWork.sheetList.saveAsWorksheetLoaded',
+            rxSet('cellTypeSheet.list.saveAsSheetLoaded',
                 { value: worksheet })
-            rxSet('cellTypeWork.sheetSelected.saveAsWorksheetLoaded',
+            rxSet('cellTypeSheet.selected.saveAsSheetLoaded',
                 { value: worksheet })
-            rxSet('cellTypeWork.sheetOwnedByUser.saveAsWorksheetLoaded',
+            rxSet('cellTypeSheet.ownedByUser.saveAsSheetLoaded',
                 { value: worksheet })
         }
     }
     // Clear the saveAs text on success or error.
-    rxSet('cellTypeWork.sheetSaveAs.clear')
+    rxSet('cellTypeSheet.saveAs.clear')
 }
 
 const receiveDataFromServer = (data) => {
@@ -59,7 +59,14 @@ const receiveDataFromServer = (data) => {
     if (error === null && data !== null) {
         transformToChart(data)
     }
-    rxSet('cellTypeWork.showChart.toQuietStatus')
+    
+    // Notify to re-render worksheet.
+    rxSet('cellTypeWork.render.now')
+    rxSet('cellTypeWork.showChart.loaded')
+
+    // Set this as the selected sheet.
+    rxSet('cellTypeSheet.ownedByUser.sheetLoaded',
+        { value: rxGet('cellTypeSheet.selected') })
     
     // Indicate the first gene table for this worksheet has not displayed.
     rxSet('cellTypeGene.firstTableDisplayed.reset')
@@ -127,6 +134,7 @@ const mapStateToProps = (state) => {
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeWork.fetchMessage,
         render: state.cellTypeWork.render,
+        show: state.cellTypeWork.showChart,
     }
 }
 

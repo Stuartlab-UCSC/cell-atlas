@@ -12,7 +12,7 @@ import { summarizeCats, clearCats, catAttrs, gatherUniqueCats }
     from 'color/colorCat'
 import Presentation from 'gene/pagePres'
 import { tableNewData } from 'gene/table'
-import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
+import { USE_TEST_DATA } from 'cellTypeSheet/sheetList'
 
 let data // the store for data outside of redux state
 

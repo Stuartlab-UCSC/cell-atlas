@@ -38,13 +38,16 @@ const Legends = ({ data, dims }) => {
     )
 }
 
-const WorksheetPresentation = ({ data, dims, fetchMessage }) => {
+const WorksheetPresentation = ({ data, dims, fetchMessage, show }) => {
     if (fetchMessage) {
         return (
             <Typography style={{marginTop: 40}}>
                 {fetchMessage}
             </Typography>
         )
+    }
+    if (!show) {
+        return null
     }
     const { bubblesHeight, bubblesWidth, fontFamily, fontSize, legendWidth,
         geneWidth } = dims

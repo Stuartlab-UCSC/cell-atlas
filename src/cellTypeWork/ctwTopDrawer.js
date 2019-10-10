@@ -6,7 +6,7 @@ import { Drawer, Grid, IconButton, Typography } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import dataStore from 'cellTypeWork/dataStore'
-import SheetList from 'cellTypeWork/sheetList'
+import SheetList from 'cellTypeSheet/sheetList'
 import 'cellTypeWork/style.css'
 
 const DatasetClustering = ({ dataset, clustering }) => {
@@ -101,7 +101,7 @@ const mapStateToProps = (state) => {
         dataset: dataStore.getDataset() || '',
         description: dataStore.getDescription() || '',
         open: state.cellTypeWork.topDrawer,
-        worksheet: state.cellTypeWork.sheetSelected,
+        worksheet: state.cellTypeSheet.selected,
     }
 }
 

@@ -1,5 +1,5 @@
 
-// The cluster worksheet sheet pick list logic.
+// Cell type worksheet: sheet pick list logic.
 
 import { connect } from 'react-redux'
 import PickList from 'components/PickList'
@@ -19,12 +19,12 @@ let prevUser = null
 
 const findSelected = (sheets) => {
     // Get the most recently used worksheet, or the first in the list.
-    let selected = rxGet('cellTypeWork.sheetSelected')
+    let selected = rxGet('cellTypeSheet.selected')
     if (!selected) {
         if (sheets.length) {
             selected = sheets[0].name
         }
-        rxSet('cellTypeWork.sheetSelected.firstSheet', { value: selected })
+        rxSet('cellTypeSheet.selected.firstSheet', { value: selected })
     }
 
     if (selected) {
@@ -80,7 +80,7 @@ const receiveDataFromServer = (data) => {
     })
     
     // Save to state
-    rxSet('cellTypeWork.sheetList.load', { value: sheets })
+    rxSet('cellTypeSheet.list.load', { value: sheets })
 
     // Get the selected sheet.
     findSelected(sheets)
@@ -116,8 +116,8 @@ const mapStateToProps = (state) => {
     return {
         id: 'cell_type_work_sheet',
         label: 'Open a Worksheet',
-        list: state.cellTypeWork.sheetList,
-        selected: state.cellTypeWork.sheetSelected,
+        list: state.cellTypeSheet.list,
+        selected: state.cellTypeSheet.selected,
     }
 }
 
@@ -130,14 +130,14 @@ const mapDispatchToProps = (dispatch) => {
             // Save the sheet selected.
             const sheet = ev.target.value
             dispatch({
-                type: 'cellTypeWork.sheetSelected.uiSelect',
+                type: 'cellTypeSheet.selected.uiSelect',
                 value: sheet,
             })
             
             // Send the sheet name to state and let it decide if it
             // is owned by the current user.
             dispatch({
-                type: 'cellTypeWork.sheetOwnedByUser.uiSelect',
+                type: 'cellTypeSheet.ownedByUser.uiSelect',
                 value: sheet
             })
             

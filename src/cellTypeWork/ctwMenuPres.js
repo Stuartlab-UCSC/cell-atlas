@@ -5,12 +5,12 @@ import { Drawer, IconButton, MenuItem, MenuList } from '@material-ui/core'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import InfoIcon from '@material-ui/icons/Info';
 
-import SheetList from 'cellTypeWork/sheetList'
+import SheetList from 'cellTypeSheet/sheetList'
 
 const Body = ({props}) => {
     // Render the menu.
-    const { sheetOwnedByUser, onSaveAsClick, onSaveClick, onUploadClick,
-        onUploadInfoClick } = props
+    const { sheetOwnedByUser, sheetSelected, onRemoveClick, onSaveAsClick,
+        onSaveClick, onUploadClick, onUploadInfoClick } = props
     return (
         <div style={{width: '20rem'}} >
             <div style={{margin: '1rem'}} >
@@ -18,12 +18,13 @@ const Body = ({props}) => {
             </div>
             <MenuList style={{ padding: 0, }}>
                 <MenuItem
-                    disabled={!sheetOwnedByUser}
+                    disabled={!sheetOwnedByUser || !sheetSelected}
                     onClick={onSaveClick}
                 >
                     Save
                 </MenuItem>
                 <MenuItem
+                    disabled={!sheetSelected}
                     onClick={onSaveAsClick}
                 >
                     Save As
@@ -38,6 +39,12 @@ const Body = ({props}) => {
                     >
                         <InfoIcon color='primary' />
                     </IconButton>
+                </MenuItem>
+                <MenuItem
+                    disabled={!sheetOwnedByUser || !sheetSelected}
+                    onClick={onRemoveClick}
+                >
+                    Remove Worksheet
                 </MenuItem>
             </MenuList>
         </div>

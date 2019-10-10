@@ -11,7 +11,7 @@ import makeButtons from 'cellTypeGene/buttons'
 import { DOMAIN } from 'cellTypeGene/ctgMain'
 import { newDataReceived } from 'cellTypeGene/ctgDisplayRows'
 import testData from 'cellTypeGene/ctgTestData'
-import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
+import { USE_TEST_DATA } from 'cellTypeSheet/sheetList'
 
 const tooltips = {
     'pct.exp': "The percent of cells in the cluster expressing a gene.",

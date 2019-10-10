@@ -7,8 +7,8 @@ import { get as rxGet, set as rxSet } from 'state/rx'
 const resetOnLogout = () => {
     // There is probably a better place to do this, but for now
     // reset some user data when she logs out.
-    rxSet('cellTypeWork.sheetList.userChange')
-    rxSet('cellTypeWork.sheetSelected.userChange')
+    rxSet('cellTypeSheet.list.userChange')
+    rxSet('cellTypeSheet.selected.userChange')
 }
 
 const checkUrlSearch = () => {

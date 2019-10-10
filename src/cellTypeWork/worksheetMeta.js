@@ -60,7 +60,7 @@ const mapStateToProps = (state) => {
         clustering: dataStore.getClusterSolution() || '',
         dataset: dataStore.getDataset() || '',
         description: dataStore.getDescription() || '',
-        worksheet: state.cellTypeWork.sheetSelected,
+        worksheet: state.cellTypeSheet.selected,
     }
 }
 

@@ -87,7 +87,7 @@ const Presentation = (props) => {
 const mapStateToProps = (state) => {
     return {
         bubbleTooltip: state.bubble.tooltip,
-        worksheet: state.cellTypeWork.sheetSelected,
+        worksheet: state.cellTypeSheet.selected,
     }
 }
 

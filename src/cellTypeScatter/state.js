@@ -27,7 +27,8 @@ const State = (
                 fetchMessage: action.value
             }
         case 'cellTypeScatter.fetchMessage.clear':
-            return {
+        case 'cellTypeScatter.fetchMessage.sheetRemove':
+               return {
                 ...state,
                 fetchMessage: null
             }
@@ -49,6 +50,8 @@ const State = (
         case 'cellTypeScatter.showChart.getNewAssignmentPlot':
         case 'cellTypeScatter.showChart.getNewGenePlot':
         case 'cellTypeScatter.showChart.getNewWorksheet':
+        case 'cellTypeScatter.showChart.toRequestStatus':
+        case 'cellTypeScatter.showChart.sheetRemove':
             return {
                 ...state,
                 showChart: false
@@ -57,11 +60,6 @@ const State = (
             return {
                 ...state,
                 showChart: true
-            }
-        case 'cellTypeScatter.showChart.toRequestStatus':
-            return {
-                ...state,
-                showChart: false
             }
         default:
             return state

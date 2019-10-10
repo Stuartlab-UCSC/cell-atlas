@@ -24,8 +24,6 @@ const defaultDims = {
     rowHeight: 18,
     sizeRange:{},
 }
-const defaultSheetList = []
-const defaultSheetSelected = null
 
 const State = (
     state = {
@@ -36,10 +34,6 @@ const State = (
         geneMenu: null,
         menu: false,
         render: renderSeq++,
-        sheetList: defaultSheetList,
-        sheetSaveAs: '',
-        sheetSelected: null,
-        sheetOwnedByUser: false,
         showChart: false,
         topDrawer: true,
     }, action) => {
@@ -72,6 +66,7 @@ const State = (
                 fetchMessage: action.value
             }
         case 'cellTypeWork.fetchMessage.clear':
+        case 'cellTypeWork.fetchMessage.sheetRemove':
             return {
                 ...state,
                 fetchMessage: null
@@ -119,90 +114,16 @@ const State = (
                 ...state,
                 render: renderSeq++
             }
-        case 'cellTypeWork.sheetList.load':
-            return {
-                ...state,
-                sheetList: action.value
-            }
-        case 'cellTypeWork.sheetList.saveAsWorksheetLoaded':
-            // If the sheet is already in the list we're done.
-            const value = action.value
-            const i = state.sheetList.findIndex(sheet => {
-                return sheet.value === value
-            })
-            if (i > -1) {
-                return state
-            }
-            // Insert the new sheet into those owned by the current user,
-            // alphabetically. Note that the user's sheets are listed above
-            // sheets owned by others.
-            let newList = []
-            let added = false
-            state.sheetList.forEach(sheet => {
-                if (!added) {
-                    const j = sheet.value.indexOf('/')
-                    if ( j > -1 || value < sheet.value) {
-                        // We've reached the sheets owned by others or
-                        // the new is lexographically less than this sheet.
-                        newList.push({ value, name: value })
-                        added = true
-                    }
-                }
-                newList.push(sheet)
-            })
-            return {
-                ...state,
-                sheetList: newList,
-            }
-        case 'cellTypeWork.sheetList.userChange':
-            return {
-                ...state,
-                sheetList: defaultSheetList,
-            }
-        case 'cellTypeWork.sheetOwnedByUser.saveAsWorksheetLoaded':
-        case 'cellTypeWork.sheetOwnedByUser.uiSelect':
-            return {
-                ...state,
-                sheetOwnedByUser: (action.value.indexOf('/') < 0),
-            }
-        case 'cellTypeWork.sheetSaveAs.clear':
-            return {
-                ...state,
-                sheetSaveAs: ''
-            }
-        case 'cellTypeWork.sheetSaveAs.cleanedNameSet':
-        case 'cellTypeWork.sheetSaveAs.uiSet':
-            return {
-                ...state,
-                sheetSaveAs: action.value
-            }
-        case 'cellTypeWork.sheetSelected.loadPersist':
-        case 'cellTypeWork.sheetSelected.saveAsWorksheetLoaded':
-        case 'cellTypeWork.sheetSelected.firstSheet':
-        case 'cellTypeWork.sheetSelected.uiSelect':
-            return {
-                ...state,
-                sheetSelected: action.value,
-            }
-        case 'cellTypeWork.sheetSelected.userChange':
-            return {
-                ...state,
-                sheetSelected: null
-            }
-        case 'cellTypeWork.showChart.loading':
-            return {
-                ...state,
-                showChart: false
-            }
-        case 'cellTypeWork.showChart.toQuietStatus':
-            return {
-                ...state,
-                showChart: true
-            }
+        case 'cellTypeWork.showChart.sheetRemove':
         case 'cellTypeWork.showChart.toRequestStatus':
             return {
                 ...state,
                 showChart: false
+            }
+        case 'cellTypeWork.showChart.loaded':
+            return {
+                ...state,
+                showChart: true
             }
         case 'cellTypeWork.topDrawer.open':
             return {
@@ -219,37 +140,4 @@ const State = (
         }
     }
 
-const cellTypeSheetState = (
-    state = {
-        fetchMessage: null,
-        fetchStatus: 'initial',
-    }, action) => {
-        switch (action.type) {
-        case 'cellTypeSheet.fetchMessage.set':
-            return {
-                ...state,
-                fetchMessage: action.value
-            }
-        case 'cellTypeSheet.fetchMessage.clear':
-            return {
-                ...state,
-                fetchMessage: null
-            }
-        case 'cellTypeSheet.fetchStatus.waiting':
-            return {
-                ...state,
-                fetchStatus: 'waiting'
-            }
-        case 'cellTypeSheet.fetchStatus.quiet':
-            return {
-                ...state,
-                fetchStatus: 'quiet'
-            }
-        default:
-            return state
-        }
-    }
-
-
 export default State
-export { cellTypeSheetState, defaultSheetList, defaultSheetSelected }

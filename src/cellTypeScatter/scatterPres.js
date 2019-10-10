@@ -46,7 +46,7 @@ const AssignmentsButton = ({ gene, onClick }) => {
     )
 }
 
-const ScatterPlotPres = ({ fetchMessage, gene, plot, onClick }) => {
+const ScatterPlotPres = ({ fetchMessage, gene, plot, show, onClick }) => {
     let paperHeight = imageHeight - 20
     let viz = null
     if (fetchMessage) {
@@ -55,7 +55,7 @@ const ScatterPlotPres = ({ fetchMessage, gene, plot, onClick }) => {
                 {fetchMessage}
             </Typography>
         )
-    } else {
+    } else if (show) {
         viz = (
             <Paper style={{
                 position: 'relative',

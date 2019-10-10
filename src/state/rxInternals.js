@@ -10,7 +10,9 @@ import cellTypeCluster from 'cellTypeCluster/clusterState'
 import { cellTypeGeneClusters, cellTypeGene, ctgVariable }
     from 'cellTypeGene/state'
 import cellTypeScatter from 'cellTypeScatter/state'
-import { cellTypeSheetState as cellTypeSheet } from  'cellTypeWork/state'
+import cellTypeSheet from  'cellTypeSheet/sheetState'
+import { cellTypeSheetRemoveState as cellTypeSheetRemove }
+    from 'cellTypeSheet/sheetState'
 import cellTypeWork from 'cellTypeWork/state'
 import database from 'database/databaseState'
 import dataset from 'dataset/datasetState'
@@ -23,7 +25,7 @@ import { State as wish } from 'components/wish'
 // Global application state.
 const defaultSnackbar = {
     open: false,
-    message: ' ',
+    message: '',
 }
 const app = (
     state = {
@@ -94,6 +96,7 @@ export const init = () => {
         cellTypeGeneClusters,
         cellTypeScatter,
         cellTypeSheet,
+        cellTypeSheetRemove,
         cellTypeWork,
         ctgVariable,
         database,

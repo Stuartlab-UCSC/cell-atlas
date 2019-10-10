@@ -14,8 +14,8 @@ const DOMAIN = 'cellTypeGene'
 
 const Presentation = (props) => {
     // Rendering of the gene table.
-    const { cluster, count, data, dims, fetchMessage, fetchStatus, onClick }
-        = props
+    const { cluster, count, data, dims, fetchMessage, fetchStatus, show,
+        onClick } = props
     let Counts = null
     let clusterBar = null
     if (data === undefined) {
@@ -28,7 +28,7 @@ const Presentation = (props) => {
                 style={{position: 'fixed', left: 550, top: 300}}
             />
         )
-    } else if (!fetchMessage) {
+    } else if (!fetchMessage && show) {
         Counts = (
             <Typography inline={true} style={{
                 fontSize: '1.1rem',

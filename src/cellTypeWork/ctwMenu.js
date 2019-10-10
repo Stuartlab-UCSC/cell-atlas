@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { get as rxGet } from 'state/rx'
 import { cleanName } from 'app/util'
 import { postWorksheetData } from 'cellTypeWork/worksheet'
+import sheetRemove from 'cellTypeSheet/sheetRemove'
 import CtwMenuPres from 'cellTypeWork/ctwMenuPres'
 
 const onSaveAsSubmit = (name, dispatch) => {
@@ -13,7 +14,7 @@ const onSaveAsSubmit = (name, dispatch) => {
         nameIt(dispatch, name, true, 'A name is required to save.')
         
     // Did the user confirm to overwrite an existing worksheet?
-    } else if (name === rxGet('cellTypeWork.sheetSaveAs')) {
+    } else if (name === rxGet('cellTypeSheet.saveAs')) {
         postWorksheetData(name)
         
     // Does the name have any dirty characters it it?
@@ -23,7 +24,7 @@ const onSaveAsSubmit = (name, dispatch) => {
             'Invalid characters were replaced and the worksheet was saved as: '
             + cleanedName)
         dispatch({
-            type: 'cellTypeWork.sheetSaveAs.cleanedNameSet',
+            type: 'cellTypeSheet.saveAs.cleanedNameSet',
             value: cleanedName
         })
         postWorksheetData(cleanedName)
@@ -37,11 +38,11 @@ const onSaveAsSubmit = (name, dispatch) => {
     } else {
         // Save this name for later.
         dispatch({
-            type: 'cellTypeWork.sheetSaveAs.uiSet',
+            type: 'cellTypeSheet.saveAs.uiSet',
             value: name
         })
         // Check for the worksheet already existing.
-        const found = rxGet('cellTypeWork.sheetList').find(sheet => {
+        const found = rxGet('cellTypeSheet.list').find(sheet => {
             return (name === sheet.value)
         })
         if (found) {
@@ -70,32 +71,40 @@ const mapStateToProps = (state) => {
     return {
         background: 'white',
         menuShow: state.cellTypeWork.menu,
-        sheetOwnedByUser: state.cellTypeWork.sheetOwnedByUser,
+        sheetOwnedByUser: state.cellTypeSheet.ownedByUser,
+        sheetSelected: state.cellTypeSheet.selected,
     }
+}
+
+const close = (dispatch) => {
+    dispatch({ type: 'cellTypeWork.menu.hide' })
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onBackdropClick: ev => {
-            dispatch({ type: 'cellTypeWork.menu.hide' })
+            close(dispatch)
         },
         onMenuClose: ev => {
-            dispatch({ type: 'cellTypeWork.menu.hide'})
+            close(dispatch)
+        },
+        onRemoveClick: ev => {
+            sheetRemove(dispatch)
         },
         onSaveAsClick: ev => {
             // Name the worksheet.
-            dispatch({ type: 'cellTypeWork.menu.hide' })
+            close(dispatch)
             nameIt(dispatch)
         },
         onSaveClick: ev => {
-            dispatch({ type: 'cellTypeWork.menu.hide' })
-            postWorksheetData(rxGet('cellTypeWork.sheetSelected'))
+            close(dispatch)
+            postWorksheetData(rxGet('cellTypeSheet.selected'))
         },
         onUploadClick: ev => {
-            dispatch({ type: 'cellTypeWork.menu.hide' })
+            close(dispatch)
         },
         onUploadInfoClick: ev => {
-            dispatch({ type: 'cellTypeWork.menu.hide' })
+            close(dispatch)
         },
     }
 }

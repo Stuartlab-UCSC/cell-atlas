@@ -176,9 +176,6 @@ const transfromToChart = (data) => {
         ]
     })
 
-    // Notify to re-render worksheet.
-    rxSet('cellTypeWork.render.now')
-
     // Load the initial scatterplot. The receive function then requests the
     // initial gene table.
     getInitialScatterPlot(clusters, colormap, data.scatterplot_url)

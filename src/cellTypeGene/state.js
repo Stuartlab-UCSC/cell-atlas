@@ -25,6 +25,7 @@ const cellTypeGene = (
                 cluster: action.value
             }
        case 'cellTypeGene.fetchMessage.clear':
+       case 'cellTypeGene.fetchMessage.sheetRemove':
             return {
                 ...state,
                 fetchMessage: null
@@ -89,6 +90,7 @@ const cellTypeGene = (
         case 'cellTypeGene.show.getInitialGeneTable':
         case 'cellTypeGene.show.getGeneTable':
         case 'cellTypeGene.show.getNewWorksheet':
+        case 'cellTypeGene.show.sheetRemove':
             return {
                 ...state,
                 show: false

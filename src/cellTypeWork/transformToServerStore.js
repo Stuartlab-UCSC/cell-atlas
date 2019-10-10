@@ -121,7 +121,7 @@ const transformToServerStore = () => {
         group: data.group,
         source_user: data.sourceUser || rxGet('auth.user').name,
         source_worksheet_name:
-            data.sourceWorksheet || rxGet('cellTypeWork.sheetSelected'),
+            data.sourceWorksheet || rxGet('cellTypeSheet.selected'),
         role: 'worksheet',
         dataset_name: data.dataset,
         cluster_solution: data.clusterSolution,

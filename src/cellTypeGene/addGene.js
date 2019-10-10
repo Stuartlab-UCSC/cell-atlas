@@ -7,7 +7,7 @@ import fetchData from 'fetch/data'
 import { addGeneBubbles } from 'cellTypeWork/transformToBubbles'
 import { geneAlreadyThere } from 'cellTypeGene/ctgTable'
 import dataStore from 'cellTypeWork/dataStore'
-import { USE_TEST_DATA } from 'cellTypeWork/sheetList'
+import { USE_TEST_DATA } from 'cellTypeSheet/sheetList'
 
 const DOMAIN = 'cellTypeGeneClusters'
 const testData =

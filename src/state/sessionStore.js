@@ -23,7 +23,7 @@ let storeName
 const stateKeys = {
     'auth.redirectPage': auth.defaultRedirectPage,
     'auth.user': auth.defaultUser,
-    'cellTypeWork.sheetSelected': cellTypeWork.defaultSheetSelected,
+    'cellTypeSheet.selected': cellTypeWork.defaultSheetSelected,
     'database.favoriteList': database.defaultFavoriteList,
     'database.favoriteSelected': database.defaultFavoriteSelected,
     'database.query': database.defaultQuery,
