@@ -3,14 +3,14 @@
 import React from 'react'
 import { Drawer, IconButton, MenuItem, MenuList } from '@material-ui/core'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import InfoIcon from '@material-ui/icons/Info';
+//import InfoIcon from '@material-ui/icons/Info';
 
 import SheetList from 'cellTypeSheet/sheetList'
 
 const Body = ({props}) => {
     // Render the menu.
-    const { sheetOwnedByUser, sheetSelected, onRemoveClick, onSaveAsClick,
-        onSaveClick, onUploadClick, onUploadInfoClick } = props
+    const { sheetOwnedByUser, sheetSelected, /*onRemoveClick,*/ onSaveAsClick,
+        onSaveClick/*, onUploadClick, onUploadInfoClick*/ } = props
     return (
         <div style={{width: '20rem'}} >
             <div style={{margin: '1rem'}} >
@@ -29,27 +29,29 @@ const Body = ({props}) => {
                 >
                     Save As
                 </MenuItem>
-                <MenuItem
-                    disabled = {true}
-                    onClick={onUploadClick}
-                >
-                    Upload Data
-                    <IconButton
-                        onClick={onUploadInfoClick}
-                    >
-                        <InfoIcon color='primary' />
-                    </IconButton>
-                </MenuItem>
-                <MenuItem
-                    disabled={!sheetOwnedByUser || !sheetSelected}
-                    onClick={onRemoveClick}
-                >
-                    Remove Worksheet
-                </MenuItem>
             </MenuList>
         </div>
     )
 }
+/*
+<MenuItem
+    disabled = {true}
+    onClick={onUploadClick}
+>
+    Upload Data
+    <IconButton
+        onClick={onUploadInfoClick}
+    >
+        <InfoIcon color='primary' />
+    </IconButton>
+</MenuItem>
+<MenuItem
+    disabled={!sheetOwnedByUser || !sheetSelected}
+    onClick={onRemoveClick}
+>
+    Remove Worksheet
+</MenuItem>
+*/
 
 const CtwMenuPresentation = (props) => {
     // Render the modal upon opening.
