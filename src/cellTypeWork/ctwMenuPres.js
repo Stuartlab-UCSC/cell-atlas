@@ -9,11 +9,12 @@ import SheetList from 'cellTypeSheet/sheetList'
 
 const Body = ({props}) => {
     // Render the menu.
-    const { sheetOwnedByUser, sheetSelected, /*onRemoveClick,*/ onSaveAsClick,
-        onSaveClick/*, onUploadClick, onUploadInfoClick*/ } = props
+    const { sheetOwnedByUser, sheetSelected, /*username, onRemoveClick,*/
+        onSaveAsClick, onSaveClick/*, onUploadClick, onUploadInfoClick*/ }
+        = props
     return (
         <div style={{width: '20rem'}} >
-            <div style={{margin: '1rem'}} >
+            <div style={{margin: '1rem', marginTop: 0}} >
                 <SheetList />
             </div>
             <MenuList style={{ padding: 0, }}>
@@ -70,12 +71,11 @@ const CtwMenuPresentation = (props) => {
         >
             <div style={{
                 position: 'relative',
-                top: 50,
+                top: 40,
             }}>
-                <Body props={props} />
                 <div style={{
-                    position: 'absolute',
-                    right: 0,
+                    width: '100%',
+                    textAlign: 'right',
                 }} >
                     <IconButton
                         onClick={onMenuClose}
@@ -83,6 +83,7 @@ const CtwMenuPresentation = (props) => {
                         <KeyboardArrowLeftIcon color='primary' />
                     </IconButton>
                 </div>
+                <Body props={props} />
             </div>
         </Drawer>
     )

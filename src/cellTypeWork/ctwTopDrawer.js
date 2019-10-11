@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Drawer, Grid, IconButton, Typography } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import dataStore from 'cellTypeWork/dataStore'
 import SheetList from 'cellTypeSheet/sheetList'
@@ -31,15 +32,26 @@ const DatasetClustering = ({ dataset, clustering }) => {
 }
 
 const Body = ({props}) => {
-    const { clustering, dataset, description } = props
+    const { clustering, dataset, description, onMenuClick } = props
     return (
         <Grid container spacing={16} >
+            <Grid item xs={1} >
+                <IconButton
+                    style={{
+                        marginTop: -21,
+                        marginLeft: -34,
+                    }}
+                    onClick={onMenuClick}
+                >
+                    <MenuIcon color='primary' style={{height: 36, width: 36}}/>
+                </IconButton>
+            </Grid>
             <Grid item xs={4} >
                 <div style={{width: '90%', margin: 'auto'}} >
                     <SheetList />
                 </div>
             </Grid>
-            <Grid item xs={8} style={{marginTop: '1.5rem'}}>
+            <Grid item xs={7} style={{marginTop: '1.5rem'}}>
                 <DatasetClustering
                     clustering={clustering}
                     dataset={dataset}
@@ -66,6 +78,7 @@ const CtwTopDrawerPres = (props) => {
             anchor='top'
             ModalProps={{
                 //hideBackdrop: true,
+                // TODO: change this to accordian down rather than overlay
                 style: { width: '90%' },
                 BackdropProps: { style: { background: 'rgb(127,127,127,0.5)' }},
                 onBackdropClick,
@@ -109,6 +122,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onBackdropClick: ev => {
             dispatch({ type: 'cellTypeWork.topDrawer.close' })
+        },
+        onMenuClick: ev => {
+            dispatch({ type: 'cellTypeWork.menu.show' })
         },
         onClose: ev => {
             dispatch({ type: 'cellTypeWork.topDrawer.close' })
