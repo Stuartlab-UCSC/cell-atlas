@@ -46,23 +46,14 @@ const Presentation = (props) => {
                 colormap={colormap}
                 dims={dims}
                 menuPosition={null}
-                topStyle={{
-                    zIndex: 1,
-                }}
                 onClick={onClick}
             />
         )
     }
     return (
-        <div style={{position: 'relative' }}>
-            <div style={{
-                position: 'absolute',
-                top: 0,
-                right: 250,
-            }} >
-                {Counts}
-                {clusterBar}
-            </div>
+        <div>
+            {Counts}
+            {clusterBar}
             <CtgTable />
         </div>
     )
@@ -78,6 +69,7 @@ const mapStateToProps = (state) => {
         dims: state.cellTypeWork.dims,
         fetchMessage: state.cellTypeGene.fetchMessage,
         fetchStatus: state.cellTypeGene.fetchStatus,
+        show: state.cellTypeGene.show,
         menuPosition: null,
     }
 }
