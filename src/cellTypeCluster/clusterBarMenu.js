@@ -61,8 +61,6 @@ const cellTypeChangeCleanUp = (cellTypes, dispatch, focusLabelIndex) => {
     // Finish up after a menu option is processed.
     // Remove the selection from the cluster menu.
     dispatch({ type: 'cellTypeCluster.select.optionSelected' })
-    // Close the  menu.
-    dispatch({ type: 'cellTypeCluster.menu.optionSelected' })
     
     cellTypeChangeConclusion(cellTypes, dispatch, focusLabelIndex)
 }
@@ -155,11 +153,13 @@ const mapDispatchToProps = (dispatch) => {
                 dataStore.getClusters()[rxGet('cellTypeCluster.menu').startCol]
             getGeneTableData(cluster.name)
             // Close the context menu.
-            dispatch({ type: 'cellTypeCluster.menu.optionClicked' })
+            dispatch({ type: 'cellTypeCluster.menu.optionSelected' })
         },
         onMakeTypeClick: ev => {
             // A new cell type has been requested.
             const { startCol, endCol } = rxGet('cellTypeCluster.menu')
+            // Close the context menu.
+            dispatch({ type: 'cellTypeCluster.menu.optionSelected' })
             if (startCol === endCol) {
                 // There is a single cluster for this cell type.
                 // Give new cell type a label to differentiate it from others.
@@ -167,7 +167,7 @@ const mapDispatchToProps = (dispatch) => {
                 const newCellTypes = cellTypes.map((type, i) => {
                     return (i === startCol)
                         ? { label: uniqueLabel(
-                                    cellTypes, type.label, startCol, endCol) }
+                                cellTypes, type.label, startCol, endCol) }
                         : type
                 })
                 // Finish up.

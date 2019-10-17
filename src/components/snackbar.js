@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, IconButton, Snackbar } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import { rxGet } from 'state/rx'
+import { rxGet, rxSet } from 'state/rx'
 
 
 const Action = ({ label, onClick }) => {
@@ -105,9 +105,21 @@ CaSnackbarPres.propTypes = {
     onClose: PropTypes.func, // the event handler for closing the snackbar
 }
 
+const onReallyClose = (reason, onClose) => {
+    if (reason === 'clickaway') {
+        return
+    }
+    if (onClose) {
+        onClose()
+    }
+    rxSet('app.snackbar.close')
+}
+
 const mapStateToProps = state => {
     return {
         ...state.app.snackbar,
+        onClose: (ev, reason) =>
+            onReallyClose(reason, state.app.snackbar.onClose),
     }
 }
 
@@ -118,13 +130,6 @@ const mapDispatchToProps = dispatch => {
             dispatch({ type: 'app.snackbar.close' })
             if (onActionClick) {
                 onActionClick()
-            }
-        },
-        onClose: () => {
-            const onClose = rxGet('app.snackbar').onClose
-            dispatch({ type: 'app.snackbar.close' })
-            if (onClose) {
-                onClose()
             }
         },
     }
