@@ -60,6 +60,12 @@ const findDerivedData = (solutions) => {
 const receiveDataFromServer = (dataIn) => {
     // Handle the data received from the server.
     data = dataIn.resource
+    if (data.cluster_solutions.length < 1) {
+        rxSet('app.snackbar.open', { value:
+            'No clustering solutions were found for this gene.',
+        })
+        return
+    }
     rxSet('gene.sort.reset')
     findDerivedData(data.cluster_solutions)
     tableNewData(data)

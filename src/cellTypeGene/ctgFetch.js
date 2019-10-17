@@ -1,7 +1,7 @@
 
 // The fetch for the cell type worksheet gene table.
 
-import { set as rxSet } from 'state/rx'
+import { rxGet, set as rxSet } from 'state/rx'
 import fetchData, { receiveData } from 'fetch/data'
 import { receiveTableData } from 'fetch/tableData'
 import { stringToPrecisionNumber } from 'app/util'
@@ -73,6 +73,16 @@ const receiveTableDataFromServer = (columns, data) => {
 const receiveDataFromServer = (data) => {
     // Receive the data from the server and call to extract the columns from
     // the data.
+    
+    const error = rxGet(DOMAIN + '.fetchMessage')
+    if (error !== null) {
+        rxSet('app.snackbar.open', { value: {
+            severity: 'error',
+            message: 'Retrieving gene stats failed with: ' + error
+        }})
+        return
+    }
+
     if (!data) {
         return
     }

@@ -19,6 +19,10 @@ const toHexString = (val) => {
 
 const getCatColormap = (palette, count) => {
     // Get the colors as hexadecimal strings.
+    if (count < 1) {
+        // With no categories, we return an empty array of colors.
+        return []
+    }
     let rgbs = ColorMap.get(palette)(count + 1)
     let colors = rgbs.map.map(val => {
         // Ignore alpha, taking the default of one.
