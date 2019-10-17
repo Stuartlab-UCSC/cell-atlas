@@ -1,7 +1,8 @@
 // Cell type worksheet: remove a worksheet.
 
 import { rxGet, rxSet} from 'state/rx'
-//import fetchData from 'fetch/data'
+import fetchData from 'fetch/data'
+import dataStore from 'cellTypeWork/dataStore'
 
 const DOMAIN = 'cellTypeSheetRemove'
 
@@ -31,15 +32,12 @@ const requestRemoveOnServer = (dispatch) => {
     // One way or another the confirmation dialog closed without an undo, so
     // this is a confirmation the remove really was intended.
     // Request removal of the worksheet on the server now.
-    receiveDeleteConfirmFromServer()
-    /*
+    //receiveDeleteConfirmFromServer()
     const url =
         '/user/' + rxGet('auth.user').name +
         '/worksheet/' + rxGet('cellTypeSheetRemove.name')
     let options = { credentials: true, method: 'DELETE' }
-    // TODO test with server
-    //fetchData(DOMAIN, url, receiveDeleteConfirmFromServer, options)
-    */
+    fetchData(DOMAIN, url, receiveDeleteConfirmFromServer, options)
 }
 
 const onUndoClick = () => {
@@ -89,6 +87,9 @@ const sheetRemove = (dispatch) => {
         value: selected
     })
     dispatch({ type: 'cellTypeSheet.selected.sheetRemove' })
+    
+    // Set the render data to defaults so no leftover info shows.
+    dataStore.setDefaults()
 }
 
 export default sheetRemove

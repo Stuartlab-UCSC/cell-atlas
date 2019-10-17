@@ -9,7 +9,7 @@ import SheetList from 'cellTypeSheet/sheetList'
 
 const Body = ({props}) => {
     // Render the menu.
-    const { sheetOwnedByUser, sheetSelected, /*username, onRemoveClick,*/
+    const { sheetOwnedByUser, sheetSelected, /*username,*/ onRemoveClick,
         onSaveAsClick, onSaveClick/*, onUploadClick, onUploadInfoClick*/ }
         = props
     return (
@@ -30,6 +30,12 @@ const Body = ({props}) => {
                 >
                     Save As
                 </MenuItem>
+                <MenuItem
+                    disabled={!sheetOwnedByUser || !sheetSelected}
+                    onClick={onRemoveClick}
+                >
+                    Remove Worksheet
+                </MenuItem>
             </MenuList>
         </div>
     )
@@ -45,12 +51,6 @@ const Body = ({props}) => {
     >
         <InfoIcon color='primary' />
     </IconButton>
-</MenuItem>
-<MenuItem
-    disabled={!sheetOwnedByUser || !sheetSelected}
-    onClick={onRemoveClick}
->
-    Remove Worksheet
 </MenuItem>
 */
 

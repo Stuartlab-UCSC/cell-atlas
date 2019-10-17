@@ -5,7 +5,7 @@
 import { get as rxGet, set as rxSet } from 'state/rx'
 import { receiveTableData } from 'fetch/tableData'
 
-const receiveData = (id, data, callback, optionsIn) => {
+const receiveData = (id, data, callback, options) => {
     // Receive the data from the fetch.
     // @param id: ID of the table instance, used as part of the state name
     // @param data: data received from the server; for table data this is a text
@@ -13,41 +13,41 @@ const receiveData = (id, data, callback, optionsIn) => {
     // @param callback: function to call after receiving the data; optional for
     //                   table data, otherwise required
     // @param options: the same as that for fetchData().
-    let options = optionsIn || {}
-    const post = (options.payload)
-    // TODO we are using a POST to get a cluster assignment scatterplot, so
-    // there is a payload, but we expect data returned. How to handle that?
-    // a PUT?
+    let dataOut = data
 
+    // Look for an error already detected.
     if (rxGet(id + '.fetchStatus') === 'quiet') {
-        // This means there was an error detected and already recorded
-        // in state: ...fetchMessage.
-        if (callback) {
-            // Use a timeout so we have good debugging available.
-            setTimeout(() => { callback(null) })
-        }
-        return
+        dataOut = null
+        // An error has already been set, so skip the rest of processing.
 
-    // If the data contains a message, set the fetch message to that error.
+    // Look for a server error not yet recorded by checking for a message
+    // in the data object.
     } else if (data !== null && typeof data === 'object' && data.message) {
-        error(id, data.message)
-        if (callback) {
-            setTimeout(() => {
-                callback(null)
-            })
-        }
+        serverError(id, data.message)
+        dataOut = null
+
+    // Look for a server error recorded in the options.
+    } else if (options.serverError) {
+        serverError(id, options.serverError)
+        dataOut = null
 
     // If data is empty on a GET, let the user know there is no data.
-    } else if (!post &&
+    } else if ((options.method === 'GET') &&
         (data === null || data === undefined || data.length < 1)) {
-        rxSet(id + '.fetchMessage.set', { value: 'No data found' })
+        serverError(id, 'No data found')
+        dataOut = null
 
     } else {
-        // Process the data.
+        // This is good data as far as we can tell.
+        // Clear the fetch message on valid data.
+        rxSet(id + '.fetchMessage.clear')
         if (options.tableData) {
         
             // Receiving of dataTables includes formatting for a dataTable.
             receiveTableData(id, data, callback)
+            rxSet(id + '.fetchStatus.quiet')
+            return
+
         } else if (options.responseType === 'png') {
         
             // Receiving of a png includes converting it to 'src' for an <img>.
@@ -59,26 +59,41 @@ const receiveData = (id, data, callback, optionsIn) => {
                 }
                 file.readAsDataURL(data);
             })
-        } else if (callback) {
-            // Use a timeout so we have good debugging available.
-            setTimeout(() => { callback(data) })
+            rxSet(id + '.fetchStatus.quiet')
+            return
         }
-        // Clear the fetch message on valid data.
-        rxSet(id + '.fetchMessage.clear')
     }
-    // Quiet the fetch status, no matter if data is valid or not.
-    // TODO change all callers to set this to quiet like we do for cellTypeGene.
-    if (id === 'cellTypeGene') {
-        rxSet(id + '.fetchStatus.loading')
-    } else {
-        rxSet(id + '.fetchStatus.quiet')
+    if (callback) {
+        // Use a timeout so we have good debugging available.
+        setTimeout(() => {
+            callback(dataOut)
+        })
     }
+    rxSet(id + '.fetchStatus.quiet')
 }
 
-const error = (id, message) => {
-    console.error('fetch error 1:', message)
+const serverError = (id, message) => {
+    console.error('server fetch error:', message)
     rxSet(id + '.fetchMessage.set', { value: message })
     rxSet(id + '.fetchStatus.quiet')
+}
+
+const clientError = (id, message) => {
+    console.error('client error after fetch:', message)
+    rxSet(id + '.fetchMessage.set', { value: message })
+    rxSet(id + '.fetchStatus.quiet')
+}
+
+const findFetchOptions = (options) => {
+    let fetchOpts = { method: options.method }
+    if (options.payload) {
+        fetchOpts.headers = { 'Content-Type': 'application/json' }
+        fetchOpts.body = JSON.stringify(options.payload)
+    }
+    if (options.credentials) {
+        fetchOpts.credentials = 'include'
+    }
+    return fetchOpts
 }
 
 const fetchData = (id, urlPath, callback, optionsIn) => {
@@ -86,9 +101,11 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
     // @param id: ID of the table instance, used as part of the state name
     // @param urlPath: url path to use in the http request
     // @param callback: optional function to call after receiving the data
-    // @param options: optional with these possible properties:
+    // @param optionsIn: optional with these possible properties:
+    //                 method: http method of POST, GET, etc. defaults to GET
+    //                 credentials: true: include auth credentials in request
     //                 fullUrl: true: the url needs no prefix to request
-    //                 payload: the POST data payload
+    //                 payload: the data payload
     //                 responseType: one of json/text/png; defaults to json
     //                 tableData: true: transform response into dataTable format
     if (rxGet(id + '.fetchStatus') === 'waiting') {
@@ -114,23 +131,10 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
         const encodedUrl = url
         //const encodedUrl = encodeURI(url)
         
-        let fetchOpts = {}
-        if (options.payload) {
-            // Any request with a payload is assumed to have a method supplied.
-            fetchOpts = {
-                method: options.method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(options.payload),
-            }
-        }
-        if (options.credentials) {
-            // Include credentials.
-            fetchOpts.credentials = 'include'
-        }
-
-        fetch(encodedUrl, fetchOpts)
+        // Default the method to GET for use when receiving the data.
+        options.method = options.method || 'GET'
+        
+        fetch(encodedUrl, findFetchOptions(options))
         .then((response) => {
             if (response.ok) {
 
@@ -145,17 +149,22 @@ const fetchData = (id, urlPath, callback, optionsIn) => {
                     return response.json()
                 }
             } else {
-                if (response.status === 403) {
-                    error(id, 'Unauthorized, maybe you need to sign in.')
+                if (response.status === 401) {
+                    serverError(
+                        id, 'Unauthenticated, maybe you need to sign in.')
+                } else if (response.status === 403) {
+                    serverError(
+                        id, 'Unauthorized, maybe you need to sign in.')
                 } else {
-                    error(id, response.statusText)
+                    options.serverError = response.statusText
                 }
                 return response.json()
             }
         })
         .then((data) => receiveData(id, data, callback, options))
         .catch((e) => {
-            error(id, e.toString())
+            clientError(id, e.toString())
+            receiveData(id, null, callback, options)
         })
     }, 0)
 }
