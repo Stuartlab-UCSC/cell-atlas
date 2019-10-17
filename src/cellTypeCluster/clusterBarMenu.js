@@ -43,7 +43,7 @@ const setMenuOptions = (positionIn, dispatch) => {
     dispatch({type: 'cellTypeCluster.geneStats.set',
         value: (startCol === endCol) })
     dispatch({ type: 'cellTypeCluster.selectInfo.set',
-        value: (select === null) })
+        value: (select === null  || (select[0] === select[1])) })
     dispatch({ type: 'cellTypeCluster.makeType.set',
         value: (position >= startCol || position <= endCol) })
 
