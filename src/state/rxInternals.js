@@ -70,12 +70,8 @@ const app = (
                 snackbar: defaultSnackbar
             }
         case 'app.snackbar.open':
-            // The action value may be a message string or an object
-            // containing the message an options.
-            let snackbar = { message: action.value, open: true }
-            if (typeof action.value === 'object') {
-                snackbar = { ...action.value, open: true }
-            }
+            let snackbar = { ...action, open: true }
+            delete snackbar.type
             return {
                 ...state,
                 snackbar

@@ -76,10 +76,10 @@ const receiveDataFromServer = (data) => {
     
     const error = rxGet(DOMAIN + '.fetchMessage')
     if (error !== null) {
-        rxSet('app.snackbar.open', { value: {
+        rxSet('app.snackbar.open', {
+            message: 'Retrieving gene stats failed with: ' + error,
             severity: 'error',
-            message: 'Retrieving gene stats failed with: ' + error
-        }})
+        })
         return
     }
 

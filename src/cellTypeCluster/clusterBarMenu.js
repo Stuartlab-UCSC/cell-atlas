@@ -124,11 +124,9 @@ const multiColumnType = (startCol, endCol, dispatch) => {
     } else {
         dispatch({
             type: 'app.snackbar.open',
-            value: {
-                message: "There are multiple labels and I don't know which " +
+            message: "There are multiple labels and I don't know which " +
                 "to use. Remove all but one label then make the cell type.",
-                severity: 'error',
-            }
+            severity: 'error',
         })
         return
     }
@@ -181,14 +179,12 @@ const mapDispatchToProps = (dispatch) => {
             // Give the user info on how to make a multi-column cell type.
             dispatch({
                 type: 'app.snackbar.open',
-                value: {
-                    message:
+                message:
                     'For a multi-column cell type: ' +
                     '(1) click on begin cluster, ' +
                     '(2) shift-click on end cluster, ' +
                     '(3) select "Make Cell Type".',
-                    severity: 'fromDirectRequest',
-                }
+                severity: 'fromDirectRequest',
             })
         },
     }

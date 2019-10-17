@@ -56,7 +56,7 @@ const CaSnackbarPres = (props) => {
     let marginTop = 0
     let TransitionProps={
         direction: 'up',
-        //style: { transformOrigin: '0 0 0' }
+        //style: { transformOrigin: '0 0 0' }  // seems to be default
     }
     if (variant === 'error' || variant === 'fromDirectRequest') {
         autoHideDuration = null
@@ -103,6 +103,7 @@ CaSnackbarPres.propTypes = {
     actionLabel: PropTypes.string, // the label on the optional action button
     onActionClick: PropTypes.func, // the event handler for the action button
     onClose: PropTypes.func, // the event handler for closing the snackbar
+    severity: PropTypes.string,// one of: info, warning, error,fromDirectRequest
 }
 
 const onReallyClose = (reason, onClose) => {

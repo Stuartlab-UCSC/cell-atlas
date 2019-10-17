@@ -18,10 +18,10 @@ const receiveDeleteConfirmFromServer = () => {
             { value: rxGet('cellTypeSheetRemove.name')})
 
         // Display a message about the error.
-        rxSet('app.snackbar.open', { value: {
+        rxSet('app.snackbar.open', {
             message: 'Worksheet was not removed due to error: ' + error,
             severity: 'error',
-        }})
+        })
         // Remove the sheet from the sheetRemove state.
         rxSet('cellTypeSheetRemove.name.serverError')
     }
@@ -50,7 +50,7 @@ const onUndoClick = () => {
     // Remove the sheet from the sheetRemove state.
     rxSet('cellTypeSheetRemove.name.undo')
     // Display a message confirming undop.
-    rxSet('app.snackbar.open', { value:
+    rxSet('app.snackbar.open', { message:
         'The worksheet was not removed. Select it from the list to see it.'
     })
 }
@@ -69,12 +69,10 @@ const sheetRemove = (dispatch) => {
     // Cause the 'remove worksheet undo' message to render.
     dispatch({
         type: 'app.snackbar.open',
-        value: {
-            message: selected + ' has been removed.',
-            actionLabel: 'Undo',
-            onActionClick: onUndoClick,
-            onClose: requestRemoveOnServer,
-        }
+        message: selected + ' has been removed.',
+        actionLabel: 'Undo',
+        onActionClick: onUndoClick,
+        onClose: requestRemoveOnServer,
     })
 
     // Hide this worksheet along with other charts and fetch messages.
