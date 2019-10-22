@@ -30,7 +30,7 @@ const State = (
         colormap: [],
         dims: defaultDims,
         fetchMessage: ' ',
-        fetchStatus: 'initial',
+        fetchStatus: 'quiet',
         geneMenu: null,
         menu: false,
         render: renderSeq++,

@@ -16,7 +16,7 @@ const State = (
         
         // fetch common
         fetchMessage: ' ',
-        fetchStatus: 'initial',
+        fetchStatus: 'quiet',
         
         // unique
         firstChartDisplayed: false,

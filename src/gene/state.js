@@ -11,7 +11,7 @@ const State = (
         colorColumnTooltip: null,
         colorRange: { min: 0, max: 0 },
         fetchMessage: ' ',
-        fetchStatus: 'initial',
+        fetchStatus: 'quiet',
         firstChartDisplayed: false,
         sort: defaultSort,
         name: '',

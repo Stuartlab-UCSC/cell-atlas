@@ -6,7 +6,7 @@ let renderSeq = 0
 const State = (
     state = {
         fetchMessage: ' ',
-        fetchStatus: 'initial',
+        fetchStatus: 'quiet',
         render: renderSeq,
         showChart: false,
     }, action) => {

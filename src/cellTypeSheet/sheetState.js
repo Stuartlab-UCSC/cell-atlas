@@ -7,7 +7,7 @@ const defaultSheetSelected = null
 const State = (
     state = {
         fetchMessage: null,
-        fetchStatus: 'initial',
+        fetchStatus: 'quiet',
         list: defaultSheetList,
         saveAs: '',
         selected: null,
@@ -129,7 +129,7 @@ const State = (
 const cellTypeSheetRemoveState = (
     state = {
         fetchMessage: null,
-        fetchStatus: 'initial',
+        fetchStatus: 'quiet',
         remove: null,
     }, action) => {
         switch(action.type) {

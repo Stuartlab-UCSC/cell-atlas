@@ -116,7 +116,7 @@ const Wish = connect(
 const State = (
 state = {
     fetchMessage: ' ',
-    fetchStatus: 'initial',
+    fetchStatus: 'quiet',
     show: false,
     text: '',
 }, action) => {
