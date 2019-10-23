@@ -86,7 +86,9 @@ const clientError = (id, message) => {
 
 const findFetchOptions = (options) => {
     let fetchOpts = { method: options.method }
-    if (options.payload) {
+    if (options.uploadFile) {
+        fetchOpts.body = options.uploadFile
+    } else if (options.payload) {
         fetchOpts.headers = { 'Content-Type': 'application/json' }
         fetchOpts.body = JSON.stringify(options.payload)
     }

@@ -11,7 +11,8 @@ import { cellTypeGeneClusters, cellTypeGene, ctgVariable }
     from 'cellTypeGene/state'
 import cellTypeScatter from 'cellTypeScatter/state'
 import cellTypeSheet from  'cellTypeSheet/sheetState'
-import { cellTypeSheetRemoveState as cellTypeSheetRemove }
+import { cellTypeSheetRemoveState as cellTypeSheetRemove,
+    cellTypeSheetUploadState as cellTypeSheetUpload }
     from 'cellTypeSheet/sheetState'
 import cellTypeWork from 'cellTypeWork/state'
 import database from 'database/databaseState'
@@ -93,6 +94,7 @@ export const init = () => {
         cellTypeScatter,
         cellTypeSheet,
         cellTypeSheetRemove,
+        cellTypeSheetUpload,
         cellTypeWork,
         ctgVariable,
         database,

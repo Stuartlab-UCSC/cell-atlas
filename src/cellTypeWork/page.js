@@ -13,6 +13,7 @@ import CtwTopDrawer from 'cellTypeWork/ctwTopDrawer'
 import CtwMenu from 'cellTypeWork/ctwMenu'
 import ScatterPlot from 'cellTypeScatter/scatter'
 import GeneTable from 'cellTypeGene/ctgMain'
+import Upload from 'cellTypeSheet/sheetUpload'
 
 const DrawerIcons = ({props}) => {
     const { worksheet, onMenuClick, onTopDrawerClick } = props
@@ -80,6 +81,7 @@ const Presentation = (props) => {
                 </Grid>
             </div>
             <BubbleTooltip data={bubbleTooltip} id='cellTypeWork' />
+            <Upload />
         </div>
     )
 }

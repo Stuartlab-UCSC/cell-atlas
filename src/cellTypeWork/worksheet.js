@@ -33,6 +33,17 @@ const clearContextElements = (except) => {
         }
     }, 100)
 }
+
+const addWorksheetToList = (worksheet) => {
+    // Add the worksheet name to the pick-list.
+    rxSet('cellTypeSheet.list.saveAsSheetLoaded',
+        { value: worksheet })
+    rxSet('cellTypeSheet.selected.saveAsSheetLoaded',
+        { value: worksheet })
+    rxSet('cellTypeSheet.ownedByUser.saveAsSheetLoaded',
+        { value: worksheet })
+}
+
 const receivePostConfirmFromServer = () => {
     // Handle the post results received from the server.
     const error = rxGet(DOMAIN + '.fetchMessage')
@@ -40,13 +51,7 @@ const receivePostConfirmFromServer = () => {
         // Look for the worksheet name in the 'save as' state.
         let worksheet = rxGet('cellTypeSheet.saveAs')
         if (worksheet) {
-            // Add the worksheet name to the pick-list.
-            rxSet('cellTypeSheet.list.saveAsSheetLoaded',
-                { value: worksheet })
-            rxSet('cellTypeSheet.selected.saveAsSheetLoaded',
-                { value: worksheet })
-            rxSet('cellTypeSheet.ownedByUser.saveAsSheetLoaded',
-                { value: worksheet })
+            addWorksheetToList(worksheet)
         }
     }
     // Clear the saveAs text on success or error.
@@ -56,8 +61,31 @@ const receivePostConfirmFromServer = () => {
 const receiveDataFromServer = (data) => {
     // Handle the data received from the server.
     const error = rxGet(DOMAIN +'.fetchMessage')
-    if (error === null && data !== null) {
-        transformToChart(data)
+    if (error) {
+        rxSet('app.snackbar.open', {
+            message: error,
+            severity: 'error',
+        })
+        // Clear the upload name so we don't try to add it to the list later.
+        rxSet('cellTypeSheetUpload.name.clear')
+        
+        // Clear the selection in the list since there will be no charts.
+        rxSet('cellTypeSheet.selected.clearBeforeGet')
+    }
+    if (data === null) {
+        return
+    }
+    
+    // Save the data in the form needed for the UI.
+    transformToChart(data)
+
+    // Look for the worksheet name in the 'upload' state.
+    let worksheet = rxGet('cellTypeSheetUpload.name')
+    if (worksheet) {
+        addWorksheetToList(worksheet)
+        
+        // Clear the upload name so we don't try to add it to the list later.
+        rxSet('cellTypeSheetUpload.name.clear')
     }
     
     // Notify to re-render worksheet.
@@ -93,8 +121,8 @@ const getWorksheetData = (worksheetIn) => {
     rxSet('cellTypeScatter.showChart.getNewWorksheet')
     rxSet('cellTypeGene.show.getNewWorksheet')
     
-    
     rxSet('cellTypeWork.showChart.toRequestStatus')
+    
     // Initialize the variables as if the user owns the worksheet.
     let user = rxGet('auth.user').name
     let worksheet = worksheetIn

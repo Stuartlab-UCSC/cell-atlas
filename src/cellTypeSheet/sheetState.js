@@ -9,9 +9,9 @@ const State = (
         fetchMessage: null,
         fetchStatus: 'quiet',
         list: defaultSheetList,
+        ownedByUser: false,
         saveAs: '',
         selected: null,
-        ownedByUser: false,
     }, action) => {
         switch(action.type) {
         case 'cellTypeSheet.fetchMessage.set':
@@ -115,6 +115,7 @@ const State = (
                 ...state,
                 selected: action.value,
             }
+        case 'cellTypeSheet.selected.clearBeforeGet':
         case 'cellTypeSheet.selected.sheetRemove':
         case 'cellTypeSheet.selected.userChange':
             return {
@@ -169,6 +170,116 @@ const cellTypeSheetRemoveState = (
             return state
         }
     }
+    
+const cellTypeSheetUploadState = (
+state = {
+    dataset: null,
+    description: null,
+    fetchMessage: null,
+    fetchStatus: 'quiet',
+    group: null,
+    method: null,
+    name: null,
+    open: false,
+    button: false,
+}, action) => {
+    switch(action.type) {
+    case 'cellTypeSheetUpload.button.enable':
+        return {
+            ...state,
+            button: true
+        }
+    case 'cellTypeSheetUpload.button.disable':
+        return {
+            ...state,
+            button: false
+        }
+    case 'cellTypeSheetUpload.method.clear':
+        return {
+            ...state,
+            method: null
+        }
+    case 'cellTypeSheetUpload.method.uiSet':
+        return {
+            ...state,
+            method: action.value
+        }
+    case 'cellTypeSheetUpload.dataset.clear':
+        return {
+            ...state,
+            dataset: null
+        }
+    case 'cellTypeSheetUpload.dataset.uiSet':
+        return {
+            ...state,
+            dataset: action.value
+        }
+    case 'cellTypeSheetUpload.description.clear':
+        return {
+            ...state,
+            description: null
+        }
+    case 'cellTypeSheetUpload.description.uiSet':
+        return {
+            ...state,
+            description: action.value
+        }
+    case 'cellTypeSheetUpload.fetchMessage.clear':
+        return {
+            ...state,
+            fetchMessage: null
+        }
+    case 'cellTypeSheetUpload.fetchMessage.set':
+        return {
+            ...state,
+            fetchMessage: action.value
+        }
+    case 'cellTypeSheetUpload.fetchStatus.waiting':
+        return {
+            ...state,
+            fetchStatus: 'waiting'
+        }
+    case 'cellTypeSheetUpload.fetchStatus.quiet':
+        return {
+            ...state,
+            fetchStatus: 'quiet'
+        }
+    case 'cellTypeSheetUpload.group.clear':
+        return {
+            ...state,
+            group: null
+        }
+    case 'cellTypeSheetUpload.group.uiSet':
+        return {
+            ...state,
+            group: action.value
+        }
+    case 'cellTypeSheetUpload.name.clear':
+        return {
+            ...state,
+            name: null
+        }
+    case 'cellTypeSheetUpload.name.uiSet':
+        return {
+            ...state,
+            name: action.value
+        }
+    case 'cellTypeSheetUpload.open.now':
+        return {
+            ...state,
+            open: true
+        }
+    case 'cellTypeSheetUpload.open.close':
+        return {
+            ...state,
+            open: false
+        }
+    default:
+        return state
+    }
+}
+
                 
 export default State
-export { cellTypeSheetRemoveState, defaultSheetList, defaultSheetSelected }
+export { cellTypeSheetRemoveState, cellTypeSheetUploadState, defaultSheetList,
+    defaultSheetSelected }

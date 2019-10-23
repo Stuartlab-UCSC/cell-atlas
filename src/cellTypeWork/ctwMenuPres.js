@@ -3,15 +3,12 @@
 import React from 'react'
 import { Drawer, IconButton, MenuItem, MenuList } from '@material-ui/core'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-//import InfoIcon from '@material-ui/icons/Info';
-
 import SheetList from 'cellTypeSheet/sheetList'
 
 const Body = ({props}) => {
     // Render the menu.
-    const { sheetOwnedByUser, sheetSelected, /*username,*/ onRemoveClick,
-        onSaveAsClick, onSaveClick/*, onUploadClick, onUploadInfoClick*/ }
-        = props
+    const { sheetOwnedByUser, sheetSelected, uploadInProgress, username,
+        onRemoveClick, onSaveAsClick, onSaveClick, onUploadClick } = props
     return (
         <div style={{width: '20rem'}} >
             <div style={{margin: '1rem', marginTop: 0}} >
@@ -31,6 +28,13 @@ const Body = ({props}) => {
                     Save As
                 </MenuItem>
                 <MenuItem
+                    style={{display: 'None'}}
+                    disabled = {(username === null || uploadInProgress)}
+                    onClick={onUploadClick}
+                >
+                    {(uploadInProgress) ? 'Upload In Progress' : 'Upload Data'}
+                </MenuItem>
+                <MenuItem
                     disabled={!sheetOwnedByUser || !sheetSelected}
                     onClick={onRemoveClick}
                 >
@@ -40,19 +44,6 @@ const Body = ({props}) => {
         </div>
     )
 }
-/*
-<MenuItem
-    disabled = {true}
-    onClick={onUploadClick}
->
-    Upload Data
-    <IconButton
-        onClick={onUploadInfoClick}
-    >
-        <InfoIcon color='primary' />
-    </IconButton>
-</MenuItem>
-*/
 
 const CtwMenuPresentation = (props) => {
     // Render the modal upon opening.

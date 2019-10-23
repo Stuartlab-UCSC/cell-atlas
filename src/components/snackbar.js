@@ -15,8 +15,10 @@ const Action = ({ label, onClick }) => {
     }
     return (
         <Button
-            color="inherit"
+            autoFocus
+            color="primary"
             size="small"
+            variant="contained"
             onClick={onClick}
         >
             {label}

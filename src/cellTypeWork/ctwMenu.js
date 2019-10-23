@@ -5,7 +5,6 @@ import { get as rxGet } from 'state/rx'
 import { cleanName } from 'app/util'
 import { postWorksheetData } from 'cellTypeWork/worksheet'
 import sheetRemove from 'cellTypeSheet/sheetRemove'
-import ingestUpload from 'cellTypeWork/upload'
 import CtwMenuPres from 'cellTypeWork/ctwMenuPres'
 
 const onSaveAsSubmit = (name, dispatch) => {
@@ -75,6 +74,7 @@ const mapStateToProps = (state) => {
         menuShow: state.cellTypeWork.menu,
         sheetOwnedByUser: state.cellTypeSheet.ownedByUser,
         sheetSelected: state.cellTypeSheet.selected,
+        uploadInProgress: (state.cellTypeSheetUpload.fetchStatus !== 'quiet'),
         username,
     }
 }
@@ -104,13 +104,8 @@ const mapDispatchToProps = (dispatch) => {
             postWorksheetData(rxGet('cellTypeSheet.selected'))
         },
         onUploadClick: ev => {
-            ingestUpload(ev, dispatch)
             close(dispatch)
-        },
-        onUploadInfoClick: ev => {
-            console.log('onUploadInfoClick')
-            ev.stopPropagation()
-            close(dispatch)
+            dispatch({ type: 'cellTypeSheetUpload.open.now' })
         },
     }
 }

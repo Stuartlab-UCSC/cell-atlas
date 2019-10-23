@@ -2,37 +2,66 @@
 import { connect } from 'react-redux'
 import fetchData from 'fetch/data'
 import { rxGet, rxSet } from 'state/rx'
-import UploadPres from 'cellTypeSheet/uploadPres'
+import { getWorksheetData } from 'cellTypeWork/worksheet'
+import UploadPres from 'cellTypeSheet/sheetUploadPres'
 
 const DOMAIN = 'cellTypeSheetUpload'
 
 const receiveFromServer = (data) => {
-    console.log('receiveFromServer: data:', data)
     const error = rxGet('cellTypeSheetUpload.fetchMessage')
-    console.log('error:', error)
     if (error) {
         rxSet('app.snackbar.open', { message: error, severity: 'error' })
     } else {
-        rxSet('app.snackbar.open', { message: 'Uploaded' })
+        // Get the worksheet from the server.
+        getWorksheetData(rxGet('cellTypeSheetUpload.name'))
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log('mapStateToProps: state.cellTypeSheetUpload.open:',
-        state.cellTypeSheetUpload.open)
     return {
+        method: state.cellTypeSheetUpload.method,
+        dataset: state.cellTypeSheetUpload.dataset,
+        description: state.cellTypeSheetUpload.description,
         group: state.cellTypeSheetUpload.group,
         name: state.cellTypeSheetUpload.name,
         open: state.cellTypeSheetUpload.open,
         buttonEnabled: state.cellTypeSheetUpload.button,
     }
 }
+
+const buildUrl = () => {
+    let url = '/user/worksheet/' + rxGet('cellTypeSheetUpload.name')
+    let prefix = '/?'
+    const parms = ['group', 'method', 'dataset', 'description']
+    parms.forEach(parm => {
+        let val = rxGet('cellTypeSheetUpload.' + parm)
+        if (val && val !== null) {
+            val = val.trim()
+            if (val.length > 0) {
+                let name = parm
+                if (parm === 'method') {
+                    name = 'cluster_name'
+                }
+                url += prefix + name + '=' + val
+                prefix = '&'
+            }
+        }
+    })
+    return url
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onClose: ev => {
             // Close the dialog and the main menu.
             dispatch({ type: 'cellTypeSheetUpload.open.close' })
             dispatch({ type: 'cellTypeWork.menu.hide' })
+        },
+        onMethodChange: ev => {
+            dispatch({
+                type: 'cellTypeSheetUpload.method.uiSet',
+                value: ev.target.value
+            })
         },
         onDatasetChange: ev => {
             dispatch({
@@ -47,15 +76,12 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         onFileChange: ev => {
-            // Upload the file after giving the user a message.
-            console.log('onFileChange')
+            // Upload the file.
+            // Prepare for the fetch.
+            const url = buildUrl()
             const files = ev.target.files
-            console.log('files:', files)
-            const url = '/user/worksheet/' + rxGet('cellTypeSheetUpload.name')
             let data = new FormData()
-            // TODO check when there are no files, like the file was unselected?
             data.append('documents', files[0])
-
             let options = {
                 credentials: true,
                 method: 'POST',
@@ -64,14 +90,15 @@ const mapDispatchToProps = (dispatch) => {
             // Let the user know the upload has started.
             dispatch({
                 type: 'app.snackbar.open',
-                message: 'When the file has finished uploading, this page ' +
-                'will automatically load the new worksheet. In the mean ' +
-                'time, if you want to continue using the Cell Atlas, open ' +
-                'another instance in another tab.',
+                message: 'Uploading. On completion the new worksheet will ' +
+                'load. To use the Cell Atlas in the mean time, open it in ' +
+                'another tab.',
                 severity: 'fromDirectRequest',
+                actionLabel: 'New Tab',
+                onActionClick: () => window.open(process.env.REACT_APP_VIEW_URL,
+                    '_blank'),
             })
-            
-            // Clear the file name for another upload and close the dialog.
+            // Clear the file name for the next upload and close the dialog.
             document.getElementById('celltypework-upload-input').value = null
             dispatch({ type: 'cellTypeSheetUpload.open.close' })
             
