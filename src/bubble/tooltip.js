@@ -100,6 +100,14 @@ const BubbleTooltip = ({data, id}) => {
                                     label={data.size_by}
                                     value={stringToPrecision(data.size)}
                                 />
+                                <Row
+                                    label='cluster'
+                                    value={data.cluster}
+                                />
+                                <Row
+                                    label='gene'
+                                    value={data.gene}
+                                />
                             </tbody>
                         </table>
                     </Typography>

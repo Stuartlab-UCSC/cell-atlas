@@ -19,9 +19,11 @@ const ManyBubbles = ({ data, dims }) => {
             bubbleList.push(
                 <Bubble
                     key={'[' + i.toString() + ',' + j.toString()+ ']'}
+                    cluster={cluster.name}
                     color={bubble.color}
                     colorBy={colorBy}
                     colorRgb={bubble.colorRgb}
+                    gene={gene}
                     offsetX={colWidth * j}
                     offsetY={rowHeight * i}
                     radius={bubble.radius}

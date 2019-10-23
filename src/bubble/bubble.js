@@ -17,8 +17,8 @@ const onMouseOver = (ev) => {
 }
 
 const Circle = ({ props }) => {
-    const { cellCount, color, colorBy, colorRgb, name, offsetX, offsetY,
-        radius, size, sizeBy } = props
+    const { cellCount, cluster, color, colorBy, colorRgb, gene, name, offsetX,
+        offsetY, radius, size, sizeBy } = props
     if (isNaN(radius)) {
         return null
     }
@@ -48,8 +48,10 @@ const Circle = ({ props }) => {
             strokeWidth={0}
             fill={colorRgb}
             {...opt}
+            data-cluster={cluster}
             data-color={color.toString()}
             data-color_by={colorBy}
+            data-gene={gene}
             data-size={size.toString()}
             data-size_by={sizeBy}
             onMouseOver={onMouseOver}
