@@ -81,7 +81,8 @@ const mapStateToProps = (state) => {
 const onSubmit = (dispatch) => {
     dispatch({ type: 'wish.open.close' })
     const text = rxGet('wish.text')
-    fetch(DOMAIN, '/mail-admin/subject/cell-type/message/' + text)
+    fetch(DOMAIN, '/mail-admin/subject/cell-type/message/' + text,
+        null, { credentials: true })
 }
 
 const mapDispatchToProps = (dispatch) => {
