@@ -18,8 +18,8 @@ const Make = ({ props }) => {
             open={true}
             onClose={onClose}
         >
-            <DialogTitle id="form-dialog-title">
-                What do you wish for?
+            <DialogTitle>
+                I wish this would ...
             </DialogTitle>
             <DialogContent>
                 <TextField
@@ -29,7 +29,8 @@ const Make = ({ props }) => {
                     id="wishDialog"
                     margin="dense"
                     multiline={true}
-                    rows={3}
+                    rows={5}
+                    style={{width: '30rem'}}
                     onChange={onTextChange}
                     onKeyPress={onTextKeyPress}
                 />
@@ -80,7 +81,7 @@ const mapStateToProps = (state) => {
 const onSubmit = (dispatch) => {
     dispatch({ type: 'wish.open.close' })
     const text = rxGet('wish.text')
-    fetch(DOMAIN, '/mail-admin/' + text)
+    fetch(DOMAIN, '/mail-admin/subject/cell-type/message/' + text)
 }
 
 const mapDispatchToProps = (dispatch) => {

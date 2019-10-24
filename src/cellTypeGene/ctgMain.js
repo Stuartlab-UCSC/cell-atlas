@@ -3,10 +3,11 @@
 
 import { connect } from 'react-redux'
 import React from 'react'
-import { CircularProgress, Typography } from '@material-ui/core'
+import { CircularProgress, Grid, Typography } from '@material-ui/core'
 import ClusterBar from 'cellTypeCluster/clusterBarPres'
 import ctwDataStore from 'cellTypeWork/dataStore'
 import dataStore from 'cellTypeGene/ctgDataStore'
+import Wish from 'components/wish'
 import CtgTable from 'cellTypeGene/ctgTable'
 import getGeneTableData from 'cellTypeGene/ctgFetch'
 
@@ -14,10 +15,11 @@ const DOMAIN = 'cellTypeGene'
 
 const Presentation = (props) => {
     // Rendering of the gene table.
-    const { cluster, count, data, dims, fetchMessage, fetchStatus, show,
-        onClick } = props
+    const { cluster, clusters, colormap, count, data, dims, fetchMessage,
+        fetchStatus, show, onClick } = props
+
     let Counts = null
-    let clusterBar = null
+    let bar = null
     if (data === undefined) {
         return (null)
     }
@@ -33,27 +35,34 @@ const Presentation = (props) => {
             <Typography inline={true} style={{
                 fontSize: '1.1rem',
                 verticalAlign: 'bottom',
-                marginTop: 5,
+                marginTop: '0.5rem',
                 marginRight: '1.5rem',
             }}>
                 Cluster <b>{cluster}</b>: <b>{count}</b> genes found
             </Typography>
         )
-        const {clusters, colormap } = props
-        clusterBar = (
-            <ClusterBar
-                clusters={clusters}
-                colormap={colormap}
-                dims={dims}
-                menuPosition={null}
-                onClick={onClick}
-            />
+        bar = (
+            <Grid container spacing={16}>
+                <Grid item xs={10}>
+                    {Counts}
+                    <ClusterBar
+                        clusters={clusters}
+                        colormap={colormap}
+                        dims={dims}
+                        menuPosition={null}
+                        onClick={onClick}
+                    />
+                </Grid>
+                <Grid item xs={2}
+                    style={{paddingBottom: '1rem'}}>
+                    <Wish />
+                </Grid>
+            </Grid>
         )
     }
     return (
         <div>
-            {Counts}
-            {clusterBar}
+            {bar}
             <CtgTable />
         </div>
     )
