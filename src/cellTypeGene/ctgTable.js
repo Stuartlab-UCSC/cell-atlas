@@ -30,7 +30,7 @@ const Presentation = (props) => {
     }
     const muiDataTablesMaxHeight = 599
     return (
-        <div id='ctgTableScroller' style={{minHeight: muiDataTablesMaxHeight}}>
+        <div style={{minHeight: muiDataTablesMaxHeight}}>
             {table}
         </div>
     )

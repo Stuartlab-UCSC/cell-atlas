@@ -34,16 +34,14 @@ const Presentation = (props) => {
         Counts = (
             <Typography inline={true} style={{
                 fontSize: '1.1rem',
-                verticalAlign: 'bottom',
-                marginTop: '0.5rem',
                 marginRight: '1.5rem',
             }}>
                 Cluster <b>{cluster}</b>: <b>{count}</b> genes found
             </Typography>
         )
         bar = (
-            <Grid container spacing={16}>
-                <Grid item xs={10}>
+            <Grid container spacing={16} id='cell_type_gene_scroll_into_view'>
+                <Grid item xs={10} style={{marginTop: 10}}>
                     {Counts}
                     <ClusterBar
                         clusters={clusters}
@@ -54,7 +52,7 @@ const Presentation = (props) => {
                     />
                 </Grid>
                 <Grid item xs={2}
-                    style={{paddingBottom: '1rem'}}>
+                    style={{marginBottom: 10}}>
                     <Wish />
                 </Grid>
             </Grid>

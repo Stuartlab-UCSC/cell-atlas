@@ -259,9 +259,10 @@ const newDataReceived = () => {
     // Show the table.
     findAvailable()
     if (rxGet('cellTypeGene.firstTableDisplayed')) {
-        document.getElementById('ctgTableScroller').scrollIntoView({
-            behavior: 'smooth',
-        })
+        document.getElementById(
+            'cell_type_gene_scroll_into_view').scrollIntoView(
+            { behavior: 'smooth' }
+        )
     } else {
         rxSet('cellTypeGene.firstTableDisplayed.set')
     }
