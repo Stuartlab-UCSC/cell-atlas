@@ -102,6 +102,7 @@ const getSheetListData = () => {
     const url = '/user/worksheets'
     let options = { credentials: true }
     if (USE_TEST_DATA) {
+        rxSet(DOMAIN + '.fetchStatus.waiting')
         receiveData(DOMAIN, testData, receiveDataFromServer, options)
     } else {
         fetchData(DOMAIN, url, receiveDataFromServer, options)
@@ -115,7 +116,6 @@ const mapStateToProps = (state) => {
 
     return {
         id: 'cell_type_work_sheet',
-        label: 'Open a Worksheet',
         list: state.cellTypeSheet.list,
         selected: state.cellTypeSheet.selected,
     }

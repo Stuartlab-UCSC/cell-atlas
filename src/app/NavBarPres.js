@@ -236,7 +236,7 @@ class NavBarPres extends React.Component {
                 style={{
                     width: '100%',
                     height: this.height,
-                    zIndex: '3000',
+                    zIndex: '1000',
                     position: 'fixed',
                     background: altBackground,
                     color: altForeground,

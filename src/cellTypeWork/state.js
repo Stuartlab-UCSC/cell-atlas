@@ -35,7 +35,7 @@ const State = (
         menu: false,
         render: renderSeq++,
         showChart: false,
-        topDrawer: true,
+        sheetInfo: false,
     }, action) => {
         switch(action.type) {
         case 'cellTypeWork.colormap.create':
@@ -125,15 +125,15 @@ const State = (
                 ...state,
                 showChart: true
             }
-        case 'cellTypeWork.topDrawer.open':
+        case 'cellTypeWork.sheetInfo.open':
             return {
                 ...state,
-                topDrawer: true
+                sheetInfo: true
             }
-        case 'cellTypeWork.topDrawer.close':
+        case 'cellTypeWork.sheetInfo.close':
             return {
                 ...state,
-                topDrawer: false
+                sheetInfo: false
             }
         default:
             return state

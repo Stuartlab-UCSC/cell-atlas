@@ -4,48 +4,40 @@ import { connect } from 'react-redux'
 import React from 'react';
 import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 
 import BubbleTooltip from 'bubble/tooltip'
 import Worksheet from 'cellTypeWork/worksheet'
-import CtwTopDrawer from 'cellTypeWork/ctwTopDrawer'
+import SheetName from 'cellTypeSheet/sheetName'
 import CtwMenu from 'cellTypeWork/ctwMenu'
 import ScatterPlot from 'cellTypeScatter/scatter'
+import SheetList from 'cellTypeSheet/sheetList'
 import GeneTable from 'cellTypeGene/ctgMain'
 import Upload from 'cellTypeSheet/sheetUpload'
 
-const DrawerIcons = ({props}) => {
-    const { worksheet, onMenuClick, onTopDrawerClick } = props
-    const menuIconStyle = {
-        marginTop: -32,
-        marginLeft: -50,
-    }
-    const topDrawerIconStyle = {
-        ...menuIconStyle,
-        marginLeft: 50,
-        fontSize: '1.1rem',
-        color: 'black',
-        zIndex: 1,
-    }
+const Header = ({props}) => {
+    const { onMenuClick, onSheetInfoClick } = props
     return (
         <React.Fragment>
             <CtwMenu />
             <IconButton
-                style={menuIconStyle}
+                style={{marginTop: -12, marginLeft: -50}}
                 onClick={onMenuClick}
             >
                 <MenuIcon color='primary' style={{height: 36, width: 36}}/>
             </IconButton>
-
-            <CtwTopDrawer />
-            <IconButton
-                style={topDrawerIconStyle}
-                onClick={onTopDrawerClick}
-            >
-                <KeyboardArrowDownIcon color='primary' />
-                {worksheet}
+            <IconButton style={{marginTop: 10}} onClick={onSheetInfoClick} >
+                <InfoIcon color='primary' />
             </IconButton>
+            <div style={{
+                width: 400,
+                marginBottom: '1rem',
+                display: 'inline-block'
+            }} >
+                <SheetList />
+            </div>
+            <SheetName />
         </React.Fragment>
     )
 }
@@ -58,15 +50,10 @@ const Presentation = (props) => {
         width: '100%'
     }
     return (
-        <div>
-            <DrawerIcons props={props} />
+        <div style={{marginTop: -20}}>
+            <Header props={props} />
             <div style={gridStyle}>
                 <Grid container spacing={8} style={{background: 'transparent'}}>
-            
-                    <Grid item xs={12}>
-                        <CtwTopDrawer />
-                    </Grid>
-            
                     <Grid item xs={5}>
                         <ScatterPlot />
                     </Grid>
@@ -89,7 +76,6 @@ const Presentation = (props) => {
 const mapStateToProps = (state) => {
     return {
         bubbleTooltip: state.bubble.tooltip,
-        worksheet: state.cellTypeSheet.selected,
     }
 }
 
@@ -98,8 +84,9 @@ const mapDispatchToProps = (dispatch) => {
         onMenuClick: ev => {
             dispatch({ type: 'cellTypeWork.menu.show' })
         },
-        onTopDrawerClick: ev => {
-            dispatch({ type: 'cellTypeWork.topDrawer.open' })
+        onSheetInfoClick: ev => {
+            console.log('onSheetInfoClick')
+            dispatch({ type: 'cellTypeWork.sheetInfo.open' })
         },
     }
 }

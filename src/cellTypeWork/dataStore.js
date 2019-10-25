@@ -2,7 +2,7 @@
 // Store the chart data and handle all updates to it.
 
 const defaultData = {
-    group: null,
+    accessGroup: '',
     dataset: '',
     description: '',
     clusterSolution: '',
@@ -31,6 +31,10 @@ class DataStore {
 
     get() {
         return this.data
+    }
+    
+    getAccessGroup() {
+        return this.data.accessGroup
     }
     
     getBubbles() {
