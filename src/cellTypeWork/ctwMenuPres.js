@@ -1,7 +1,8 @@
 // Presentational component of the Main menu of the cell type worksheet page.
 
 import React from 'react'
-import { Drawer, IconButton, MenuItem, MenuList } from '@material-ui/core'
+import { Drawer, IconButton, MenuItem, MenuList, Typography }
+    from '@material-ui/core'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import SheetList from 'cellTypeSheet/sheetList'
 
@@ -12,6 +13,9 @@ const Body = ({props}) => {
     return (
         <div style={{width: '20rem'}} >
             <div style={{margin: '1rem', marginTop: 0}} >
+                <Typography style={{fontSize: '1.1rem'}}>
+                    Open
+                </Typography>
                 <SheetList />
             </div>
             <MenuList style={{ padding: 0, }}>
@@ -22,14 +26,14 @@ const Body = ({props}) => {
                     Save
                 </MenuItem>
                 <MenuItem
-                    disabled={!sheetSelected}
+                    disabled={username === null || !sheetSelected}
                     onClick={onSaveAsClick}
                 >
                     Save As
                 </MenuItem>
                 <MenuItem
                     style={{display: 'None'}}
-                    disabled = {(username === null || uploadInProgress)}
+                    disabled = {username === null || uploadInProgress || !sheetSelected}
                     onClick={onUploadClick}
                 >
                     {(uploadInProgress) ? 'Upload In Progress' : 'Upload Data'}

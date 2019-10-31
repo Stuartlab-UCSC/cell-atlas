@@ -22,7 +22,7 @@ const Header = ({props}) => {
         <React.Fragment>
             <CtwMenu />
             <IconButton
-                style={{marginTop: -12, marginLeft: -50}}
+                style={{marginTop: -2, marginLeft: -50}}
                 onClick={onMenuClick}
             >
                 <MenuIcon color='primary' style={{height: 36, width: 36}}/>
@@ -50,7 +50,7 @@ const Presentation = (props) => {
         width: '100%'
     }
     return (
-        <div style={{marginTop: -20}}>
+        <div style={{marginTop: -30}}>
             <Header props={props} />
             <div style={gridStyle}>
                 <Grid container spacing={8} style={{background: 'transparent'}}>

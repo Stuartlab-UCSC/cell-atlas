@@ -41,7 +41,11 @@ const PickList = ({id, helperText, label, list, placeholder, selected,
     let Placeholder = null
     if (placeholder) {
         Placeholder = (
-            <MenuItem value="none" disabled >
+            <MenuItem
+                value='none'
+                disabled
+                style={{fontStyle: 'italic'}}
+            >
                 {placeholder}
             </MenuItem>
         )

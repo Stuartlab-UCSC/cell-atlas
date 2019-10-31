@@ -180,10 +180,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: 'app.snackbar.open',
                 message:
-                    'For a multi-column cell type: ' +
-                    '(1) click on begin cluster, ' +
-                    '(2) shift-click on end cluster, ' +
-                    '(3) select "Make Cell Type".',
+                    'For a multi-cluster cell type: ' +
+                    '(1) click begin cluster, ' +
+                    '(2) shift-click end cluster, ' +
+                    '(3) click "Make Cell Type".',
                 severity: 'fromDirectRequest',
             })
         },

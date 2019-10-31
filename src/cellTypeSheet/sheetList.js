@@ -117,6 +117,7 @@ const mapStateToProps = (state) => {
     return {
         id: 'cell_type_work_sheet',
         list: state.cellTypeSheet.list,
+        placeholder: 'Open a worksheet...',
         selected: state.cellTypeSheet.selected,
     }
 }

@@ -40,7 +40,16 @@ const buildTypeGroups = (cellTypes) => {
     
     // Determine which column should display the label.
     groups.forEach(group => {
-        cellTypes[group[0]].show = true
+    
+        try {
+            cellTypes[group[0]].show = true
+        } catch (e) {
+            // Causing: "Uncaught TypeError: Cannot set property 'show' of undefined"
+            console.error('buildTypeGroups(): debug for:', e)
+            console.error('buildTypeGroups(): cellTypes:', cellTypes)
+            console.error('buildTypeGroups(): group:', group)
+            console.error('buildTypeGroups(): group[0]:', group[0])
+        }
     })
     
     return groups
