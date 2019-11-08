@@ -178,6 +178,7 @@ state = {
     fetchMessage: null,
     fetchStatus: 'quiet',
     group: null,
+    helpOpen: false,
     method: null,
     name: null,
     open: false,
@@ -249,10 +250,15 @@ state = {
             ...state,
             group: null
         }
-    case 'cellTypeSheetUpload.group.uiSet':
+    case 'cellTypeSheetUpload.helpOpen.now':
         return {
             ...state,
-            group: action.value
+            helpOpen: true
+        }
+    case 'cellTypeSheetUpload.helpOpen.close':
+        return {
+            ...state,
+            helpOpen: false
         }
     case 'cellTypeSheetUpload.name.clear':
         return {

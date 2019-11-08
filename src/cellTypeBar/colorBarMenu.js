@@ -10,8 +10,8 @@ import { setCellTypeInputFocus } from 'cellTypeBar/cellTypesEdit'
 const mapStateToProps = (state) => {
     return {
         dims: state.cellTypeWork.dims,
-        menu: false
-        //menu: state.cellTypeBar.menu, // the start and end groups & columns
+        //menu: false
+        menu: state.cellTypeBar.menu, // the start and end groups & columns
     }
 }
 

@@ -1,8 +1,9 @@
 
 import React from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid,
-    TextField } from '@material-ui/core'
+    TextField, Typography } from '@material-ui/core'
 import InfoIcon from '@material-ui/icons/Info'
+import UploadHelp from 'cellTypeSheet/sheetUploadHelp'
 
 const Input = (props) => {
     const { autoFocus, label, title, value, onChange } = props
@@ -37,7 +38,7 @@ const Content = ({props}) => {
                         onClick={onInfoClick}
                     >
                         <InfoIcon style={{marginRight: '0.5rem'}} />
-                        File Format
+                        Data Required
                     </Button>
                 </Grid>
                 <Input
@@ -49,7 +50,7 @@ const Content = ({props}) => {
                 />
                 <Input
                     value={group}
-                    label='Group'
+                    label='Access Group'
                     title={'Optional, so others in the group may read ' +
                         'your worksheet'}
                     onChange={onGroupChange}
@@ -63,7 +64,7 @@ const Content = ({props}) => {
                 <Input
                     value={dataset}
                     label='Dataset'
-                    title={'Dataset from which this clusters came'}
+                    title={'Dataset that was clustered'}
                     onChange={onDatasetChange}
                 />
 
@@ -79,6 +80,7 @@ const Content = ({props}) => {
                 title='A description of this clustering'
                 onChange={onDescriptionChange}
             />
+            <UploadHelp />
         </DialogContent>
     )
 }
@@ -94,6 +96,9 @@ const UploadPres = (props) => {
             </DialogTitle>
             <Content props={props} />
             <DialogActions>
+                <Typography variant='caption' style={{float: 'left'}}>
+                    * required field
+                </Typography>
                 <Button color="primary" onClick={onClose}>
                     Cancel
                 </Button>

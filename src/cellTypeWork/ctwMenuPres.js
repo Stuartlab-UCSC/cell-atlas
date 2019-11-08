@@ -32,7 +32,6 @@ const Body = ({props}) => {
                     Save As
                 </MenuItem>
                 <MenuItem
-                    style={{display: 'None'}}
                     disabled = {username === null || uploadInProgress || !sheetSelected}
                     onClick={onUploadClick}
                 >
@@ -48,6 +47,7 @@ const Body = ({props}) => {
         </div>
     )
 }
+//                    style={{display: 'None'}}
 
 const CtwMenuPresentation = (props) => {
     // Render the modal upon opening.
