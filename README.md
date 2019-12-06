@@ -7,11 +7,14 @@ Stuart lab cell atlas.
 ### run locally
 `npm start`
 
-### deploy to server
+### deploy from the local development environment
 `cell/bin/deployWww`
 
 ### install on server
 `cell/bin/installWww`
+
+### stop the server
+`ps -eaf | grep 'node server.js'`
 
 ### source-map-explorer
 To run source-map-explorer insert this in package.json:
