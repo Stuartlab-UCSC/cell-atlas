@@ -12,7 +12,7 @@ const Body = ({props}) => {
         onRemoveClick, onSaveAsClick, onSaveClick, onUploadClick } = props
     return (
         <div style={{width: '20rem'}} >
-            <div style={{margin: '1rem', marginTop: 0}} >
+            <div style={{margin: '1rem', marginTop: -30}} >
                 <Typography style={{fontSize: '1.1rem'}}>
                     Open
                 </Typography>
@@ -64,10 +64,7 @@ const CtwMenuPresentation = (props) => {
             }}
             PaperProps={{ style: { background: background }}}
         >
-            <div style={{
-                position: 'relative',
-                top: 40,
-            }}>
+            <div>
                 <div style={{
                     width: '100%',
                     textAlign: 'right',

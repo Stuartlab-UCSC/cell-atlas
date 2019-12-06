@@ -7,6 +7,43 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle,
 const Content = () => {
     return (
         <DialogContent>
+            <Typography variant='body1' paragraph>
+Before uploading the worksheet data it needs to be manipulated into
+a format that the Cell Type Workbench (CTW) understands. There is a script to
+extract the data from a scanpy object, with support for other sources
+in the works. If your data is not in a scanpy object, hexmap@ucsc.edu may be
+able to help.
+            </Typography>
+            <Typography variant='h6'>
+                Scanpy extraction
+            </Typography>
+            <Typography variant='body1' paragraph>
+To extract the data from a scanpy object, install the python package at:&nbsp;
+                <a
+                    href="https://github.com/Stuartlab-UCSC/ctwpy"
+                    target='_blank'
+                >
+                    https://github.com/Stuartlab-UCSC/ctwpy
+                </a>
+            </Typography>
+            <Typography variant='body1' paragraph>
+Then run the script: ctw-from-scanpy according to the README.
+            </Typography>
+            <Typography variant='body1' paragraph>
+Some data are required to already exist in the scanpy object before
+running the script. These include a umap with an observation key of "X_umap",
+and clustering information with observation keys of "cluster_name" and
+"mapping_name".
+            </Typography>
+            <Typography variant='body1' paragraph>
+The script should create a file with an extension of ".ctw.tgz". This is the
+file that you upload here.
+            </Typography>
+        </DialogContent>
+    )
+}
+
+/*
             <Typography>
 There are two scripts available to generate the data needed to create a
 worksheet. One script takes in a scanpy object and the other takes in
@@ -49,9 +86,7 @@ cluster    gene       log2fc       ...    -log10_pval    1-adjp*2<br/>
 7          NOC2L      0.008068     ...    -0.000000      0.000000<br/>
 9          PLEKHN1    -1.015159    ...     0.608961      0.939455<br/>
 ...</pre>
-        </DialogContent>
-    )
-}
+*/
 
 const UploadHelpPres = ({ open, onClose }) => {
     return (

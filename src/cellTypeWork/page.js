@@ -85,7 +85,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({ type: 'cellTypeWork.menu.show' })
         },
         onSheetInfoClick: ev => {
-            console.log('onSheetInfoClick')
             dispatch({ type: 'cellTypeWork.sheetInfo.open' })
         },
     }

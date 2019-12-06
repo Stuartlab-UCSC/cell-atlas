@@ -112,7 +112,6 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         onInfoClick: ev => {
-            console.log('onUploadInfoClick')
             dispatch({ type: 'cellTypeSheetUpload.helpOpen.now' })
         },
         onNameChange: ev => {
