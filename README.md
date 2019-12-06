@@ -14,6 +14,7 @@ Stuart lab cell atlas.
 `cell/bin/installWww`
 
 ### stop the server
+Find the PID and kill the process
 `ps -eaf | grep 'node server.js'`
 
 ### source-map-explorer
