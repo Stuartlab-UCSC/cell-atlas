@@ -22,6 +22,7 @@ To extract the data from a scanpy object, install the python package at:&nbsp;
                 <a
                     href="https://github.com/Stuartlab-UCSC/ctwpy"
                     target='_blank'
+                    rel='noopener noreferrer'
                 >
                     https://github.com/Stuartlab-UCSC/ctwpy
                 </a>
