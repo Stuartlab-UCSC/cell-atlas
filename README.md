@@ -62,6 +62,13 @@ cd cell-atlas
 bin/start
 ```
 
+## Stop on production machine
+Find the process ID of the server and kill it.
+```
+ps -eaf | grep "node server.js"
+kill <pid>
+```
+
 ## Code size view
 To run source-map-explorer insert this in package.json,
 "dependencies" section:
