@@ -46,17 +46,13 @@ cd cell-atlas
 bin/deployWww
 ```
 On your production machine, after modifying bin/installWww to match your instance.
-First copy the script, bin/installWww into hour 
-```
-cd <install-dir>
-```
 Copy the script, bin/installWww into your install directory.
 ```
+cd <install-dir>
 installWww
 ```
 
 ## Start on production machine
-The app first needs to be installed on production as below.
 ```
 cd cell-atlas
 bin/start
